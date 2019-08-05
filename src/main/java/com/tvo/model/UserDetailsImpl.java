@@ -1,0 +1,78 @@
+/**
+ * 
+ */
+package com.tvo.model;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+
+/**
+ * @author Ace
+ *
+ */
+public class UserDetailsImpl implements UserDetails {
+	 private static final long serialVersionUID = -7206276226932033386L;
+	    private User user;
+	    private List<GrantedAuthority> authorities;
+
+	    public UserDetailsImpl(final User user, final List<GrantedAuthority> authorities) {
+	        this.user = user;
+	        this.authorities = authorities;
+	    }
+
+	    public User getUser() {
+	        return user;
+	    }
+
+	    public void setUser(final User user) {
+	        this.user = user;
+	    }
+
+	    public void setAuthorities(final List<GrantedAuthority> authorities) {
+	        this.authorities = authorities;
+	    }
+
+	    @Override
+	    public Collection<? extends GrantedAuthority> getAuthorities() {
+	        return authorities;
+	    }
+
+	    @Override
+	    public boolean isAccountNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isAccountNonLocked() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isCredentialsNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isEnabled() {
+	    	String ena = user.getStatus();
+	    	if("A".contentEquals(ena)) {
+	    		return true;
+	    	}
+	        return false;
+	    }
+
+	    @Override
+	    public String getPassword() {
+	        return user.getPassword();
+	    }
+
+	    @Override
+	    public String getUsername() {
+	        return user.getUserName();
+	    }
+}
