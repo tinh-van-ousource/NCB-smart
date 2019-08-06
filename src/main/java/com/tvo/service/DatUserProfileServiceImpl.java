@@ -23,6 +23,7 @@ import com.tvo.controllerDto.SearchConsumerModel;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dto.DatUserProfileDto;
+import com.tvo.model.DatCfmast;
 import com.tvo.model.DatUserProfile;
 import com.tvo.model.DatUserProfile_;
 
@@ -98,8 +99,8 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
 		rootPersist.join(DatUserProfile_.function);
 		rootPersist.join(DatUserProfile_.datCfmast);
+//		Join<DatUserProfile, DatCfmast> datCfmast = rootPersist.join(DatUserProfile_.datCfmast);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
-
 		if (searchModel.getUsrid() != null && !StringUtils.isEmpty(searchModel.getUsrid().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("usrid")),
 					"%" + searchModel.getUsrid().toUpperCase() + "%")));
@@ -109,8 +110,8 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 					.and(cb.equal(cb.upper(rootPersist.<String>get("cifgrp")), searchModel.getCifgrp().toUpperCase())));
 		}
 		if (searchModel.getIdno() != null && !StringUtils.isEmpty(searchModel.getIdno().trim())) {
-			predicates.add(
-					cb.and(cb.like(cb.upper(rootPersist.<String>get("idno")), searchModel.getIdno().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<DatCfmast>get("datCfmast").<String>get("idno")),
+					searchModel.getIdno().toUpperCase())));
 		}
 		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
 			predicates.add(
