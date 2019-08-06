@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.SearchConsumerModel;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.dto.DatUserProfileDto;
 import com.tvo.response.ResponeData;
@@ -25,14 +26,23 @@ public class DatUserProfileController {
 	@Autowired
 	private DatUserProfileService datUserProfileService;
 
-	@GetMapping(value = "search")
-	public ResponeData<Page<DatUserProfileDto>> searchDatUserProfile(@RequestBody SearchDatUserProfileModel searchModel,@RequestParam(value="filter") String filter,
+	@GetMapping(value = "searchUser")
+	public ResponeData<Page<DatUserProfileDto>> searchDatUserProfile(@RequestBody SearchDatUserProfileModel searchModel,
+			@RequestParam(value = "filter") String filter,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-		Page<DatUserProfileDto> dts = datUserProfileService.searchDatUserProfile(searchModel,filter, pageable);
+		Page<DatUserProfileDto> dts = datUserProfileService.searchDatUserProfile(searchModel, filter, pageable);
 		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
 				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 
+	@GetMapping(value = "searchConsumer")
+	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@RequestBody SearchConsumerModel searchModel,
+			@RequestParam(value = "filter") String filter,
+			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+		Page<DatUserProfileDto> dts = datUserProfileService.searchConsumer(searchModel, filter, pageable);
+		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
+				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+	}
 //	@RequestMapping(method = RequestMethod.GET, value = "/filter")
 //	public ResponeData<Page<DatUserProfileDto>> filter(@RequestParam(value = "search", required = false) String search,
 //			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {

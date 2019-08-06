@@ -138,5 +138,7 @@ public class DatUserProfile_ {
 	public static volatile SingularAttribute<DatUserProfile, Date> tmrchangepass;
 
 	public static volatile SingularAttribute<DatUserProfile, Function> function;
+	
+	public static volatile SingularAttribute<DatUserProfile, DatCfmast> datCfmast;
 
 }
