@@ -2,6 +2,7 @@ package com.tvo.dto;
 
 import java.util.Date;
 
+import com.tvo.model.DatCfmast;
 import com.tvo.model.Function;
 
 import lombok.Data;
@@ -143,6 +144,8 @@ public class DatUserProfileDto {
 	private String touchidTran;
 
 	private Date tmrchangepass;
-	
+
 	private Function function;
+
+	private DatCfmast datCfmast;
 }

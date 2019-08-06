@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,9 +24,9 @@ public class DatUserProfile implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;
 
-//	@Column(name="id")
-//	@GeneratedValue(generator = "id")
-//	private Integer id;
+//	@Id
+//	@Column(name = "ID", insertable = false, updatable = false)
+//	private Long id;
 
 	@Column(name = "BNKID")
 	private String bnkid;
@@ -38,6 +39,7 @@ public class DatUserProfile implements Serializable {
 
 	@Column(name = "CRTUSRID")
 	private String crtusrid;
+
 	@Id
 	@Column(name = "USRID")
 	private String usrid;
@@ -51,7 +53,7 @@ public class DatUserProfile implements Serializable {
 	@Column(name = "USRSNAME")
 	private String usrsname;
 
-	@Column(name = "CIFGRP")
+	@Column(name = "CIFGRP", insertable = false, updatable = false)
 	private String cifgrp;
 
 	@Column(name = "CIFNAME")
@@ -192,8 +194,8 @@ public class DatUserProfile implements Serializable {
 	@Column(name = "MOBILE")
 	private String mobile;
 
-//	@Column(name = "LM4RM")
-//	private String lm4rm;
+	@Column(name = "LM4RM", insertable = false, updatable = false)
+	private String lm4rm;
 
 	@Column(name = "NEWSTART")
 	private String newstart;
@@ -223,9 +225,9 @@ public class DatUserProfile implements Serializable {
 	private Date tmrchangepass;
 
 	@ManyToOne
-	@JoinColumn(name = "LM4RM")
-//	@JoinColumns({
-//        @JoinColumn(name="LM4RM", referencedColumnName="ID")
-//	})
+	@JoinColumns({ @JoinColumn(name = "LM4RM", referencedColumnName = "ID") })
 	private Function function;
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "CIFGRP", referencedColumnName = "CIFNO") })
+	private DatCfmast datCfmast;
 }
