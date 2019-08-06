@@ -16,15 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
-import com.tvo.controllerDto.searchCity;
 import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dto.DatUserProfileDto;
-import com.tvo.model.City;
 import com.tvo.model.DatUserProfile;
+import com.tvo.model.DatUserProfile_;
 
 @Service
 public class DatUserProfileServiceImpl implements DatUserProfileService {
@@ -54,30 +54,31 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		return listResult;
 	}
 
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchDatUserProfileModel searchModel) {
+	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+			SearchDatUserProfileModel searchModel,String filter) {
 		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		if (searchModel.getBrncode() != null
-				&& !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
+		rootPersist.join(DatUserProfile_.function);
+		final List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		if (searchModel.getBrncode() != null && !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("brncode"), searchModel.getBrncode())));
 		}
-		if (searchModel.getOfficecode() != null
-				&& !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
+		if (searchModel.getOfficecode() != null && !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("officecode"), searchModel.getOfficecode())));
 		}
-		if (searchModel.getUsrfname() != null
-				&& !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrfname"), searchModel.getUsrfname())));
+		if (searchModel.getUsrfname() != null && !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
+			predicates.add(cb.and(cb.like(rootPersist.<String>get("usrfname"), "%" + searchModel.getUsrfname() + "%")));
 		}
-		if (searchModel.getCifname() != null
-				&& !StringUtils.isEmpty(searchModel.getCifname().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cifname"), searchModel.getCifname())));
+		if (searchModel.getCifname() != null && !StringUtils.isEmpty(searchModel.getCifname().trim())) {
+			predicates.add(cb.and(cb.like(rootPersist.<String>get("cifname"), "%" + searchModel.getCifname() + "%")));
 		}
 
-		if (searchModel.getUsrstatus() != null
-				&& !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
+		if (searchModel.getUsrstatus() != null && !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrstatus"), searchModel.getUsrstatus())));
+		}
+		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
+			predicates.add(cb.and(cb.like(rootPersist.<String>get("usrfname"), "%" +filter+ "%")));
+			predicates.add(cb.or(cb.like(rootPersist.<String>get("cifname"), "%" +filter+ "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -86,26 +87,114 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 	@Override
-	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, Pageable pageable) {
-		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-		Object[] queryObjs = this.createCityRootPersist(cb, query, searchModel);
+	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel,String filter, Pageable pageable) {
+		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
+		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel,filter);
 		query.select((Root<DatUserProfile>) queryObjs[0]);
 		query.where((Predicate[]) queryObjs[1]);
 		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
 		typedQuery.setFirstResult((int) pageable.getOffset());
 		typedQuery.setMaxResults(pageable.getPageSize());
-		final List<DatUserProfile> objects = typedQuery.getResultList();
+		List<DatUserProfile> objects = typedQuery.getResultList();
 		List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
 
-		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-//	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
+		CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
 		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
 		countQuery.where((Predicate[]) queryObjs[1]);
 		Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(datUserProfileDtos, pageable, total);
 //		return null;
 	}
+
+//	public Page<DatUserProfileDto> filterUser(List<SearchCriteria> params, Pageable pageable) {
+		// CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		// CriteriaQuery<DatUserProfileDto> query =
+		// builder.createQuery(DatUserProfileDto.class);
+
+//		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<DatUserProfile> cq = cb.createQuery(DatUserProfile.class);
+//		Root<Function> r = cq.from(Function.class);
+//		Join<DatUserProfile, Function> warehouses = r.join("warehouses");
+//		cq.select(warehouses).where(cb.equal(r.get("id"), drinks.getId()));
+//		Predicate predicate = builder.conjunction();
+//
+//		UserSearchQueryCriteria filter = new UserSearchQueryCriteria(predicate, builder, r);
+//		params.stream().forEach(filter);
+//		predicate = filter.getPredicate();
+////		query.where(predicate);
+//
+//		List<DatUserProfileDto> result = entityManager.createQuery(query).getResultList();
+//
+//		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+//		final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+////	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
+//		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+//		Long total = entityManager.createQuery(countQuery).getSingleResult();
+//
+//		return new PageImpl<>(result, pageable, total);
+//		return null;
+//	}
+
+//	public Page<DatUserProfileDto> filterUser(List<SearchCriteria> params, Pageable pageable) {
+//		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//		CriteriaQuery<DatUserProfileDto> query = builder.createQuery(DatUserProfileDto.class);
+//		Root r = query.from(DatUserProfile.class);
+//
+//		Predicate predicate = builder.conjunction();
+//
+//		UserSearchQueryCriteria filter = new UserSearchQueryCriteria(predicate, builder, r);
+//		params.stream().forEach(filter);
+//		predicate = filter.getPredicate();
+////		query.where(predicate);
+//
+//		List<DatUserProfileDto> result = entityManager.createQuery(query).getResultList();
+//
+//		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+//		final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+////	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
+//		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+//		Long total = entityManager.createQuery(countQuery).getSingleResult();
+//
+//		return new PageImpl<>(result, pageable, total);
+//	}
+
+//	@Override
+//	public Page<DatUserProfileDto> search(List<SearchCriteria> params, Pageable pageable) {
+//
+//		Metamodel m = entityManager.getMetamodel();
+//		EntityType<DatUserProfile> datUserProfile_ = m.entity(DatUserProfile.class);
+//		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//		CriteriaQuery<DatUserProfile> cq = cb.createQuery(DatUserProfile.class);
+//
+//		Root<DatUserProfile> datUserProfile = cq.from(datUserProfile_);
+//		datUserProfile.join(DatUserProfile_.function);
+//		Predicate predicate = cb.conjunction();
+//
+//		UserSearchQueryCriteria filter = new UserSearchQueryCriteria(predicate, cb, datUserProfile);
+//		params.stream().forEach(filter);
+//		predicate = filter.getPredicate();
+//
+//		cq.select(datUserProfile);
+//		cq.where(predicate);
+//		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(cq);
+//
+//		typedQuery.setFirstResult((int) pageable.getOffset());
+//		typedQuery.setMaxResults(pageable.getPageSize());
+//		List<DatUserProfile> objects = typedQuery.getResultList();
+//		List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
+//
+//		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+//		final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+//		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+//		Long total = entityManager.createQuery(countQuery).getSingleResult();
+//		return new PageImpl<>(datUserProfileDtos, pageable, total);
+//	}
+
+//	@Override
+//	public Page<DatUserProfileDto> findAll(Specification<DatUserProfile> spec, Pageable pageable) {
+//		return datUserProfileDao.findAll(spec, pageable);
+//	}
 }
