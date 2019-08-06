@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.tvo.common.ModelMapperUtils;
@@ -55,30 +54,37 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchDatUserProfileModel searchModel,String filter) {
+			SearchDatUserProfileModel searchModel, String filter) {
 		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
 		rootPersist.join(DatUserProfile_.function);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
-		
+
 		if (searchModel.getBrncode() != null && !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("brncode"), searchModel.getBrncode())));
+			predicates.add(cb.and(
+					cb.equal(cb.upper(rootPersist.<String>get("brncode")), searchModel.getBrncode().toUpperCase())));
 		}
 		if (searchModel.getOfficecode() != null && !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("officecode"), searchModel.getOfficecode())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("officecode")),
+					searchModel.getOfficecode().toUpperCase())));
 		}
 		if (searchModel.getUsrfname() != null && !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
-			predicates.add(cb.and(cb.like(rootPersist.<String>get("usrfname"), "%" + searchModel.getUsrfname() + "%")));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")),
+					"%" + searchModel.getUsrfname().toUpperCase() + "%")));
 		}
 		if (searchModel.getCifname() != null && !StringUtils.isEmpty(searchModel.getCifname().trim())) {
-			predicates.add(cb.and(cb.like(rootPersist.<String>get("cifname"), "%" + searchModel.getCifname() + "%")));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")),
+					"%" + searchModel.getCifname().toUpperCase() + "%")));
 		}
 
 		if (searchModel.getUsrstatus() != null && !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrstatus"), searchModel.getUsrstatus())));
 		}
 		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
-			predicates.add(cb.and(cb.like(rootPersist.<String>get("usrfname"), "%" +filter+ "%")));
-			predicates.add(cb.or(cb.like(rootPersist.<String>get("cifname"), "%" +filter+ "%")));
+			predicates.add(
+					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
+			predicates.add(
+					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
+//			predicates.add(cb.or(cb.like(rootPersist.<String>get("usrid"), "%" +filter+ "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -87,10 +93,11 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 	@Override
-	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel,String filter, Pageable pageable) {
+	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
+			Pageable pageable) {
 		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel,filter);
+		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel, filter);
 		query.select((Root<DatUserProfile>) queryObjs[0]);
 		query.where((Predicate[]) queryObjs[1]);
 		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
@@ -110,9 +117,9 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 //	public Page<DatUserProfileDto> filterUser(List<SearchCriteria> params, Pageable pageable) {
-		// CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		// CriteriaQuery<DatUserProfileDto> query =
-		// builder.createQuery(DatUserProfileDto.class);
+	// CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+	// CriteriaQuery<DatUserProfileDto> query =
+	// builder.createQuery(DatUserProfileDto.class);
 
 //		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 //        CriteriaQuery<DatUserProfile> cq = cb.createQuery(DatUserProfile.class);

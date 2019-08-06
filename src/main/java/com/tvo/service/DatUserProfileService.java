@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
-import com.tvo.controllerDto.SearchCriteria;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.dto.DatUserProfileDto;
-import com.tvo.model.DatUserProfile;
 
 /**
  * @author Thanglt
