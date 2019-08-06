@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchConsumerModel;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dto.DatUserProfileDto;
@@ -92,6 +93,37 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		return results;
 	}
 
+	public Object[] createConsumerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+			SearchConsumerModel searchModel, String filter) {
+		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
+		rootPersist.join(DatUserProfile_.function);
+		rootPersist.join(DatUserProfile_.datCfmast);
+		final List<Predicate> predicates = new ArrayList<Predicate>();
+
+		if (searchModel.getUsrid() != null && !StringUtils.isEmpty(searchModel.getUsrid().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("usrid")),
+					"%" + searchModel.getUsrid().toUpperCase() + "%")));
+		}
+		if (searchModel.getCifgrp() != null && !StringUtils.isEmpty(searchModel.getCifgrp().trim())) {
+			predicates.add(cb
+					.and(cb.equal(cb.upper(rootPersist.<String>get("cifgrp")), searchModel.getCifgrp().toUpperCase())));
+		}
+		if (searchModel.getIdno() != null && !StringUtils.isEmpty(searchModel.getIdno().trim())) {
+			predicates.add(
+					cb.and(cb.like(cb.upper(rootPersist.<String>get("idno")), searchModel.getIdno().toUpperCase())));
+		}
+		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
+			predicates.add(
+					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
+//			predicates.add(
+//					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
+		}
+		Object[] results = new Object[2];
+		results[0] = rootPersist;
+		results[1] = predicates.toArray(new Predicate[predicates.size()]);
+		return results;
+	}
+
 	@Override
 	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
 			Pageable pageable) {
@@ -114,6 +146,28 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(datUserProfileDtos, pageable, total);
 //		return null;
+	}
+
+	@Override
+	public Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, String filter, Pageable pageable) {
+		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
+		Object[] queryObjs = this.createConsumerRootPersist(cb, query, searchModel, filter);
+		query.select((Root<DatUserProfile>) queryObjs[0]);
+		query.where((Predicate[]) queryObjs[1]);
+		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
+
+		typedQuery.setFirstResult((int) pageable.getOffset());
+		typedQuery.setMaxResults(pageable.getPageSize());
+		List<DatUserProfile> objects = typedQuery.getResultList();
+		List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
+
+		CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+		countQuery.where((Predicate[]) queryObjs[1]);
+		Long total = entityManager.createQuery(countQuery).getSingleResult();
+		return new PageImpl<>(datUserProfileDtos, pageable, total);
 	}
 
 //	public Page<DatUserProfileDto> filterUser(List<SearchCriteria> params, Pageable pageable) {
