@@ -14,5 +14,5 @@ import com.tvo.model.DatUserProfile;
  */
 @Repository
 public interface DatUserProfileDao extends JpaRepository<DatUserProfile, String>, JpaSpecificationExecutor<DatUserProfile> {
-	public DatUserProfile findByUsrsname(String usrsname);
+//	public DatUserProfile findByUsrsname(String usrsname);
 }
