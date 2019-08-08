@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.tvo.model.Function;
+import com.tvo.model.Promotions;
 
 @Repository
-public interface FunctionDAO extends JpaRepository<Function, String>{
-	public Function findByTypeId(String typeId);
+public interface PromotionsDAO extends JpaRepository<Promotions, String> {
+	public Promotions findByType(String type);
 }

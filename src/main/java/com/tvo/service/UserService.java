@@ -80,7 +80,7 @@ public class UserService implements UserServiceIpml {
 		if (user == null) {
 			return null;
 		}
-		if (userDto.getEmail() != null) {
+		if (userDto.getEmail() != null) {	
 			user.setEmail(userDto.getEmail());
 		}
 		if (userDto.getFullName() != null) {

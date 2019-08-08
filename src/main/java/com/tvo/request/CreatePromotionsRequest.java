@@ -1,5 +1,7 @@
 package com.tvo.request;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,31 +9,32 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateFunctionRequest {
-
-	private String id;
-
-	private String prdName;
-
-	private String tranType;
-
-	private String typeId;
-
+public class CreatePromotionsRequest {
+	private String idName;
+	
+	private String type;
+	
+	private String functionType;
+	
 	private String status;
-
+	
 	private String quantity;
-
-	private String customerType;
-
+	
+	private String cuType;
+	
 	private String ccy;
-
+	
 	private String limitDaily;
-
+	
+	private String limitFace;
+	
+	private String userId;
+	
 	private String min;
-
+	
 	private String max;
-
-	private String limitFaceid;
+	
+	private Date createDate;
 
 	private String limitFinger;
 
@@ -41,13 +44,7 @@ public class CreateFunctionRequest {
 
 	private String percentage;
 
-	private String fromDate;
+	private Date fromDate;
 
-	private String toDate;
-
-	private String createdBy;
-
-	private String createdDate;
-
-	private String prd;
+	private Date toDate;
 }
