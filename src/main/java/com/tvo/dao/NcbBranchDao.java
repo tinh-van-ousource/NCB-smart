@@ -8,5 +8,5 @@ import com.tvo.model.NcbBranch;
 
 @Repository
 public interface NcbBranchDao extends JpaRepository<NcbBranch, String>, JpaSpecificationExecutor<NcbBranch> {
-	public NcbBranch findByBrnCode(String brnCode);
+	public NcbBranch findByDepartCode(String departCode);
 }

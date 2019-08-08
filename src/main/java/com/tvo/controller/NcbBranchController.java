@@ -46,8 +46,8 @@ public class NcbBranchController {
 	}
 
 	@GetMapping(value = "detail")
-	public ResponeData<NcbBranchDto> detail(@RequestParam String brnCode) {
-		NcbBranch ncbBranch = ncbBranchService.findByBrnCode(brnCode);
+	public ResponeData<NcbBranchDto> detail(@RequestParam String departCode) {
+		NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
 		NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
@@ -76,7 +76,7 @@ public class NcbBranchController {
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String brnCode) {
-		return new ResponeData<String>(ncbBranchService.delete(brnCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<String> delete(@RequestParam String departCode) {
+		return new ResponeData<String>(ncbBranchService.delete(departCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 	}
 }

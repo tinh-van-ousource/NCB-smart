@@ -19,7 +19,7 @@ import com.tvo.request.CreateNcbBranchRequest;
 public interface NcbBranchService {
 	public List<NcbBranchDto> findAll();
 
-	public NcbBranch findByBrnCode(String brnCode);
+	public NcbBranch findByDepartCode(String departCode);
 
 	public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable);
 

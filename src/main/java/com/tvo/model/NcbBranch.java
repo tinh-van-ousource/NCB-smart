@@ -21,13 +21,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class NcbBranch {
-	@Id
+
 	@Column(name = "BRN_CODE")
 	private String brnCode;
 
 	@Column(name = "BRANCH_NAME")
 	private String branchName;
 
+	@Id
 	@Column(name = "DEPART_CODE")
 	private String departCode;
 

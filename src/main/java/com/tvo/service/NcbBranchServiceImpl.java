@@ -52,8 +52,8 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 	}
 
 	@Override
-	public NcbBranch findByBrnCode(String brnCode) {
-		return ncbBranchDao.findByBrnCode(brnCode);
+	public NcbBranch findByDepartCode(String departCode) {
+		return ncbBranchDao.findByDepartCode(departCode);
 	}
 
 	@SuppressWarnings("unused")
@@ -112,7 +112,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbBranch update(CreateNcbBranchRequest request) {
-		NcbBranch ncbBranch = ncbBranchDao.findByBrnCode(request.getBrnCode());
+		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
 		if (!ObjectUtils.isEmpty(ncbBranch)) {
 			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
 			return ModelMapperUtils.map(save, NcbBranch.class);
@@ -123,8 +123,8 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbBranch create(CreateNcbBranchRequest request) {
-		NcbBranch findByBrnCode = ncbBranchDao.findByBrnCode(request.getBrnCode());
-		if (!ObjectUtils.isEmpty(findByBrnCode)) {
+		NcbBranch findByDepartCode = ncbBranchDao.findByDepartCode(request.getDepartCode());
+		if (!ObjectUtils.isEmpty(findByDepartCode)) {
 			return null;
 		}
 		NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
@@ -133,10 +133,10 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String brnCode) {
-		if (!brnCode.isEmpty()) {
+	public String delete(String departCode) {
+		if (!departCode.isEmpty()) {
 			try {
-				NcbBranch ncbBranch = ncbBranchDao.findByBrnCode(brnCode);
+				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
 				ncbBranch.setStatus("D");
 				ncbBranchDao.save(ncbBranch);
 				return AppConstant.SUCCSESSFUL_CODE;
