@@ -1,14 +1,12 @@
 package com.tvo.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -25,14 +23,14 @@ public class Function implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "ID_NAME")
-	private String idName;
+	@Column(name = "PRD_NAME")
+	private String prdName;
 
-	@Column(name = "TYPE_FUNCTION")
-	private String typeFunction;
+	@Column(name = "TRAN_TYPE")
+	private String tranType;
 
-	@Column(name = "FUNCTION")
-	private String function;
+	@Column(name = "TYPE_ID")
+	private String typeId;
 
 	@Column(name = "STATUS")
 	private String status;
@@ -40,32 +38,26 @@ public class Function implements Serializable {
 	@Column(name = "QUANTITY")
 	private String quantity;
 
-	@Column(name = "CU_TYPE")
-	private String cuType;
+	@Column(name = "CUSTOMER_TYPE")
+	private String customerType;
 
 	@Column(name = "CCY")
 	private String ccy;
 
 	@Column(name = "LIMIT_DAILY")
-	private String limitDaily;
-
-	@Column(name = "LIMIT_FACE")
-	private String limitFace;
-
-	@Column(name = "USER_ID")
-	private String userId;
+	private Long limitDaily;
 
 	@Column(name = "MIN")
-	private String min;
+	private Long min;
 
 	@Column(name = "MAX")
-	private String max;
+	private Long max;
 
-	@Column(name = "CREATE_DATE")
-	private Date createDate;
+	@Column(name = "LIMIT_FACEID")
+	private Long limitFaceid;
 
 	@Column(name = "LIMIT_FINGER")
-	private String limitFinger;
+	private Long limitFinger;
 
 	@Column(name = "PROMOTION")
 	private String promotion;
@@ -74,15 +66,21 @@ public class Function implements Serializable {
 	private String promotionName;
 
 	@Column(name = "PERCENTAGE")
-	private String percentage;
+	private Long percentage;
 
 	@Column(name = "FROM_DATE")
-	private Date fromDate;
+	private LocalDate fromDate;
 
 	@Column(name = "TO_DATE")
-	private Date toDate;
+	private LocalDate toDate;
 
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "function")
-//	private List<DatUserProfile> listUser;
+	@Column(name = "CREATED_BY")
+	private String createdBy;
+
+	@Column(name = "CREATED_DATE")
+	private LocalDate createdDate;
+
+	@Column(name = "PRD")
+	private String prd;
 
 }

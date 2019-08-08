@@ -7,5 +7,5 @@ import com.tvo.model.Function;
 
 @Repository
 public interface FunctionDAO extends JpaRepository<Function, String>{
-	public Function findByTypeFunction(String typeFunction);
+	public Function findByTypeId(String typeId);
 }

@@ -34,7 +34,7 @@ import com.tvo.request.CreateFunctionRequest;
 
 @Service
 @Transactional
-public class FunctionServiceImpl implements FunctionService{
+public class FunctionServiceImpl implements FunctionService {
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 
@@ -42,7 +42,7 @@ public class FunctionServiceImpl implements FunctionService{
 	private EntityManager entityManager;
 	@Autowired
 	FunctionDAO functionDao;
-	
+
 	@Override
 	public Page<FunctionDto> searchFunction(searchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
@@ -51,24 +51,24 @@ public class FunctionServiceImpl implements FunctionService{
 		query.select((Root<Function>) queryObjs[0]);
 		query.where((Predicate[]) queryObjs[1]);
 		TypedQuery<Function> typedQuery = this.entityManager.createQuery(query);
-		
-		typedQuery.setFirstResult((int)pageable.getOffset());
-	    typedQuery.setMaxResults(pageable.getPageSize());
-	    final List<Function> objects = typedQuery.getResultList();
+
+		typedQuery.setFirstResult((int) pageable.getOffset());
+		typedQuery.setMaxResults(pageable.getPageSize());
+		final List<Function> objects = typedQuery.getResultList();
 		List<FunctionDto> FunctionDtos = ModelMapperUtils.mapAll(objects, FunctionDto.class);
 
-		
 		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-	    final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-	    countQuery.select(cbTotal.count(countQuery.from(Function.class)));
-	    countQuery.where((Predicate[]) queryObjs[1]);
-	    Long total = entityManager.createQuery(countQuery).getSingleResult();
+		final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+		countQuery.select(cbTotal.count(countQuery.from(Function.class)));
+		countQuery.where((Predicate[]) queryObjs[1]);
+		Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(FunctionDtos, pageable, total);
 	}
+
 	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchFunction resource) {
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		
+
 		if (resource.getTypeFunction() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeFunction().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("typyFunction"), resource.getTypeFunction())));
@@ -91,8 +91,7 @@ public class FunctionServiceImpl implements FunctionService{
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCuType().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cuType"), resource.getCuType())));
 		}
-		if (resource.getCcy() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCcy().trim())) {
+		if (resource.getCcy() != null && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCcy().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("ccy"), resource.getCcy())));
 		}
 		if (resource.getLimitDaily() != null
@@ -107,49 +106,33 @@ public class FunctionServiceImpl implements FunctionService{
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFunction().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("function"), resource.getFunction())));
 		}
-		if (resource.getMin() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getMin().trim())) {
+		if (resource.getMin() != null && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getMin().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("min"), resource.getMin())));
 		}
-		if (resource.getMax() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getMax().trim())) {
+		if (resource.getMax() != null && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getMax().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("max"), resource.getMax())));
 		}
-		
-	
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);
 		return results;
 	}
+
 	@Override
 	public FunctionDto createFunction(CreateFunctionRequest request) {
-		Function function = functionDao.findByTypeFunction(request.getTypeFunction());
+		Function function = functionDao.findByTypeId(request.getTypeId());
 		if (function != null) {
 			return null;
 		}
 		function = ModelMapperUtils.map(request, Function.class);
-		function.setUserId(request.getUserId());
-		function.setId(request.getId());
-		function.setCuType(request.getCuType());
-		function.setTypeFunction(request.getTypeFunction());
-		function.setIdName(request.getIdName());
-		function.setQuantity(request.getQuantity());
-		function.setStatus(request.getStatus());
-		function.setFunction(request.getFunction());
-		function.setLimitDaily(request.getLimitDaily());
-		function.setLimitFace(request.getLimitFace());
-		function.setMax(request.getMax());
-		function.setMin(request.getMin());
-		function.setCreateDate(request.getCreateDate());
-		function.setCcy(request.getCcy());
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
 	}
-	public String delete(String typeFunction) {
-		if(!typeFunction.isEmpty()) {
-			Function function = functionDao.findByTypeFunction(typeFunction);
+
+	public String delete(String typeId) {
+		if (!typeId.isEmpty()) {
+			Function function = functionDao.findByTypeId(typeId);
 			function.setStatus("DEACTIVE");
 			functionDao.saveAndFlush(function);
 			return AppConstant.SUCCSESSFUL_CODE;
