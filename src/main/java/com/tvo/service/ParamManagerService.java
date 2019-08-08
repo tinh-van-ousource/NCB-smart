@@ -10,6 +10,12 @@ import com.tvo.dto.ParamManagerDto;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
 
+/**
+ * @author Thanglt
+ *
+ * @version 1.0
+ * @date Aug 8, 2019
+ */
 public interface ParamManagerService {
 	public List<ParamManagerDto> findAll();
 

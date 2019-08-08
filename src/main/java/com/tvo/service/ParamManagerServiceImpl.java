@@ -27,7 +27,10 @@ import com.tvo.dto.ParamManagerDto;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Autowired
@@ -35,11 +38,6 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Autowired
 	private EntityManager entityManager;
-
-	public ParamManagerServiceImpl(ParamManagerDao paramManagerDao, EntityManager entityManager) {
-		this.paramManagerDao = paramManagerDao;
-		this.entityManager = entityManager;
-	}
 
 	@Override
 	public List<ParamManagerDto> findAll() {
