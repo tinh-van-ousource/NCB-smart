@@ -10,6 +10,7 @@ package com.tvo.common;
 public class AppConstant {
 	public static final String LOGIN_FAILURE_CODE = "401";
 	public static final String SUCCSESSFUL_CODE = "200";
+	public static final String ERROR_CODE = "204";
 	public static final String ACCESS_DENIED_CODE = "403";
 	public static final String ACCESS_DENIED_STATUS = "access denied";
 	public static final String LOGIN_FAILURE_STATUS = "login failure";

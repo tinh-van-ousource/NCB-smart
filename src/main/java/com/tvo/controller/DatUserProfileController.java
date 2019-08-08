@@ -19,6 +19,12 @@ import com.tvo.service.DatUserProfileService;
 
 import io.swagger.annotations.Api;
 
+/**
+ * @author Thanglt
+ *
+ * @version 1.0
+ * @date Aug 8, 2019
+ */
 @RestController
 @RequestMapping(value = "user-profile")
 @Api(tags = "DatUserProfile")
