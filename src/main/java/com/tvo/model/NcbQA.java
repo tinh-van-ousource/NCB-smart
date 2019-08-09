@@ -9,10 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Thanglt
@@ -22,10 +20,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "NCB_QA")
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class NcbQA extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
