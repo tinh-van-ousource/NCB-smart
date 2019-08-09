@@ -24,10 +24,6 @@ public class DatUserProfile implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;
 
-//	@Id
-//	@Column(name = "ID", insertable = false, updatable = false)
-//	private Long id;
-
 	@Column(name = "BNKID")
 	private String bnkid;
 

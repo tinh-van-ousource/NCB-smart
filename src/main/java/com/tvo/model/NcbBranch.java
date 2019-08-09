@@ -1,5 +1,7 @@
 package com.tvo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +22,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class NcbBranch {
+public class NcbBranch implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "BRN_CODE")
 	private String brnCode;
