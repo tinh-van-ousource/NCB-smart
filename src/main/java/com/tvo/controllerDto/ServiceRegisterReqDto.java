@@ -1,6 +1,8 @@
 package com.tvo.controllerDto;
 
-import javax.validation.constraints.Max;
+import com.tvo.validator.ServiceRegisterServiceConstraint;
+import com.tvo.validator.ServiceRegisterStatusConstraint;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -13,12 +15,10 @@ public class ServiceRegisterReqDto {
 
     private Integer type;
 
-    @Min(1)
-    @Max(4)
+    @ServiceRegisterServiceConstraint
     private Integer service;
 
-    @Min(1)
-    @Max(3)
+    @ServiceRegisterStatusConstraint
     private Integer status;
 
     private String fromDate;
