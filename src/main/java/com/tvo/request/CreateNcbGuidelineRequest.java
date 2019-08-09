@@ -5,11 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateMbProvisionRequest {
+public class CreateNcbGuidelineRequest {
+	
+	private String serviceId;
 
-	private String provisionName;
-
-	private String provisionLink;
+	private String content;
 
 	private String status;
+
 }

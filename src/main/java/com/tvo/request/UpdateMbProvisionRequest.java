@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateMbProvisionRequest {
+public class UpdateMbProvisionRequest {
+	private Long id;
 
 	private String provisionName;
 

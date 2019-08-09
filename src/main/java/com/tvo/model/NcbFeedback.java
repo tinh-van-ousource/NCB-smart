@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -28,11 +29,15 @@ public class NcbFeedback extends AbstractEntity implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
+    @SequenceGenerator(sequenceName = "NCB_FEEDBACK_SEQ", allocationSize = 1, name = "ID")
 	private Long id;
 
 	@Column(name = "PRODUCT_CODE")
 	private String productCode;
+
+	@Column(name = "PRODUCT_NAME")
+	private String productName;
 
 	@Column(name = "TYPE")
 	private String type;

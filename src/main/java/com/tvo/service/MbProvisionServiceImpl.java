@@ -18,26 +18,18 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dao.MbProvisionDao;
 import com.tvo.dto.MbProvisionDto;
-import com.tvo.dto.ParamManagerDto;
-import com.tvo.model.DatUserProfile;
-import com.tvo.model.DatUserProfile_;
 import com.tvo.model.MbProvision;
-import com.tvo.model.ParamManager;
 import com.tvo.request.CreateMbProvisionRequest;
-
-import lombok.AllArgsConstructor;
+import com.tvo.request.UpdateMbProvisionRequest;
 
 @Service
-@AllArgsConstructor
 public class MbProvisionServiceImpl implements MbProvisionService {
 
 	@Autowired
@@ -52,7 +44,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	}
 
 	@Override
-	public MbProvision findById(String id) {
+	public MbProvisionDto findById(Long id) {
 		MbProvision mbProvision = new MbProvision();
 		try {
 			Optional<MbProvision> opt = mbProvisionDao.findById(id);
@@ -62,7 +54,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
-		return mbProvision;
+		return ModelMapperUtils.map(mbProvision, MbProvisionDto.class);
 
 	}
 
@@ -109,31 +101,27 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public MbProvision update(CreateMbProvisionRequest request) {
+	public MbProvisionDto update(UpdateMbProvisionRequest request) {
 		Optional<MbProvision> opt = mbProvisionDao.findById(request.getId());
 		if (opt.isPresent()) {
 			MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
-			return ModelMapperUtils.map(save, MbProvision.class);
+			return ModelMapperUtils.map(save, MbProvisionDto.class);
 		}
 		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public MbProvision create(CreateMbProvisionRequest request) {
-		Optional<MbProvision> opt = mbProvisionDao.findById(request.getId());
-		if (opt.isPresent()) {
-			return null;
-		}
+	public MbProvisionDto create(CreateMbProvisionRequest request) {
 		MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
-		return ModelMapperUtils.map(save, MbProvision.class);
+		return ModelMapperUtils.map(save, MbProvisionDto.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(@RequestParam String id) {
+	public String delete(Long id) {
 		MbProvision mbProvision = new MbProvision();
-		if (!id.isEmpty()) {
+		if (id != null) {
 			Optional<MbProvision> opt = mbProvisionDao.findById(id);
 			if (opt.isPresent()) {
 				mbProvision = opt.get();

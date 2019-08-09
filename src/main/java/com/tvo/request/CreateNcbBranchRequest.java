@@ -1,6 +1,7 @@
 package com.tvo.request;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Thanglt
@@ -8,7 +9,8 @@ import lombok.Data;
  * @version 1.0
  * @date Aug 8, 2019
  */
-@Data
+@Getter
+@Setter
 public class CreateNcbBranchRequest {
 	private String brnCode;
 
@@ -31,7 +33,7 @@ public class CreateNcbBranchRequest {
 	private String urlImg;
 
 	private String dao;
-	
+
 	private String status;
-	
+
 }
