@@ -21,5 +21,5 @@ public interface NcbGuidelineService {
 
 	public NcbGuidelineDto create(CreateNcbGuidelineRequest request);
 
-	public String delete(Long id);
+	public Boolean delete(Long id);
 }

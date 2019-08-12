@@ -72,7 +72,11 @@ public class ParamManagerController {
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String paramNo) {
-		return new ResponeData<String>(paramManagerService.delete(paramNo), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<Boolean> delete(@RequestParam String paramNo) {
+		boolean deleteFlag = paramManagerService.delete(paramNo);
+		if (deleteFlag == true) {
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		}
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, false);
 	}
 }

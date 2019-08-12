@@ -45,13 +45,9 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Override
 	public MbProvisionDto findById(Long id) {
 		MbProvision mbProvision = new MbProvision();
-		try {
-			Optional<MbProvision> opt = mbProvisionDao.findById(id);
-			if (opt.isPresent()) {
-				mbProvision = mbProvisionDao.findById(id).get();
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		Optional<MbProvision> opt = mbProvisionDao.findById(id);
+		if (opt.isPresent()) {
+			mbProvision = mbProvisionDao.findById(id).get();
 		}
 		return ModelMapperUtils.map(mbProvision, MbProvisionDto.class);
 
@@ -125,7 +121,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(Long id) {
+	public Boolean delete(Long id) {
 		MbProvision mbProvision = new MbProvision();
 		if (id != null) {
 			Optional<MbProvision> opt = mbProvisionDao.findById(id);
@@ -133,10 +129,10 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 				mbProvision = opt.get();
 				mbProvision.setStatus("D");
 				mbProvisionDao.save(mbProvision);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

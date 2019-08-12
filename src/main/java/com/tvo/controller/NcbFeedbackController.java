@@ -50,7 +50,8 @@ public class NcbFeedbackController {
 	public ResponeData<NcbFeedbackDto> create(@RequestBody CreateNcbFeedbackRequest request) {
 		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.create(request);
 		if (ncbFeedbackDto == null) {
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+					null);
 		}
 		return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbFeedbackDto);
@@ -60,14 +61,19 @@ public class NcbFeedbackController {
 	public ResponeData<NcbFeedbackDto> update(@RequestBody UpdateNcbFeedbackRequest request) {
 		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.update(request);
 		if (ncbFeedbackDto == null) {
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+					null);
 		}
 		return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbFeedbackDto);
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam Long id) {
-		return new ResponeData<String>(ncbFeedbackService.delete(id), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<Boolean> delete(@RequestParam Long id) {
+		boolean deleteFlag = ncbFeedbackService.delete(id);
+		if (deleteFlag == true) {
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		}
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, false);
 	}
 }

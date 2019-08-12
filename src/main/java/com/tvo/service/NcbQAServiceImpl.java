@@ -49,13 +49,9 @@ public class NcbQAServiceImpl implements NcbQAService {
 	@Override
 	public NcbQADto findById(Long id) {
 		NcbQA ncbQA = new NcbQA();
-		try {
-			Optional<NcbQA> opt = ncbQADao.findById(id);
-			if (opt.isPresent()) {
-				ncbQA = opt.get();
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		Optional<NcbQA> opt = ncbQADao.findById(id);
+		if (opt.isPresent()) {
+			ncbQA = opt.get();
 		}
 		return ModelMapperUtils.map(ncbQA, NcbQADto.class);
 	}
@@ -140,7 +136,7 @@ public class NcbQAServiceImpl implements NcbQAService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(Long id) {
+	public Boolean delete(Long id) {
 		NcbQA ncbQA = new NcbQA();
 		if (id != null) {
 			Optional<NcbQA> opt = ncbQADao.findById(id);
@@ -148,10 +144,10 @@ public class NcbQAServiceImpl implements NcbQAService {
 				ncbQA = opt.get();
 				ncbQA.setStatus("D");
 				ncbQADao.save(ncbQA);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

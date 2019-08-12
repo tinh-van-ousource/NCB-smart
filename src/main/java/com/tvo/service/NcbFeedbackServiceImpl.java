@@ -49,13 +49,9 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	@Override
 	public NcbFeedbackDto findById(Long id) {
 		NcbFeedback ncbFeedback = new NcbFeedback();
-		try {
-			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
-			if (opt.isPresent()) {
-				ncbFeedback = opt.get();
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
+		if (opt.isPresent()) {
+			ncbFeedback = opt.get();
 		}
 		return ModelMapperUtils.map(ncbFeedback, NcbFeedbackDto.class);
 	}
@@ -147,7 +143,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(Long id) {
+	public Boolean delete(Long id) {
 		NcbFeedback ncbFeedback = new NcbFeedback();
 		if (id != null) {
 			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
@@ -155,10 +151,10 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 				ncbFeedback = opt.get();
 				ncbFeedback.setStatus("D");
 				ncbFeedbackDao.save(ncbFeedback);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

@@ -48,13 +48,9 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	@Override
 	public NcbGuidelineDto findById(Long id) {
 		NcbGuideline ncbGuideline = new NcbGuideline();
-		try {
-			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(id);
-			if (opt.isPresent()) {
-				ncbGuideline = opt.get();
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		Optional<NcbGuideline> opt = ncbGuidelineDao.findById(id);
+		if (opt.isPresent()) {
+			ncbGuideline = opt.get();
 		}
 		return ModelMapperUtils.map(ncbGuideline, NcbGuidelineDto.class);
 	}
@@ -138,7 +134,7 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(Long id) {
+	public Boolean delete(Long id) {
 		NcbGuideline ncbGuideline = new NcbGuideline();
 		if (id != null) {
 			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(id);
@@ -146,10 +142,10 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 				ncbGuideline = opt.get();
 				ncbGuideline.setStatus("D");
 				ncbGuidelineDao.save(ncbGuideline);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

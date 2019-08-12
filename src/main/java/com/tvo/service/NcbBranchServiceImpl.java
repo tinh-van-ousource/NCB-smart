@@ -138,19 +138,19 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String departCode) {
+	public Boolean delete(String departCode) {
 		if (!departCode.isEmpty()) {
 			try {
 				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
 				ncbBranch.setStatus("D");
 				ncbBranchDao.save(ncbBranch);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			} catch (Exception e) {
 				e.getStackTrace();
-				return AppConstant.SYSTEM_ERORR_CODE;
+				return false;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

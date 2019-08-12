@@ -21,5 +21,5 @@ public interface NcbQAService {
 	
 	public NcbQADto update(UpdateNcbQARequest request);
 	
-	public String delete(Long id);
+	public Boolean delete(Long id);
 }

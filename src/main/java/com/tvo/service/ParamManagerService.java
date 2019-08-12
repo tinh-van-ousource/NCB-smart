@@ -27,5 +27,5 @@ public interface ParamManagerService {
 
 	public ParamManager create(CreateParamManagerRequest request);
 
-	public String delete(String paramNo);
+	public Boolean delete(String paramNo);
 }

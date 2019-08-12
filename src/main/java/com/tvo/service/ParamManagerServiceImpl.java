@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dao.ParamManagerDao;
@@ -129,14 +128,14 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String paramNo) {
+	public Boolean delete(String paramNo) {
 		if (!paramNo.isEmpty()) {
 			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
 			paramManager.setStatus("D");
 			paramManagerDao.save(paramManager);
-			return AppConstant.SUCCSESSFUL_CODE;
+			return true;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }
