@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dao.MbProvisionDao;
@@ -109,7 +110,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Transactional(readOnly = false)
 	public MbProvisionDto create(CreateMbProvisionRequest request) {
 		MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
-		save.setStatus("A");
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, MbProvisionDto.class);
 	}
 
@@ -121,7 +122,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 			Optional<MbProvision> opt = mbProvisionDao.findById(id);
 			if (opt.isPresent()) {
 				mbProvision = opt.get();
-				mbProvision.setStatus("D");
+				mbProvision.setStatus(AppConstant.STATUS_DEACTIVED);
 				mbProvisionDao.save(mbProvision);
 				return true;
 			}

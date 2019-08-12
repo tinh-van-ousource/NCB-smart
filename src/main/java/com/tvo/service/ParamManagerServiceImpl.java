@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dao.ParamManagerDao;
@@ -46,7 +47,11 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	public ParamManager findByParamNo(String paramNo) {
-		return paramManagerDao.findByParamNo(paramNo);
+		ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
+		if (paramManager == null) {
+			return new ParamManager();
+		}
+		return paramManager;
 	}
 
 	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
@@ -113,6 +118,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 			return null;
 		}
 		ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, ParamManager.class);
 	}
 
@@ -121,7 +127,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	public Boolean delete(String paramNo) {
 		if (!paramNo.isEmpty()) {
 			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
-			paramManager.setStatus("D");
+			paramManager.setStatus(AppConstant.STATUS_DEACTIVED);
 			paramManagerDao.save(paramManager);
 			return true;
 		}

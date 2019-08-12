@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
@@ -51,7 +52,11 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	public NcbBranch findByDepartCode(String departCode) {
-		return ncbBranchDao.findByDepartCode(departCode);
+		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
+		if (ncbBranch == null) {
+			return new NcbBranch();
+		}
+		return ncbBranch;
 	}
 
 	@SuppressWarnings("unused")
@@ -126,7 +131,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 			return null;
 		}
 		NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-		save.setStatus("A");
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, NcbBranch.class);
 	}
 
@@ -136,7 +141,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 		if (!departCode.isEmpty()) {
 			try {
 				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-				ncbBranch.setStatus("D");
+				ncbBranch.setStatus(AppConstant.STATUS_DEACTIVED);
 				ncbBranchDao.save(ncbBranch);
 				return true;
 			} catch (Exception e) {

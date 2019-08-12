@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbFeedbackModel;
 import com.tvo.dao.NcbFeedbackDao;
@@ -110,7 +111,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	public NcbFeedbackDto create(CreateNcbFeedbackRequest request) {
 		NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
 		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus("A");
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, NcbFeedbackDto.class);
 	}
 
@@ -137,7 +138,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
 			if (opt.isPresent()) {
 				ncbFeedback = opt.get();
-				ncbFeedback.setStatus("D");
+				ncbFeedback.setStatus(AppConstant.STATUS_DEACTIVED);
 				ncbFeedbackDao.save(ncbFeedback);
 				return true;
 			}

@@ -105,7 +105,7 @@ public class NcbQAServiceImpl implements NcbQAService {
 	public NcbQADto create(CreateNcbQARequest request) {
 		NcbQA save = ncbQADao.save(ModelMapperUtils.map(request, NcbQA.class));
 		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus("A");
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, NcbQADto.class);
 	}
 
@@ -132,7 +132,7 @@ public class NcbQAServiceImpl implements NcbQAService {
 			Optional<NcbQA> opt = ncbQADao.findById(id);
 			if (opt.isPresent()) {
 				ncbQA = opt.get();
-				ncbQA.setStatus("D");
+				ncbQA.setStatus(AppConstant.STATUS_DEACTIVED);
 				ncbQADao.save(ncbQA);
 				return true;
 			}

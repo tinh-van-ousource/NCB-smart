@@ -47,10 +47,6 @@ public class ParamManagerController {
 					null);
 		}
 		ParamManager paramManager = paramManagerService.findByParamNo(paramNo);
-		if (paramManager == null) {
-			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					new ParamManagerDto());
-		}
 		ParamManagerDto result = ModelMapperUtils.map(paramManager, ParamManagerDto.class);
 		return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);

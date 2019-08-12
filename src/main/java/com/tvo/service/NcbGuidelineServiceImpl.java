@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbGuidelineModel;
 import com.tvo.dao.NcbGuidelineDao;
@@ -117,7 +118,7 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 		try {
 			NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
 			save.setCreatedDate(LocalDateTime.now());
-			save.setStatus("A");
+			save.setStatus(AppConstant.STATUS_ACTIVED);
 			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -133,7 +134,7 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(id);
 			if (opt.isPresent()) {
 				ncbGuideline = opt.get();
-				ncbGuideline.setStatus("D");
+				ncbGuideline.setStatus(AppConstant.STATUS_DEACTIVED);
 				ncbGuidelineDao.save(ncbGuideline);
 				return true;
 			}

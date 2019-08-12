@@ -52,10 +52,6 @@ public class NcbBranchController {
 			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
 		NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
-		if (ncbBranch == null) {
-			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					new NcbBranchDto());
-		}
 		NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
