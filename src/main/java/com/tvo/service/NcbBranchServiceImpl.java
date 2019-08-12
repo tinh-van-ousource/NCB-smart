@@ -24,7 +24,6 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
 import com.tvo.dto.NcbBranchDto;
-import com.tvo.model.MbProvision;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
 
@@ -128,6 +127,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 			return null;
 		}
 		NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
+		save.setStatus("A");
 		return ModelMapperUtils.map(save, NcbBranch.class);
 	}
 

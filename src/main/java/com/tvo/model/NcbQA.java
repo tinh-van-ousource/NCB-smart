@@ -1,6 +1,7 @@
 package com.tvo.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -23,14 +25,15 @@ import lombok.Setter;
 @Table(name = "NCB_QA")
 @Getter
 @Setter
-public class NcbQA extends AbstractEntity implements Serializable {
+@NoArgsConstructor
+public class NcbQA  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-    @SequenceGenerator(sequenceName = "NCB_QA_SEQ", allocationSize = 1, name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_NCBQA")
+	@SequenceGenerator(sequenceName = "NCB_QA_SEQ", allocationSize = 1, name = "ID_NCBQA")
 	private Long id;
 
 	@Column(name = "PRODUCT_CODE")
@@ -44,5 +47,11 @@ public class NcbQA extends AbstractEntity implements Serializable {
 
 	@Column(name = "ANSWER")
 	private String answer;
+
+	@Column(name = "CREATED_DATE")
+	private LocalDateTime createdDate;
+
+	@Column(name = "STATUS")
+	private String status;
 
 }

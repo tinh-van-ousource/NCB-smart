@@ -1,13 +1,12 @@
-package com.tvo.dto;
+package com.tvo.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NcbFeedbackDto {
-
-	private String id;
+public class UpdateNcbFeedbackRequest {
+	private Long id;
 
 	private String productCode;
 
@@ -20,8 +19,6 @@ public class NcbFeedbackDto {
 	private String email;
 
 	private String status;
-
-	private String createdDate;
 
 	private String name;
 

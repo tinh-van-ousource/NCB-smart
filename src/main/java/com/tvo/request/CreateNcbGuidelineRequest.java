@@ -11,6 +11,4 @@ public class CreateNcbGuidelineRequest {
 
 	private String content;
 
-	private String status;
-
 }

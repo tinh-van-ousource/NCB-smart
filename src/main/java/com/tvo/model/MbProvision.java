@@ -11,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Table(name = "MB_PROVISION")
 @Setter
 @Getter
+@NoArgsConstructor
 public class MbProvision implements Serializable {
 
 	private static final long serialVersionUID = 1L;

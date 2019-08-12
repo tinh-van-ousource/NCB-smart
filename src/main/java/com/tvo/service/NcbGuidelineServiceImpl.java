@@ -32,7 +32,7 @@ import com.tvo.request.UpdateNcbGuidelineRequest;
 @Service
 public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	@Autowired
-	NcbGuidelineDao ncbGuidelineDao;
+	private NcbGuidelineDao ncbGuidelineDao;
 
 	private final EntityManager entityManager;
 
@@ -78,6 +78,7 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page<NcbGuidelineDto> searchNcbGuideline(SearchNcbGuidelineModel searchModel, Pageable pageable) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -108,9 +109,9 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 //			request = ModelMapperUtils.map(opt.get(), UpdateNcbGuidelineRequest.class);
 			NcbGuideline ncbGuideline = ModelMapperUtils.map(request, NcbGuideline.class);
 			ncbGuideline.setCreatedDate(opt.get().getCreatedDate());
-			
+
 			NcbGuideline save = ncbGuidelineDao.save(ncbGuideline);
-			
+
 			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
 		}
 		return null;
@@ -121,6 +122,7 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	public NcbGuidelineDto create(CreateNcbGuidelineRequest request) {
 		NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
 		save.setCreatedDate(LocalDateTime.now());
+		save.setStatus("A");
 		return ModelMapperUtils.map(save, NcbGuidelineDto.class);
 	}
 

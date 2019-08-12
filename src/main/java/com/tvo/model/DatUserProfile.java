@@ -12,12 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "DAT_USERPROFILE")
 @Getter
 @Setter
+@NoArgsConstructor
 public class DatUserProfile implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;

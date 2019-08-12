@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -24,6 +25,7 @@ import lombok.Setter;
 @Table(name = "NCB_GUIDELINE")
 @Getter
 @Setter
+@NoArgsConstructor
 public class NcbGuideline implements Serializable {
 
 	private static final long serialVersionUID = 1L;

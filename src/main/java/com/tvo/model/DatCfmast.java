@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "DAT_CFMAST")
 @Getter
 @Setter
+@NoArgsConstructor
 public class DatCfmast implements Serializable {
 
 	private static final long serialVersionUID = 1L;

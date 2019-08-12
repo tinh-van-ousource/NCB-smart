@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
@@ -77,6 +76,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page<MbProvisionDto> searchMbProvision(SearchMbProvisionModel searchModel, Pageable pageable) {
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
@@ -114,6 +114,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Transactional(readOnly = false)
 	public MbProvisionDto create(CreateMbProvisionRequest request) {
 		MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
+		save.setStatus("A");
 		return ModelMapperUtils.map(save, MbProvisionDto.class);
 	}
 

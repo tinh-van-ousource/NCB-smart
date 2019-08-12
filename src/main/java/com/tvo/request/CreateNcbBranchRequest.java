@@ -34,6 +34,4 @@ public class CreateNcbBranchRequest {
 
 	private String dao;
 
-	private String status;
-
 }

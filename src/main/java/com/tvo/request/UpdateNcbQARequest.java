@@ -1,13 +1,13 @@
-package com.tvo.dto;
+package com.tvo.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NcbQADto {
+public class UpdateNcbQARequest {
 
-	private String id;
+	private Long id;
 
 	private String productCode;
 
@@ -19,5 +19,4 @@ public class NcbQADto {
 	
 	private String status;
 
-	private String createdDate;
 }

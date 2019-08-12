@@ -11,5 +11,4 @@ public class CreateMbProvisionRequest {
 
 	private String provisionLink;
 
-	private String status;
 }
