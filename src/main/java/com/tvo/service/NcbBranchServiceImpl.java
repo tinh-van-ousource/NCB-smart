@@ -111,10 +111,15 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbBranch update(CreateNcbBranchRequest request) {
-		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
-		if (!ObjectUtils.isEmpty(ncbBranch)) {
-			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-			return ModelMapperUtils.map(save, NcbBranch.class);
+		try {
+			NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
+			if (!ObjectUtils.isEmpty(ncbBranch)) {
+				NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
+				return ModelMapperUtils.map(save, NcbBranch.class);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
 		}
 		return null;
 	}
@@ -142,6 +147,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 				return AppConstant.SUCCSESSFUL_CODE;
 			} catch (Exception e) {
 				e.getStackTrace();
+				return AppConstant.SYSTEM_ERORR_CODE;
 			}
 		}
 		return AppConstant.SYSTEM_ERORR_CODE;

@@ -104,26 +104,36 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbGuidelineDto update(UpdateNcbGuidelineRequest request) {
-		Optional<NcbGuideline> opt = ncbGuidelineDao.findById(request.getId());
-		if (opt.isPresent()) {
-//			request = ModelMapperUtils.map(opt.get(), UpdateNcbGuidelineRequest.class);
-			NcbGuideline ncbGuideline = ModelMapperUtils.map(request, NcbGuideline.class);
-			ncbGuideline.setCreatedDate(opt.get().getCreatedDate());
+		try {
+			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(request.getId());
+			if (opt.isPresent()) {
+				NcbGuideline ncbGuideline = ModelMapperUtils.map(request, NcbGuideline.class);
+				ncbGuideline.setCreatedDate(opt.get().getCreatedDate());
 
-			NcbGuideline save = ncbGuidelineDao.save(ncbGuideline);
+				NcbGuideline save = ncbGuidelineDao.save(ncbGuideline);
 
-			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
+				return ModelMapperUtils.map(save, NcbGuidelineDto.class);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
 		}
+
 		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public NcbGuidelineDto create(CreateNcbGuidelineRequest request) {
-		NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
-		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus("A");
-		return ModelMapperUtils.map(save, NcbGuidelineDto.class);
+		try {
+			NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
+			save.setCreatedDate(LocalDateTime.now());
+			save.setStatus("A");
+			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
 	}
 
 	@Override

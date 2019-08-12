@@ -55,24 +55,22 @@ public class NcbBranchController {
 
 	@PostMapping(value = "create")
 	public ResponeData<NcbBranch> create(@RequestBody CreateNcbBranchRequest request) {
-		try {
-			NcbBranch ncbBranch = ncbBranchService.create(request);
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbBranch);
-		} catch (Exception e) {
+		NcbBranch ncbBranch = ncbBranchService.create(request);
+		if (ncbBranch == null) {
 			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
+		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbBranch);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<NcbBranch> update(@RequestBody CreateNcbBranchRequest request) {
-		try {
-			NcbBranch ncbBranch = ncbBranchService.update(request);
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbBranch);
-		} catch (Exception e) {
+		NcbBranch ncbBranch = ncbBranchService.update(request);
+		if (ncbBranch == null) {
 			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
+		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbBranch);
 	}
 
 	@DeleteMapping(value = "delete")

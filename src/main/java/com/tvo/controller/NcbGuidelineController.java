@@ -48,34 +48,24 @@ public class NcbGuidelineController {
 
 	@PostMapping(value = "create")
 	public ResponeData<NcbGuidelineDto> create(@RequestBody CreateNcbGuidelineRequest request) {
-		try {
-			NcbGuidelineDto ncbGuideline = ncbGuidelineService.create(request);
-			if (ncbGuideline == null) {
-				return new ResponeData<NcbGuidelineDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						ncbGuideline);
-			}
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbGuideline);
-		} catch (Exception e) {
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+		NcbGuidelineDto ncbGuideline = ncbGuidelineService.create(request);
+		if (ncbGuideline == null) {
+			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 					null);
 		}
+		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbGuideline);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<NcbGuidelineDto> update(@RequestBody UpdateNcbGuidelineRequest request) {
-		try {
-			NcbGuidelineDto ncbGuideline = ncbGuidelineService.update(request);
-			if (ncbGuideline == null) {
-				return new ResponeData<NcbGuidelineDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						ncbGuideline);
-			}
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbGuideline);
-		} catch (Exception e) {
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+		NcbGuidelineDto ncbGuideline = ncbGuidelineService.update(request);
+		if (ncbGuideline == null) {
+			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 					null);
 		}
+		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbGuideline);
 	}
 
 	@DeleteMapping(value = "delete")

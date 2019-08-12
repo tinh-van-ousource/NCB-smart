@@ -48,30 +48,20 @@ public class NcbQAController {
 
 	@PostMapping(value = "create")
 	public ResponeData<NcbQADto> create(@RequestBody CreateNcbQARequest request) {
-		try {
-			NcbQADto ncbQADto = ncbQAService.create(request);
-			if (ncbQADto == null) {
-				return new ResponeData<NcbQADto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
-			}
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbQADto);
-		} catch (Exception e) {
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+		NcbQADto ncbQADto = ncbQAService.create(request);
+		if (ncbQADto == null) {
+			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 		}
+		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<NcbQADto> update(@RequestBody UpdateNcbQARequest request) {
-		try {
-			NcbQADto ncbQADto = ncbQAService.update(request);
-			if (ncbQADto == null) {
-				return new ResponeData<NcbQADto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
-			}
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbQADto);
-		} catch (Exception e) {
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+		NcbQADto ncbQADto = ncbQAService.update(request);
+		if (ncbQADto == null) {
+			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 		}
+		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
 
 	@DeleteMapping(value = "delete")

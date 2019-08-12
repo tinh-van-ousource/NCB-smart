@@ -102,11 +102,16 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Override
 	@Transactional(readOnly = false)
 	public MbProvisionDto update(UpdateMbProvisionRequest request) {
-		Optional<MbProvision> opt = mbProvisionDao.findById(request.getId());
-		if (opt.isPresent()) {
-			MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
-			return ModelMapperUtils.map(save, MbProvisionDto.class);
+		try {
+			Optional<MbProvision> opt = mbProvisionDao.findById(request.getId());
+			if (opt.isPresent()) {
+				MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
+				return ModelMapperUtils.map(save, MbProvisionDto.class);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		return null;
 	}
 

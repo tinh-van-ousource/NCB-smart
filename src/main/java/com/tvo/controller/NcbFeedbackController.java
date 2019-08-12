@@ -48,34 +48,22 @@ public class NcbFeedbackController {
 
 	@PostMapping(value = "create")
 	public ResponeData<NcbFeedbackDto> create(@RequestBody CreateNcbFeedbackRequest request) {
-		try {
-			NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.create(request);
-			if (ncbFeedbackDto == null) {
-				return new ResponeData<NcbFeedbackDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						ncbFeedbackDto);
-			}
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbFeedbackDto);
-		} catch (Exception e) {
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
-					null);
+		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.create(request);
+		if (ncbFeedbackDto == null) {
+			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 		}
+		return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbFeedbackDto);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<NcbFeedbackDto> update(@RequestBody UpdateNcbFeedbackRequest request) {
-		try {
-			NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.update(request);
-			if (ncbFeedbackDto == null) {
-				return new ResponeData<NcbFeedbackDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						ncbFeedbackDto);
-			}
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbFeedbackDto);
-		} catch (Exception e) {
-			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
-					null);
+		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.update(request);
+		if (ncbFeedbackDto == null) {
+			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 		}
+		return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbFeedbackDto);
 	}
 
 	@DeleteMapping(value = "delete")

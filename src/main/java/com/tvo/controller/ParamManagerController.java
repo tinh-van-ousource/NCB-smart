@@ -49,26 +49,26 @@ public class ParamManagerController {
 
 	@PostMapping(value = "create")
 	public ResponeData<ParamManager> create(@RequestBody CreateParamManagerRequest request) {
-		try {
-			ParamManager paramManager = paramManagerService.create(request);
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					paramManager);
-		} catch (Exception e) {
+		ParamManager paramManager = paramManagerService.create(request);
+		if (paramManager == null) {
 			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
+		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				paramManager);
+
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<ParamManager> update(@RequestBody CreateParamManagerRequest request) {
-		try {
-			ParamManager paramManager = paramManagerService.update(request);
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					paramManager);
-		} catch (Exception e) {
+		ParamManager paramManager = paramManagerService.update(request);
+		if (paramManager == null) {
 			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
+		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				paramManager);
+
 	}
 
 	@DeleteMapping(value = "delete")

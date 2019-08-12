@@ -53,34 +53,24 @@ public class MbProvisionController {
 
 	@PostMapping(value = "create")
 	public ResponeData<MbProvisionDto> create(@RequestBody CreateMbProvisionRequest request) {
-		try {
-			MbProvisionDto mbProvision = mbProvisionService.create(request);
-			if (mbProvision == null) {
-				return new ResponeData<MbProvisionDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						mbProvision);
-			}
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					mbProvision);
-		} catch (Exception e) {
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+		MbProvisionDto mbProvision = mbProvisionService.create(request);
+		if (mbProvision == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 					null);
 		}
+		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				mbProvision);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<MbProvisionDto> update(@RequestBody UpdateMbProvisionRequest request) {
-		try {
-			MbProvisionDto mbProvision = mbProvisionService.update(request);
-			if (mbProvision == null) {
-				return new ResponeData<MbProvisionDto>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						mbProvision);
-			}
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					mbProvision);
-		} catch (Exception e) {
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+		MbProvisionDto mbProvision = mbProvisionService.update(request);
+		if (mbProvision == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 					null);
 		}
+		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				mbProvision);
 	}
 
 	@DeleteMapping(value = "delete")

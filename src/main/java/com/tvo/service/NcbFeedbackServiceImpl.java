@@ -113,24 +113,35 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbFeedbackDto create(CreateNcbFeedbackRequest request) {
-		NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
-		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus("A");
-		return ModelMapperUtils.map(save, NcbFeedbackDto.class);
+		try {
+			NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
+			save.setCreatedDate(LocalDateTime.now());
+			save.setStatus("A");
+			return ModelMapperUtils.map(save, NcbFeedbackDto.class);
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public NcbFeedbackDto update(UpdateNcbFeedbackRequest request) {
-		Optional<NcbFeedback> opt = ncbFeedbackDao.findById(request.getId());
-		if (opt.isPresent()) {
-			NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
-			ncbFeedback.setCreatedDate(opt.get().getCreatedDate());
+		try {
+			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(request.getId());
+			if (opt.isPresent()) {
+				NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
+				ncbFeedback.setCreatedDate(opt.get().getCreatedDate());
 
-			NcbFeedback save = ncbFeedbackDao.save(ncbFeedback);
+				NcbFeedback save = ncbFeedbackDao.save(ncbFeedback);
 
-			return ModelMapperUtils.map(save, NcbFeedbackDto.class);
+				return ModelMapperUtils.map(save, NcbFeedbackDto.class);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
 		}
+
 		return null;
 	}
 
