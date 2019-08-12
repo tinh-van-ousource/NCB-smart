@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ServiceRegisterAllResDto {
+public class ServiceRegisterGetDetailResDto {
     private Long id;
 
     private String customerName;
@@ -22,6 +24,6 @@ public class ServiceRegisterAllResDto {
 
     private String status;
 
-    private String requestDate;
+    private List<ServiceRegisterLogResDto> serviceRegisterLogResDtoList;
 
 }

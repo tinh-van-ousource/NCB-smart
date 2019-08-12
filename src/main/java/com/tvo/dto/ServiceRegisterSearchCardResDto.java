@@ -9,7 +9,7 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ServiceRegisterCardResDto {
+public class ServiceRegisterSearchCardResDto {
     private Long id;
 
     private String compCode;

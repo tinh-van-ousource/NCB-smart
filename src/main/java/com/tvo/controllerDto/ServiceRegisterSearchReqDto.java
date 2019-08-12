@@ -7,23 +7,23 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public class ServiceRegisterReqDto {
+public class ServiceRegisterSearchReqDto {
 
-    private String compCode;
+    private String compCode; // chi nhanh - phong giao dich
 
-    private String idCard;
+    private String idCard; // cmnd - ho chieu
 
-    private Integer type;
+    private Integer type; // phan he
 
     @ServiceRegisterServiceConstraint
-    private Integer service;
+    private Integer service; // dich vu
 
     @ServiceRegisterStatusConstraint
-    private Integer status;
+    private Integer status; // trang thai
 
-    private String fromDate;
+    private String fromDate; // tu ngay
 
-    private String toDate;
+    private String toDate; // den ngay
 
     @Positive
     @Min(1)
@@ -31,6 +31,7 @@ public class ServiceRegisterReqDto {
     private Integer page;
 
     @Positive
+    @Min(1)
     @NotNull
     private Integer size;
 

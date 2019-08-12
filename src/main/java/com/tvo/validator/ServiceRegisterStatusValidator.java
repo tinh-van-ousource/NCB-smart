@@ -16,6 +16,10 @@ public class ServiceRegisterStatusValidator implements
     public boolean isValid(Integer status, ConstraintValidatorContext cxt) {
         ServiceRegisterStatus[] allTypes = ServiceRegisterStatus.values();
 
+        if (status == null) {
+            return true;
+        }
+
         for (ServiceRegisterStatus type : allTypes) {
             if (type.getType().equals(status)) {
                 return true;
