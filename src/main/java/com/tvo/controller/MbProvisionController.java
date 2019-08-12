@@ -46,16 +46,21 @@ public class MbProvisionController {
 
 	@GetMapping(value = "detail")
 	public ResponeData<MbProvisionDto> detail(@RequestParam Long id) {
-		MbProvisionDto result = mbProvisionService.findById(id);
+		if (id == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
+		}
+		MbProvisionDto mbProvisionDto = mbProvisionService.findById(id);
 		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				result);
+				mbProvisionDto);
+
 	}
 
 	@PostMapping(value = "create")
 	public ResponeData<MbProvisionDto> create(@RequestBody CreateMbProvisionRequest request) {
 		MbProvisionDto mbProvision = mbProvisionService.create(request);
 		if (mbProvision == null) {
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
 		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -66,7 +71,7 @@ public class MbProvisionController {
 	public ResponeData<MbProvisionDto> update(@RequestBody UpdateMbProvisionRequest request) {
 		MbProvisionDto mbProvision = mbProvisionService.update(request);
 		if (mbProvision == null) {
-			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
 		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -79,6 +84,6 @@ public class MbProvisionController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }

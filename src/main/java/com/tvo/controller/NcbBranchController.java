@@ -1,5 +1,6 @@
 package com.tvo.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,10 +48,18 @@ public class NcbBranchController {
 
 	@GetMapping(value = "detail")
 	public ResponeData<NcbBranchDto> detail(@RequestParam String departCode) {
+		if (StringUtils.isEmpty(departCode.trim())) {
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+		}
 		NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
+		if (ncbBranch == null) {
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+					new NcbBranchDto());
+		}
 		NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
+
 	}
 
 	@PostMapping(value = "create")
@@ -79,6 +88,6 @@ public class NcbBranchController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }

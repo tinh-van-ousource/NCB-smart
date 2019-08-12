@@ -1,5 +1,6 @@
 package com.tvo.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,15 @@ public class ParamManagerController {
 
 	@GetMapping(value = "detail")
 	public ResponeData<ParamManagerDto> detail(@RequestParam String paramNo) {
+		if (StringUtils.isEmpty(paramNo.trim())) {
+			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
+		}
 		ParamManager paramManager = paramManagerService.findByParamNo(paramNo);
+		if (paramManager == null) {
+			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+					new ParamManagerDto());
+		}
 		ParamManagerDto result = ModelMapperUtils.map(paramManager, ParamManagerDto.class);
 		return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
@@ -77,6 +86,6 @@ public class ParamManagerController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }
