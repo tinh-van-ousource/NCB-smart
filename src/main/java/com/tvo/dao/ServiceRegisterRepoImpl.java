@@ -1,7 +1,7 @@
 package com.tvo.dao;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.ServiceRegisterReqDto;
+import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.model.ServiceRegisterEntity;
 
 import javax.persistence.EntityManager;
@@ -17,30 +17,30 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
     }
 
     @Override
-    public List<ServiceRegisterEntity> retrieveListServiceRegister(ServiceRegisterReqDto serviceRegisterReqDto) {
+    public List<ServiceRegisterEntity> retrieveListServiceRegister(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
         StringBuilder queryString = new StringBuilder();
         queryString.append(" SELECT sr ");
         queryString.append(" FROM ServiceRegisterEntity sr ");
         queryString.append(" WHERE ");
         queryString.append(" 1 = 1 ");
 
-        if (serviceRegisterReqDto.getCompCode() != null) {
+        if (serviceRegisterSearchReqDto.getCompCode() != null) {
             queryString.append(" AND sr.compCode = :compCode ");
         }
 
-        if (serviceRegisterReqDto.getIdCard() != null) {
+        if (serviceRegisterSearchReqDto.getIdCard() != null) {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
-        if (serviceRegisterReqDto.getType() != null) {
+        if (serviceRegisterSearchReqDto.getType() != null) {
             queryString.append(" AND sr.type = :type ");
         }
 ;
-        if (serviceRegisterReqDto.getService() != null) {
+        if (serviceRegisterSearchReqDto.getService() != null) {
             queryString.append(" AND sr.service = :service ");
         }
 
-        if (serviceRegisterReqDto.getStatus() != null) {
+        if (serviceRegisterSearchReqDto.getStatus() != null) {
             queryString.append(" AND sr.status = :status ");
         }
 
@@ -48,28 +48,28 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         TypedQuery<ServiceRegisterEntity> query = em.createQuery(queryString.toString(), ServiceRegisterEntity.class);
 
-        if (serviceRegisterReqDto.getCompCode() != null) {
-            query.setParameter("compCode", serviceRegisterReqDto.getCompCode());
+        if (serviceRegisterSearchReqDto.getCompCode() != null) {
+            query.setParameter("compCode", serviceRegisterSearchReqDto.getCompCode());
         }
 
-        if (serviceRegisterReqDto.getIdCard() != null) {
-            query.setParameter("idCard", serviceRegisterReqDto.getIdCard());
+        if (serviceRegisterSearchReqDto.getIdCard() != null) {
+            query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
         }
 
-        if (serviceRegisterReqDto.getType() != null) {
-            query.setParameter("type", serviceRegisterReqDto.getType().toString());
+        if (serviceRegisterSearchReqDto.getType() != null) {
+            query.setParameter("type", serviceRegisterSearchReqDto.getType().toString());
         }
 
-        if (serviceRegisterReqDto.getService() != null) {
-            query.setParameter("service", serviceRegisterReqDto.getService().toString());
+        if (serviceRegisterSearchReqDto.getService() != null) {
+            query.setParameter("service", serviceRegisterSearchReqDto.getService().toString());
         }
 
-        if (serviceRegisterReqDto.getStatus() != null) {
-            query.setParameter("status", serviceRegisterReqDto.getStatus().toString());
+        if (serviceRegisterSearchReqDto.getStatus() != null) {
+            query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
-        query.setFirstResult(AppConstant.getOffset(serviceRegisterReqDto.getPage(), serviceRegisterReqDto.getSize()))
-                .setMaxResults(serviceRegisterReqDto.getSize());
+        query.setFirstResult(AppConstant.getOffset(serviceRegisterSearchReqDto.getPage(), serviceRegisterSearchReqDto.getSize()))
+                .setMaxResults(serviceRegisterSearchReqDto.getSize());
 
         return query.getResultList();
     }

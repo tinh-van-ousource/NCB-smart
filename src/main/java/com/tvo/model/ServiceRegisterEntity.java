@@ -1,6 +1,7 @@
 package com.tvo.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,14 +10,14 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP")
+@NoArgsConstructor
 @Setter
 @Getter
 public class ServiceRegisterEntity implements Serializable {
 
-    private static final long serialVersionUID = -7110042333210180119L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_REGISTER_ID_SQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_REGISTER_ID_SQ_GENERATOR")
+    @SequenceGenerator(sequenceName = "SERVICE_REGISTER_ID_SQ", allocationSize = 1, name = "SERVICE_REGISTER_ID_SQ_GENERATOR")
     @Column(name = "ID")
     private Long id;
 
