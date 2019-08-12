@@ -11,14 +11,14 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "DAT_USERPROFILE")
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 public class DatUserProfile implements Serializable {
 

@@ -14,15 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dto.MbProvisionDto;
-import com.tvo.model.MbProvision;
 import com.tvo.request.CreateMbProvisionRequest;
+import com.tvo.request.UpdateMbProvisionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.MbProvisionService;
 
-import antlr.StringUtils;
 import io.swagger.annotations.Api;
 
 /**
@@ -47,45 +45,45 @@ public class MbProvisionController {
 	}
 
 	@GetMapping(value = "detail")
-	public ResponeData<MbProvisionDto> detail(@RequestParam String id) {
-		MbProvision mbProvision = mbProvisionService.findById(id);
-		MbProvisionDto result = ModelMapperUtils.map(mbProvision, MbProvisionDto.class);
+	public ResponeData<MbProvisionDto> detail(@RequestParam Long id) {
+		if (id == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
+		}
+		MbProvisionDto mbProvisionDto = mbProvisionService.findById(id);
 		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				result);
+				mbProvisionDto);
+
 	}
 
 	@PostMapping(value = "create")
-	public ResponeData<MbProvision> create(@RequestBody CreateMbProvisionRequest request) {
-		try {
-			MbProvision mbProvision = mbProvisionService.create(request);
-			if (mbProvision == null) {
-				return new ResponeData<MbProvision>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						mbProvision);
-			}
-			return new ResponeData<MbProvision>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					mbProvision);
-		} catch (Exception e) {
-			return new ResponeData<MbProvision>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+	public ResponeData<MbProvisionDto> create(@RequestBody CreateMbProvisionRequest request) {
+		MbProvisionDto mbProvision = mbProvisionService.create(request);
+		if (mbProvision == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
 		}
+		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				mbProvision);
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<MbProvision> update(@RequestBody CreateMbProvisionRequest request) {
-		try {
-			MbProvision mbProvision = mbProvisionService.update(request);
-			if (mbProvision == null) {
-				return new ResponeData<MbProvision>(AppConstant.ERROR_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-						mbProvision);
-			}
-			return new ResponeData<MbProvision>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					mbProvision);
-		} catch (Exception e) {
-			return new ResponeData<MbProvision>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+	public ResponeData<MbProvisionDto> update(@RequestBody UpdateMbProvisionRequest request) {
+		MbProvisionDto mbProvision = mbProvisionService.update(request);
+		if (mbProvision == null) {
+			return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
 		}
+		return new ResponeData<MbProvisionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				mbProvision);
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String id) {
-		return new ResponeData<String>(mbProvisionService.delete(id), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<Boolean> delete(@RequestParam Long id) {
+		boolean deleteFlag = mbProvisionService.delete(id);
+		if (deleteFlag == true) {
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		}
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }

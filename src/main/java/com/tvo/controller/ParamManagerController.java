@@ -1,5 +1,6 @@
 package com.tvo.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,10 @@ public class ParamManagerController {
 
 	@GetMapping(value = "detail")
 	public ResponeData<ParamManagerDto> detail(@RequestParam String paramNo) {
+		if (StringUtils.isEmpty(paramNo.trim())) {
+			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
+		}
 		ParamManager paramManager = paramManagerService.findByParamNo(paramNo);
 		ParamManagerDto result = ModelMapperUtils.map(paramManager, ParamManagerDto.class);
 		return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -49,30 +54,34 @@ public class ParamManagerController {
 
 	@PostMapping(value = "create")
 	public ResponeData<ParamManager> create(@RequestBody CreateParamManagerRequest request) {
-		try {
-			ParamManager paramManager = paramManagerService.create(request);
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					paramManager);
-		} catch (Exception e) {
+		ParamManager paramManager = paramManagerService.create(request);
+		if (paramManager == null) {
 			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
+		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				paramManager);
+
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<ParamManager> update(@RequestBody CreateParamManagerRequest request) {
-		try {
-			ParamManager paramManager = paramManagerService.update(request);
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					paramManager);
-		} catch (Exception e) {
+		ParamManager paramManager = paramManagerService.update(request);
+		if (paramManager == null) {
 			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
 					null);
 		}
+		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				paramManager);
+
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String paramNo) {
-		return new ResponeData<String>(paramManagerService.delete(paramNo), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<Boolean> delete(@RequestParam String paramNo) {
+		boolean deleteFlag = paramManagerService.delete(paramNo);
+		if (deleteFlag == true) {
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		}
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }

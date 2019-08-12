@@ -1,15 +1,14 @@
 package com.tvo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dto.MbProvisionDto;
-import com.tvo.model.MbProvision;
 import com.tvo.request.CreateMbProvisionRequest;
+import com.tvo.request.UpdateMbProvisionRequest;
 
 /**
  * @author Thanglt
@@ -20,13 +19,13 @@ import com.tvo.request.CreateMbProvisionRequest;
 public interface MbProvisionService {
 	public List<MbProvisionDto> findAll();
 
-	public MbProvision findById(String id);
+	public MbProvisionDto findById(Long id);
 
 	public Page<MbProvisionDto> searchMbProvision(SearchMbProvisionModel searchModel, Pageable pageable);
 
-	public MbProvision update(CreateMbProvisionRequest request);
+	public MbProvisionDto update(UpdateMbProvisionRequest request);
 
-	public MbProvision create(CreateMbProvisionRequest request);
+	public MbProvisionDto create(CreateMbProvisionRequest request);
 
-	public String delete(String id);
+	public Boolean delete(Long id);
 }

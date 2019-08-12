@@ -1,15 +1,18 @@
 package com.tvo.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -22,13 +25,15 @@ import lombok.Setter;
 @Table(name = "NCB_GUIDELINE")
 @Getter
 @Setter
-public class NcbGuideline extends AbstractEntity implements Serializable {
+@NoArgsConstructor
+public class NcbGuideline implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
+	@SequenceGenerator(sequenceName = "NCB_GUIDELINE_SEQ", allocationSize = 1, name = "ID")
 	private Long id;
 
 	@Column(name = "SERVICE_ID")
@@ -36,5 +41,11 @@ public class NcbGuideline extends AbstractEntity implements Serializable {
 
 	@Column(name = "CONTENT")
 	private String content;
+
+	@Column(name = "CREATED_DATE")
+	private LocalDateTime createdDate;
+
+	@Column(name = "STATUS")
+	private String status;
 
 }

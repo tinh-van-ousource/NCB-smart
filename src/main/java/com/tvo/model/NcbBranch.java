@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Thanglt
@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "NCB_BRANCH")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class NcbBranch implements Serializable {
 
 	private static final long serialVersionUID = 1L;

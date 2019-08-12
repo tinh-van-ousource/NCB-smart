@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import com.tvo.model.ParamManager;
 
+/**
+ * @author Thanglt
+ *
+ * @version 1.0
+ * @date Aug 9, 2019
+ */
 @Repository
 public interface ParamManagerDao extends JpaRepository<ParamManager, String>, JpaSpecificationExecutor<ParamManager> {
 

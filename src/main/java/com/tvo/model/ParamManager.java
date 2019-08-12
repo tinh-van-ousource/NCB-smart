@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Thanglt
@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "PARAM_MANAGER")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class ParamManager implements Serializable {
 

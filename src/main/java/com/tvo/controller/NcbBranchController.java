@@ -1,5 +1,6 @@
 package com.tvo.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,36 +48,42 @@ public class NcbBranchController {
 
 	@GetMapping(value = "detail")
 	public ResponeData<NcbBranchDto> detail(@RequestParam String departCode) {
+		if (StringUtils.isEmpty(departCode.trim())) {
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+		}
 		NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
 		NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
+
 	}
 
 	@PostMapping(value = "create")
 	public ResponeData<NcbBranch> create(@RequestBody CreateNcbBranchRequest request) {
-		try {
-			NcbBranch ncbBranch = ncbBranchService.create(request);
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbBranch);
-		} catch (Exception e) {
+		NcbBranch ncbBranch = ncbBranchService.create(request);
+		if (ncbBranch == null) {
 			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
+		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbBranch);
 	}
 
 	@PutMapping(value = "update")
 	public ResponeData<NcbBranch> update(@RequestBody CreateNcbBranchRequest request) {
-		try {
-			NcbBranch ncbBranch = ncbBranchService.update(request);
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-					ncbBranch);
-		} catch (Exception e) {
+		NcbBranch ncbBranch = ncbBranchService.update(request);
+		if (ncbBranch == null) {
 			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
+		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				ncbBranch);
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String departCode) {
-		return new ResponeData<String>(ncbBranchService.delete(departCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<Boolean> delete(@RequestParam String departCode) {
+		Boolean deleteFlag = ncbBranchService.delete(departCode);
+		if (deleteFlag == true) {
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		}
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
 	}
 }

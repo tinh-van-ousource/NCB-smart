@@ -27,5 +27,5 @@ public interface NcbBranchService {
 
 	public NcbBranch create(CreateNcbBranchRequest request);
 
-	public String delete(String brnCode);
+	public Boolean delete(String brnCode);
 }

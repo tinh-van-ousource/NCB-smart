@@ -47,7 +47,11 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	public ParamManager findByParamNo(String paramNo) {
-		return paramManagerDao.findByParamNo(paramNo);
+		ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
+		if (paramManager == null) {
+			return new ParamManager();
+		}
+		return paramManager;
 	}
 
 	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
@@ -114,19 +118,20 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 			return null;
 		}
 		ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, ParamManager.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String paramNo) {
+	public Boolean delete(String paramNo) {
 		if (!paramNo.isEmpty()) {
 			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
-			paramManager.setStatus("D");
+			paramManager.setStatus(AppConstant.STATUS_DEACTIVED);
 			paramManagerDao.save(paramManager);
-			return AppConstant.SUCCSESSFUL_CODE;
+			return true;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

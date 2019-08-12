@@ -24,7 +24,6 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
 import com.tvo.dto.NcbBranchDto;
-import com.tvo.model.MbProvision;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
 
@@ -53,7 +52,11 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	public NcbBranch findByDepartCode(String departCode) {
-		return ncbBranchDao.findByDepartCode(departCode);
+		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
+		if (ncbBranch == null) {
+			return new NcbBranch();
+		}
+		return ncbBranch;
 	}
 
 	@SuppressWarnings("unused")
@@ -128,23 +131,25 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 			return null;
 		}
 		NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
+		save.setStatus(AppConstant.STATUS_ACTIVED);
 		return ModelMapperUtils.map(save, NcbBranch.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String departCode) {
+	public Boolean delete(String departCode) {
 		if (!departCode.isEmpty()) {
 			try {
 				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-				ncbBranch.setStatus("D");
+				ncbBranch.setStatus(AppConstant.STATUS_DEACTIVED);
 				ncbBranchDao.save(ncbBranch);
-				return AppConstant.SUCCSESSFUL_CODE;
+				return true;
 			} catch (Exception e) {
 				e.getStackTrace();
+				return false;
 			}
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }
