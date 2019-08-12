@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbGuidelineModel;
 import com.tvo.dao.NcbGuidelineDao;
@@ -100,21 +99,15 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbGuidelineDto update(UpdateNcbGuidelineRequest request) {
-		try {
-			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(request.getId());
-			if (opt.isPresent()) {
-				NcbGuideline ncbGuideline = ModelMapperUtils.map(request, NcbGuideline.class);
-				ncbGuideline.setCreatedDate(opt.get().getCreatedDate());
+		Optional<NcbGuideline> opt = ncbGuidelineDao.findById(request.getId());
+		if (opt.isPresent()) {
+			NcbGuideline ncbGuideline = ModelMapperUtils.map(request, NcbGuideline.class);
+			ncbGuideline.setCreatedDate(opt.get().getCreatedDate());
 
-				NcbGuideline save = ncbGuidelineDao.save(ncbGuideline);
+			NcbGuideline save = ncbGuidelineDao.save(ncbGuideline);
 
-				return ModelMapperUtils.map(save, NcbGuidelineDto.class);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
+			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
 		}
-
 		return null;
 	}
 

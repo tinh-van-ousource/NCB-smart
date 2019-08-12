@@ -97,15 +97,10 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public ParamManager update(CreateParamManagerRequest request) {
-		try {
-			ParamManager paramManager = paramManagerDao.findByParamNo(request.getParamNo());
-			if (!ObjectUtils.isEmpty(paramManager)) {
-				ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
-				return ModelMapperUtils.map(save, ParamManager.class);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
+		ParamManager paramManager = paramManagerDao.findByParamNo(request.getParamNo());
+		if (!ObjectUtils.isEmpty(paramManager)) {
+			ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
+			return ModelMapperUtils.map(save, ParamManager.class);
 		}
 		return null;
 	}
@@ -113,17 +108,12 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public ParamManager create(CreateParamManagerRequest request) {
-		try {
-			ParamManager findByParamNo = paramManagerDao.findByParamNo(request.getParamNo());
-			if (!ObjectUtils.isEmpty(findByParamNo)) {
-				return null;
-			}
-			ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
-			return ModelMapperUtils.map(save, ParamManager.class);
-		} catch (Exception e) {
-			e.getStackTrace();
+		ParamManager findByParamNo = paramManagerDao.findByParamNo(request.getParamNo());
+		if (!ObjectUtils.isEmpty(findByParamNo)) {
 			return null;
 		}
+		ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
+		return ModelMapperUtils.map(save, ParamManager.class);
 	}
 
 	@Override

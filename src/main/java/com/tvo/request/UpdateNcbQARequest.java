@@ -1,12 +1,13 @@
 package com.tvo.request;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class UpdateNcbQARequest {
-
+	@NonNull
 	private Long id;
 
 	private String productCode;
@@ -16,7 +17,7 @@ public class UpdateNcbQARequest {
 	private String question;
 
 	private String answer;
-	
+
 	private String status;
 
 }

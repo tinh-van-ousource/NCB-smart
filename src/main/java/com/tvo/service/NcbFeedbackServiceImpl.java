@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbFeedbackModel;
 import com.tvo.dao.NcbFeedbackDao;
@@ -109,35 +108,24 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbFeedbackDto create(CreateNcbFeedbackRequest request) {
-		try {
-			NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
-			save.setCreatedDate(LocalDateTime.now());
-			save.setStatus("A");
-			return ModelMapperUtils.map(save, NcbFeedbackDto.class);
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
-		}
+		NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
+		save.setCreatedDate(LocalDateTime.now());
+		save.setStatus("A");
+		return ModelMapperUtils.map(save, NcbFeedbackDto.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public NcbFeedbackDto update(UpdateNcbFeedbackRequest request) {
-		try {
-			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(request.getId());
-			if (opt.isPresent()) {
-				NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
-				ncbFeedback.setCreatedDate(opt.get().getCreatedDate());
+		Optional<NcbFeedback> opt = ncbFeedbackDao.findById(request.getId());
+		if (opt.isPresent()) {
+			NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
+			ncbFeedback.setCreatedDate(opt.get().getCreatedDate());
 
-				NcbFeedback save = ncbFeedbackDao.save(ncbFeedback);
+			NcbFeedback save = ncbFeedbackDao.save(ncbFeedback);
 
-				return ModelMapperUtils.map(save, NcbFeedbackDto.class);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
+			return ModelMapperUtils.map(save, NcbFeedbackDto.class);
 		}
-
 		return null;
 	}
 

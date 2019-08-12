@@ -103,33 +103,23 @@ public class NcbQAServiceImpl implements NcbQAService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbQADto create(CreateNcbQARequest request) {
-		try {
-			NcbQA save = ncbQADao.save(ModelMapperUtils.map(request, NcbQA.class));
-			save.setCreatedDate(LocalDateTime.now());
-			save.setStatus("A");
-			return ModelMapperUtils.map(save, NcbQADto.class);
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
-		}
+		NcbQA save = ncbQADao.save(ModelMapperUtils.map(request, NcbQA.class));
+		save.setCreatedDate(LocalDateTime.now());
+		save.setStatus("A");
+		return ModelMapperUtils.map(save, NcbQADto.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public NcbQADto update(UpdateNcbQARequest request) {
-		try {
-			Optional<NcbQA> opt = ncbQADao.findById(request.getId());
-			if (opt.isPresent()) {
-				NcbQA ncbQA = ModelMapperUtils.map(request, NcbQA.class);
-				ncbQA.setCreatedDate(opt.get().getCreatedDate());
+		Optional<NcbQA> opt = ncbQADao.findById(request.getId());
+		if (opt.isPresent()) {
+			NcbQA ncbQA = ModelMapperUtils.map(request, NcbQA.class);
+			ncbQA.setCreatedDate(opt.get().getCreatedDate());
 
-				NcbQA save = ncbQADao.save(ncbQA);
+			NcbQA save = ncbQADao.save(ncbQA);
 
-				return ModelMapperUtils.map(save, NcbQADto.class);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
+			return ModelMapperUtils.map(save, NcbQADto.class);
 		}
 		return null;
 	}

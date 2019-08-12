@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
@@ -111,15 +110,10 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbBranch update(CreateNcbBranchRequest request) {
-		try {
-			NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
-			if (!ObjectUtils.isEmpty(ncbBranch)) {
-				NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-				return ModelMapperUtils.map(save, NcbBranch.class);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
+		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
+		if (!ObjectUtils.isEmpty(ncbBranch)) {
+			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
+			return ModelMapperUtils.map(save, NcbBranch.class);
 		}
 		return null;
 	}
