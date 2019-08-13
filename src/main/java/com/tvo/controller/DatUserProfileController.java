@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +33,8 @@ public class DatUserProfileController {
 	private DatUserProfileService datUserProfileService;
 
 	@GetMapping(value = "searchUser")
-	public ResponeData<Page<DatUserProfileDto>> searchDatUserProfile(@RequestBody SearchDatUserProfileModel searchModel,
-			@RequestParam(value = "filter") String filter,
+	public ResponeData<Page<DatUserProfileDto>> searchDatUserProfile(
+			@ModelAttribute SearchDatUserProfileModel searchModel, @RequestParam(value = "filter") String filter,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<DatUserProfileDto> dts = datUserProfileService.searchDatUserProfile(searchModel, filter, pageable);
 		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
@@ -42,7 +42,7 @@ public class DatUserProfileController {
 	}
 
 	@GetMapping(value = "searchConsumer")
-	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@RequestBody SearchConsumerModel searchModel,
+	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@ModelAttribute SearchConsumerModel searchModel,
 			@RequestParam(value = "filter") String filter,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<DatUserProfileDto> dts = datUserProfileService.searchConsumer(searchModel, filter, pageable);

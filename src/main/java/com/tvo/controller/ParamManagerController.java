@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class ParamManagerController {
 	private ParamManagerService paramManagerService;
 
 	@GetMapping(value = "search")
-	public ResponeData<Page<ParamManagerDto>> searchDatUserProfile(@RequestBody SearchParamManagerModel searchModel,
+	public ResponeData<Page<ParamManagerDto>> searchDatUserProfile(@ModelAttribute SearchParamManagerModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<ParamManagerDto> dts = paramManagerService.searchParamManager(searchModel, pageable);
 		return new ResponeData<Page<ParamManagerDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
