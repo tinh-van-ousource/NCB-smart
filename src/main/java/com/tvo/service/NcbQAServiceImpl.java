@@ -103,10 +103,10 @@ public class NcbQAServiceImpl implements NcbQAService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbQADto create(CreateNcbQARequest request) {
-		NcbQA save = ncbQADao.save(ModelMapperUtils.map(request, NcbQA.class));
-		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus(AppConstant.STATUS_ACTIVED);
-		return ModelMapperUtils.map(save, NcbQADto.class);
+		NcbQA ncbQA = ModelMapperUtils.map(request, NcbQA.class);
+		ncbQA.setCreatedDate(LocalDateTime.now());
+		ncbQA.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(ncbQADao.save(ncbQA), NcbQADto.class);
 	}
 
 	@Override

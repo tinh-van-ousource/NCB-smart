@@ -59,22 +59,22 @@ public class NcbBranchController {
 	}
 
 	@PostMapping(value = "create")
-	public ResponeData<NcbBranch> create(@RequestBody CreateNcbBranchRequest request) {
-		NcbBranch ncbBranch = ncbBranchService.create(request);
+	public ResponeData<NcbBranchDto> create(@RequestBody CreateNcbBranchRequest request) {
+		NcbBranchDto ncbBranch = ncbBranchService.create(request);
 		if (ncbBranch == null) {
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
-		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBranch);
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<NcbBranch> update(@RequestBody CreateNcbBranchRequest request) {
-		NcbBranch ncbBranch = ncbBranchService.update(request);
+	public ResponeData<NcbBranchDto> update(@RequestBody CreateNcbBranchRequest request) {
+		NcbBranchDto ncbBranch = ncbBranchService.update(request);
 		if (ncbBranch == null) {
-			return new ResponeData<NcbBranch>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
-		return new ResponeData<NcbBranch>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBranch);
 	}
 

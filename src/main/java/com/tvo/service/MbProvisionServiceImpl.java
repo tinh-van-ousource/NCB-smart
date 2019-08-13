@@ -109,9 +109,9 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Override
 	@Transactional(readOnly = false)
 	public MbProvisionDto create(CreateMbProvisionRequest request) {
-		MbProvision save = mbProvisionDao.save(ModelMapperUtils.map(request, MbProvision.class));
-		save.setStatus(AppConstant.STATUS_ACTIVED);
-		return ModelMapperUtils.map(save, MbProvisionDto.class);
+		MbProvision mbProvision = ModelMapperUtils.map(request, MbProvision.class);
+		mbProvision.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(mbProvisionDao.save(mbProvision), MbProvisionDto.class);
 	}
 
 	@Override

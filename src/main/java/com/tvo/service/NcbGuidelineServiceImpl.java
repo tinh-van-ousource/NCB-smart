@@ -115,15 +115,10 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbGuidelineDto create(CreateNcbGuidelineRequest request) {
-		try {
-			NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
-			save.setCreatedDate(LocalDateTime.now());
-			save.setStatus(AppConstant.STATUS_ACTIVED);
-			return ModelMapperUtils.map(save, NcbGuidelineDto.class);
-		} catch (Exception e) {
-			e.getStackTrace();
-			return null;
-		}
+		NcbGuideline save = ncbGuidelineDao.save(ModelMapperUtils.map(request, NcbGuideline.class));
+		save.setCreatedDate(LocalDateTime.now());
+		save.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(save, NcbGuidelineDto.class);
 	}
 
 	@Override
