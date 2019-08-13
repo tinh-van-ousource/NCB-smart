@@ -9,6 +9,7 @@ import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
+import com.tvo.request.UpdateNcbBranchRequest;
 
 /**
  * @author Thanglt
@@ -23,7 +24,7 @@ public interface NcbBranchService {
 
 	public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable);
 
-	public NcbBranchDto update(CreateNcbBranchRequest request);
+	public NcbBranchDto update(UpdateNcbBranchRequest request);
 
 	public NcbBranchDto create(CreateNcbBranchRequest request);
 
