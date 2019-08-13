@@ -117,9 +117,9 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		if (!ObjectUtils.isEmpty(findByParamNo)) {
 			return null;
 		}
-		ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
-		save.setStatus(AppConstant.STATUS_ACTIVED);
-		return ModelMapperUtils.map(save, ParamManager.class);
+		ParamManager paramManager = ModelMapperUtils.map(request, ParamManager.class);
+		paramManager.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(paramManagerDao.save(paramManager), ParamManager.class);
 	}
 
 	@Override

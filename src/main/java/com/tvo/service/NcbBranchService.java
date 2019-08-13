@@ -23,9 +23,9 @@ public interface NcbBranchService {
 
 	public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable);
 
-	public NcbBranch update(CreateNcbBranchRequest request);
+	public NcbBranchDto update(CreateNcbBranchRequest request);
 
-	public NcbBranch create(CreateNcbBranchRequest request);
+	public NcbBranchDto create(CreateNcbBranchRequest request);
 
 	public Boolean delete(String brnCode);
 }

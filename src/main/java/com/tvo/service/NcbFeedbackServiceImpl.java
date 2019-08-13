@@ -109,10 +109,10 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	@Override
 	@Transactional(readOnly = false)
 	public NcbFeedbackDto create(CreateNcbFeedbackRequest request) {
-		NcbFeedback save = ncbFeedbackDao.save(ModelMapperUtils.map(request, NcbFeedback.class));
-		save.setCreatedDate(LocalDateTime.now());
-		save.setStatus(AppConstant.STATUS_ACTIVED);
-		return ModelMapperUtils.map(save, NcbFeedbackDto.class);
+		NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
+		ncbFeedback.setCreatedDate(LocalDateTime.now());
+		ncbFeedback.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(ncbFeedbackDao.save(ncbFeedback), NcbFeedbackDto.class);
 	}
 
 	@Override

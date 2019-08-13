@@ -114,25 +114,25 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public NcbBranch update(CreateNcbBranchRequest request) {
+	public NcbBranchDto update(CreateNcbBranchRequest request) {
 		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
 		if (!ObjectUtils.isEmpty(ncbBranch)) {
 			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-			return ModelMapperUtils.map(save, NcbBranch.class);
+			return ModelMapperUtils.map(save, NcbBranchDto.class);
 		}
 		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public NcbBranch create(CreateNcbBranchRequest request) {
+	public NcbBranchDto create(CreateNcbBranchRequest request) {
 		NcbBranch findByDepartCode = ncbBranchDao.findByDepartCode(request.getDepartCode());
 		if (!ObjectUtils.isEmpty(findByDepartCode)) {
 			return null;
 		}
-		NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-		save.setStatus(AppConstant.STATUS_ACTIVED);
-		return ModelMapperUtils.map(save, NcbBranch.class);
+		NcbBranch ncbBranch = ModelMapperUtils.map(request, NcbBranch.class);
+		ncbBranch.setStatus(AppConstant.STATUS_ACTIVED);
+		return ModelMapperUtils.map(ncbBranchDao.save(ncbBranch), NcbBranchDto.class);
 	}
 
 	@Override

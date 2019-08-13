@@ -19,39 +19,42 @@ import lombok.Setter;
  * @author Thanglt
  *
  * @version 1.0
- * @date Aug 9, 2019
+ * @date Aug 13, 2019
  */
 @Entity
-@Table(name = "NCB_QA")
+@Table(name = "NCB_BANNER")
 @Getter
 @Setter
 @NoArgsConstructor
-public class NcbQA  implements Serializable {
+public class NcbBanner implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-	@SequenceGenerator(sequenceName = "NCB_QA_SEQ", allocationSize = 1, name = "ID")
+	@SequenceGenerator(sequenceName = "NCB_BANNER_SEQ", allocationSize = 1, name = "ID")
+	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "PRODUCT_CODE")
-	private String productCode;
+	@Column(name = "BANNER_CODE")
+	private String bannerCode;
 
-	@Column(name = "PRODUCT_NAME")
-	private String productName;
+	@Column(name = "BANNER_NAME")
+	private String bannerName;
 
-	@Column(name = "QUESTION")
-	private String question;
+	@Column(name = "LINK_IMG")
+	private String linkImg;
 
-	@Column(name = "ANSWER")
-	private String answer;
+	@Column(name = "LINK_URL_VN")
+	private String linkUrlVn;
 
-	@Column(name = "CREATED_DATE")
-	private LocalDateTime createdDate;
+	@Column(name = "LINK_URL_EN")
+	private String linkUrlEn;
 
 	@Column(name = "STATUS")
 	private String status;
+
+	@Column(name = "CREATE_DATE")
+	private LocalDateTime createdDate;
 
 }
