@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
+import com.tvo.request.UpdateNcbBranchRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbBranchService;
 
@@ -39,7 +41,7 @@ public class NcbBranchController {
 	private NcbBranchService ncbBranchService;
 
 	@GetMapping(value = "search")
-	public ResponeData<Page<NcbBranchDto>> searchDatUserProfile(@RequestBody SearchNcbBranchModel searchModel,
+	public ResponeData<Page<NcbBranchDto>> searchDatUserProfile(@ModelAttribute SearchNcbBranchModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NcbBranchDto> dts = ncbBranchService.searchNcbBranch(searchModel, pageable);
 		return new ResponeData<Page<NcbBranchDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -69,7 +71,7 @@ public class NcbBranchController {
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<NcbBranchDto> update(@RequestBody CreateNcbBranchRequest request) {
+	public ResponeData<NcbBranchDto> update(@RequestBody UpdateNcbBranchRequest request) {
 		NcbBranchDto ncbBranch = ncbBranchService.update(request);
 		if (ncbBranch == null) {
 			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);

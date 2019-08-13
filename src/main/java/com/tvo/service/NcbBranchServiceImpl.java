@@ -26,6 +26,7 @@ import com.tvo.dao.NcbBranchDao;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
+import com.tvo.request.UpdateNcbBranchRequest;
 
 import lombok.AllArgsConstructor;
 
@@ -114,7 +115,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public NcbBranchDto update(CreateNcbBranchRequest request) {
+	public NcbBranchDto update(UpdateNcbBranchRequest request) {
 		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
 		if (!ObjectUtils.isEmpty(ncbBranch)) {
 			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
