@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 
 public class ServiceRegisterSearchReqDto {
 
-    private String compCode; // chi nhanh - phong giao dich
+    private String compCode; // ma chi nhanh - phong giao dich
 
     private String idCard; // cmnd - ho chieu
 

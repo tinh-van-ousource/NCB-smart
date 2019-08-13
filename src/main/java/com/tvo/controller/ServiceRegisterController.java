@@ -2,16 +2,14 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
+import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ServiceRegisterGetDetailResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -39,6 +37,18 @@ public class ServiceRegisterController {
         ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto =
                 serviceRegisterService.getServiceRegisterDetailById(id);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
+    }
+
+    @PatchMapping(value = "/{serviceId}/update")
+    public ResponeData<ServiceRegisterGetDetailResDto> updateServiceRegisterDetail(@PathVariable("serviceId") Long id,
+                                                                                   @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
+        ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto =
+                serviceRegisterService.updateServiceRegisterDetail(id, serviceRegisterUpdateReqDto);
+        if (serviceRegisterGetDetailResDto != null) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
+        } else {
+            return new ResponeData<>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, serviceRegisterGetDetailResDto);
+        }
     }
 
 }
