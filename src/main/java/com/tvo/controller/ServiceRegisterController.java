@@ -42,8 +42,8 @@ public class ServiceRegisterController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
     }
 
-    @PatchMapping(value = "/{serviceId}/update")
-    public ResponeData<ServiceRegisterGetDetailResDto> updateServiceRegisterDetail(@PathVariable("serviceId") Long id,
+    @PatchMapping(value = "/{service_id}/update")
+    public ResponeData<ServiceRegisterGetDetailResDto> updateServiceRegisterDetail(@PathVariable("service_id") Long id,
                                                                                    @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
         ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto =
                 serviceRegisterService.updateServiceRegisterDetail(id, serviceRegisterUpdateReqDto);

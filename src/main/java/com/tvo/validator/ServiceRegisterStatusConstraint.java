@@ -13,6 +13,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ServiceRegisterStatusConstraint {
     String message() default "";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
