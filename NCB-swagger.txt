@@ -1,0 +1,327 @@
+swagger: "2.0"
+info:
+  description: "NCB Smart API"
+  version: "1.0.0"
+  title: "NCB Smart API"
+host: "localhost"
+tags:
+- name: "Service Register"
+  description: "Service Register Api"
+schemes:
+- "https"
+- "http"
+paths:
+  /service-register/search:
+    get:
+      tags:
+      - "Service Register"
+      summary: "Search Service Register"
+      description: "Search Service Register"
+      operationId: "searchServiceRegister"
+      produces:
+      - "application/json"
+      parameters:
+        - name: comp_code
+          in: query
+          description: "ma chi nhanh - phong giao dich"
+          required: false
+          type: string
+        - name: id_card
+          in: query
+          description: "cmnd - ho chieu"
+          required: false
+          type: string
+        - name: type
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: service
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: status
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: from_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: to_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+        - name: size
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterSearchCardResDto"
+        400:
+          description: "Bad request"
+
+  /service-register/{id}/detail:
+    get:
+      tags:
+      - "Service Register"
+      summary: "Get Service Register Detail"
+      description: "Get Service Register Detail"
+      operationId: "getServiceRegisterDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: comp_code
+          in: query
+          description: "ma chi nhanh - phong giao dich"
+          required: false
+          type: string
+        - name: id_card
+          in: query
+          description: "cmnd - ho chieu"
+          required: false
+          type: string
+        - name: type
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: service
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: status
+          in: query
+          description: ""
+          required: false
+          type: integer
+        - name: from_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: to_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+        - name: size
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+        400:
+          description: "Bad request"
+
+  /service-register/{service_id}/update:
+    patch:
+      tags:
+      - "Service Register"
+      summary: "Update Service Register Detail"
+      description: "Update Service Register Detail"
+      operationId: "updateServiceRegisterDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: service_id
+          in: path
+          required: true
+          type: string
+        - in: "body"
+          name: "ServiceRegisterUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRegisterUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+        400:
+          description: "Bad request"
+
+definitions:
+  ServiceRegisterSearchCardResDto:
+    type: "object"
+    properties:
+      id:
+        type: integer
+        description: ""
+      comp_code:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      customer_name:
+        type: string
+        description: ""
+      cif:
+        type: string
+        description: ""
+      id_card:
+        type: string
+        description: ""
+      id_card_issue_date:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      service:
+        type: string
+        description: ""
+      card_no:
+        type: string
+        description: ""
+      acct_no:
+        type: string
+        description: ""
+      reissue_reason:
+        type: string
+        description: ""
+      product:
+        type: string
+        description: ""
+      card_class:
+        type: string
+        description: ""
+      fee:
+        type: integer
+        description: ""
+      salary_code:
+        type: string
+        description: ""
+      salary_bank:
+        type: string
+        description: ""
+      credit_limit:
+        type: integer
+        description: ""
+      monthly_income:
+        type: integer
+        description: ""
+      monthly_spend:
+        type: integer
+        description: ""
+      auto_debit:
+        type: string
+        description: ""
+      repay_mode:
+        type: string
+        description: ""
+      auto_debit_bank_acct:
+        type: string
+        description: ""
+      request_date:
+        type: string
+        description: ""
+      completed_date:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      description:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
+      user_register:
+        type: string
+        description: ""
+
+  ServiceRegisterGetDetailResDto:
+    type: "object"
+    properties:
+      id:
+        type: integer
+        description: ""
+      customer_name:
+        type: string
+        description: ""
+      id_card:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      service:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      log:
+        $ref: "#/definitions/ServiceRegisterLogResDto"
+
+  ServiceRegisterLogResDto:
+    type: "object"
+    properties:
+      datetime:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
+      new_value:
+        type: string
+        description: ""
+
+  ServiceRegisterUpdateReqDto:
+    type: "object"
+    properties:
+      comp_code:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      comment:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
