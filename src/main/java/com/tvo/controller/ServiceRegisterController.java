@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author NgocDC
+ */
 @RestController
 @RequestMapping(value = "/service-register", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "ServiceRegisterController")

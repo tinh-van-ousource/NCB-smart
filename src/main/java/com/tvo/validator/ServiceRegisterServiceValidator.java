@@ -5,6 +5,9 @@ import com.tvo.enums.ServiceRegisterServiceType;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * @author NgocDC
+ */
 public class ServiceRegisterServiceValidator implements
         ConstraintValidator<ServiceRegisterServiceConstraint, Integer> {
 

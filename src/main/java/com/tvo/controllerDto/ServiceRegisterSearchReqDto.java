@@ -7,6 +7,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+/**
+ * @author NgocDC
+ */
 public class ServiceRegisterSearchReqDto {
 
     private String compCode; // ma chi nhanh - phong giao dich
