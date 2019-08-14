@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+/**
+ * @author NgocDC
+ */
 @Setter
 @Getter
 public class ServiceRegisterUpdateReqDto {

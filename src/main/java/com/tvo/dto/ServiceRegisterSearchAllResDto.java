@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author NgocDC
+ */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)

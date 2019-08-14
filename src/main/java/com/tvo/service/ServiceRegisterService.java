@@ -6,6 +6,9 @@ import com.tvo.dto.ServiceRegisterGetDetailResDto;
 
 import java.util.List;
 
+/**
+ * @author NgocDC
+ */
 public interface ServiceRegisterService {
     List getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
 

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author NgocDC
+ */
 @Repository
 public interface ServiceRegisterRepo extends JpaRepository<ServiceRegisterEntity, Long>, ServiceRegisterRepoCustom {
 
