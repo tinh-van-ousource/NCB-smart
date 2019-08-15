@@ -32,8 +32,8 @@ public class NcbQA  implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-	@SequenceGenerator(sequenceName = "NCB_QA_SEQ", allocationSize = 1, name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_QA")
+	@SequenceGenerator(sequenceName = "NCB_QA_SEQ", allocationSize = 1, name = "ID_QA")
 	private Long id;
 
 	@Column(name = "PRODUCT_CODE")

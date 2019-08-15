@@ -32,8 +32,8 @@ public class NcbFeedback implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-	@SequenceGenerator(sequenceName = "NCB_FEEDBACK_SEQ", allocationSize = 1, name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_FEEDBACK")
+	@SequenceGenerator(sequenceName = "NCB_FEEDBACK_SEQ", allocationSize = 1, name = "ID_FEEDBACK")
 	private Long id;
 
 	@Column(name = "PRODUCT_CODE")
