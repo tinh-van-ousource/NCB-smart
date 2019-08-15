@@ -31,8 +31,8 @@ public class NcbBanner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-	@SequenceGenerator(sequenceName = "NCB_BANNER_SEQ", allocationSize = 1, name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_BANNER")
+	@SequenceGenerator(sequenceName = "NCB_BANNER_SEQ", allocationSize = 1, name = "ID_BANNER")
 	@Column(name = "ID")
 	private Long id;
 

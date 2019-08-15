@@ -30,8 +30,8 @@ public class MbProvision implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-    @SequenceGenerator(sequenceName = "MB_PROVISION_SEQ", allocationSize = 1, name = "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_PROVISION")
+    @SequenceGenerator(sequenceName = "MB_PROVISION_SEQ", allocationSize = 1, name = "ID_PROVISION")
 	@Column(name = "ID")
 	private Long id;
 

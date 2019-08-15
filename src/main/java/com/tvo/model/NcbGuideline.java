@@ -32,8 +32,8 @@ public class NcbGuideline implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID")
-	@SequenceGenerator(sequenceName = "NCB_GUIDELINE_SEQ", allocationSize = 1, name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GUIDELINE")
+	@SequenceGenerator(sequenceName = "NCB_GUIDELINE_SEQ", allocationSize = 1, name = "ID_GUIDELINE")
 	private Long id;
 
 	@Column(name = "SERVICE_ID")
