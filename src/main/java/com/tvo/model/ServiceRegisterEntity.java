@@ -18,6 +18,8 @@ import java.math.BigInteger;
 @Getter
 public class ServiceRegisterEntity implements Serializable {
 
+    private static final long serialVersionUID = 7003030148868469074L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_REGISTER_ID_SQ_GENERATOR")
     @SequenceGenerator(sequenceName = "SERVICE_REGISTER_ID_SQ", allocationSize = 1, name = "SERVICE_REGISTER_ID_SQ_GENERATOR")
