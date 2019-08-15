@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @Getter
 public class ServiceRegisterLogEntity implements Serializable {
 
+    private static final long serialVersionUID = 6479602175532593444L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_REGISTER_LOG_ID_SQ_GENERATOR")
     @SequenceGenerator(sequenceName = "SERVICE_REGISTER_LOG_ID_SQ", allocationSize = 1, name = "SERVICE_REGISTER_LOG_ID_SQ_GENERATOR")
