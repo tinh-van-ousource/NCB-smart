@@ -3,7 +3,7 @@ package com.tvo.enums;
 /**
  * @author NgocDC
  */
-public enum ServiceRegisterType {
+public enum ServiceRegisterSearchType {
     CARD(1),
     ACCOUNT(2);
 
@@ -13,7 +13,7 @@ public enum ServiceRegisterType {
 
     private Integer type;
 
-    ServiceRegisterType(Integer type) {
+    ServiceRegisterSearchType(Integer type) {
         this.type = type;
     }
 }
