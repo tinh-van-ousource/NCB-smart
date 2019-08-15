@@ -33,17 +33,17 @@ paths:
           type: string
         - name: type
           in: query
-          description: ""
+          description: "1: CARD, 2: ACCOUNT"
           required: false
           type: integer
         - name: service
           in: query
-          description: ""
+          description: "1: CARD, 2: LOAN, 3: ACCOUNT, 4: SMS"
           required: false
           type: integer
         - name: status
           in: query
-          description: ""
+          description: "1: NEW, 2: PROCESSING, 3: CLOSED"
           required: false
           type: integer
         - name: from_date
@@ -90,51 +90,6 @@ paths:
           in: path
           required: true
           type: string
-        - name: comp_code
-          in: query
-          description: "ma chi nhanh - phong giao dich"
-          required: false
-          type: string
-        - name: id_card
-          in: query
-          description: "cmnd - ho chieu"
-          required: false
-          type: string
-        - name: type
-          in: query
-          description: ""
-          required: false
-          type: integer
-        - name: service
-          in: query
-          description: ""
-          required: false
-          type: integer
-        - name: status
-          in: query
-          description: ""
-          required: false
-          type: integer
-        - name: from_date
-          in: query
-          description: "YYYYMMDD"
-          required: false
-          type: string
-        - name: to_date
-          in: query
-          description: "YYYYMMDD"
-          required: false
-          type: string
-        - name: page
-          in: query
-          description: "Min: 1"
-          required: true
-          type: integer
-        - name: size
-          in: query
-          description: "Min: 1"
-          required: true
-          type: integer
       responses:
         200:
           description: "Successful"
