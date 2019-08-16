@@ -28,6 +28,7 @@ import com.tvo.controllerDto.ParCardSearch;
 import com.tvo.dao.ParCardProductDao;
 import com.tvo.dto.ParCardProductDto;
 import com.tvo.model.ParCardProduct;
+import com.tvo.model.ParamManager;
 import com.tvo.request.PardCardProductCreate;
 
 /**
@@ -89,9 +90,17 @@ public class ParCardProductService {
 		return results;
 	}
 
+	public ParCardProduct findPrdcode(String prdcode) {
+		ParCardProduct parCardProduct = parCardProductDao.findByPrdcode(prdcode);
+		if (parCardProduct == null) {
+			return new ParCardProduct();
+		}
+		return parCardProduct;
+	}
+
 	@Transactional(readOnly = false)
 	public ParCardProductDto create(PardCardProductCreate request) {
-		 ParCardProduct findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
+		ParCardProduct findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
 		if (!ObjectUtils.isEmpty(findByPrdcode)) {
 			return null;
 		}
@@ -101,16 +110,16 @@ public class ParCardProductService {
 	}
 
 	public ParCardProductDto edit(PardCardProductCreate request) {
-		ParCardProduct parCardProduct =  parCardProductDao.findByPrdcode(request.getPrdcode());
+		ParCardProduct parCardProduct = parCardProductDao.findByPrdcode(request.getPrdcode());
 		if (!ObjectUtils.isEmpty(parCardProduct)) {
 			ParCardProduct save = parCardProductDao.saveAndFlush(ModelMapperUtils.map(request, ParCardProduct.class));
 			return ModelMapperUtils.map(save, ParCardProductDto.class);
 		}
 		return null;
 	}
-	
+
 	public String delete(String prdCode) {
-		if(!prdCode.isEmpty()) {
+		if (!prdCode.isEmpty()) {
 			ParCardProduct parCardProduct = parCardProductDao.findByPrdcode(prdCode);
 			parCardProduct.setStatus("DEACTIVE");
 			parCardProductDao.saveAndFlush(parCardProduct);
