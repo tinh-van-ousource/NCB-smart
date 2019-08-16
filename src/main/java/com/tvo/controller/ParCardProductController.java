@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.ParCardSearch;
 import com.tvo.dto.ParCardProductDto;
+import com.tvo.dto.ParamManagerDto;
+import com.tvo.model.ParCardProduct;
+import com.tvo.model.ParamManager;
 import com.tvo.request.PardCardProductCreate;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParCardProductService;
@@ -57,7 +62,7 @@ public class ParCardProductController {
 		}
 
 	}
-	
+
 	private String uploadingIMG(MultipartFile uploadingFile) throws IOException {
 		File file = new File(AppConstant.RESOURCE_IMG + uploadingFile.getOriginalFilename());
 		file.delete();
@@ -71,6 +76,18 @@ public class ParCardProductController {
 		Page<ParCardProductDto> dts = parCardProductService.search(searchModel, pageable);
 		return new ResponeData<Page<ParCardProductDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
 				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+	}
+
+	@GetMapping(value = "detail")
+	public ResponeData<ParCardProductDto> detail(@RequestParam String prdcode) {
+		if (StringUtils.isEmpty(prdcode.trim())) {
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+					null);
+		}
+		ParCardProduct parCardProduct = parCardProductService.findPrdcode(prdcode);
+		ParCardProductDto result = ModelMapperUtils.map(parCardProduct, ParCardProductDto.class);
+		return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+				result);
 	}
 
 	@PostMapping(value = "create")
@@ -96,9 +113,9 @@ public class ParCardProductController {
 			return new ResponeData<String>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
 	}
-	
+
 	@PostMapping(value = "delete")
-	public ResponeData<String> delete(@RequestParam String prdCode){
-		return  new ResponeData<String>(parCardProductService.delete(prdCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	public ResponeData<String> delete(@RequestParam String prdCode) {
+		return new ResponeData<String>(parCardProductService.delete(prdCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
 	}
 }
