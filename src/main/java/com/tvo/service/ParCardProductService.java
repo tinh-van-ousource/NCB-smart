@@ -3,6 +3,10 @@
  */
 package com.tvo.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +25,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.FileStorageException;
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.config.FileStorageProperties;
 import com.tvo.controllerDto.ParCardSearch;
 import com.tvo.dao.ParCardProductDao;
 import com.tvo.dto.ParCardProductDto;
 import com.tvo.model.ParCardProduct;
-import com.tvo.model.ParamManager;
 import com.tvo.request.PardCardProductCreate;
+import com.tvo.response.UploadFileResponse;
 
 /**
  * @author Ace
@@ -37,6 +45,20 @@ import com.tvo.request.PardCardProductCreate;
  */
 @Service
 public class ParCardProductService {
+
+	private final Path fileStorageLocation;
+
+	@Autowired
+	public ParCardProductService(FileStorageProperties fileStorageProperties) {
+		this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
+
+		try {
+			Files.createDirectories(this.fileStorageLocation);
+		} catch (Exception ex) {
+			throw new FileStorageException("Could not create the directory where the uploaded files will be stored.",
+					ex);
+		}
+	}
 
 	@Autowired
 	ParCardProductDao parCardProductDao;
@@ -126,5 +148,33 @@ public class ParCardProductService {
 			return AppConstant.SUCCSESSFUL_CODE;
 		}
 		return AppConstant.SYSTEM_ERORR_CODE;
+	}
+
+	public String storeFile(MultipartFile file) {
+		// Normalize file name
+		String fileName = file.getOriginalFilename().toString();
+
+		try {
+			// Check if the file's name contains invalid characters
+			if (fileName.contains("..")) {
+				throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+			}
+			// Copy file to the target location (Replacing existing file with the same name)
+			Path targetLocation = this.fileStorageLocation.resolve(fileName);
+			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+			return fileName;
+		} catch (Exception ex) {
+			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+		}
+	}
+	
+	public UploadFileResponse uploadFile(MultipartFile file) {
+		String fileName = storeFile(file);
+
+		String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/uploadFile/")
+				.path(fileName).toUriString();
+
+		return new UploadFileResponse(fileName, fileUploadUri, file.getContentType(), file.getSize());
 	}
 }

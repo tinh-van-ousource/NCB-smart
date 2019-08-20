@@ -3,7 +3,6 @@
  */
 package com.tvo.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,11 +30,10 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.ParCardSearch;
 import com.tvo.dto.ParCardProductDto;
-import com.tvo.dto.ParamManagerDto;
 import com.tvo.model.ParCardProduct;
-import com.tvo.model.ParamManager;
 import com.tvo.request.PardCardProductCreate;
 import com.tvo.response.ResponeData;
+import com.tvo.response.UploadFileResponse;
 import com.tvo.service.ParCardProductService;
 
 import io.swagger.annotations.Api;
@@ -48,12 +47,12 @@ import io.swagger.annotations.Api;
 @Api(tags = "ParCardProduct")
 public class ParCardProductController {
 	@Autowired
-	ParCardProductService parCardProductService;
+	private ParCardProductService parCardProductService;
 
 	@RequestMapping(value = "img", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<byte[]> getImage(@RequestParam String name) throws IOException {
+	public ResponseEntity<byte[]> getImage(final @RequestParam("img") MultipartFile multipartFiles) throws IOException {
 		try {
-			Path path = Paths.get(AppConstant.RESOURCE_IMG + name);
+			Path path = Paths.get(AppConstant.RESOURCE_IMG + multipartFiles.getOriginalFilename());
 			byte[] bytes = Files.readAllBytes(path);
 			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
 		} catch (Exception e) {
@@ -61,13 +60,6 @@ public class ParCardProductController {
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 		}
 
-	}
-
-	private String uploadingIMG(MultipartFile uploadingFile) throws IOException {
-		File file = new File(AppConstant.RESOURCE_IMG + uploadingFile.getOriginalFilename());
-		file.delete();
-		uploadingFile.transferTo(file);
-		return uploadingFile.getOriginalFilename();
 	}
 
 	@GetMapping(value = "search")
@@ -91,26 +83,36 @@ public class ParCardProductController {
 	}
 
 	@PostMapping(value = "create")
-	public ResponeData<String> create(final @RequestParam("IMG") MultipartFile multipartFiles,
-			@ModelAttribute("pardCardProductCreate") PardCardProductCreate pardCardProductCreate) {
+	public ResponeData<ParCardProductDto> create(final @RequestParam("img") MultipartFile multipartFiles,
+			@ModelAttribute PardCardProductCreate pardCardProductCreate) {
 		try {
-			pardCardProductCreate.setFileName(this.uploadingIMG(multipartFiles));
-			parCardProductService.create(pardCardProductCreate);
-			return new ResponeData<String>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
-		} catch (IOException e) {
-			return new ResponeData<String>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			UploadFileResponse uploadFileResponse = parCardProductService.uploadFile(multipartFiles);
+			pardCardProductCreate.setLinkUlr(uploadFileResponse.getFileUploadUri());
+			pardCardProductCreate.setFileName(uploadFileResponse.getFileName());
+			ParCardProductDto parCardProduc = ModelMapperUtils.map(parCardProductService.create(pardCardProductCreate),
+					ParCardProductDto.class);
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
+					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
+		} catch (Exception e) {
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_MESSAGE,
+					AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
 	}
 
 	@PostMapping(value = "edit")
-	public ResponeData<String> edit(final @RequestParam("IMG") MultipartFile multipartFiles,
-			@ModelAttribute("pardCardProductCreate") PardCardProductCreate pardCardProductCreate) {
+	public ResponeData<ParCardProductDto> edit(final @RequestParam("IMG") MultipartFile multipartFiles,
+			@RequestBody PardCardProductCreate pardCardProductCreate) {
 		try {
-			pardCardProductCreate.setFileName(this.uploadingIMG(multipartFiles));
-			parCardProductService.edit(pardCardProductCreate);
-			return new ResponeData<String>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
-		} catch (IOException e) {
-			return new ResponeData<String>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			Path path = Paths.get(AppConstant.RESOURCE_IMG + multipartFiles.getOriginalFilename());
+			pardCardProductCreate.setLinkUlr(path.toString());
+			pardCardProductCreate.setFileName(path.getFileName().toString());
+			ParCardProductDto parCardProduc = ModelMapperUtils.map(parCardProductService.edit(pardCardProductCreate),
+					ParCardProductDto.class);
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
+					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
+		} catch (Exception e) {
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_MESSAGE,
+					AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
 	}
 
