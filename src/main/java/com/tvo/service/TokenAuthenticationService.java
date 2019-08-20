@@ -3,6 +3,8 @@
  */
 package com.tvo.service;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -41,7 +43,8 @@ public class TokenAuthenticationService {
 		res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 		try {
 			gson = new Gson();
-			ResponeData respLogin = new ResponeData(AppConstant.LOGIN_FAILURE_CODE, AppConstant.LOGIN_FAILURE_STATUS, null);
+			ResponeData respLogin = new ResponeData(AppConstant.LOGIN_FAILURE_CODE, AppConstant.LOGIN_FAILURE_STATUS,
+					null);
 			res.getWriter().write(gson.toJson(respLogin));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -52,13 +55,15 @@ public class TokenAuthenticationService {
 		String JWT = Jwts.builder().setSubject(userDetails.getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + AppConstant.EXPIRATIONTIME))
 				.signWith(SignatureAlgorithm.HS512, AppConstant.SECRET).compact();
-		res.addHeader(AppConstant.HEADER_STRING, AppConstant.TOKEN_PREFIX + " " + JWT);
+//		res.addHeader(AppConstant.HEADER_STRING, AppConstant.TOKEN_PREFIX + " " + JWT);
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
 		try {
 			gson = new Gson();
-			ResponeData respLogin = new ResponeData(AppConstant.SUCCSESSFUL_CODE,
-					AppConstant.LOGIN_SUCCSESSFUL_STATUS, ModelMapperUtils.map(userDetails.getUser(), UserDto.class));
+			UserDto userDto = ModelMapperUtils.map(userDetails.getUser(), UserDto.class);
+			userDto.setToken(JWT);
+			ResponeData respLogin = new ResponeData(AppConstant.SUCCSESSFUL_CODE, AppConstant.LOGIN_SUCCSESSFUL_STATUS,
+					userDto);
 			res.getWriter().write(gson.toJson(respLogin));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -72,13 +77,14 @@ public class TokenAuthenticationService {
 			try {
 				String user = Jwts.parser().setSigningKey(AppConstant.SECRET)
 						.parseClaimsJws(token.replace(AppConstant.TOKEN_PREFIX, "")).getBody().getSubject();
-				return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) : null;
+				return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList())
+						: null;
 			} catch (ExpiredJwtException e) {
-			    System.out.println(" Token expired ");
+				System.out.println(" Token expired ");
 			} catch (SignatureException e) {
 				System.out.println(" token exception ");
-			} catch(Exception e){
-			    System.out.println(" Some other exception in JWT parsing ");
+			} catch (Exception e) {
+				System.out.println(" Some other exception in JWT parsing ");
 			}
 		}
 		return null;

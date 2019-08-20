@@ -47,6 +47,6 @@ public class UserDto extends AbstractEntityDto {
 	
 	private String userCode;
 	
-	
+	private String token;
 	
 }
