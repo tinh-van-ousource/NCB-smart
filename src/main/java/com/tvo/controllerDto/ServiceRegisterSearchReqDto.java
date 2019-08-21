@@ -109,5 +109,4 @@ public class ServiceRegisterSearchReqDto {
     public void setSize(Integer size) {
         this.size = size;
     }
-
 }

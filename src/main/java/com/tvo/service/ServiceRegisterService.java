@@ -2,17 +2,16 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.ServiceRegisterGetDetailResDto;
-
-import java.util.List;
 
 /**
  * @author NgocDC
  */
 public interface ServiceRegisterService {
-    List getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
+    ContentResDto getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
 
-    ServiceRegisterGetDetailResDto getServiceRegisterDetailById(Long id);
+    ContentResDto getServiceRegisterDetailById(Long id);
 
-    ServiceRegisterGetDetailResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto);
+    ContentResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto);
 }

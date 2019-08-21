@@ -12,4 +12,6 @@ import java.util.List;
 @Repository
 public interface ServiceRegisterRepoCustom {
     List<ServiceRegisterEntity> retrieveListServiceRegister(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
+
+    Long retrieveListServiceRegisterCount(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
 }
