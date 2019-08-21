@@ -3,16 +3,15 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.ServiceRegisterGetDetailResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author NgocDC
@@ -29,23 +28,23 @@ public class ServiceRegisterController {
     }
 
     @GetMapping(value = "/search")
-    public ResponeData<List> searchServiceRegister(@Valid ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
-        List serviceRegisterResDtoList =
+    public ResponeData<ContentResDto> searchServiceRegister(@Valid ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
+        ContentResDto serviceRegisterResDtoList =
                 serviceRegisterService.getServiceRegisterList(serviceRegisterSearchReqDto);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterResDtoList);
     }
 
     @GetMapping(value = "/{id}/detail")
-    public ResponeData<ServiceRegisterGetDetailResDto> getDetailById(@PathVariable("id") Long id) {
-        ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto =
+    public ResponeData<ContentResDto> getDetailById(@PathVariable("id") Long id) {
+        ContentResDto serviceRegisterGetDetailResDto =
                 serviceRegisterService.getServiceRegisterDetailById(id);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
     }
 
     @PatchMapping(value = "/{service_id}/update")
-    public ResponeData<ServiceRegisterGetDetailResDto> updateServiceRegisterDetail(@PathVariable("service_id") Long id,
+    public ResponeData<ContentResDto> updateServiceRegisterDetail(@PathVariable("service_id") Long id,
                                                                                    @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
-        ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto =
+        ContentResDto serviceRegisterGetDetailResDto =
                 serviceRegisterService.updateServiceRegisterDetail(id, serviceRegisterUpdateReqDto);
         if (serviceRegisterGetDetailResDto != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);

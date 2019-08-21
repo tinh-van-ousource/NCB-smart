@@ -1,5 +1,6 @@
 package com.tvo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP_LOG")
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 public class ServiceRegisterLogEntity implements Serializable {

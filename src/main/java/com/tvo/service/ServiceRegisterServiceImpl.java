@@ -7,9 +7,9 @@ import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dao.ServiceRegisterLogRepo;
 import com.tvo.dao.ServiceRegisterRepo;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.ServiceRegisterGetDetailResDto;
 import com.tvo.dto.ServiceRegisterLogResDto;
-import com.tvo.dto.ServiceRegisterSearchAllResDto;
 import com.tvo.dto.ServiceRegisterSearchCardResDto;
 import com.tvo.model.ServiceRegisterEntity;
 import com.tvo.model.ServiceRegisterLogEntity;
@@ -40,26 +40,42 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
     }
 
     @Override
-    public List getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
+    public ContentResDto getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
         List<ServiceRegisterEntity> serviceRegisterEntityList =
                 serviceRegisterRepo.retrieveListServiceRegister(serviceRegisterSearchReqDto);
 
+        Long totalServiceRegister =
+                serviceRegisterRepo.retrieveListServiceRegisterCount(serviceRegisterSearchReqDto);
+
+        ContentResDto contentResDto = new ContentResDto(Collections.EMPTY_LIST, 0L);
+
         if (!serviceRegisterEntityList.isEmpty()) {
+            List<ServiceRegisterSearchCardResDto> serviceRegisterSearchCardResDtoList;
+
             if (serviceRegisterSearchReqDto.getType() != null) {
-                return ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
+                serviceRegisterSearchCardResDtoList =
+                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
+
             } else {
-                return ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
+                serviceRegisterSearchCardResDtoList =
+                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
             }
-        } else {
-            return Collections.EMPTY_LIST;
+
+            contentResDto.setContent(serviceRegisterSearchCardResDtoList);
+            contentResDto.setTotal(totalServiceRegister);
+            return contentResDto;
         }
+
+        return contentResDto;
     }
 
     @Override
-    public ServiceRegisterGetDetailResDto getServiceRegisterDetailById(Long id) {
+    public ContentResDto getServiceRegisterDetailById(Long id) {
         ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto = new ServiceRegisterGetDetailResDto();
 
         Optional<ServiceRegisterEntity> serviceRegisterEntity = serviceRegisterRepo.findById(id);
+
+        ContentResDto contentResDto = new ContentResDto();
 
         if (serviceRegisterEntity.isPresent()) {
             serviceRegisterGetDetailResDto = ModelMapperUtils.map(serviceRegisterEntity.get(), ServiceRegisterGetDetailResDto.class);
@@ -71,17 +87,21 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                     .stream()
                     .map(s -> ModelMapperUtils.map(s, ServiceRegisterLogResDto.class))
                     .collect(Collectors.toList()));
+
+            contentResDto.setContent(serviceRegisterGetDetailResDto);
         }
 
-        return serviceRegisterGetDetailResDto;
+        return contentResDto;
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public ServiceRegisterGetDetailResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
+    public ContentResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
         Optional<ServiceRegisterEntity> serviceRegisterEntityOptional = serviceRegisterRepo.findById(id);
+
+        ContentResDto contentResDto = new ContentResDto();
 
         if (serviceRegisterEntityOptional.isPresent()) {
             ServiceRegisterEntity serviceRegisterEntityOld = serviceRegisterEntityOptional.get();
@@ -95,14 +115,13 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
 
                 serviceRegisterEntityNew.setCompCode(serviceRegisterUpdateReqDto.getCompCode());
 
-                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity();
-                serviceRegisterLogEntity.setServiceRegisterId(id);
-                serviceRegisterLogEntity.setTableName(TableName.SERVICE_REGISTER_MBAPP);
-                serviceRegisterLogEntity.setColumnName(ColumnName.COMP_CODE);
-                serviceRegisterLogEntity.setOldValue(serviceRegisterEntityOld.getCompCode());
-                serviceRegisterLogEntity.setNewValue(serviceRegisterEntityNew.getCompCode());
-                serviceRegisterLogEntity.setUserId(serviceRegisterUpdateReqDto.getUserId());
-                serviceRegisterLogEntity.setDatetime(currentLocalDateTime);
+                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
+                        null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.COMP_CODE,
+                        serviceRegisterEntityOld.getCompCode(),
+                        serviceRegisterEntityNew.getCompCode(),
+                        serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
+                );
+
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
@@ -110,14 +129,13 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                     !serviceRegisterUpdateReqDto.getCompName().equals(serviceRegisterEntityOld.getCompName())) {
                 serviceRegisterEntityNew.setCompName(serviceRegisterUpdateReqDto.getCompName());
 
-                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity();
-                serviceRegisterLogEntity.setServiceRegisterId(id);
-                serviceRegisterLogEntity.setTableName(TableName.SERVICE_REGISTER_MBAPP);
-                serviceRegisterLogEntity.setColumnName(ColumnName.COMP_NAME);
-                serviceRegisterLogEntity.setOldValue(serviceRegisterEntityOld.getCompName());
-                serviceRegisterLogEntity.setNewValue(serviceRegisterEntityNew.getCompName());
-                serviceRegisterLogEntity.setUserId(serviceRegisterUpdateReqDto.getUserId());
-                serviceRegisterLogEntity.setDatetime(currentLocalDateTime);
+                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
+                        null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.COMP_NAME,
+                        serviceRegisterEntityOld.getCompName(),
+                        serviceRegisterEntityNew.getCompName(),
+                        serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
+                );
+
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
@@ -125,27 +143,26 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                     !serviceRegisterUpdateReqDto.getStatus().equals(serviceRegisterEntityOld.getStatus())) {
                 serviceRegisterEntityNew.setStatus(serviceRegisterUpdateReqDto.getStatus());
 
-                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity();
-                serviceRegisterLogEntity.setServiceRegisterId(id);
-                serviceRegisterLogEntity.setTableName(TableName.SERVICE_REGISTER_MBAPP);
-                serviceRegisterLogEntity.setColumnName(ColumnName.STATUS);
-                serviceRegisterLogEntity.setOldValue(serviceRegisterEntityOld.getStatus());
-                serviceRegisterLogEntity.setNewValue(serviceRegisterEntityNew.getStatus());
-                serviceRegisterLogEntity.setUserId(serviceRegisterUpdateReqDto.getUserId());
-                serviceRegisterLogEntity.setDatetime(currentLocalDateTime);
+                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
+                        null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.STATUS,
+                        serviceRegisterEntityOld.getStatus(),
+                        serviceRegisterEntityNew.getStatus(),
+                        serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
+                );
+
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
             if (serviceRegisterUpdateReqDto.getComment() != null) {
                 serviceRegisterEntityNew.setStatus(serviceRegisterUpdateReqDto.getStatus());
 
-                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity();
-                serviceRegisterLogEntity.setServiceRegisterId(id);
-                serviceRegisterLogEntity.setTableName(TableName.SERVICE_REGISTER_MBAPP);
-                serviceRegisterLogEntity.setColumnName(ColumnName.COMMENT);
-                serviceRegisterLogEntity.setNewValue(serviceRegisterUpdateReqDto.getComment());
-                serviceRegisterLogEntity.setUserId(serviceRegisterUpdateReqDto.getUserId());
-                serviceRegisterLogEntity.setDatetime(currentLocalDateTime);
+                ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
+                        null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.COMMENT,
+                        null,
+                        serviceRegisterUpdateReqDto.getComment(),
+                        serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
+                );
+
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
@@ -154,14 +171,14 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                 serviceRegisterLogRepo.saveAll(serviceRegisterLogEntityList);
 
                 // save new detail then return
-                return getRegisterServiceDetail(serviceRegisterRepo.save(serviceRegisterEntityNew));
+                contentResDto.setContent(getRegisterServiceDetail(serviceRegisterRepo.save(serviceRegisterEntityNew)));
             } else {
                 // return old detail
-                return getRegisterServiceDetail(serviceRegisterEntityOld);
+                contentResDto.setContent(getRegisterServiceDetail(serviceRegisterEntityOld));
             }
         }
 
-        return null;
+        return contentResDto;
     }
 
     private ServiceRegisterGetDetailResDto getRegisterServiceDetail(ServiceRegisterEntity serviceRegisterEntity) {
