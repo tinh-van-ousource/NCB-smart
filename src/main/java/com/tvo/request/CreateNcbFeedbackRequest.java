@@ -3,10 +3,13 @@ package com.tvo.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 public class CreateNcbFeedbackRequest {
 
+	@Size(max = 15)
 	private String productCode;
 
 	private String productName;

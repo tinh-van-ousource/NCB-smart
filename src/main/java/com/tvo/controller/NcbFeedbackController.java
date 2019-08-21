@@ -24,6 +24,8 @@ import com.tvo.service.NcbFeedbackService;
 
 import io.swagger.annotations.Api;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "ncb-feedback")
 @Api(tags = "Ncb Feedback")
@@ -51,7 +53,7 @@ public class NcbFeedbackController {
 	}
 
 	@PostMapping(value = "create")
-	public ResponeData<NcbFeedbackDto> create(@RequestBody CreateNcbFeedbackRequest request) {
+	public ResponeData<NcbFeedbackDto> create(@Valid @RequestBody CreateNcbFeedbackRequest request) {
 		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.create(request);
 		if (ncbFeedbackDto == null) {
 			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
@@ -62,7 +64,7 @@ public class NcbFeedbackController {
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<NcbFeedbackDto> update(@RequestBody UpdateNcbFeedbackRequest request) {
+	public ResponeData<NcbFeedbackDto> update(@Valid @RequestBody UpdateNcbFeedbackRequest request) {
 		NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.update(request);
 		if (ncbFeedbackDto == null) {
 			return new ResponeData<NcbFeedbackDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
