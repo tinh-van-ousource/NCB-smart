@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 public class UpdateNcbFeedbackRequest {
 	@NonNull
 	private Long id;
 
+	@Size(max = 15)
 	private String productCode;
 
 	private String productName;
