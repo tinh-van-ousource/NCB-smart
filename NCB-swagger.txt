@@ -72,7 +72,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/ServiceRegisterSearchCardResDto"
+              $ref: "#/definitions/ServiceRegisterSearchCardContentResDto"
         400:
           description: "Bad request"
 
@@ -96,7 +96,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+              $ref: "#/definitions/ServiceRegisterGetDetailContentResDto"
         400:
           description: "Bad request"
 
@@ -126,7 +126,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+              $ref: "#/definitions/ServiceRegisterGetDetailContentResDto"
         400:
           description: "Bad request"
 
@@ -280,3 +280,20 @@ definitions:
       user_id:
         type: string
         description: ""
+
+  ServiceRegisterSearchCardContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/ServiceRegisterSearchCardResDto"
+      total:
+        type: number
+        description: ""
+
+  ServiceRegisterGetDetailContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+
+

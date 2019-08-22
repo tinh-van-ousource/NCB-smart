@@ -19,7 +19,7 @@ import com.tvo.controllerDto.searchModel;
 import com.tvo.dto.UserDto;
 import com.tvo.request.CreateUserRequest;
 import com.tvo.response.ResponeData;
-import com.tvo.service.UserService;
+import com.tvo.service.UserServiceImpl;
 
 import io.swagger.annotations.Api;
 
@@ -32,7 +32,7 @@ import io.swagger.annotations.Api;
 @Api(tags = "user Controller")
 public class UserController {
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 	@GetMapping(value = "/searchUser")
 	public ResponeData<Page<UserDto>> searchUser(@ModelAttribute searchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<UserDto> UserDtos = userService.searchUser(searchModel, pageable);
