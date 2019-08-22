@@ -46,6 +46,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //		}
 		//moi nguoi 1 quyen
 		Role role = user.getRole();
+		if (role == null) {
+			throw new UsernameNotFoundException("User not found");
+		}
 		grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
 		 return new UserDetailsImpl(user, grantedAuthorities); 
 		/*

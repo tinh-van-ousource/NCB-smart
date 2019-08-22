@@ -6,6 +6,7 @@ package com.tvo.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.tvo.dto.ContentResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -110,7 +112,6 @@ public class UserServiceImpl implements UserService {
 		return ModelMapperUtils.map(save, UserDto.class);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Page<UserDto> searchUser(searchModel searchModel, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
@@ -172,6 +173,26 @@ public class UserServiceImpl implements UserService {
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);
 		return results;
+	}
+
+	@Override
+	public ContentResDto getUserDetail(Long id) {
+		ContentResDto contentResDto = new ContentResDto();
+		Optional<User> optionalUser = userDao.findById(id);
+		optionalUser.ifPresent(user -> contentResDto.setContent(ModelMapperUtils.map(user, UserDto.class)));
+		return contentResDto;
+	}
+
+	@Override
+	public Boolean deleteUser(Long id) {
+		Optional<User> optionalUser = userDao.findById(id);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			user.setRole(null);
+			userDao.save(user);
+			return true;
+		}
+		return false;
 	}
 
 }

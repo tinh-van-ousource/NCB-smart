@@ -14,11 +14,11 @@ import com.tvo.service.AuditorAwareImpl;
  * @author Ace
  *
  */
-@Configuration
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+//@Configuration
+//@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class JpaConfig {
-	@Bean
-	public AuditorAware<Long> auditorAware() {
-		return new AuditorAwareImpl();
-	}
+//	@Bean
+//	public AuditorAware<Long> auditorAware() {
+//		return new AuditorAwareImpl();
+//	}
 }

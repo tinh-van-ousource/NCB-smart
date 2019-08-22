@@ -3,6 +3,7 @@
  */
 package com.tvo.service;
 
+import com.tvo.dto.ContentResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,4 +26,8 @@ public interface UserService {
 	public UserDto createUser(CreateUserRequest request) ;
 	
 	public Page<UserDto> searchUser(searchModel searchModel, Pageable pageable);
+
+    ContentResDto getUserDetail(Long id);
+
+	Boolean deleteUser(Long id);
 }

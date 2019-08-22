@@ -3,16 +3,13 @@
  */
 package com.tvo.controller;
 
+import com.tvo.dto.ContentResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.searchModel;
@@ -57,5 +54,20 @@ public class UserController {
 			return new ResponeData<UserDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
 		}
 		return new ResponeData<UserDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+	}
+
+	@GetMapping(value = "/{id}/detail")
+	public ResponeData<ContentResDto> getUserDetail(@PathVariable("id") Long id){
+		ContentResDto UserDtos = userService.getUserDetail(id);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos) ;
+	}
+
+	@DeleteMapping(value = "/{id}/delete")
+	public ResponeData<Boolean> deleteUser(@PathVariable("id") Long id){
+		Boolean result = userService.deleteUser(id);
+		if (result) {
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result) ;
+		}
+		return new ResponeData<>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, result) ;
 	}
 }
