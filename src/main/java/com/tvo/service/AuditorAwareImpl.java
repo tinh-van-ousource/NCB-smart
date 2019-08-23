@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.tvo.service;
 
@@ -19,22 +19,26 @@ import com.tvo.model.User;
  */
 public class AuditorAwareImpl implements AuditorAware<Long> {
 
-	@Autowired
-	AppUserDAO appUserDAO;
+    @Autowired
+    AppUserDAO appUserDAO;
 
-	@Override
-	public Optional<Long> getCurrentAuditor() {
-		User user = new User();
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-			String username = ((UserDetails) principal).getUsername();
-			 user = appUserDAO.findByUserName(username);
-			 return  Optional.ofNullable(user.getUserId());
-		} else {
-			String username = principal.toString();
-			 user = appUserDAO.findByUserName(username);
-			 return  Optional.ofNullable(user.getUserId());
-		}
-	}
+    @Override
+    public Optional<Long> getCurrentAuditor() {
+        try {
+            User user = new User();
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof UserDetails) {
+                String username = ((UserDetails) principal).getUsername();
+                user = appUserDAO.findByUserName(username);
+                return Optional.ofNullable(user.getUserId());
+            } else {
+                String username = principal.toString();
+                user = appUserDAO.findByUserName(username);
+                return Optional.ofNullable(user.getUserId());
+            }
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 
 }
