@@ -28,13 +28,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     @Autowired
     private AppRoleDAO roleRepository;
     
-//    @Autowired
-//    private BranchDao branchRepository;
-//    
-//    @Autowired
-//    private TransactionCenterDao transactionCenterDao;
-
-    @Autowired 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -43,7 +37,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         if (roleRepository.findByRoleName("ROLE_ADMIN") == null) {
         	Role role = new Role();
         	role.setRoleName("ROLE_ADMIN");
-        	role.setDescription("ad");
+        	role.setDescription("admin");
         	role.setStatus(AppConstant.Status.ACTIVE.getValue());
             roleRepository.save(role);
         }

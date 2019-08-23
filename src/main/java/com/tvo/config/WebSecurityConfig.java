@@ -72,19 +72,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/login").permitAll() // For Test on Browser
                 // Need authentication.
                 .anyRequest().authenticated()
-                //
+                // Response if auth error
                 .and().
                 exceptionHandling().accessDeniedHandler(accessDeniedHandler).
                 authenticationEntryPoint(authenticationEntryPoint())
                 .and()
-                //
                 // Add Filter 1 - JWTLoginFilter
-                //
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
-                //
                 // Add Filter 2 - JWTAuthenticationFilter
-                //
                 .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -104,13 +100,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-
     }
 }
