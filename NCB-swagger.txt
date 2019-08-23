@@ -7,6 +7,8 @@ host: "localhost"
 tags:
 - name: "Service Register"
   description: "Service Register Api"
+- name: "Login"
+  description: "Login Api"
 schemes:
 - "https"
 - "http"
@@ -127,6 +129,52 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/ServiceRegisterGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/{user_id}/detail:
+    get:
+      tags:
+      - "Login"
+      summary: "Get User Detail"
+      description: "Get User Detail"
+      operationId: "getUserDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/{user_id}/delete:
+    delete:
+      tags:
+      - "Login"
+      summary: "Delete User"
+      description: "Delete User"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: boolean
         400:
           description: "Bad request"
 
@@ -296,4 +344,81 @@ definitions:
       content:
         $ref: "#/definitions/ServiceRegisterGetDetailResDto"
 
+  UserResDto:
+    type: "object"
+    properties:
+      createdDate:
+        type: string
+        description: ""
+      createdBy:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      userId:
+        type: number
+        description: ""
+      userName:
+        type: string
+        description: ""
+      fullName:
+        type: string
+        description: ""
+      password:
+        type: string
+        description: ""
+      branchCode:
+        type: string
+        description: ""
+      posCode:
+        type: string
+        description: ""
+      passChange:
+        type: string
+        description: ""
+      role:
+        $ref: "#/definitions/RoleDto"
+      email:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      countLoginFail:
+        type: number
+        description: ""
+      userCode:
+        type: string
+        description: ""
+      token:
+        type: string
+        description: ""
 
+  UserGetDetailContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/UserResDto"
+
+  RoleDto:
+    type: "object"
+    properties:
+      createdDate:
+        type: string
+        description: ""
+      createdBy:
+        type: number
+        description: ""
+      status:
+        type: string
+        description: ""
+      roleId:
+        type: number
+        description: ""
+      roleName:
+        type: string
+        description: ""
+      description:
+        type: string
+        description: ""
