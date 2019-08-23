@@ -14,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -40,8 +41,14 @@ public class TokenAuthenticationService {
 
         try {
             gson = new Gson();
-            ResponeData respLogin = new ResponeData(AppConstant.LOGIN_FAILURE_CODE, failed.getMessage(),
-                    null);
+            ResponeData respLogin;
+
+            if (failed instanceof DisabledException) {
+                respLogin = new ResponeData(AppConstant.ACCOUNT_DEACTIVATED_CODE, failed.getMessage());
+            } else {
+                respLogin = new ResponeData(AppConstant.LOGIN_FAILURE_CODE, failed.getMessage());
+            }
+
             res.getWriter().write(gson.toJson(respLogin));
         } catch (IOException e) {
             e.printStackTrace();
