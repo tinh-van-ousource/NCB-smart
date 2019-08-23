@@ -108,6 +108,8 @@ public class UserServiceImpl implements UserService {
 		user = ModelMapperUtils.map(request, User.class);
 		user.setRole(role);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		user.setStatus(AppConstant.STATUS_ACTIVED);
+
 		User save = userDao.save(user);
 		return ModelMapperUtils.map(save, UserDto.class);
 	}
