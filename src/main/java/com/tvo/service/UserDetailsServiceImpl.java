@@ -37,10 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Bad credentials - User not found.");
         }
 
-        if(user.getStatus().equals("D")) {
-            throw new UsernameNotFoundException("User is disabled - User is deactivated.");
-        }
-
         //moi nguoi 1 quyen
         Role role = user.getRole();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
