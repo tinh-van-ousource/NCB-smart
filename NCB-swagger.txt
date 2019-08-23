@@ -7,8 +7,8 @@ host: "localhost"
 tags:
 - name: "Service Register"
   description: "Service Register Api"
-- name: "Login"
-  description: "Login Api"
+- name: "User"
+  description: "User Api"
 schemes:
 - "https"
 - "http"
@@ -135,7 +135,7 @@ paths:
   /user/{user_id}/detail:
     get:
       tags:
-      - "Login"
+      - "User"
       summary: "Get User Detail"
       description: "Get User Detail"
       operationId: "getUserDetail"
@@ -159,7 +159,7 @@ paths:
   /user/{user_id}/delete:
     delete:
       tags:
-      - "Login"
+      - "User"
       summary: "Delete User"
       description: "Delete User"
       operationId: "deleteUser"
@@ -170,6 +170,30 @@ paths:
           in: path
           required: true
           type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: boolean
+        400:
+          description: "Bad request"
+
+  /user/change-password:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Passwprd"
+      description: "Change User Passwprd"
+      operationId: "changeUserPassword"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserChangePasswordReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserChangePasswordReqDto"
       responses:
         200:
           description: "Successful"
@@ -422,3 +446,17 @@ definitions:
       description:
         type: string
         description: ""
+
+  UserChangePasswordReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      oldPassword:
+        type: string
+        description: ""
+      newPassword:
+        type: string
+        description: ""
+      

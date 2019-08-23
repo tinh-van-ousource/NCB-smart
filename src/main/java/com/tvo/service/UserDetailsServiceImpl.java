@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Bad credentials - User not found.");
         }
 
-        //moi nguoi 1 quyen
+        // moi user 1 role
         Role role = user.getRole();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
