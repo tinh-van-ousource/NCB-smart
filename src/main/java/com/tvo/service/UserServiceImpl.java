@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
 		Optional<User> optionalUser = userDao.findById(id);
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
-			user.setRole(null);
+			user.setStatus("D");
 			userDao.save(user);
 			return true;
 		}

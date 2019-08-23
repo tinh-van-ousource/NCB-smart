@@ -57,53 +57,29 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         }
 
         // Admin account
-        if (userRepository.findByUserName("sondaik") == null) {
+        if (userRepository.findByUserName("admin") == null) {
             User admin = new User();
             admin.setEmail("admin@gmail.com");
-            admin.setUserName("sondaik");
-            admin.setFullName("Ngo Van Son");
+            admin.setUserName("admin");
+            admin.setFullName("Toi la admin");
             admin.setPassword(passwordEncoder.encode("123456"));
-//            roles.add(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setStatus(AppConstant.Status.ACTIVE.getValue());
             userRepository.save(admin);
         }
 
         // USER account
-        if (userRepository.findByUserName("user1") == null) {
+        if (userRepository.findByUserName("user") == null) {
             User user = new User();
             user.setEmail("USER@gmail.com");
-            user.setUserName("user1");
-            user.setFullName("user 111");
+            user.setUserName("user");
+            user.setFullName("Toi la user");
             user.setPassword(passwordEncoder.encode("123456"));
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
             user.setStatus(AppConstant.Status.ACTIVE.getValue());
             userRepository.save(user);
         }
-        
-        if (userRepository.findByUserName("sonvipDaik") == null) {
-            User user = new User();
-            user.setEmail("son@gmail.com");
-            user.setUserName("sonvipDaik");
-            user.setFullName("user 22");
-            user.setPassword(passwordEncoder.encode("Son123"));
-            user.setRole(roleRepository.findByRoleName("ROLE_USER"));
-            user.setStatus(AppConstant.Status.ACTIVE.getValue());
-            userRepository.save(user);
-        }
-//        if(branchRepository.findByBranchName("Hà Nội") == null) {
-//        	  Branch branch = new Branch();
-//      		branch.setBranchName("Hà Nội");
-//      		branchRepository.save(branch);
-//        }
-//        
-//        if(transactionCenterDao.findByTransactionName("phòng giao dịch số 1")== null) {
-//        	TransactionCenter transactionCenter = new TransactionCenter();
-//        	transactionCenter.setTransactionName("phòng giao dịch số 1");
-//        	transactionCenter.setBranch(branchRepository.findByBranchName("Hà Nội"));
-//        	transactionCenterDao.save(transactionCenter);
-//        }
-      
+
     }
 
 }
