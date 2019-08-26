@@ -20,5 +20,5 @@ public interface AppUserDAO extends JpaRepository<User, Long>{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Query("select u from User u where u.userName = ?1")
 	User findByUserName(String userName);
-	
+
 }

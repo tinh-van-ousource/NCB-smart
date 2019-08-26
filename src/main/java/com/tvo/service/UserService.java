@@ -3,10 +3,10 @@
  */
 package com.tvo.service;
 
+import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
 import com.tvo.model.User;
