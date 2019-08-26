@@ -1,11 +1,10 @@
 package com.tvo.dto;
 
-import java.util.Date;
-
 import com.tvo.model.DatCfmast;
 import com.tvo.model.Function;
-
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author Thanglt

@@ -3,13 +3,13 @@
  */
 package com.tvo.dto;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * @author Ace

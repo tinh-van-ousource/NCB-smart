@@ -1,17 +1,13 @@
 package com.tvo.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchNcbBannerModel;
+import com.tvo.controllerDto.UpdateNcbBannerRequest;
+import com.tvo.dao.NcbBannerDao;
+import com.tvo.dto.NcbBannerDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbBanner;
+import com.tvo.request.CreateNcbBannerRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,14 +15,16 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNcbBannerModel;
-import com.tvo.controllerDto.UpdateNcbBannerRequest;
-import com.tvo.dao.NcbBannerDao;
-import com.tvo.dto.NcbBannerDto;
-import com.tvo.model.NcbBanner;
-import com.tvo.request.CreateNcbBannerRequest;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Thanglt
@@ -110,7 +108,7 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 	public NcbBannerDto create(CreateNcbBannerRequest request) {
 		NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
 		ncbBanner.setCreatedDate(LocalDateTime.now());
-		ncbBanner.setStatus(AppConstant.STATUS_ACTIVED);
+		ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
 	}
 
@@ -135,7 +133,7 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 			Optional<NcbBanner> opt = ncbBannerDao.findById(id);
 			if (opt.isPresent()) {
 				ncbBanner = opt.get();
-				ncbBanner.setStatus(AppConstant.STATUS_DEACTIVED);
+				ncbBanner.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				ncbBannerDao.save(ncbBanner);
 				return true;
 			}

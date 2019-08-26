@@ -2,17 +2,17 @@
  * 
  */
 package com.tvo.config;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.tvo.common.AppConstant;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.model.Role;
 import com.tvo.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 
 /**

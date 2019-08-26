@@ -1,19 +1,5 @@
 package com.tvo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.SearchNcbBannerModel;
 import com.tvo.controllerDto.UpdateNcbBannerRequest;
@@ -21,8 +7,12 @@ import com.tvo.dto.NcbBannerDto;
 import com.tvo.request.CreateNcbBannerRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbBannerService;
-
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "ncb-banner")

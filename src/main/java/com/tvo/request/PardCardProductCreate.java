@@ -3,9 +3,9 @@
  */
 package com.tvo.request;
 
-import javax.validation.constraints.NotEmpty;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author Ace

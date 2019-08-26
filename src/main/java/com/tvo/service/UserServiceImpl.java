@@ -8,12 +8,14 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
+import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.controllerDto.searchModel;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.dao.BranchDao;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.request.CreateUserRequest;
@@ -97,7 +99,7 @@ public class UserServiceImpl implements UserService {
         user = ModelMapperUtils.map(request, User.class);
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setStatus(AppConstant.STATUS_ACTIVED);
+        user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 
         User save = userDao.save(user);
         return ModelMapperUtils.map(save, UserDto.class);
@@ -225,17 +227,33 @@ public class UserServiceImpl implements UserService {
             User user = userDao.findByUserName(userDto.getUsername());
             // edited user must exist
             if (user != null) {
-                // edited username must equal current auditor
-                if (!currentUserId.get().equals(user.getUserId())) {
-                    contentResDto.setContent(false);
-                    return contentResDto;
-                }
-
                 user.setBranchCode(userDto.getBranchCode());
                 user.setTransactionCode(userDto.getPosCode());
                 user.setFullName(userDto.getFullName());
                 user.setEmail(userDto.getEmail());
                 user.setPhone(userDto.getPhone());
+
+                contentResDto.setContent(userDao.save(user));
+                return contentResDto;
+            }
+            contentResDto.setContent(false);
+            return contentResDto;
+        } else {
+            contentResDto.setContent(false);
+            return contentResDto;
+        }
+    }
+
+    @Override
+    public ContentResDto updateStatus(UserUpdateStatusReqDto userDto) {
+        ContentResDto contentResDto = new ContentResDto();
+        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
+        // current auditor must exist
+        if (currentUserId.isPresent()) {
+            User user = userDao.findByUserName(userDto.getUsername());
+            // edited user must exist
+            if (user != null) {
+                user.setStatus(userDto.getStatus());
 
                 contentResDto.setContent(userDao.save(user));
                 return contentResDto;

@@ -1,15 +1,14 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchNcbBranchModel;
+import com.tvo.dao.NcbBranchDao;
+import com.tvo.dto.NcbBranchDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbBranch;
+import com.tvo.request.CreateNcbBranchRequest;
+import com.tvo.request.UpdateNcbBranchRequest;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,16 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNcbBranchModel;
-import com.tvo.dao.NcbBranchDao;
-import com.tvo.dto.NcbBranchDto;
-import com.tvo.model.NcbBranch;
-import com.tvo.request.CreateNcbBranchRequest;
-import com.tvo.request.UpdateNcbBranchRequest;
-
-import lombok.AllArgsConstructor;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Thanglt
@@ -132,7 +129,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 			return null;
 		}
 		NcbBranch ncbBranch = ModelMapperUtils.map(request, NcbBranch.class);
-		ncbBranch.setStatus(AppConstant.STATUS_ACTIVED);
+		ncbBranch.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(ncbBranchDao.save(ncbBranch), NcbBranchDto.class);
 	}
 
@@ -142,7 +139,7 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 		if (!departCode.isEmpty()) {
 			try {
 				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-				ncbBranch.setStatus(AppConstant.STATUS_DEACTIVED);
+				ncbBranch.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				ncbBranchDao.save(ncbBranch);
 				return true;
 			} catch (Exception e) {

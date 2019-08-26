@@ -1,13 +1,11 @@
 package com.tvo.dao;
 
-import java.util.List;
-
+import com.tvo.model.BankTransfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.tvo.model.BankTransfer;
-import com.tvo.model.Branch;
+import java.util.List;
 
 
 

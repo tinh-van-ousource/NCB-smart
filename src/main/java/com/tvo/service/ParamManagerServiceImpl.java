@@ -1,15 +1,13 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchParamManagerModel;
+import com.tvo.dao.ParamManagerDao;
+import com.tvo.dto.ParamManagerDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.ParamManager;
+import com.tvo.request.CreateParamManagerRequest;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,15 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchParamManagerModel;
-import com.tvo.dao.ParamManagerDao;
-import com.tvo.dto.ParamManagerDto;
-import com.tvo.model.ParamManager;
-import com.tvo.request.CreateParamManagerRequest;
-
-import lombok.AllArgsConstructor;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -118,7 +115,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 			return null;
 		}
 		ParamManager paramManager = ModelMapperUtils.map(request, ParamManager.class);
-		paramManager.setStatus(AppConstant.STATUS_ACTIVED);
+		paramManager.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(paramManagerDao.save(paramManager), ParamManager.class);
 	}
 
@@ -127,7 +124,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	public Boolean delete(String paramNo) {
 		if (!paramNo.isEmpty()) {
 			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
-			paramManager.setStatus(AppConstant.STATUS_DEACTIVED);
+			paramManager.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 			paramManagerDao.save(paramManager);
 			return true;
 		}
