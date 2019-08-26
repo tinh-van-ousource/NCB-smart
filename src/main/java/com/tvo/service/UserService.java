@@ -5,6 +5,7 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
+import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.controllerDto.searchModel;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
@@ -20,8 +21,6 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
     public User getCurrenLogin();
 
-    ContentResDto update(UserUpdateReqDto userDto);
-
     public Page<UserDto> findAllUser(Pageable pageable);
 
     public UserDto createUser(CreateUserRequest request);
@@ -32,5 +31,9 @@ public interface UserService {
 
     Boolean deleteUser(Long id);
 
+    ContentResDto update(UserUpdateReqDto userDto);
+
     Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto);
+
+    ContentResDto updateStatus(UserUpdateStatusReqDto userDto);
 }

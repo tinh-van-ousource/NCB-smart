@@ -1,15 +1,14 @@
 package com.tvo.service;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
 import com.tvo.request.UpdateNcbBranchRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * @author Thanglt

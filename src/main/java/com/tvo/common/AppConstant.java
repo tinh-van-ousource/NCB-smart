@@ -33,9 +33,6 @@ public class AppConstant {
     public static final int LIMIT_PAGE = 15;
     public static final int MAX_PAGE_ITEM_DISPLAY = 5;
 
-    public static final String STATUS_ACTIVED = "A";
-    public static final String STATUS_DEACTIVED = "D";
-
     public static final String RESOURCE_IMG = "C:\\upload\\card-img\\";
 
     public enum Status {

@@ -1,16 +1,13 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchMbProvisionModel;
+import com.tvo.dao.MbProvisionDao;
+import com.tvo.dto.MbProvisionDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.MbProvision;
+import com.tvo.request.CreateMbProvisionRequest;
+import com.tvo.request.UpdateMbProvisionRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,14 +16,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchMbProvisionModel;
-import com.tvo.dao.MbProvisionDao;
-import com.tvo.dto.MbProvisionDto;
-import com.tvo.model.MbProvision;
-import com.tvo.request.CreateMbProvisionRequest;
-import com.tvo.request.UpdateMbProvisionRequest;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MbProvisionServiceImpl implements MbProvisionService {
@@ -110,7 +108,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 	@Transactional(readOnly = false)
 	public MbProvisionDto create(CreateMbProvisionRequest request) {
 		MbProvision mbProvision = ModelMapperUtils.map(request, MbProvision.class);
-		mbProvision.setStatus(AppConstant.STATUS_ACTIVED);
+		mbProvision.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(mbProvisionDao.save(mbProvision), MbProvisionDto.class);
 	}
 
@@ -122,7 +120,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 			Optional<MbProvision> opt = mbProvisionDao.findById(id);
 			if (opt.isPresent()) {
 				mbProvision = opt.get();
-				mbProvision.setStatus(AppConstant.STATUS_DEACTIVED);
+				mbProvision.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				mbProvisionDao.save(mbProvision);
 				return true;
 			}

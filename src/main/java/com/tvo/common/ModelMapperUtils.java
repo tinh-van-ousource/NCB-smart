@@ -1,5 +1,14 @@
 package com.tvo.common;
 
+import com.tvo.common.AppConstant.Status;
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.Conditions;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MappingContext;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,16 +19,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-import org.modelmapper.Conditions;
-import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MappingContext;
-
-import com.tvo.common.AppConstant.Status;
 
 
 public class ModelMapperUtils {

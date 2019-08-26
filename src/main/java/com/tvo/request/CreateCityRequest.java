@@ -1,8 +1,5 @@
 package com.tvo.request;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

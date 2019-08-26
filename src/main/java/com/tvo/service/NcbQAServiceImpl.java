@@ -1,17 +1,13 @@
 package com.tvo.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchNcbQAModel;
+import com.tvo.dao.NcbQADao;
+import com.tvo.dto.NcbQADto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbQA;
+import com.tvo.request.CreateNcbQARequest;
+import com.tvo.request.UpdateNcbQARequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,14 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNcbQAModel;
-import com.tvo.dao.NcbQADao;
-import com.tvo.dto.NcbQADto;
-import com.tvo.model.NcbQA;
-import com.tvo.request.CreateNcbQARequest;
-import com.tvo.request.UpdateNcbQARequest;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NcbQAServiceImpl implements NcbQAService {
@@ -105,7 +103,7 @@ public class NcbQAServiceImpl implements NcbQAService {
 	public NcbQADto create(CreateNcbQARequest request) {
 		NcbQA ncbQA = ModelMapperUtils.map(request, NcbQA.class);
 		ncbQA.setCreatedDate(LocalDateTime.now());
-		ncbQA.setStatus(AppConstant.STATUS_ACTIVED);
+		ncbQA.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(ncbQADao.save(ncbQA), NcbQADto.class);
 	}
 
@@ -132,7 +130,7 @@ public class NcbQAServiceImpl implements NcbQAService {
 			Optional<NcbQA> opt = ncbQADao.findById(id);
 			if (opt.isPresent()) {
 				ncbQA = opt.get();
-				ncbQA.setStatus(AppConstant.STATUS_DEACTIVED);
+				ncbQA.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				ncbQADao.save(ncbQA);
 				return true;
 			}

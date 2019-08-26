@@ -3,10 +3,9 @@
  */
 package com.tvo.dao;
 
+import com.tvo.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.tvo.model.Role;
 
 /**
  * @author Ace

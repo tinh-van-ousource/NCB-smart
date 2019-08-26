@@ -3,15 +3,14 @@
  */
 package com.tvo.service;
 
-import java.util.Optional;
-
+import com.tvo.dao.AppUserDAO;
+import com.tvo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.tvo.dao.AppUserDAO;
-import com.tvo.model.User;
+import java.util.Optional;
 
 /**
  * @author Ace

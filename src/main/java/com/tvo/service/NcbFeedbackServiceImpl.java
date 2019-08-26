@@ -1,17 +1,13 @@
 package com.tvo.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchNcbFeedbackModel;
+import com.tvo.dao.NcbFeedbackDao;
+import com.tvo.dto.NcbFeedbackDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbFeedback;
+import com.tvo.request.CreateNcbFeedbackRequest;
+import com.tvo.request.UpdateNcbFeedbackRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,14 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNcbFeedbackModel;
-import com.tvo.dao.NcbFeedbackDao;
-import com.tvo.dto.NcbFeedbackDto;
-import com.tvo.model.NcbFeedback;
-import com.tvo.request.CreateNcbFeedbackRequest;
-import com.tvo.request.UpdateNcbFeedbackRequest;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NcbFeedbackServiceImpl implements NcbFeedbackService {
@@ -111,7 +109,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 	public NcbFeedbackDto create(CreateNcbFeedbackRequest request) {
 		NcbFeedback ncbFeedback = ModelMapperUtils.map(request, NcbFeedback.class);
 		ncbFeedback.setCreatedDate(LocalDateTime.now());
-		ncbFeedback.setStatus(AppConstant.STATUS_ACTIVED);
+		ncbFeedback.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		return ModelMapperUtils.map(ncbFeedbackDao.save(ncbFeedback), NcbFeedbackDto.class);
 	}
 
@@ -138,7 +136,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
 			Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
 			if (opt.isPresent()) {
 				ncbFeedback = opt.get();
-				ncbFeedback.setStatus(AppConstant.STATUS_DEACTIVED);
+				ncbFeedback.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				ncbFeedbackDao.save(ncbFeedback);
 				return true;
 			}
