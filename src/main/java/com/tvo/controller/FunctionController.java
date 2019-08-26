@@ -31,7 +31,7 @@ public class FunctionController {
 		public ResponeData<FunctionDto> createBranch(@ModelAttribute CreateFunctionRequest request) {
 		FunctionDto dto = functionService.createFunction(request);
 		if(dto == null) {
-			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<FunctionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}

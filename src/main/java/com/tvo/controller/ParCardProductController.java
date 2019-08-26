@@ -73,7 +73,7 @@ public class ParCardProductController {
 	@GetMapping(value = "detail")
 	public ResponeData<ParCardProductDto> detail(@RequestParam String prdcode) {
 		if (StringUtils.isEmpty(prdcode.trim())) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		ParCardProduct parCardProduct = parCardProductService.findPrdcode(prdcode);
@@ -94,8 +94,8 @@ public class ParCardProductController {
 			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
 					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
 		} catch (Exception e) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_MESSAGE,
-					AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_MESSAGE,
+					AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 	}
 
@@ -111,8 +111,8 @@ public class ParCardProductController {
 			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
 					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
 		} catch (Exception e) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERORR_MESSAGE,
-					AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_MESSAGE,
+					AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 	}
 

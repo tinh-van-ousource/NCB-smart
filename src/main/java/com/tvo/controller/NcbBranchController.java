@@ -51,7 +51,7 @@ public class NcbBranchController {
 	@GetMapping(value = "detail")
 	public ResponeData<NcbBranchDto> detail(@RequestParam String departCode) {
 		if (StringUtils.isEmpty(departCode.trim())) {
-			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
 		NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
@@ -64,7 +64,7 @@ public class NcbBranchController {
 	public ResponeData<NcbBranchDto> create(@RequestBody CreateNcbBranchRequest request) {
 		NcbBranchDto ncbBranch = ncbBranchService.create(request);
 		if (ncbBranch == null) {
-			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBranch);
@@ -74,7 +74,7 @@ public class NcbBranchController {
 	public ResponeData<NcbBranchDto> update(@RequestBody UpdateNcbBranchRequest request) {
 		NcbBranchDto ncbBranch = ncbBranchService.update(request);
 		if (ncbBranch == null) {
-			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbBranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBranch);
@@ -86,6 +86,6 @@ public class NcbBranchController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }

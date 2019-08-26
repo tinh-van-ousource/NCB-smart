@@ -1,8 +1,5 @@
 package com.tvo.enums;
 
-/**
- * @author NgocDC
- */
 public enum ServiceRegisterSearchType {
     CARD(1),
     ACCOUNT(2);

@@ -7,9 +7,6 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-/**
- * @author NgocDC
- */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)

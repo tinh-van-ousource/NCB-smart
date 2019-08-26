@@ -5,9 +5,6 @@ import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.ServiceRegisterGetDetailResDto;
 
-/**
- * @author NgocDC
- */
 public interface ServiceRegisterService {
     ContentResDto getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto);
 

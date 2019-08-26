@@ -43,7 +43,7 @@ public class NcbQAController {
 	@GetMapping(value = "detail")
 	public ResponeData<NcbQADto> detail(@RequestParam Long id) {
 		if (id == null) {
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		NcbQADto result = ncbQAService.findById(id);
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
@@ -53,7 +53,7 @@ public class NcbQAController {
 	public ResponeData<NcbQADto> create(@RequestBody CreateNcbQARequest request) {
 		NcbQADto ncbQADto = ncbQAService.create(request);
 		if (ncbQADto == null) {
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
@@ -62,7 +62,7 @@ public class NcbQAController {
 	public ResponeData<NcbQADto> update(@RequestBody UpdateNcbQARequest request) {
 		NcbQADto ncbQADto = ncbQAService.update(request);
 		if (ncbQADto == null) {
-			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
@@ -73,6 +73,6 @@ public class NcbQAController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }

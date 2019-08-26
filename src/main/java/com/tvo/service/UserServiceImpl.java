@@ -7,6 +7,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
+import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.searchModel;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
@@ -47,8 +48,8 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	JpaConfig jpaConfig;
+    @Autowired
+    JpaConfig jpaConfig;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -78,22 +79,6 @@ public class UserServiceImpl implements UserService {
             String username = principal.toString();
             return userDao.findByUserName(username);
         }
-    }
-
-    @Override
-    public UserDto update(UserDto userDto) {
-        User user = userDao.findByUserName(userDto.getUserName());
-        if (user == null) {
-            return null;
-        }
-        if (userDto.getEmail() != null) {
-            user.setEmail(userDto.getEmail());
-        }
-        if (userDto.getFullName() != null) {
-            user.setFullName(userDto.getFullName());
-        }
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return ModelMapperUtils.map(userDao.save(user), UserDto.class);
     }
 
     @Override
@@ -203,32 +188,64 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
-		Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
-		// current auditor must exist
-		if (currentUserId.isPresent()) {
-			User user = userDao.findByUserName(userChangePasswordReqDto.getUsername());
-			// edited user must exist
-			if (user != null) {
-				// edited username must equal current auditor
-				if (!currentUserId.get().equals(user.getUserId())) {
-					return false;
-				}
+        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
+        // current auditor must exist
+        if (currentUserId.isPresent()) {
+            User user = userDao.findByUserName(userChangePasswordReqDto.getUsername());
+            // edited user must exist
+            if (user != null) {
+                // edited username must equal current auditor
+                if (!currentUserId.get().equals(user.getUserId())) {
+                    return false;
+                }
 
-				// old password must match input old password
-				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-				boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
-				if (!isMatch) {
-					return false;
-				}
+                // old password must match input old password
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
+                if (!isMatch) {
+                    return false;
+                }
 
-				user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
-				userDao.save(user);
-				return true;
-			}
-			return false;
-		} else {
-			return false;
-		}
+                user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
+                userDao.save(user);
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public ContentResDto update(UserUpdateReqDto userDto) {
+        ContentResDto contentResDto = new ContentResDto();
+        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
+        // current auditor must exist
+        if (currentUserId.isPresent()) {
+            User user = userDao.findByUserName(userDto.getUsername());
+            // edited user must exist
+            if (user != null) {
+                // edited username must equal current auditor
+                if (!currentUserId.get().equals(user.getUserId())) {
+                    contentResDto.setContent(false);
+                    return contentResDto;
+                }
+
+                user.setBranchCode(userDto.getBranchCode());
+                user.setTransactionCode(userDto.getPosCode());
+                user.setFullName(userDto.getFullName());
+                user.setEmail(userDto.getEmail());
+                user.setPhone(userDto.getPhone());
+
+                contentResDto.setContent(userDao.save(user));
+                return contentResDto;
+            }
+            contentResDto.setContent(false);
+            return contentResDto;
+        } else {
+            contentResDto.setContent(false);
+            return contentResDto;
+        }
     }
 
 }

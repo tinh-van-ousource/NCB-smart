@@ -7,9 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-/**
- * @author NgocDC
- */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)

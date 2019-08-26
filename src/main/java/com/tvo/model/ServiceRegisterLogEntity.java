@@ -9,9 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * @author NgocDC
- */
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP_LOG")
 @NoArgsConstructor

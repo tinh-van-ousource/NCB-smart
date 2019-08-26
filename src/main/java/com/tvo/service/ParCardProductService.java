@@ -147,7 +147,7 @@ public class ParCardProductService {
 			parCardProductDao.saveAndFlush(parCardProduct);
 			return AppConstant.SUCCSESSFUL_CODE;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return AppConstant.SYSTEM_ERROR_CODE;
 	}
 
 	public String storeFile(MultipartFile file) {

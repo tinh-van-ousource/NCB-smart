@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.apache.logging.log4j.message.ReusableMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,15 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.searchFunction;
-import com.tvo.dao.BankTransferDAO;
 import com.tvo.dao.FunctionDAO;
-import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.FunctionDto;
-import com.tvo.model.BankTransfer;
-import com.tvo.model.City;
 import com.tvo.model.Function;
-import com.tvo.model.ParCardProduct;
-import com.tvo.request.CreateBankTransferRequest;
 import com.tvo.request.CreateFunctionRequest;
 
 @Service
@@ -137,6 +131,6 @@ public class FunctionServiceImpl implements FunctionService {
 			functionDao.saveAndFlush(function);
 			return AppConstant.SUCCSESSFUL_CODE;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return AppConstant.SYSTEM_ERROR_CODE;
 	}
 }

@@ -42,7 +42,7 @@ public class NcbBannerController {
 	@GetMapping(value = "detail")
 	public ResponeData<NcbBannerDto> detail(@RequestParam Long id) {
 		if (id == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		NcbBannerDto result = ncbBannerService.findById(id);
 		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -53,7 +53,7 @@ public class NcbBannerController {
 	public ResponeData<NcbBannerDto> create(@RequestBody CreateNcbBannerRequest request) {
 		NcbBannerDto ncbBanner = ncbBannerService.create(request);
 		if (ncbBanner == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBanner);
@@ -63,7 +63,7 @@ public class NcbBannerController {
 	public ResponeData<NcbBannerDto> update(@RequestBody UpdateNcbBannerRequest request) {
 		NcbBannerDto ncbBanner = ncbBannerService.update(request);
 		if (ncbBanner == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbBanner);
@@ -75,6 +75,6 @@ public class NcbBannerController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }

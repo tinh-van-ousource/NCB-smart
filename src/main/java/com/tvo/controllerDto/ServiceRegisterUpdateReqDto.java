@@ -3,9 +3,6 @@ package com.tvo.controllerDto;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author NgocDC
- */
 @Setter
 @Getter
 public class ServiceRegisterUpdateReqDto {

@@ -7,9 +7,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-/**
- * @author NgocDC
- */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)

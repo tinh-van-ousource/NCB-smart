@@ -10,7 +10,6 @@ package com.tvo.common;
 public class AppConstant {
     public static final String LOGIN_FAILURE_CODE = "401";
     public static final String SUCCSESSFUL_CODE = "200";
-    public static final String ERROR_CODE = "204";
 	public static final String ACCOUNT_DEACTIVATED_CODE = "402";
     public static final String ACCESS_DENIED_CODE = "403";
     public static final String ACCESS_DENIED_STATUS = "access denied";
@@ -28,8 +27,8 @@ public class AppConstant {
     public static final String SYSTEM_SUCCESS_CODE = "00";
     public static final String SYSTEM_SUCCESS_MESSAGE = "Successful";
 
-    public static final String SYSTEM_ERORR_CODE = "99";
-    public static final String SYSTEM_ERORR_MESSAGE = "System error";
+    public static final String SYSTEM_ERROR_CODE = "99";
+    public static final String SYSTEM_ERROR_MESSAGE = "System error";
 
     public static final int LIMIT_PAGE = 15;
     public static final int MAX_PAGE_ITEM_DISPLAY = 5;

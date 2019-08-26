@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchCity;
 import com.tvo.controllerDto.searchProvider;
-import com.tvo.dto.CityDto;
 import com.tvo.dto.ProviderDto;
-import com.tvo.request.CreateCityRequest;
 import com.tvo.request.CreateProviderRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ProviderServiceImpl;
@@ -40,7 +37,7 @@ public class ProviderController {
 	public ResponeData<ProviderDto> createProvider(@ModelAttribute CreateProviderRequest request) {
 		ProviderDto dto = providerServiceImpl.createProvider(request);
 		if(dto == null) {
-			return new ResponeData<ProviderDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<ProviderDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<ProviderDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
