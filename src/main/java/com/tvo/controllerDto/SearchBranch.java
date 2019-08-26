@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class searchBranch {
+public class SearchBranch {
 private Long branchId;
 	
 	private String branchCode;

@@ -9,7 +9,7 @@ import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.controllerDto.searchModel;
+import com.tvo.controllerDto.SearchModel;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.dao.BranchDao;
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> searchUser(searchModel searchModel, Pageable pageable) {
+    public Page<UserDto> searchUser(SearchModel searchModel, Pageable pageable) {
         final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<User> query = cb.createQuery(User.class);
         Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         return new PageImpl<>(UserDtos, pageable, total);
     }
 
-    private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchModel resource) {
+    private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchModel resource) {
         final Root<User> rootPersist = query.from(User.class);
         final List<Predicate> predicates = new ArrayList<Predicate>(6);
         if (resource.getBranchCode() != null

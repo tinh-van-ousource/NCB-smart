@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Setter
 @Getter
-public class searchBankTransfer {
+public class SearchBankTransfer {
 	private String bankCode;
 
 	private String bankName;

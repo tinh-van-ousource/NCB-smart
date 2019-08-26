@@ -1,7 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchBankTransfer;
+import com.tvo.controllerDto.SearchBankTransfer;
 import com.tvo.dto.BankTransferDto;
 import com.tvo.request.CreateBankTransferRequest;
 import com.tvo.response.ResponeData;
@@ -24,7 +24,7 @@ public class BankTransferController {
 		return new ResponeData<List<BankTransferDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, bankService.findAll());
 	};
 	@GetMapping(value = "/searchBankTransfer")
-	public ResponeData<Page<BankTransferDto>> searchCity(@ModelAttribute searchBankTransfer searchBankTransfer, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<BankTransferDto>> searchCity(@ModelAttribute SearchBankTransfer searchBankTransfer, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<BankTransferDto> BankTransferDtos = bankService.searchBankTransfer(searchBankTransfer, pageable);
 		return new ResponeData<Page<BankTransferDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, BankTransferDtos) ;
 	}

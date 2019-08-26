@@ -1,7 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchProvider;
+import com.tvo.controllerDto.SearchProvider;
 import com.tvo.dao.ProviderDAO;
 import com.tvo.dto.ProviderDto;
 import com.tvo.model.City;
@@ -50,7 +50,7 @@ public class ProviderServiceImpl implements ProviderService{
 		return ModelMapperUtils.map(save, ProviderDto.class);
 	}
 	@Override
-	public Page<ProviderDto> searchProvider(searchProvider searchProvider, Pageable pageable) {
+	public Page<ProviderDto> searchProvider(SearchProvider searchProvider, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Provider> query = cb.createQuery(Provider.class);
 		Object[] queryObjs = this.createProviderRootPersist(cb, query, searchProvider);
@@ -71,7 +71,7 @@ public class ProviderServiceImpl implements ProviderService{
 	    Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(ProviderDtos, pageable, total);
 	}
-	public Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchProvider resource) {
+	public Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchProvider resource) {
 		final Root<Provider> rootPersist = query.from(Provider.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getProviderCode() != null	

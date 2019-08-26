@@ -1,7 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchPromotion;
+import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.PromotionsServiceImpl;
@@ -20,7 +20,7 @@ public class PromotionsController {
 	@Autowired 	
 	PromotionsServiceImpl promotionsService; 
 	@GetMapping(value = "/searchPromotions")
-	public ResponeData<Page<PromotionsDto>> searchFunction(@ModelAttribute searchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<PromotionsDto>> searchFunction(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<PromotionsDto> PromotionsDtos = promotionsService.searchPromotion(searchPromotion, pageable);
 		return new ResponeData<Page<PromotionsDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, PromotionsDtos) ;
 	}

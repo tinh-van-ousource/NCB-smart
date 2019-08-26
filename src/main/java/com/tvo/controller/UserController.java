@@ -7,7 +7,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.controllerDto.searchModel;
+import com.tvo.controllerDto.SearchModel;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
 import com.tvo.request.CreateUserRequest;
@@ -35,7 +35,7 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping(value = "/searchUser")
-    public ResponeData<Page<UserDto>> searchUser(@ModelAttribute searchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+    public ResponeData<Page<UserDto>> searchUser(@ModelAttribute SearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<UserDto> UserDtos = userService.searchUser(searchModel, pageable);
         return new ResponeData<Page<UserDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
     }

@@ -202,6 +202,58 @@ paths:
         400:
           description: "Bad request"
 
+  /user/update-user:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Info"
+      description: "Change User Info"
+      operationId: "changeUserInfo"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/update-user-status:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Status"
+      description: "Change User Status"
+      operationId: "changeUserStatus"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserUpdateStatusReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdateStatusReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
 definitions:
   ServiceRegisterSearchCardResDto:
     type: "object"
@@ -459,4 +511,36 @@ definitions:
       newPassword:
         type: string
         description: ""
+
+  UserUpdateReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      branchCode:
+        type: string
+        description: ""
+      posCode:
+        type: string
+        description: ""
+      fullName:
+        type: string
+        description: ""
+      email:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+
+  UserUpdateStatusReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: "A or D"
       

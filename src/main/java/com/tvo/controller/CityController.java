@@ -1,7 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchCity;
+import com.tvo.controllerDto.SearchCity;
 import com.tvo.dto.CityDto;
 import com.tvo.request.CreateCityRequest;
 import com.tvo.response.ResponeData;
@@ -34,7 +34,7 @@ public class CityController {
 		return new ResponeData<CityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 	@GetMapping(value = "/searchCity")
-	public ResponeData<Page<CityDto>> searchCity(@ModelAttribute searchCity searchCity, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<CityDto>> searchCity(@ModelAttribute SearchCity searchCity, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<CityDto> CityDtos = cityService.searchCity(searchCity, pageable);
 		return new ResponeData<Page<CityDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, CityDtos) ;
 	}
