@@ -60,4 +60,7 @@ public class User extends AbstractEntity implements Serializable {
 
     @Column(name = "USER_CODE")
     private String userCode;
+
+    @Column(name = "LOGIN_COUNT")
+    private Long loginCount;
 }

@@ -1,10 +1,9 @@
 /**
  *
  */
-package com.tvo.filler;
+package com.tvo.filter;
 
 import com.google.gson.Gson;
-import com.tvo.common.AppConstant;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
 import com.tvo.service.TokenAuthenticationService;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,13 +33,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException, IOException, ServletException {
+            throws AuthenticationException, IOException {
         User user = new Gson().fromJson(request.getReader(), User.class);
         String userName = user.getUserName();
         String password = user.getPassword();
 
-        System.out.printf("JWTLoginFilter.attemptAuthentication: username/password= %s,%s", userName, password);
-        System.out.println();
+        System.out.println("JWTLoginFilter.attemptAuthentication: username = " + userName);
 
         return getAuthenticationManager()
                 .authenticate(new UsernamePasswordAuthenticationToken(userName, password, Collections.emptyList()));
@@ -49,21 +46,19 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+                                            Authentication authResult) throws IOException {
 
-        System.out.println("JWTLoginFilter.successfulAuthentication:");
         UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
+
+        System.out.println("JWTLoginFilter.successfulAuthentication: username = " + userDetails.getUsername());
+
         // Write Authorization to Headers of Response.
-        TokenAuthenticationService.addAuthentication(response, userDetails);
-
-        String authorizationString = response.getHeader(AppConstant.HEADER_STRING);
-
-        System.out.println("Authorization String=" + authorizationString);
+        TokenAuthenticationService.addAuthentication(response, userDetails, authResult);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
+                                              AuthenticationException failed) {
         TokenAuthenticationService.unsuccessfulAuthentication(response, failed);
     }
 

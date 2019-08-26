@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.tvo.filler;
+package com.tvo.filter;
 
 import com.tvo.service.TokenAuthenticationService;
 import org.springframework.security.core.Authentication;

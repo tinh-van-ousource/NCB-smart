@@ -6,10 +6,10 @@ package com.tvo.service;
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
+import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.dao.BranchDao;
@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        user.setLoginCount(0L);
 
         User save = userDao.save(user);
         return ModelMapperUtils.map(save, UserDto.class);

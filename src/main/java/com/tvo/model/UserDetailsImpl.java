@@ -3,6 +3,7 @@
  */
 package com.tvo.model;
 
+import com.tvo.enums.StatusActivate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -61,7 +62,7 @@ public class UserDetailsImpl implements UserDetails {
 	    @Override
 	    public boolean isEnabled() {
 	    	String userStatus = user.getStatus();
-			return userStatus.contentEquals("A");
+			return userStatus.contentEquals(StatusActivate.STATUS_ACTIVATED.getStatus());
 		}
 
 	    @Override

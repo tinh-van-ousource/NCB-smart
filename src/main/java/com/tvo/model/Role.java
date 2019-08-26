@@ -24,9 +24,8 @@ public class Role extends AbstractEntity  implements Serializable {
 	 */
 	private static final long serialVersionUID = 8912960400201534248L;
 	@Id
-	@SequenceGenerator(sequenceName = "AI_CMS_ROLE_SQ", name = "ai_cms_role_sq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_ROLE_SQ")
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(sequenceName = "AI_CMS_ROLE_SQ", allocationSize = 1, name = "AI_CMS_ROLE_SQ")
 	@Column(name = "ROLE_ID",insertable = false)
 	private Long roleId;
 

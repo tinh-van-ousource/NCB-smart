@@ -4,10 +4,10 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
 import com.tvo.request.CreateUserRequest;
@@ -57,8 +57,8 @@ public class UserController {
 
     @GetMapping(value = "/{id}/detail")
     public ResponeData<ContentResDto> getUserDetail(@PathVariable("id") Long id) {
-        ContentResDto UserDtos = userService.getUserDetail(id);
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
+        ContentResDto contentResDto = userService.getUserDetail(id);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
     }
 
     @DeleteMapping(value = "/{id}/delete")
