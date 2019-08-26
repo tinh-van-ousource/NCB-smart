@@ -1,0 +1,546 @@
+swagger: "2.0"
+info:
+  description: "NCB Smart API"
+  version: "1.0.0"
+  title: "NCB Smart API"
+host: "localhost"
+tags:
+- name: "Service Register"
+  description: "Service Register Api"
+- name: "User"
+  description: "User Api"
+schemes:
+- "https"
+- "http"
+paths:
+  /service-register/search:
+    get:
+      tags:
+      - "Service Register"
+      summary: "Search Service Register"
+      description: "Search Service Register"
+      operationId: "searchServiceRegister"
+      produces:
+      - "application/json"
+      parameters:
+        - name: comp_code
+          in: query
+          description: "ma chi nhanh - phong giao dich"
+          required: false
+          type: string
+        - name: id_card
+          in: query
+          description: "cmnd - ho chieu"
+          required: false
+          type: string
+        - name: type
+          in: query
+          description: "1: CARD, 2: ACCOUNT"
+          required: false
+          type: integer
+        - name: service
+          in: query
+          description: "1: CARD, 2: LOAN, 3: ACCOUNT, 4: SMS"
+          required: false
+          type: integer
+        - name: status
+          in: query
+          description: "1: NEW, 2: PROCESSING, 3: CLOSED"
+          required: false
+          type: integer
+        - name: from_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: to_date
+          in: query
+          description: "YYYYMMDD"
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+        - name: size
+          in: query
+          description: "Min: 1"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterSearchCardContentResDto"
+        400:
+          description: "Bad request"
+
+  /service-register/{id}/detail:
+    get:
+      tags:
+      - "Service Register"
+      summary: "Get Service Register Detail"
+      description: "Get Service Register Detail"
+      operationId: "getServiceRegisterDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /service-register/{service_id}/update:
+    patch:
+      tags:
+      - "Service Register"
+      summary: "Update Service Register Detail"
+      description: "Update Service Register Detail"
+      operationId: "updateServiceRegisterDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: service_id
+          in: path
+          required: true
+          type: string
+        - in: "body"
+          name: "ServiceRegisterUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRegisterUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceRegisterGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/{user_id}/detail:
+    get:
+      tags:
+      - "User"
+      summary: "Get User Detail"
+      description: "Get User Detail"
+      operationId: "getUserDetail"
+      produces:
+      - "application/json"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/{user_id}/delete:
+    delete:
+      tags:
+      - "User"
+      summary: "Delete User"
+      description: "Delete User"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: boolean
+        400:
+          description: "Bad request"
+
+  /user/change-password:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Passwprd"
+      description: "Change User Passwprd"
+      operationId: "changeUserPassword"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserChangePasswordReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserChangePasswordReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: boolean
+        400:
+          description: "Bad request"
+
+  /user/update-user:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Info"
+      description: "Change User Info"
+      operationId: "changeUserInfo"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /user/update-user-status:
+    patch:
+      tags:
+      - "User"
+      summary: "Change User Status"
+      description: "Change User Status"
+      operationId: "changeUserStatus"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "UserUpdateStatusReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdateStatusReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+definitions:
+  ServiceRegisterSearchCardResDto:
+    type: "object"
+    properties:
+      id:
+        type: integer
+        description: ""
+      comp_code:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      customer_name:
+        type: string
+        description: ""
+      cif:
+        type: string
+        description: ""
+      id_card:
+        type: string
+        description: ""
+      id_card_issue_date:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      service:
+        type: string
+        description: ""
+      card_no:
+        type: string
+        description: ""
+      acct_no:
+        type: string
+        description: ""
+      reissue_reason:
+        type: string
+        description: ""
+      product:
+        type: string
+        description: ""
+      card_class:
+        type: string
+        description: ""
+      fee:
+        type: integer
+        description: ""
+      salary_code:
+        type: string
+        description: ""
+      salary_bank:
+        type: string
+        description: ""
+      credit_limit:
+        type: integer
+        description: ""
+      monthly_income:
+        type: integer
+        description: ""
+      monthly_spend:
+        type: integer
+        description: ""
+      auto_debit:
+        type: string
+        description: ""
+      repay_mode:
+        type: string
+        description: ""
+      auto_debit_bank_acct:
+        type: string
+        description: ""
+      request_date:
+        type: string
+        description: ""
+      completed_date:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      description:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
+      user_register:
+        type: string
+        description: ""
+
+  ServiceRegisterGetDetailResDto:
+    type: "object"
+    properties:
+      id:
+        type: integer
+        description: ""
+      customer_name:
+        type: string
+        description: ""
+      id_card:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      service:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      log:
+        $ref: "#/definitions/ServiceRegisterLogResDto"
+
+  ServiceRegisterLogResDto:
+    type: "object"
+    properties:
+      datetime:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
+      new_value:
+        type: string
+        description: ""
+
+  ServiceRegisterUpdateReqDto:
+    type: "object"
+    properties:
+      comp_code:
+        type: string
+        description: ""
+      comp_name:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      comment:
+        type: string
+        description: ""
+      user_id:
+        type: string
+        description: ""
+
+  ServiceRegisterSearchCardContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/ServiceRegisterSearchCardResDto"
+      total:
+        type: number
+        description: ""
+
+  ServiceRegisterGetDetailContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/ServiceRegisterGetDetailResDto"
+
+  UserResDto:
+    type: "object"
+    properties:
+      createdDate:
+        type: string
+        description: ""
+      createdBy:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+      userId:
+        type: number
+        description: ""
+      userName:
+        type: string
+        description: ""
+      fullName:
+        type: string
+        description: ""
+      password:
+        type: string
+        description: ""
+      branchCode:
+        type: string
+        description: ""
+      posCode:
+        type: string
+        description: ""
+      passChange:
+        type: string
+        description: ""
+      role:
+        $ref: "#/definitions/RoleDto"
+      email:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      countLoginFail:
+        type: number
+        description: ""
+      userCode:
+        type: string
+        description: ""
+      token:
+        type: string
+        description: ""
+
+  UserGetDetailContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/UserResDto"
+
+  RoleDto:
+    type: "object"
+    properties:
+      createdDate:
+        type: string
+        description: ""
+      createdBy:
+        type: number
+        description: ""
+      status:
+        type: string
+        description: ""
+      roleId:
+        type: number
+        description: ""
+      roleName:
+        type: string
+        description: ""
+      description:
+        type: string
+        description: ""
+
+  UserChangePasswordReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      oldPassword:
+        type: string
+        description: ""
+      newPassword:
+        type: string
+        description: ""
+
+  UserUpdateReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      branchCode:
+        type: string
+        description: ""
+      posCode:
+        type: string
+        description: ""
+      fullName:
+        type: string
+        description: ""
+      email:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+
+  UserUpdateStatusReqDto:
+    type: "object"
+    properties:
+      username:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: "A or D"
+      

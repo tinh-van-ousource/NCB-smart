@@ -1,9 +1,8 @@
 package com.tvo.model;
 
-import java.util.Date;
-
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+import java.util.Date;
 
 @StaticMetamodel(DatUserProfile.class)
 public class DatUserProfile_ {

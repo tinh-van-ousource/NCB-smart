@@ -1,28 +1,18 @@
 package com.tvo.controller;
 
-import java.util.List;
-
+import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dto.CityDto;
+import com.tvo.request.CreateCityRequest;
+import com.tvo.response.ResponeData;
+import com.tvo.service.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchCity;
-import com.tvo.controllerDto.searchModel;
-import com.tvo.dto.BranchDto;
-import com.tvo.dto.CityDto;
-import com.tvo.dto.UserDto;
-import com.tvo.request.CreateCityRequest;
-import com.tvo.request.CreateUserRequest;
-import com.tvo.response.ResponeData;
-import com.tvo.service.CityService;
-import com.tvo.service.CityServiceImpl;
+import java.util.List;
 
 
 @RestController
@@ -39,12 +29,12 @@ public class CityController {
 	public ResponeData<CityDto> createUser(@ModelAttribute CreateCityRequest request) {
 		CityDto dto = cityService.createCity(request);
 		if(dto == null) {
-			return new ResponeData<CityDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<CityDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<CityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 	@GetMapping(value = "/searchCity")
-	public ResponeData<Page<CityDto>> searchCity(@ModelAttribute searchCity searchCity, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<CityDto>> searchCity(@ModelAttribute SearchCity searchCity, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<CityDto> CityDtos = cityService.searchCity(searchCity, pageable);
 		return new ResponeData<Page<CityDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, CityDtos) ;
 	}

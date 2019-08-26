@@ -3,14 +3,13 @@
  */
 package com.tvo.service;
 
-import java.util.List;
-
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dto.CityDto;
+import com.tvo.request.CreateCityRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.tvo.controllerDto.searchCity;
-import com.tvo.dto.CityDto;
-import com.tvo.request.CreateCityRequest;
+import java.util.List;
 
 
 /**
@@ -21,5 +20,5 @@ import com.tvo.request.CreateCityRequest;
 public interface CityService {
 	public List<CityDto> findAll();
 	public CityDto createCity(CreateCityRequest request) ;
-	public Page<CityDto> searchCity(searchCity searchCity, Pageable pageable);
+	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable);
 }

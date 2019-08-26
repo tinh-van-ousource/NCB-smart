@@ -3,8 +3,17 @@
  */
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dao.CityDao;
+import com.tvo.dto.CityDto;
+import com.tvo.model.City;
+import com.tvo.request.CreateCityRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,22 +22,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchCity;
-import com.tvo.controllerDto.searchModel;
-import com.tvo.dao.CityDao;
-import com.tvo.dto.CityDto;
-import com.tvo.dto.UserDto;
-import com.tvo.model.City;
-import com.tvo.model.User;
-import com.tvo.request.CreateCityRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ace
@@ -50,7 +45,7 @@ public class CityServiceImpl implements CityService{
 		List<CityDto> ctdt = ModelMapperUtils.mapAll(cityDao.findAll(), CityDto.class);
 		return ctdt;
 	}
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchCity resource) {
+	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchCity resource) {
 		final Root<City> rootPersist = query.from(City.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getCityCode() != null	
@@ -90,7 +85,7 @@ public class CityServiceImpl implements CityService{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public Page<CityDto> searchCity(searchCity searchCity, Pageable pageable) {
+	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<City> query = cb.createQuery(City.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchCity);

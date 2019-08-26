@@ -1,10 +1,14 @@
 package com.tvo.request;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CreateParamManagerRequest {
 
+	@NonNull
 	private String paramNo;
 
 	private String paramName;
@@ -13,5 +17,4 @@ public class CreateParamManagerRequest {
 
 	private String note;
 
-	private String status;
 }

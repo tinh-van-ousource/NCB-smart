@@ -1,13 +1,11 @@
 package com.tvo.controllerDto;
 
-import javax.persistence.Column;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class searchProvider {
+public class SearchProvider {
 
 	private String providerId;
 	

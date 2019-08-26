@@ -1,7 +1,17 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchProvider;
+import com.tvo.dao.ProviderDAO;
+import com.tvo.dto.ProviderDto;
+import com.tvo.model.City;
+import com.tvo.model.Provider;
+import com.tvo.request.CreateProviderRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,23 +20,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchCity;
-import com.tvo.controllerDto.searchProvider;
-import com.tvo.dao.ProviderDAO;
-import com.tvo.dto.CityDto;
-import com.tvo.dto.ProviderDto;
-import com.tvo.model.City;
-import com.tvo.model.Provider;
-import com.tvo.model.User;
-import com.tvo.request.CreateProviderRequest;
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class ProviderServiceImpl implements ProviderService{
 	@Autowired
@@ -55,7 +50,7 @@ public class ProviderServiceImpl implements ProviderService{
 		return ModelMapperUtils.map(save, ProviderDto.class);
 	}
 	@Override
-	public Page<ProviderDto> searchProvider(searchProvider searchProvider, Pageable pageable) {
+	public Page<ProviderDto> searchProvider(SearchProvider searchProvider, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Provider> query = cb.createQuery(Provider.class);
 		Object[] queryObjs = this.createProviderRootPersist(cb, query, searchProvider);
@@ -76,7 +71,7 @@ public class ProviderServiceImpl implements ProviderService{
 	    Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(ProviderDtos, pageable, total);
 	}
-	public Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchProvider resource) {
+	public Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchProvider resource) {
 		final Root<Provider> rootPersist = query.from(Provider.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getProviderCode() != null	

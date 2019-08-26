@@ -1,13 +1,13 @@
 package com.tvo.controllerDto;
 
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 @Setter
 @Getter
-public class searchFunction {
+public class SearchFunction {
 private Long id;
 	
 	private String idName;

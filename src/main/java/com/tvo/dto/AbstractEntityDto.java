@@ -3,12 +3,11 @@
  */
 package com.tvo.dto;
 
-import java.util.Date;
-
 import com.tvo.common.AppConstant;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * @author Ace

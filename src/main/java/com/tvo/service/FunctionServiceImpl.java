@@ -1,7 +1,18 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.tvo.common.AppConstant;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dao.FunctionDAO;
+import com.tvo.dto.FunctionDto;
+import com.tvo.model.Function;
+import com.tvo.request.CreateFunctionRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,27 +21,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.apache.logging.log4j.message.ReusableMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchFunction;
-import com.tvo.dao.BankTransferDAO;
-import com.tvo.dao.FunctionDAO;
-import com.tvo.dto.BankTransferDto;
-import com.tvo.dto.FunctionDto;
-import com.tvo.model.BankTransfer;
-import com.tvo.model.City;
-import com.tvo.model.Function;
-import com.tvo.model.ParCardProduct;
-import com.tvo.request.CreateBankTransferRequest;
-import com.tvo.request.CreateFunctionRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -44,7 +36,7 @@ public class FunctionServiceImpl implements FunctionService {
 	FunctionDAO functionDao;
 
 	@Override
-	public Page<FunctionDto> searchFunction(searchFunction searchFunction, Pageable pageable) {
+	public Page<FunctionDto> searchFunction(SearchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
@@ -65,7 +57,7 @@ public class FunctionServiceImpl implements FunctionService {
 		return new PageImpl<>(FunctionDtos, pageable, total);
 	}
 
-	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchFunction resource) {
+	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchFunction resource) {
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 
@@ -137,6 +129,6 @@ public class FunctionServiceImpl implements FunctionService {
 			functionDao.saveAndFlush(function);
 			return AppConstant.SUCCSESSFUL_CODE;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return AppConstant.SYSTEM_ERROR_CODE;
 	}
 }

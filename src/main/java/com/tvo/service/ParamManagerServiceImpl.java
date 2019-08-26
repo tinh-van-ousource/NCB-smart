@@ -1,15 +1,13 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchParamManagerModel;
+import com.tvo.dao.ParamManagerDao;
+import com.tvo.dto.ParamManagerDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.ParamManager;
+import com.tvo.request.CreateParamManagerRequest;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,15 +17,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchParamManagerModel;
-import com.tvo.dao.ParamManagerDao;
-import com.tvo.dto.ParamManagerDto;
-import com.tvo.model.ParamManager;
-import com.tvo.request.CreateParamManagerRequest;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Autowired
@@ -35,11 +35,6 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Autowired
 	private EntityManager entityManager;
-
-	public ParamManagerServiceImpl(ParamManagerDao paramManagerDao, EntityManager entityManager) {
-		this.paramManagerDao = paramManagerDao;
-		this.entityManager = entityManager;
-	}
 
 	@Override
 	public List<ParamManagerDto> findAll() {
@@ -49,7 +44,11 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	public ParamManager findByParamNo(String paramNo) {
-		return paramManagerDao.findByParamNo(paramNo);
+		ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
+		if (paramManager == null) {
+			return new ParamManager();
+		}
+		return paramManager;
 	}
 
 	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
@@ -115,20 +114,21 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		if (!ObjectUtils.isEmpty(findByParamNo)) {
 			return null;
 		}
-		ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
-		return ModelMapperUtils.map(save, ParamManager.class);
+		ParamManager paramManager = ModelMapperUtils.map(request, ParamManager.class);
+		paramManager.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+		return ModelMapperUtils.map(paramManagerDao.save(paramManager), ParamManager.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public String delete(String paramNo) {
+	public Boolean delete(String paramNo) {
 		if (!paramNo.isEmpty()) {
 			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
-			paramManager.setStatus("D");
+			paramManager.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 			paramManagerDao.save(paramManager);
-			return AppConstant.SUCCSESSFUL_CODE;
+			return true;
 		}
-		return AppConstant.SYSTEM_ERORR_CODE;
+		return false;
 	}
 
 }

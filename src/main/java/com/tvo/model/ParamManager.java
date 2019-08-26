@@ -1,15 +1,14 @@
 package com.tvo.model;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 /**
  * @author Thanglt
@@ -19,8 +18,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "PARAM_MANAGER")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class ParamManager implements Serializable {
 

@@ -1,32 +1,21 @@
 package com.tvo.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "DAT_USERPROFILE")
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 public class DatUserProfile implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;
-
-//	@Id
-//	@Column(name = "ID", insertable = false, updatable = false)
-//	private Long id;
 
 	@Column(name = "BNKID")
 	private String bnkid;

@@ -3,8 +3,17 @@
  */
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchBranch;
+import com.tvo.dao.BranchDao;
+import com.tvo.dto.BranchDto;
+import com.tvo.model.Branch;
+import com.tvo.request.CreateBranchRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,23 +22,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchBranch;
-import com.tvo.controllerDto.searchCity;
-import com.tvo.dao.BranchDao;
-import com.tvo.dto.BranchDto;
-import com.tvo.dto.CityDto;
-import com.tvo.model.Branch;
-import com.tvo.model.City;
-import com.tvo.model.User;
-import com.tvo.request.CreateBranchRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ace
@@ -66,7 +60,7 @@ public class BracnhSeviceImpl implements BracnhService {
 	}
 	
 	@Override
-	public Page<BranchDto> searchBranch(searchBranch searchBranch, Pageable pageable) {
+	public Page<BranchDto> searchBranch(SearchBranch searchBranch, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Branch> query = cb.createQuery(Branch.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchBranch);
@@ -92,7 +86,7 @@ public class BracnhSeviceImpl implements BracnhService {
 	
 	
 	
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchBranch resource) {
+	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchBranch resource) {
 		final Root<Branch> rootPersist = query.from(Branch.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getBranchCode() != null	

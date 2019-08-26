@@ -3,11 +3,11 @@
  */
 package com.tvo.model;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 
 
@@ -57,14 +57,12 @@ public class UserDetailsImpl implements UserDetails {
 	        return true;
 	    }
 
+	    // check user status (Activate/Deactivate)
 	    @Override
 	    public boolean isEnabled() {
-	    	String ena = user.getStatus();
-	    	if("A".contentEquals(ena)) {
-	    		return true;
-	    	}
-	        return false;
-	    }
+	    	String userStatus = user.getStatus();
+			return userStatus.contentEquals("A");
+		}
 
 	    @Override
 	    public String getPassword() {
