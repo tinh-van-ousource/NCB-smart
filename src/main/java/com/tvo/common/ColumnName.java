@@ -1,8 +1,5 @@
 package com.tvo.common;
 
-/**
- * @author NgocDC
- */
 public class ColumnName {
     public static final String COMP_CODE = "COMP_CODE";
     public static final String COMP_NAME = "COMP_NAME";

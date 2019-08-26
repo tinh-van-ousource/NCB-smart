@@ -14,14 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.searchCity;
-import com.tvo.controllerDto.searchModel;
-import com.tvo.dto.BranchDto;
 import com.tvo.dto.CityDto;
-import com.tvo.dto.UserDto;
 import com.tvo.request.CreateCityRequest;
-import com.tvo.request.CreateUserRequest;
 import com.tvo.response.ResponeData;
-import com.tvo.service.CityService;
 import com.tvo.service.CityServiceImpl;
 
 
@@ -39,7 +34,7 @@ public class CityController {
 	public ResponeData<CityDto> createUser(@ModelAttribute CreateCityRequest request) {
 		CityDto dto = cityService.createCity(request);
 		if(dto == null) {
-			return new ResponeData<CityDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<CityDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<CityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}

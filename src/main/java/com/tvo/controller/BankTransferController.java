@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.searchBankTransfer;
-import com.tvo.controllerDto.searchBranch;
 import com.tvo.dto.BankTransferDto;
-import com.tvo.dto.BranchDto;
 import com.tvo.request.CreateBankTransferRequest;
-import com.tvo.request.CreateBranchRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.BankTransferServiceImpl;
 
@@ -40,7 +37,7 @@ public class BankTransferController {
 	public ResponeData<BankTransferDto> createBankTransfer(@ModelAttribute CreateBankTransferRequest request) {
 		BankTransferDto dto = bankService.createBankTransfer(request);
 		if(dto == null) {
-			return new ResponeData<BankTransferDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+			return new ResponeData<BankTransferDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<BankTransferDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}

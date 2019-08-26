@@ -8,9 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 
-/**
- * @author NgocDC
- */
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP")
 @NoArgsConstructor

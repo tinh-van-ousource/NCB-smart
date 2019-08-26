@@ -42,7 +42,7 @@ public class NcbGuidelineController {
 	@GetMapping(value = "detail")
 	public ResponeData<NcbGuidelineDto> detail(@RequestParam Long id) {
 		if (id == null) {
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		NcbGuidelineDto result = ncbGuidelineService.findById(id);
@@ -54,7 +54,7 @@ public class NcbGuidelineController {
 	public ResponeData<NcbGuidelineDto> create(@RequestBody CreateNcbGuidelineRequest request) {
 		NcbGuidelineDto ncbGuideline = ncbGuidelineService.create(request);
 		if (ncbGuideline == null) {
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -65,7 +65,7 @@ public class NcbGuidelineController {
 	public ResponeData<NcbGuidelineDto> update(@RequestBody UpdateNcbGuidelineRequest request) {
 		NcbGuidelineDto ncbGuideline = ncbGuidelineService.update(request);
 		if (ncbGuideline == null) {
-			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -78,6 +78,6 @@ public class NcbGuidelineController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }

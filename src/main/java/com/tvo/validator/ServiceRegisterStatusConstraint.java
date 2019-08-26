@@ -4,9 +4,6 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-/**
- * @author NgocDC
- */
 @Documented
 @Constraint(validatedBy = ServiceRegisterStatusValidator.class)
 @Target(ElementType.FIELD)

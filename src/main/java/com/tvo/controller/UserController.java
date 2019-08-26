@@ -5,6 +5,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
+import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.searchModel;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserDto;
@@ -36,11 +37,6 @@ public class UserController {
         return new ResponeData<Page<UserDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
     }
 
-    @PostMapping(value = "/updateUser")
-    public ResponeData<UserDto> updateUser(@ModelAttribute UserDto userDto) {
-        return new ResponeData<UserDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, userService.update(userDto));
-    }
-
     @GetMapping(value = "/get-listUser")
     public ResponeData<Page<UserDto>> listUser(@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<UserDto> page = userService.findAllUser(pageable);
@@ -51,7 +47,7 @@ public class UserController {
     public ResponeData<UserDto> createUser(@ModelAttribute CreateUserRequest request) {
         UserDto dto = userService.createUser(request);
         if (dto == null) {
-            return new ResponeData<UserDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, null);
+            return new ResponeData<UserDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
         return new ResponeData<UserDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
@@ -68,7 +64,7 @@ public class UserController {
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, result);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, result);
     }
 
     @PatchMapping(value = "/change-password")
@@ -77,6 +73,15 @@ public class UserController {
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, result);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, result);
+    }
+
+    @PatchMapping(value = "/update-user")
+    public ResponeData<ContentResDto> updateUser(@RequestBody UserUpdateReqDto userDto) {
+        ContentResDto contentResDto = userService.update(userDto);
+        if (contentResDto.getContent().equals(true)) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_CODE, contentResDto);
     }
 }

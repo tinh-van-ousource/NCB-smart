@@ -44,7 +44,7 @@ public class ParamManagerController {
 	@GetMapping(value = "detail")
 	public ResponeData<ParamManagerDto> detail(@RequestParam String paramNo) {
 		if (StringUtils.isEmpty(paramNo.trim())) {
-			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<ParamManagerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		ParamManager paramManager = paramManagerService.findByParamNo(paramNo);
@@ -57,7 +57,7 @@ public class ParamManagerController {
 	public ResponeData<ParamManager> create(@RequestBody CreateParamManagerRequest request) {
 		ParamManager paramManager = paramManagerService.create(request);
 		if (paramManager == null) {
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -69,7 +69,7 @@ public class ParamManagerController {
 	public ResponeData<ParamManager> update(@RequestBody CreateParamManagerRequest request) {
 		ParamManager paramManager = paramManagerService.update(request);
 		if (paramManager == null) {
-			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERORR_MESSAGE, AppConstant.SYSTEM_ERORR_MESSAGE,
+			return new ResponeData<ParamManager>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
 		return new ResponeData<ParamManager>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
@@ -83,6 +83,6 @@ public class ParamManagerController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERORR_CODE, AppConstant.SYSTEM_ERORR_MESSAGE, false);
+		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }

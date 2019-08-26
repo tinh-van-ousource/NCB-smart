@@ -1,8 +1,5 @@
 package com.tvo.enums;
 
-/**
- * @author NgocDC
- */
 public enum ServiceRegisterStatus {
     NEW(1),
     PROCESSING(2),
