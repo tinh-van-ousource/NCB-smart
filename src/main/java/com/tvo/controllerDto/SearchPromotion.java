@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.util.Date;
 @Setter
 @Getter
-public class searchPromotion {
+public class SearchPromotion {
 	private Long id;
 	
 	private String type;

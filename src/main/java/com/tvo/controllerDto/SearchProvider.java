@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class searchProvider {
+public class SearchProvider {
 
 	private String providerId;
 	

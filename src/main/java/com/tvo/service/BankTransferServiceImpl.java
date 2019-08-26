@@ -1,7 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchBankTransfer;
+import com.tvo.controllerDto.SearchBankTransfer;
 import com.tvo.dao.BankTransferDAO;
 import com.tvo.dto.BankTransferDto;
 import com.tvo.model.BankTransfer;
@@ -35,7 +35,7 @@ public class BankTransferServiceImpl implements BankTransferService{
 		return ctdt;
 	}
 	@Override
-	public Page<BankTransferDto> searchBankTransfer(searchBankTransfer searchBankTransfer, Pageable pageable) {
+	public Page<BankTransferDto> searchBankTransfer(SearchBankTransfer searchBankTransfer, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<BankTransfer> query = cb.createQuery(BankTransfer.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchBankTransfer);
@@ -59,7 +59,7 @@ public class BankTransferServiceImpl implements BankTransferService{
 		return new PageImpl<>(BankTransferDtos, pageable, total);
 	}
 	
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchBankTransfer resource) {
+	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchBankTransfer resource) {
 		final Root<BankTransfer> rootPersist = query.from(BankTransfer.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getBankCode() != null	

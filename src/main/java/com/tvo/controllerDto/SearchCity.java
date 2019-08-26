@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class searchCity {
+public class SearchCity {
 	private String cityCode;
 
 	private String cityName;

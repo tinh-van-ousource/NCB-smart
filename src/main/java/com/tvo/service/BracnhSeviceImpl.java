@@ -4,7 +4,7 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchBranch;
+import com.tvo.controllerDto.SearchBranch;
 import com.tvo.dao.BranchDao;
 import com.tvo.dto.BranchDto;
 import com.tvo.model.Branch;
@@ -60,7 +60,7 @@ public class BracnhSeviceImpl implements BracnhService {
 	}
 	
 	@Override
-	public Page<BranchDto> searchBranch(searchBranch searchBranch, Pageable pageable) {
+	public Page<BranchDto> searchBranch(SearchBranch searchBranch, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Branch> query = cb.createQuery(Branch.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchBranch);
@@ -86,7 +86,7 @@ public class BracnhSeviceImpl implements BracnhService {
 	
 	
 	
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchBranch resource) {
+	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchBranch resource) {
 		final Root<Branch> rootPersist = query.from(Branch.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getBranchCode() != null	

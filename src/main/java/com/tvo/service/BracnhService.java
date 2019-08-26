@@ -3,7 +3,7 @@
  */
 package com.tvo.service;
 
-import com.tvo.controllerDto.searchBranch;
+import com.tvo.controllerDto.SearchBranch;
 import com.tvo.dto.BranchDto;
 import com.tvo.request.CreateBranchRequest;
 import org.springframework.data.domain.Page;
@@ -18,5 +18,5 @@ import java.util.List;
 public interface BracnhService {
 		public List<BranchDto> findAll();
 		public BranchDto createBranch(CreateBranchRequest request) ;
-		public Page<BranchDto> searchBranch(searchBranch searchBranch, Pageable pageable);
+		public Page<BranchDto> searchBranch(SearchBranch searchBranch, Pageable pageable);
 }

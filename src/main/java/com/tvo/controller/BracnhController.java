@@ -4,7 +4,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchBranch;
+import com.tvo.controllerDto.SearchBranch;
 import com.tvo.dto.BranchDto;
 import com.tvo.request.CreateBranchRequest;
 import com.tvo.response.ResponeData;
@@ -40,7 +40,7 @@ public class BracnhController {
 		return new ResponeData<BranchDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 	@GetMapping(value = "/searchBranch")
-	public ResponeData<Page<BranchDto>> searchCity(@ModelAttribute searchBranch searchBranch, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<BranchDto>> searchCity(@ModelAttribute SearchBranch searchBranch, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<BranchDto> BranchDtos = bracnhService.searchBranch(searchBranch, pageable);
 		return new ResponeData<Page<BranchDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, BranchDtos) ;
 	}

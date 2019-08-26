@@ -2,7 +2,7 @@ package com.tvo.service;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchFunction;
+import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dto.FunctionDto;
 import com.tvo.model.Function;
@@ -36,7 +36,7 @@ public class FunctionServiceImpl implements FunctionService {
 	FunctionDAO functionDao;
 
 	@Override
-	public Page<FunctionDto> searchFunction(searchFunction searchFunction, Pageable pageable) {
+	public Page<FunctionDto> searchFunction(SearchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
@@ -57,7 +57,7 @@ public class FunctionServiceImpl implements FunctionService {
 		return new PageImpl<>(FunctionDtos, pageable, total);
 	}
 
-	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchFunction resource) {
+	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchFunction resource) {
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 

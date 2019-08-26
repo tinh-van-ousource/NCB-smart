@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Setter
 @Getter
-public class searchModel {
+public class SearchModel {
 	private String fullName;
 	private String branchCode;
 	private String transactionCode;

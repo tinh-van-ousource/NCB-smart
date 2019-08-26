@@ -4,7 +4,7 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.searchCity;
+import com.tvo.controllerDto.SearchCity;
 import com.tvo.dao.CityDao;
 import com.tvo.dto.CityDto;
 import com.tvo.model.City;
@@ -45,7 +45,7 @@ public class CityServiceImpl implements CityService{
 		List<CityDto> ctdt = ModelMapperUtils.mapAll(cityDao.findAll(), CityDto.class);
 		return ctdt;
 	}
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, searchCity resource) {
+	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchCity resource) {
 		final Root<City> rootPersist = query.from(City.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		if (resource.getCityCode() != null	
@@ -85,7 +85,7 @@ public class CityServiceImpl implements CityService{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public Page<CityDto> searchCity(searchCity searchCity, Pageable pageable) {
+	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<City> query = cb.createQuery(City.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchCity);

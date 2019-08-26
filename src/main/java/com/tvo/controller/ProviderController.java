@@ -1,7 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.searchProvider;
+import com.tvo.controllerDto.SearchProvider;
 import com.tvo.dto.ProviderDto;
 import com.tvo.request.CreateProviderRequest;
 import com.tvo.response.ResponeData;
@@ -24,7 +24,7 @@ public class ProviderController {
 		return new ResponeData<List<ProviderDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, providerServiceImpl.findAll());
 	};
 	@GetMapping(value = "/searchProvider")
-	public ResponeData<Page<ProviderDto>> searchCity(@ModelAttribute searchProvider searchProvider, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<ProviderDto>> searchCity(@ModelAttribute SearchProvider searchProvider, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<ProviderDto> ProviderDtos = providerServiceImpl.searchProvider(searchProvider, pageable);
 		return new ResponeData<Page<ProviderDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ProviderDtos) ;
 	}
