@@ -9,7 +9,7 @@ import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.dto.ContentResDto;
-import com.tvo.dto.UserDto;
+import com.tvo.dto.UserResDto;
 import com.tvo.request.CreateUserRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.UserServiceImpl;
@@ -35,24 +35,24 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping(value = "/searchUser")
-    public ResponeData<Page<UserDto>> searchUser(@ModelAttribute SearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-        Page<UserDto> UserDtos = userService.searchUser(searchModel, pageable);
-        return new ResponeData<Page<UserDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
+    public ResponeData<Page<UserResDto>> searchUser(@ModelAttribute SearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+        Page<UserResDto> UserDtos = userService.searchUser(searchModel, pageable);
+        return new ResponeData<Page<UserResDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
     }
 
     @GetMapping(value = "/get-listUser")
-    public ResponeData<Page<UserDto>> listUser(@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-        Page<UserDto> page = userService.findAllUser(pageable);
-        return new ResponeData<Page<UserDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, page);
+    public ResponeData<Page<UserResDto>> listUser(@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+        Page<UserResDto> page = userService.findAllUser(pageable);
+        return new ResponeData<Page<UserResDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, page);
     }
 
     @PostMapping(value = "/createUser")
-    public ResponeData<UserDto> createUser(@ModelAttribute CreateUserRequest request) {
-        UserDto dto = userService.createUser(request);
+    public ResponeData<UserResDto> createUser(@RequestBody CreateUserRequest request) {
+        UserResDto dto = userService.createUser(request);
         if (dto == null) {
-            return new ResponeData<UserDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+            return new ResponeData<UserResDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        return new ResponeData<UserDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+        return new ResponeData<UserResDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/{id}/detail")

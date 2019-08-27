@@ -426,7 +426,7 @@ definitions:
       createdDate:
         type: string
         description: ""
-      createdBy:
+      updatedBy:
         type: string
         description: ""
       status:
@@ -469,6 +469,9 @@ definitions:
         description: ""
       token:
         type: string
+        description: ""
+      loginCount:
+        type: number
         description: ""
 
   UserGetDetailContentResDto:

@@ -3,13 +3,13 @@
  */
 package com.tvo.dto;
 
+import com.tvo.common.AppConstant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * @author Ace
@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto extends AbstractEntityDto {
+public class UserResDto {
 	
 	private Long userId;
 
@@ -39,8 +39,6 @@ public class UserDto extends AbstractEntityDto {
 	
 	private String email;
 	
-	@Size(min = 10, max = 11)
-	@Pattern(regexp = "\\d")
 	private String phone;
 	
 	private Integer countLoginFail;
@@ -50,5 +48,11 @@ public class UserDto extends AbstractEntityDto {
 	private String token;
 
 	private Long loginCount;
+
+	private Date createdDate;
+
+	private String updatedBy;
+
+	private AppConstant.Status  status;
 	
 }

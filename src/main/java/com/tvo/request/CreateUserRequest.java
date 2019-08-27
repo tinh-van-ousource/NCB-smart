@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {
-	private Long userId;
 
 	private String userName;
 	
