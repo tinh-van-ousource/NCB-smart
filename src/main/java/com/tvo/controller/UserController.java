@@ -4,8 +4,8 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
+import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.dto.ContentResDto;
@@ -35,15 +35,15 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping(value = "/searchUser")
-    public ResponeData<Page<UserResDto>> searchUser(@ModelAttribute SearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+    public ResponeData<Page<UserResDto>> searchUser(UserSearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<UserResDto> UserDtos = userService.searchUser(searchModel, pageable);
-        return new ResponeData<Page<UserResDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
     }
 
     @GetMapping(value = "/get-listUser")
     public ResponeData<Page<UserResDto>> listUser(@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<UserResDto> page = userService.findAllUser(pageable);
-        return new ResponeData<Page<UserResDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, page);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, page);
     }
 
     @PostMapping(value = "/createUser")
