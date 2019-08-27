@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/createUser")
-    public ResponeData<UserDto> createUser(@ModelAttribute CreateUserRequest request) {
+    public ResponeData<UserDto> createUser(@RequestBody CreateUserRequest request) {
         UserDto dto = userService.createUser(request);
         if (dto == null) {
             return new ResponeData<UserDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
