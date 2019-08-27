@@ -25,7 +25,8 @@ public class Transaction implements Serializable{
 	private static final long serialVersionUID = -7015287597033169174L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_TRANS_SQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_TRANS_SQ_GENERATOR")
+    @SequenceGenerator(sequenceName = "AI_CMS_TRANS_SQ", allocationSize = 1, name = "AI_CMS_TRANS_SQ_GENERATOR")
 	@Column(name = "TRANSACTION_ID")
 	private Integer transactionId;
 	
