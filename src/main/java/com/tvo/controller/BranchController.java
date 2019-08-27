@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/branch")
-public class BracnhController {
+public class BranchController {
 	@Autowired
 	BracnhService bracnhService;
 	
