@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.dao.AppUserDAO;
-import com.tvo.dto.UserDto;
+import com.tvo.dto.UserResDto;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
 import com.tvo.response.ResponeData;
@@ -81,7 +81,7 @@ public class TokenAuthenticationService {
             user = userDao.save(user);
 
             gson = new Gson();
-            UserDto userDto = ModelMapperUtils.map(user, UserDto.class);
+            UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);
             userDto.setToken(JWT);
             ResponeData respLogin = new ResponeData(AppConstant.SUCCSESSFUL_CODE, AppConstant.LOGIN_SUCCSESSFUL_STATUS,
                     userDto);

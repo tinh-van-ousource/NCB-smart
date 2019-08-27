@@ -14,7 +14,7 @@ import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.dao.BranchDao;
 import com.tvo.dto.ContentResDto;
-import com.tvo.dto.UserDto;
+import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
 import com.tvo.model.User;
@@ -84,13 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> findAllUser(Pageable pageable) {
+    public Page<UserResDto> findAllUser(Pageable pageable) {
         Page<User> users = userDao.findAll(pageable);
-        List<UserDto> userDto = ModelMapperUtils.mapAll(users.getContent(), UserDto.class);
+        List<UserResDto> userDto = ModelMapperUtils.mapAll(users.getContent(), UserResDto.class);
         return new PageImpl<>(userDto, pageable, users.getTotalElements());
     }
 
-    public UserDto createUser(CreateUserRequest request) {
+    public UserResDto createUser(CreateUserRequest request) {
         User user = userDao.findByUserName(request.getUserName());
         if (user != null) {
             return null;
@@ -103,11 +103,11 @@ public class UserServiceImpl implements UserService {
         user.setLoginCount(0L);
 
         User save = userDao.save(user);
-        return ModelMapperUtils.map(save, UserDto.class);
+        return ModelMapperUtils.map(save, UserResDto.class);
     }
 
     @Override
-    public Page<UserDto> searchUser(SearchModel searchModel, Pageable pageable) {
+    public Page<UserResDto> searchUser(SearchModel searchModel, Pageable pageable) {
         final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<User> query = cb.createQuery(User.class);
         Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<User> objects = typedQuery.getResultList();
-        List<UserDto> UserDtos = ModelMapperUtils.mapAll(objects, UserDto.class);
+        List<UserResDto> UserDtos = ModelMapperUtils.mapAll(objects, UserResDto.class);
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
@@ -173,16 +173,19 @@ public class UserServiceImpl implements UserService {
     public ContentResDto getUserDetail(Long id) {
         ContentResDto contentResDto = new ContentResDto();
         Optional<User> optionalUser = userDao.findById(id);
-        optionalUser.ifPresent(user -> contentResDto.setContent(ModelMapperUtils.map(user, UserDto.class)));
+        optionalUser.ifPresent(user -> contentResDto.setContent(ModelMapperUtils.map(user, UserResDto.class)));
         return contentResDto;
     }
 
     @Override
     public Boolean deleteUser(Long id) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<User> optionalUser = userDao.findById(id);
+
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setStatus("D");
+            user.setUpdatedBy(currentUserName);
             userDao.save(user);
             return true;
         }
@@ -210,6 +213,7 @@ public class UserServiceImpl implements UserService {
                 }
 
                 user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
+                user.setUpdatedBy(userChangePasswordReqDto.getUsername());
                 userDao.save(user);
                 return true;
             }
@@ -221,23 +225,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ContentResDto update(UserUpdateReqDto userDto) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         ContentResDto contentResDto = new ContentResDto();
-        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
-        // current auditor must exist
-        if (currentUserId.isPresent()) {
-            User user = userDao.findByUserName(userDto.getUsername());
-            // edited user must exist
-            if (user != null) {
-                user.setBranchCode(userDto.getBranchCode());
-                user.setTransactionCode(userDto.getPosCode());
-                user.setFullName(userDto.getFullName());
-                user.setEmail(userDto.getEmail());
-                user.setPhone(userDto.getPhone());
+        User user = userDao.findByUserName(userDto.getUsername());
+        // edited user must exist
+        if (user != null) {
+            user.setBranchCode(userDto.getBranchCode());
+            user.setTransactionCode(userDto.getPosCode());
+            user.setFullName(userDto.getFullName());
+            user.setEmail(userDto.getEmail());
+            user.setPhone(userDto.getPhone());
+            user.setUpdatedBy(currentUserName);
 
-                contentResDto.setContent(userDao.save(user));
-                return contentResDto;
-            }
-            contentResDto.setContent(false);
+            contentResDto.setContent(userDao.save(user));
             return contentResDto;
         } else {
             contentResDto.setContent(false);
@@ -247,24 +247,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ContentResDto updateStatus(UserUpdateStatusReqDto userDto) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         ContentResDto contentResDto = new ContentResDto();
-        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
-        // current auditor must exist
-        if (currentUserId.isPresent()) {
-            User user = userDao.findByUserName(userDto.getUsername());
-            // edited user must exist
-            if (user != null) {
-                user.setStatus(userDto.getStatus());
-
-                contentResDto.setContent(userDao.save(user));
-                return contentResDto;
-            }
-            contentResDto.setContent(false);
-            return contentResDto;
-        } else {
-            contentResDto.setContent(false);
+        User user = userDao.findByUserName(userDto.getUsername());
+        // edited user must exist
+        if (user != null) {
+            user.setStatus(userDto.getStatus());
+            user.setUpdatedBy(currentUserName);
+            contentResDto.setContent(userDao.save(user));
             return contentResDto;
         }
+        contentResDto.setContent(false);
+        return contentResDto;
     }
 
 }
