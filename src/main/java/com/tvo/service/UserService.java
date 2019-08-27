@@ -3,8 +3,8 @@
  */
 package com.tvo.service;
 
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
+import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.dto.ContentResDto;
@@ -25,7 +25,7 @@ public interface UserService {
 
     public UserResDto createUser(CreateUserRequest request);
 
-    public Page<UserResDto> searchUser(SearchModel searchModel, Pageable pageable);
+    public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable);
 
     ContentResDto getUserDetail(Long id);
 

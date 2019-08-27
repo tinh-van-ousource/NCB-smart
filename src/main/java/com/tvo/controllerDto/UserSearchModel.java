@@ -3,7 +3,6 @@
  */
 package com.tvo.controllerDto;
 
-import com.tvo.common.AppConstant;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +14,11 @@ import java.util.Date;
  */
 @Setter
 @Getter
-public class SearchModel {
+public class UserSearchModel {
 	private String fullName;
 	private String branchCode;
 	private String transactionCode;
-	private Integer roleId;
-	private AppConstant.Status status;
+	private String userName;
 	private Date fromDate;
 	private Date toDate;
 }

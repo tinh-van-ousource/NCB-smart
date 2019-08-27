@@ -156,6 +156,44 @@ paths:
         400:
           description: "Bad request"
 
+  /user/searchUser:
+    get:
+      tags:
+      - "User"
+      summary: "Search User"
+      description: "Get User"
+      operationId: "searchUser"
+      produces:
+      - "application/json"
+      parameters:
+        - name: fullName
+          in: query
+          type: string
+        - name: branchCode
+          in: query
+          type: string
+        - name: transactionCode
+          in: query
+          type: string
+        - name: userName
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+        - name: toDate
+          in: query
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
   /user/{user_id}/delete:
     delete:
       tags:

@@ -58,8 +58,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setFullName("Toi la admin");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setPhone("0901234567");
-            admin.setBranchCode("Chi nhanh 001");
-            admin.setTransactionCode("Phong giao dich 001");
+            admin.setBranchCode("branchCode001");
+            admin.setTransactionCode("bt1");
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setStatus(AppConstant.Status.ACTIVE.getValue());
             admin.setLoginCount(0L);
@@ -74,8 +74,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setFullName("Toi la user");
             user.setPassword(passwordEncoder.encode("user"));
             user.setPhone("0901234567");
-            user.setBranchCode("Chi nhanh 001");
-            user.setTransactionCode("Phong giao dich 001");
+            user.setBranchCode("branchCode001");
+            user.setTransactionCode("bt1");
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
             user.setStatus(AppConstant.Status.ACTIVE.getValue());
             user.setLoginCount(0L);
