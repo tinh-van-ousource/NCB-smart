@@ -11,7 +11,7 @@ public class UserUpdateReqDto {
 
     private String branchCode;
 
-    private String posCode;
+    private String transactionCode;
 
     private String fullName;
 
