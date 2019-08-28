@@ -11,7 +11,6 @@ import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
-import com.tvo.dao.BranchDao;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
@@ -60,9 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AppUserDAO userDao;
-
-    @Autowired
-    BranchDao branchDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -232,7 +228,7 @@ public class UserServiceImpl implements UserService {
         // edited user must exist
         if (user != null) {
             user.setBranchCode(userDto.getBranchCode());
-            user.setTransactionCode(userDto.getPosCode());
+            user.setTransactionCode(userDto.getTransactionCode());
             user.setFullName(userDto.getFullName());
             user.setEmail(userDto.getEmail());
             user.setPhone(userDto.getPhone());

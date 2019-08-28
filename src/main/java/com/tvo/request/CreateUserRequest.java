@@ -27,7 +27,7 @@ public class CreateUserRequest {
 	
 	private String branchCode;
 	
-	private String posCode;
+	private String transactionCode;
 	
     private Long roleId;
 	
