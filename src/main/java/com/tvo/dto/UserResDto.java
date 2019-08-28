@@ -31,7 +31,7 @@ public class UserResDto {
 	
 	private String branchCode;
 	
-	private String posCode;
+	private String transactionCode;
 	
 	private String passChange;
 	

@@ -3,16 +3,14 @@
  */
 package com.tvo.service;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
-import com.tvo.controllerDto.SearchModel;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
+import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
-import com.tvo.dao.BranchDao;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
@@ -63,9 +61,6 @@ public class UserServiceImpl implements UserService {
     AppUserDAO userDao;
 
     @Autowired
-    BranchDao branchDao;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -107,7 +102,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserResDto> searchUser(SearchModel searchModel, Pageable pageable) {
+    public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable) {
         final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<User> query = cb.createQuery(User.class);
         Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
@@ -121,23 +116,26 @@ public class UserServiceImpl implements UserService {
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-//	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
         countQuery.select(cbTotal.count(countQuery.from(User.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
         return new PageImpl<>(UserDtos, pageable, total);
     }
 
-    private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchModel resource) {
+    private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, UserSearchModel resource) {
         final Root<User> rootPersist = query.from(User.class);
-        final List<Predicate> predicates = new ArrayList<Predicate>(6);
+        final List<Predicate> predicates = new ArrayList<>(6);
+
         if (resource.getBranchCode() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBranchCode().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("branchCode"), resource.getBranchCode())));
         }
+
         if (resource.getFullName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFullName().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("fullName"), resource.getFullName())));
+            predicates.add(cb.and(cb.like(cb.lower(
+                    rootPersist.get("fullName")),
+                    "%" + resource.getFullName().toLowerCase() + "%")));
         }
 
         if (resource.getTransactionCode() != null
@@ -145,21 +143,20 @@ public class UserServiceImpl implements UserService {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("transactionCode"), resource.getTransactionCode())));
         }
 
-        if (resource.getRoleId() instanceof Integer) {
-            predicates.add(cb.and(cb.equal(rootPersist.<Integer>get("roleId"), resource.getRoleId())));
-        }
-
-        if (resource.getStatus() != null) {
-            predicates.add(cb.and(cb.equal(rootPersist.<AppConstant.Status>get("status"), resource.getStatus())));
+        if (resource.getUserName() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUserName().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("userName"), resource.getUserName())));
         }
 
         if (resource.getFromDate() != null && resource.getToDate() != null) {
-            // toDate>=tu_ngay>=fromDate or toDate>=getToDate>=fromDate
+            // den_ngay >= toDate >= tu_ngay
             predicates.add(cb.and(
                     cb.between(rootPersist.<Date>get("createdDate"), resource.getFromDate(), resource.getToDate())));
-        } else if (resource.getFromDate() != null) { // toDate >= tu_ngay
+        } else if (resource.getFromDate() != null) {
+            // toDate >= tu_ngay
             predicates.add(cb.greaterThan(rootPersist.<Date>get("createdDate"), resource.getFromDate()));
-        } else if (resource.getToDate() != null) {// toDate >= den_ngay
+        } else if (resource.getToDate() != null) {
+            // toDate >= den_ngay
             predicates.add(cb.lessThan(rootPersist.<Date>get("createdDate"), resource.getToDate()));
         }
 
@@ -231,7 +228,7 @@ public class UserServiceImpl implements UserService {
         // edited user must exist
         if (user != null) {
             user.setBranchCode(userDto.getBranchCode());
-            user.setTransactionCode(userDto.getPosCode());
+            user.setTransactionCode(userDto.getTransactionCode());
             user.setFullName(userDto.getFullName());
             user.setEmail(userDto.getEmail());
             user.setPhone(userDto.getPhone());

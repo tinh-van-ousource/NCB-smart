@@ -3,6 +3,7 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
+import com.tvo.dto.NcbActiveBranchOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.NcbBranch;
@@ -29,7 +30,6 @@ import java.util.List;
 
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 8, 2019
  */
@@ -37,117 +37,130 @@ import java.util.List;
 @AllArgsConstructor
 public class NcbBranchServiceImpl implements NcbBranchService {
 
-	@Autowired
-	private NcbBranchDao ncbBranchDao;
+    @Autowired
+    private NcbBranchDao ncbBranchDao;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	@Override
-	public List<NcbBranchDto> findAll() {
-		return ModelMapperUtils.mapAll(ncbBranchDao.findAll(), NcbBranchDto.class);
-	}
+    @Override
+    public List<NcbBranchDto> findAll() {
+        return ModelMapperUtils.mapAll(ncbBranchDao.findAll(), NcbBranchDto.class);
+    }
 
-	@Override
-	public NcbBranch findByDepartCode(String departCode) {
-		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-		if (ncbBranch == null) {
-			return new NcbBranch();
-		}
-		return ncbBranch;
-	}
+    @Override
+    public NcbBranch findByDepartCode(String departCode) {
+        NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
+        if (ncbBranch == null) {
+            return new NcbBranch();
+        }
+        return ncbBranch;
+    }
 
-	@SuppressWarnings("unused")
-	private Object[] createNcbBranchRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchNcbBranchModel searchModel) {
-		final Root<NcbBranch> rootPersist = query.from(NcbBranch.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>();
+    @SuppressWarnings("unused")
+    private Object[] createNcbBranchRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+                                                SearchNcbBranchModel searchModel) {
+        final Root<NcbBranch> rootPersist = query.from(NcbBranch.class);
+        final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		if (searchModel.getBrnCode() != null && !StringUtils.isEmpty(searchModel.getBrnCode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("brnCode"), searchModel.getBrnCode())));
-		}
-		if (searchModel.getBranchName() != null && !StringUtils.isEmpty(searchModel.getBranchName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("branchName")),
-					"%" + searchModel.getBranchName().toUpperCase() + "%")));
-		}
-		if (searchModel.getDepartCode() != null && !StringUtils.isEmpty(searchModel.getDepartCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("departCode")),
-					searchModel.getDepartCode().toUpperCase())));
-		}
-		if (searchModel.getDepartName() != null && !StringUtils.isEmpty(searchModel.getDepartName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departName")),
-					"%" + searchModel.getDepartName().toUpperCase() + "%")));
-		}
-		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
-			predicates.add(cb
-					.and(cb.equal(cb.upper(rootPersist.<String>get("status")), searchModel.getStatus().toUpperCase())));
-		}
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
+        if (searchModel.getBrnCode() != null && !StringUtils.isEmpty(searchModel.getBrnCode().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("brnCode"), searchModel.getBrnCode())));
+        }
+        if (searchModel.getBranchName() != null && !StringUtils.isEmpty(searchModel.getBranchName().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("branchName")),
+                    "%" + searchModel.getBranchName().toUpperCase() + "%")));
+        }
+        if (searchModel.getDepartCode() != null && !StringUtils.isEmpty(searchModel.getDepartCode().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("departCode")),
+                    searchModel.getDepartCode().toUpperCase())));
+        }
+        if (searchModel.getDepartName() != null && !StringUtils.isEmpty(searchModel.getDepartName().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departName")),
+                    "%" + searchModel.getDepartName().toUpperCase() + "%")));
+        }
+        if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
+            predicates.add(cb
+                    .and(cb.equal(cb.upper(rootPersist.<String>get("status")), searchModel.getStatus().toUpperCase())));
+        }
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
 
-	@Override
-	public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable) {
-		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<NcbBranch> query = cb.createQuery(NcbBranch.class);
-		Object[] queryObjs = this.createNcbBranchRootPersist(cb, query, searchModel);
-		query.select((Root<NcbBranch>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
-		TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
+    @Override
+    public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable) {
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<NcbBranch> query = cb.createQuery(NcbBranch.class);
+        Object[] queryObjs = this.createNcbBranchRootPersist(cb, query, searchModel);
+        query.select((Root<NcbBranch>) queryObjs[0]);
+        query.where((Predicate[]) queryObjs[1]);
+        TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
 
-		typedQuery.setFirstResult((int) pageable.getOffset());
-		typedQuery.setMaxResults(pageable.getPageSize());
-		List<NcbBranch> objects = typedQuery.getResultList();
-		List<NcbBranchDto> ncbBranchDtos = ModelMapperUtils.mapAll(objects, NcbBranchDto.class);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        List<NcbBranch> objects = typedQuery.getResultList();
+        List<NcbBranchDto> ncbBranchDtos = ModelMapperUtils.mapAll(objects, NcbBranchDto.class);
 
-		CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cbTotal.count(countQuery.from(NcbBranch.class)));
-		countQuery.where((Predicate[]) queryObjs[1]);
-		Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(ncbBranchDtos, pageable, total);
-	}
+        CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(NcbBranch.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(ncbBranchDtos, pageable, total);
+    }
 
-	@Override
-	@Transactional(readOnly = false)
-	public NcbBranchDto update(UpdateNcbBranchRequest request) {
-		NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
-		if (!ObjectUtils.isEmpty(ncbBranch)) {
-			NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
-			return ModelMapperUtils.map(save, NcbBranchDto.class);
-		}
-		return null;
-	}
+    @Override
+    @Transactional(readOnly = false)
+    public NcbBranchDto update(UpdateNcbBranchRequest request) {
+        NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(request.getDepartCode());
+        if (!ObjectUtils.isEmpty(ncbBranch)) {
+            NcbBranch save = ncbBranchDao.save(ModelMapperUtils.map(request, NcbBranch.class));
+            return ModelMapperUtils.map(save, NcbBranchDto.class);
+        }
+        return null;
+    }
 
-	@Override
-	@Transactional(readOnly = false)
-	public NcbBranchDto create(CreateNcbBranchRequest request) {
-		NcbBranch findByDepartCode = ncbBranchDao.findByDepartCode(request.getDepartCode());
-		if (!ObjectUtils.isEmpty(findByDepartCode)) {
-			return null;
-		}
-		NcbBranch ncbBranch = ModelMapperUtils.map(request, NcbBranch.class);
-		ncbBranch.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-		return ModelMapperUtils.map(ncbBranchDao.save(ncbBranch), NcbBranchDto.class);
-	}
+    @Override
+    @Transactional(readOnly = false)
+    public NcbBranchDto create(CreateNcbBranchRequest request) {
+        NcbBranch findByDepartCode = ncbBranchDao.findByDepartCode(request.getDepartCode());
+        if (!ObjectUtils.isEmpty(findByDepartCode)) {
+            return null;
+        }
+        NcbBranch ncbBranch = ModelMapperUtils.map(request, NcbBranch.class);
+        ncbBranch.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        return ModelMapperUtils.map(ncbBranchDao.save(ncbBranch), NcbBranchDto.class);
+    }
 
-	@Override
-	@Transactional(readOnly = false)
-	public Boolean delete(String departCode) {
-		if (!departCode.isEmpty()) {
-			try {
-				NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-				ncbBranch.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-				ncbBranchDao.save(ncbBranch);
-				return true;
-			} catch (Exception e) {
-				e.getStackTrace();
-				return false;
-			}
-		}
-		return false;
-	}
+    @Override
+    @Transactional(readOnly = false)
+    public Boolean delete(String departCode) {
+        if (!departCode.isEmpty()) {
+            try {
+                NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
+                ncbBranch.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+                ncbBranchDao.save(ncbBranch);
+                return true;
+            } catch (Exception e) {
+                e.getStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<NcbActiveBranchOnlyResDto> getAllActivatedBranch() {
+        List<NcbActiveBranchOnlyResDto> ncbActiveBranchOnlyResDtoList = new ArrayList<>();
+        List<Object> listBranch = ncbBranchDao.retrieveAllActivatedBranch();
+        for (Object branch : listBranch) {
+            Object[] branches = (Object[]) branch;
+            ncbActiveBranchOnlyResDtoList.add(
+                    new NcbActiveBranchOnlyResDto(branches[0].toString(), branches[1].toString()));
+        }
+
+        return ModelMapperUtils.mapAll(ncbActiveBranchOnlyResDtoList, NcbActiveBranchOnlyResDto.class);
+    }
 
 }

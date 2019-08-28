@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.controllerDto.SearchNcbBranchModel;
+import com.tvo.dto.NcbActiveBranchOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
@@ -12,20 +13,21 @@ import java.util.List;
 
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 8, 2019
  */
 public interface NcbBranchService {
-	public List<NcbBranchDto> findAll();
+    public List<NcbBranchDto> findAll();
 
-	public NcbBranch findByDepartCode(String departCode);
+    public NcbBranch findByDepartCode(String departCode);
 
-	public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable);
+    public Page<NcbBranchDto> searchNcbBranch(SearchNcbBranchModel searchModel, Pageable pageable);
 
-	public NcbBranchDto update(UpdateNcbBranchRequest request);
+    public NcbBranchDto update(UpdateNcbBranchRequest request);
 
-	public NcbBranchDto create(CreateNcbBranchRequest request);
+    public NcbBranchDto create(CreateNcbBranchRequest request);
 
-	public Boolean delete(String brnCode);
+    public Boolean delete(String brnCode);
+
+    List<NcbActiveBranchOnlyResDto> getAllActivatedBranch();
 }

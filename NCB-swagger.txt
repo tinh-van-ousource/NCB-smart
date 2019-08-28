@@ -9,6 +9,8 @@ tags:
   description: "Service Register Api"
 - name: "User"
   description: "User Api"
+- name: "Branch"
+  description: "Branch Api"
 schemes:
 - "https"
 - "http"
@@ -156,6 +158,44 @@ paths:
         400:
           description: "Bad request"
 
+  /user/searchUser:
+    get:
+      tags:
+      - "User"
+      summary: "Search User"
+      description: "Get User"
+      operationId: "searchUser"
+      produces:
+      - "application/json"
+      parameters:
+        - name: fullName
+          in: query
+          type: string
+        - name: branchCode
+          in: query
+          type: string
+        - name: transactionCode
+          in: query
+          type: string
+        - name: userName
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+        - name: toDate
+          in: query
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
   /user/{user_id}/delete:
     delete:
       tags:
@@ -251,6 +291,25 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/UserGetDetailContentResDto"
+        400:
+          description: "Bad request"
+
+  /ncb-branch/branch/activated-list:
+    get:
+      tags:
+      - "Branch"
+      summary: "Get All Activated Branch Only"
+      description: "Get All Activated Branch Only"
+      operationId: "getAllActivatedBranch"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/NcbActiveBranchOnlyResDto"
         400:
           description: "Bad request"
 
@@ -447,7 +506,7 @@ definitions:
       branchCode:
         type: string
         description: ""
-      posCode:
+      transactionCode:
         type: string
         description: ""
       passChange:
@@ -524,7 +583,7 @@ definitions:
       branchCode:
         type: string
         description: ""
-      posCode:
+      transactionCode:
         type: string
         description: ""
       fullName:
@@ -546,4 +605,14 @@ definitions:
       status:
         type: string
         description: "A or D"
+
+  NcbActiveBranchOnlyResDto:
+    type: "object"
+    properties:
+      brnCode:
+        type: string
+        description: "VN0010112"
+      branchName:
+        type: string
+        description: "Đà Nẵng"
       
