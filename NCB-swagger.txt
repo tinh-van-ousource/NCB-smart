@@ -315,15 +315,24 @@ paths:
         400:
           description: "Bad request"
 
-  /role/get-all:
+  /role/search:
     get:
       tags:
       - "Role"
-      summary: "Get All Role"
-      description: "Get All Role"
-      operationId: "getAllRole"
+      summary: "Search Role"
+      description: "Search Role"
+      operationId: "searchRole"
       produces:
       - "application/json"
+      parameters:
+        - name: roleName
+          in: query
+          description: "ten role"
+          type: string
+        - name: status
+          in: query
+          description: "trang thai A/D"
+          type: string
       responses:
         200:
           description: "Successful"

@@ -3,7 +3,7 @@
  */
 package com.tvo.service;
 
-import com.tvo.dao.AppUserDAO;
+import com.tvo.dao.UserRepo;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
@@ -27,12 +27,12 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AppUserDAO appUserDAO;
+    private UserRepo userRepo;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = appUserDAO.findByUserName(username);
+        User user = userRepo.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("Bad credentials - User not found.");
         }

@@ -5,6 +5,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.RoleCreateReqDto;
+import com.tvo.controllerDto.RoleSearchReqDto;
 import com.tvo.controllerDto.RoleUpdateReqDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.response.ResponeData;
@@ -28,9 +29,9 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @GetMapping(value = "/get-all")
-    public ResponeData<List<RoleResDto>> getAllRole() {
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.findAllRole());
+    @GetMapping(value = "/search")
+    public ResponeData<List<RoleResDto>> searchRole(RoleSearchReqDto roleSearchReqDto) {
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.search(roleSearchReqDto));
     }
 
     @PatchMapping(value = "/update")
