@@ -134,7 +134,7 @@ paths:
         400:
           description: "Bad request"
 
-  /user/{user_id}/detail:
+  /user/{username}/detail:
     get:
       tags:
       - "User"
@@ -144,7 +144,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: user_id
+        - name: username
           in: path
           required: true
           type: string
@@ -196,7 +196,7 @@ paths:
         400:
           description: "Bad request"
 
-  /user/{user_id}/delete:
+  /user/{username}/delete:
     delete:
       tags:
       - "User"
@@ -206,7 +206,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: user_id
+        - name: username
           in: path
           required: true
           type: string
