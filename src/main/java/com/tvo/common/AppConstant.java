@@ -10,7 +10,7 @@ package com.tvo.common;
 public class AppConstant {
     public static final String LOGIN_FAILURE_CODE = "401";
     public static final String SUCCSESSFUL_CODE = "200";
-	public static final String ACCOUNT_DEACTIVATED_CODE = "402";
+    public static final String ACCOUNT_DEACTIVATED_CODE = "402";
     public static final String ACCESS_DENIED_CODE = "403";
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_FAILURE_STATUS = "login failure";
@@ -21,8 +21,8 @@ public class AppConstant {
     public static final String HEADER_STRING = "Authorization";
     public static final long EXPIRATIONTIME = 1000 * 60 * 60 * 24; // 1 day
 
-    public static final String USER_STATUS_STRING_ACTIVE = "Activated";
-    public static final String USER_STATUS_STRING_DEACTIVE = "Deactivated";
+    public static final String USER_STATUS_STRING_ACTIVATED = "Activated";
+    public static final String USER_STATUS_STRING_DEACTIVATED = "Deactivated";
 
     public static final String SYSTEM_SUCCESS_CODE = "00";
     public static final String SYSTEM_SUCCESS_MESSAGE = "Successful";
@@ -36,11 +36,11 @@ public class AppConstant {
     public static final String RESOURCE_IMG = "C:\\upload\\card-img\\";
 
     public enum Status {
-        ACTIVE("A"), CLOSE("C");
+        ACTIVATED("A"), DEACTIVATED("D");
 
         private String value;
 
-        private Status(String index) {
+        Status(String index) {
             this.value = index;
         }
 

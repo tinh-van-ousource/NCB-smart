@@ -107,7 +107,7 @@ public class ModelMapperUtils {
 				String source = context.getSource();
 				if (StringUtils.isBlank(source)) {
 					return Boolean.FALSE;
-				} else if (AppConstant.USER_STATUS_STRING_ACTIVE.equals(source)) {
+				} else if (AppConstant.USER_STATUS_STRING_ACTIVATED.equals(source)) {
 					return Boolean.TRUE;
 				}
 				return Boolean.TRUE;
@@ -121,9 +121,9 @@ public class ModelMapperUtils {
 			public String convert(MappingContext<Boolean, String> context) {
 				Boolean source = context.getSource();
 				if(source) {
-					return AppConstant.USER_STATUS_STRING_ACTIVE;
+					return AppConstant.USER_STATUS_STRING_ACTIVATED;
 				}
-				return AppConstant.USER_STATUS_STRING_DEACTIVE;
+				return AppConstant.USER_STATUS_STRING_DEACTIVATED;
 			}
 			
 		};
@@ -135,10 +135,10 @@ public class ModelMapperUtils {
 					public Status convert(final MappingContext<String, Status> context) {
 						String source = context.getSource();
 						switch (source) {
-						case "A":
-							return Status.ACTIVE;
-						case "C":
-							return Status.CLOSE;
+						case "ACTIVATED":
+							return Status.ACTIVATED;
+						case "DEACTIVATED":
+							return Status.DEACTIVATED;
 						default:
 							return null;
 						}

@@ -12,12 +12,14 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RoleDto extends AbstractEntityDto{
+public class RoleDto {
 
 	private Long roleId;
 
 	private String roleName;
 	
 	private String description;
+
+	private String status;
 
 }

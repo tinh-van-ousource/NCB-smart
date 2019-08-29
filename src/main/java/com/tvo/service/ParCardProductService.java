@@ -141,7 +141,7 @@ public class ParCardProductService {
 	public String delete(String prdCode) {
 		if (!prdCode.isEmpty()) {
 			ParCardProduct parCardProduct = parCardProductDao.findByPrdcode(prdCode);
-			parCardProduct.setStatus("DEACTIVE");
+			parCardProduct.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
 			parCardProductDao.saveAndFlush(parCardProduct);
 			return AppConstant.SUCCSESSFUL_CODE;
 		}
