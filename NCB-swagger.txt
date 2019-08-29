@@ -360,6 +360,32 @@ paths:
         400:
           description: "Bad request"
 
+  /role/create:
+    post:
+      tags:
+      - "Role"
+      summary: "Create Role"
+      description: "Create Role"
+      operationId: "createRole"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "RoleCreateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/RoleCreateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
 definitions:
   ServiceRegisterSearchCardResDto:
     type: "object"
@@ -646,13 +672,26 @@ definitions:
     properties:
       roleName:
         type: string
-        description: "Đà Nẵng"
+        description: MODERATOR"
       description:
         type: string
-        description: "Đà Nẵng"
+        description: "json screen"
       status:
         type: string
-        description: "Đà Nẵng"
+        description: "A"
+
+  RoleCreateReqDto:
+    type: "object"
+    properties:
+      roleName:
+        type: string
+        description: MODERATOR"
+      description:
+        type: string
+        description: "json screen"
+      status:
+        type: string
+        description: "A"
 
   RoleResDto:
     type: "object"
@@ -662,10 +701,10 @@ definitions:
         description: "VN0010112"
       roleName:
         type: string
-        description: "Đà Nẵng"
+        description: MODERATOR"
       description:
         type: string
-        description: "Đà Nẵng"
+        description: "json screen"
       status:
         type: string
-        description: "Đà Nẵng"
+        description: "A"

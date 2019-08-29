@@ -4,6 +4,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.RoleCreateReqDto;
 import com.tvo.controllerDto.RoleUpdateReqDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.response.ResponeData;
@@ -35,6 +36,15 @@ public class RoleController {
     @PatchMapping(value = "/update")
     public ResponeData<RoleResDto> updateRole(@RequestBody RoleUpdateReqDto roleReqDto) {
         RoleResDto role = roleService.updateRole(roleReqDto);
+        if (role != null) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, role);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+    }
+
+    @PostMapping(value = "/create")
+    public ResponeData<RoleResDto> createRole(@RequestBody RoleCreateReqDto roleReqDto) {
+        RoleResDto role = roleService.createRole(roleReqDto);
         if (role != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, role);
         }

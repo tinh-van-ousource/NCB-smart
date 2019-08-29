@@ -3,11 +3,13 @@
  */
 package com.tvo.model;
 
+import com.tvo.common.DateTimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Ace
@@ -17,7 +19,7 @@ import java.io.Serializable;
 @Table(name = "CMS_ROLE")
 @Getter
 @Setter
-public class Role extends AbstractEntity implements Serializable {
+public class Role implements Serializable {
 
     /**
      *
@@ -34,5 +36,14 @@ public class Role extends AbstractEntity implements Serializable {
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "CREATED_DATE")
+    private Date createdDate = DateTimeUtil.getNow();
+
+    @Column(name = "CREATED_USER")
+    private String updatedBy;
+
+    @Column(name = "STATUS")
+    private String status;
 
 }
