@@ -3,8 +3,8 @@
  */
 package com.tvo.config;
 
-import com.tvo.dao.UserRepo;
 import com.tvo.dao.RoleRepo;
+import com.tvo.dao.UserRepo;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
 import com.tvo.model.User;

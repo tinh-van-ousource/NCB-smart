@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RoleRepoCustom {
     List<Role> search(RoleSearchReqDto roleSearchReqDto);
+
+    Long searchCount(RoleSearchReqDto roleSearchReqDto);
 }

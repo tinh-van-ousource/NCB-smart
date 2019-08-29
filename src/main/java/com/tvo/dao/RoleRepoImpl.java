@@ -1,5 +1,6 @@
 package com.tvo.dao;
 
+import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.RoleSearchReqDto;
 import com.tvo.model.Role;
 
@@ -31,6 +32,8 @@ public class RoleRepoImpl implements RoleRepoCustom {
             queryString.append(" AND r.status = :status ");
         }
 
+        queryString.append(" ORDER BY r.createdDate ");
+
         TypedQuery<Role> query = em.createQuery(queryString.toString(), Role.class);
 
         if (roleSearchReqDto.getRoleName() != null) {
@@ -41,6 +44,38 @@ public class RoleRepoImpl implements RoleRepoCustom {
             query.setParameter("status", roleSearchReqDto.getStatus());
         }
 
+        query.setFirstResult(AppConstant.getOffset(roleSearchReqDto.getPage(), roleSearchReqDto.getSize()))
+                .setMaxResults(roleSearchReqDto.getSize());
+
         return query.getResultList();
+    }
+
+    @Override
+    public Long searchCount(RoleSearchReqDto roleSearchReqDto) {
+        StringBuilder queryString = new StringBuilder();
+        queryString.append(" SELECT COUNT(r.roleId) ");
+        queryString.append(" FROM Role r ");
+        queryString.append(" WHERE ");
+        queryString.append(" 1 = 1 ");
+
+        if (roleSearchReqDto.getRoleName() != null) {
+            queryString.append(" AND r.roleName = :roleName ");
+        }
+
+        if (roleSearchReqDto.getStatus() != null) {
+            queryString.append(" AND r.status = :status ");
+        }
+
+        TypedQuery<Long> query = em.createQuery(queryString.toString(), Long.class);
+
+        if (roleSearchReqDto.getRoleName() != null) {
+            query.setParameter("roleName", roleSearchReqDto.getRoleName());
+        }
+
+        if (roleSearchReqDto.getStatus() != null) {
+            query.setParameter("status", roleSearchReqDto.getStatus());
+        }
+
+        return query.getSingleResult();
     }
 }
