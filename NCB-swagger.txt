@@ -11,6 +11,8 @@ tags:
   description: "User Api"
 - name: "Branch"
   description: "Branch Api"
+- name: "Role"
+  description: "Role Api"
 schemes:
 - "https"
 - "http"
@@ -313,6 +315,96 @@ paths:
         400:
           description: "Bad request"
 
+  /role/search:
+    get:
+      tags:
+      - "Role"
+      summary: "Search Role"
+      description: "Search Role"
+      operationId: "searchRole"
+      produces:
+      - "application/json"
+      parameters:
+        - name: roleName
+          in: query
+          description: "ten role"
+          type: string
+        - name: status
+          in: query
+          description: "trang thai A/D"
+          type: string
+        - name: page
+          in: query
+          description: "trang hien tai"
+          type: number
+          required: true
+        - name: size
+          in: query
+          description: "so item tren 1 trang"
+          type: number
+          required: true
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleContentResDto"
+        400:
+          description: "Bad request"
+
+  /role/update:
+    patch:
+      tags:
+      - "Role"
+      summary: "Update Role"
+      description: "Update Role"
+      operationId: "updateRole"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "RoleUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/RoleUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
+  /role/create:
+    post:
+      tags:
+      - "Role"
+      summary: "Create Role"
+      description: "Create Role"
+      operationId: "createRole"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "RoleCreateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/RoleCreateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
 definitions:
   ServiceRegisterSearchCardResDto:
     type: "object"
@@ -513,7 +605,7 @@ definitions:
         type: string
         description: ""
       role:
-        $ref: "#/definitions/RoleDto"
+        $ref: "#/definitions/RoleResDto"
       email:
         type: string
         description: ""
@@ -538,28 +630,6 @@ definitions:
     properties:
       content:
         $ref: "#/definitions/UserResDto"
-
-  RoleDto:
-    type: "object"
-    properties:
-      createdDate:
-        type: string
-        description: ""
-      createdBy:
-        type: number
-        description: ""
-      status:
-        type: string
-        description: ""
-      roleId:
-        type: number
-        description: ""
-      roleName:
-        type: string
-        description: ""
-      description:
-        type: string
-        description: ""
 
   UserChangePasswordReqDto:
     type: "object"
@@ -615,4 +685,54 @@ definitions:
       branchName:
         type: string
         description: "Đà Nẵng"
-      
+
+  RoleUpdateReqDto:
+    type: "object"
+    properties:
+      roleName:
+        type: string
+        description: MODERATOR"
+      description:
+        type: string
+        description: "json screen"
+      status:
+        type: string
+        description: "A"
+
+  RoleCreateReqDto:
+    type: "object"
+    properties:
+      roleName:
+        type: string
+        description: MODERATOR"
+      description:
+        type: string
+        description: "json screen"
+      status:
+        type: string
+        description: "A"
+
+  RoleResDto:
+    type: "object"
+    properties:
+      roleId:
+        type: number
+        description: "VN0010112"
+      roleName:
+        type: string
+        description: MODERATOR"
+      description:
+        type: string
+        description: "json screen"
+      status:
+        type: string
+        description: "A"
+
+  RoleContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/RoleResDto"
+      total:
+        type: number
+        description: ""

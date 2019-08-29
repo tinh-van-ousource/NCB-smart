@@ -3,9 +3,8 @@
  */
 package com.tvo.config;
 
-import com.tvo.common.AppConstant;
-import com.tvo.dao.AppRoleDAO;
-import com.tvo.dao.AppUserDAO;
+import com.tvo.dao.RoleRepo;
+import com.tvo.dao.UserRepo;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
 import com.tvo.model.User;
@@ -24,10 +23,10 @@ import org.springframework.stereotype.Component;
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private AppUserDAO userRepository;
+    private UserRepo userRepository;
 
     @Autowired
-    private AppRoleDAO roleRepository;
+    private RoleRepo roleRepository;
     
     @Autowired
     private PasswordEncoder passwordEncoder;

@@ -4,13 +4,12 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
 import com.tvo.controllerDto.UserUpdateStatusReqDto;
-import com.tvo.dao.AppRoleDAO;
-import com.tvo.dao.AppUserDAO;
+import com.tvo.dao.RoleRepo;
+import com.tvo.dao.UserRepo;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
@@ -22,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Ace
@@ -49,55 +46,40 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    JpaConfig jpaConfig;
-
-    @Autowired
     private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     private EntityManager entityManager;
 
     @Autowired
-    AppUserDAO userDao;
+    UserRepo userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    AppRoleDAO appRoleDAO;
-
-    @Override
-    public User getCurrenLogin() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails) principal).getUsername();
-            return userDao.findByUserName(username);
-        } else {
-            String username = principal.toString();
-            return userDao.findByUserName(username);
-        }
-    }
+    RoleRepo roleRepo;
 
     @Override
     public Page<UserResDto> findAllUser(Pageable pageable) {
-        Page<User> users = userDao.findAll(pageable);
+        Page<User> users = userRepo.findAll(pageable);
         List<UserResDto> userDto = ModelMapperUtils.mapAll(users.getContent(), UserResDto.class);
         return new PageImpl<>(userDto, pageable, users.getTotalElements());
     }
 
     public UserResDto createUser(CreateUserRequest request) {
-        User user = userDao.findByUserName(request.getUserName());
+        User user = userRepo.findByUserName(request.getUserName());
         if (user != null) {
             return null;
         }
-        Role role = appRoleDAO.findById(request.getRoleId()).orElse(null);
+        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
         user = ModelMapperUtils.map(request, User.class);
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         user.setLoginCount(0L);
 
-        User save = userDao.save(user);
+        User save = userRepo.save(user);
         return ModelMapperUtils.map(save, UserResDto.class);
     }
 
@@ -169,7 +151,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ContentResDto getUserDetail(String username) {
         ContentResDto contentResDto = new ContentResDto();
-        User user = userDao.findByUserName(username);
+        User user = userRepo.findByUserName(username);
         contentResDto.setContent(user);
         return contentResDto;
     }
@@ -177,11 +159,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean deleteUser(String username) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        User user = userDao.findByUserName(username);
+        User user = userRepo.findByUserName(username);
         if (user != null) {
             user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
             user.setUpdatedBy(currentUserName);
-            userDao.save(user);
+            userRepo.save(user);
             return true;
         }
         return false;
@@ -189,40 +171,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
-        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
-        // current auditor must exist
-        if (currentUserId.isPresent()) {
-            User user = userDao.findByUserName(userChangePasswordReqDto.getUsername());
-            // edited user must exist
-            if (user != null) {
-                // edited username must equal current auditor
-                if (!currentUserId.get().equals(user.getUserId())) {
-                    return false;
-                }
-
-                // old password must match input old password
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
-                if (!isMatch) {
-                    return false;
-                }
-
-                user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
-                user.setUpdatedBy(userChangePasswordReqDto.getUsername());
-                userDao.save(user);
-                return true;
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User user = userRepo.findByUserName(userChangePasswordReqDto.getUsername());
+        // edited user must exist
+        if (user != null) {
+            // edited username must equal current auditor
+            if (!currentUserName.equals(user.getUserName())) {
+                return false;
             }
-            return false;
-        } else {
-            return false;
+
+            // old password must match input old password
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
+            if (!isMatch) {
+                return false;
+            }
+
+            user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
+            user.setUpdatedBy(userChangePasswordReqDto.getUsername());
+            userRepo.save(user);
+            return true;
         }
+        return false;
     }
 
     @Override
     public ContentResDto update(UserUpdateReqDto userDto) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         ContentResDto contentResDto = new ContentResDto();
-        User user = userDao.findByUserName(userDto.getUsername());
+        User user = userRepo.findByUserName(userDto.getUsername());
         // edited user must exist
         if (user != null) {
             user.setBranchCode(userDto.getBranchCode());
@@ -232,7 +209,7 @@ public class UserServiceImpl implements UserService {
             user.setPhone(userDto.getPhone());
             user.setUpdatedBy(currentUserName);
 
-            contentResDto.setContent(userDao.save(user));
+            contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         } else {
             contentResDto.setContent(false);
@@ -244,12 +221,12 @@ public class UserServiceImpl implements UserService {
     public ContentResDto updateStatus(UserUpdateStatusReqDto userDto) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         ContentResDto contentResDto = new ContentResDto();
-        User user = userDao.findByUserName(userDto.getUsername());
+        User user = userRepo.findByUserName(userDto.getUsername());
         // edited user must exist
         if (user != null) {
             user.setStatus(userDto.getStatus());
             user.setUpdatedBy(currentUserName);
-            contentResDto.setContent(userDao.save(user));
+            contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         }
         contentResDto.setContent(false);

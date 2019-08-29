@@ -17,7 +17,7 @@ public class StatusActivateValidator implements
         StatusActivate[] allStatuses = StatusActivate.values();
 
         if (status == null) {
-            return false;
+            return true;
         }
 
         for (StatusActivate statusActivate : allStatuses) {

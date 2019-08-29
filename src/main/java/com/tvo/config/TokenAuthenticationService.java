@@ -1,12 +1,12 @@
 /**
  *
  */
-package com.tvo.service;
+package com.tvo.config;
 
 import com.google.gson.Gson;
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.dao.AppUserDAO;
+import com.tvo.dao.UserRepo;
 import com.tvo.dto.UserResDto;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
@@ -38,12 +38,12 @@ import java.util.Date;
 @Service
 public class TokenAuthenticationService {
 
-    private static AppUserDAO userDao;
+    private static UserRepo userRepo;
 
     private static Gson gson;
 
     public TokenAuthenticationService(ApplicationContext ctx) {
-        this.userDao = ctx.getBean(AppUserDAO.class);
+        this.userRepo = ctx.getBean(UserRepo.class);
     }
 
     public static void unsuccessfulAuthentication(HttpServletResponse res, AuthenticationException failed) {
@@ -76,9 +76,9 @@ public class TokenAuthenticationService {
         try {
 
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
-            User user = userDao.findByUserName(userName);
+            User user = userRepo.findByUserName(userName);
             user.setLoginCount(user.getLoginCount() + 1);
-            user = userDao.save(user);
+            user = userRepo.save(user);
 
             gson = new Gson();
             UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);
