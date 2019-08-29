@@ -6,6 +6,7 @@ package com.tvo.config;
 import com.tvo.common.AppConstant;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         	Role role = new Role();
         	role.setRoleName("ROLE_ADMIN");
         	role.setDescription("admin");
-        	role.setStatus(AppConstant.Status.ACTIVE.getValue());
+        	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             roleRepository.save(role);
         }
 
@@ -46,7 +47,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             Role role = new Role();
         	role.setRoleName("ROLE_USER");
         	role.setDescription("user");
-        	role.setStatus(AppConstant.Status.ACTIVE.getValue());
+        	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             roleRepository.save(role);
         }
 
@@ -61,7 +62,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setBranchCode("VN0010001");
             admin.setTransactionCode("VN0010001");
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
-            admin.setStatus(AppConstant.Status.ACTIVE.getValue());
+            admin.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             admin.setLoginCount(0L);
             userRepository.save(admin);
         }
@@ -77,7 +78,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setBranchCode("VN0010001");
             user.setTransactionCode("VN0010001");
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
-            user.setStatus(AppConstant.Status.ACTIVE.getValue());
+            user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             user.setLoginCount(0L);
             userRepository.save(user);
         }

@@ -309,7 +309,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/NcbActiveBranchOnlyResDto"
+              $ref: "#/definitions/NcbActivatedBranchOnlyResDto"
         400:
           description: "Bad request"
 
@@ -606,7 +606,7 @@ definitions:
         type: string
         description: "A or D"
 
-  NcbActiveBranchOnlyResDto:
+  NcbActivatedBranchOnlyResDto:
     type: "object"
     properties:
       brnCode:

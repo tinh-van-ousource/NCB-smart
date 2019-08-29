@@ -53,6 +53,6 @@ public class UserResDto {
 
 	private String updatedBy;
 
-	private AppConstant.Status  status;
+	private String status;
 	
 }

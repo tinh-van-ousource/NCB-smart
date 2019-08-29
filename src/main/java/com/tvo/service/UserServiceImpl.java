@@ -3,6 +3,7 @@
  */
 package com.tvo.service;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
@@ -181,7 +182,7 @@ public class UserServiceImpl implements UserService {
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setStatus("D");
+            user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
             user.setUpdatedBy(currentUserName);
             userDao.save(user);
             return true;
