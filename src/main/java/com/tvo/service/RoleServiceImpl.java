@@ -8,6 +8,7 @@ import com.tvo.controllerDto.RoleCreateReqDto;
 import com.tvo.controllerDto.RoleSearchReqDto;
 import com.tvo.controllerDto.RoleUpdateReqDto;
 import com.tvo.dao.RoleRepo;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Role;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,8 +32,20 @@ public class RoleServiceImpl implements RoleService {
     RoleRepo roleRepo;
 
     @Override
-    public List<RoleResDto> search(RoleSearchReqDto roleSearchReqDto) {
-        return ModelMapperUtils.mapAll(roleRepo.search(roleSearchReqDto), RoleResDto.class);
+    public ContentResDto search(RoleSearchReqDto roleSearchReqDto) {
+        List<Role> roles = roleRepo.search(roleSearchReqDto);
+        Long roleCount = roleRepo.searchCount(roleSearchReqDto);
+
+        ContentResDto contentResDto = new ContentResDto(Collections.EMPTY_LIST, 0L);
+
+        if (!roles.isEmpty()) {
+            List<RoleResDto> roleResDtoList = ModelMapperUtils.mapAll(roles, RoleResDto.class);
+            contentResDto.setContent(roleResDtoList);
+            contentResDto.setTotal(roleCount);
+            return contentResDto;
+        }
+
+        return contentResDto;
     }
 
     @Override

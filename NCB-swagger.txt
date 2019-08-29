@@ -333,13 +333,23 @@ paths:
           in: query
           description: "trang thai A/D"
           type: string
+        - name: page
+          in: query
+          description: "trang hien tai"
+          type: number
+          required: true
+        - name: size
+          in: query
+          description: "so item tren 1 trang"
+          type: number
+          required: true
       responses:
         200:
           description: "Successful"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/RoleResDto"
+              $ref: "#/definitions/RoleContentResDto"
         400:
           description: "Bad request"
 
@@ -717,3 +727,12 @@ definitions:
       status:
         type: string
         description: "A"
+
+  RoleContentResDto:
+    type: "object"
+    properties:
+      content:
+        $ref: "#/definitions/RoleResDto"
+      total:
+        type: number
+        description: ""
