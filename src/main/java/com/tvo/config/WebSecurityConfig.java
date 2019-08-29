@@ -3,8 +3,6 @@
  */
 package com.tvo.config;
 
-import com.tvo.filter.JWTAuthenticationFilter;
-import com.tvo.filter.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

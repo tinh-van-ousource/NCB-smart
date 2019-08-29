@@ -4,7 +4,6 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
@@ -22,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Ace
@@ -47,9 +44,6 @@ import java.util.Optional;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    JpaConfig jpaConfig;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -65,18 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AppRoleDAO appRoleDAO;
-
-    @Override
-    public User getCurrenLogin() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails) principal).getUsername();
-            return userDao.findByUserName(username);
-        } else {
-            String username = principal.toString();
-            return userDao.findByUserName(username);
-        }
-    }
 
     @Override
     public Page<UserResDto> findAllUser(Pageable pageable) {
@@ -189,33 +171,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
-        Optional<Long> currentUserId = jpaConfig.auditorAware().getCurrentAuditor();
-        // current auditor must exist
-        if (currentUserId.isPresent()) {
-            User user = userDao.findByUserName(userChangePasswordReqDto.getUsername());
-            // edited user must exist
-            if (user != null) {
-                // edited username must equal current auditor
-                if (!currentUserId.get().equals(user.getUserId())) {
-                    return false;
-                }
-
-                // old password must match input old password
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
-                if (!isMatch) {
-                    return false;
-                }
-
-                user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
-                user.setUpdatedBy(userChangePasswordReqDto.getUsername());
-                userDao.save(user);
-                return true;
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User user = userDao.findByUserName(userChangePasswordReqDto.getUsername());
+        // edited user must exist
+        if (user != null) {
+            // edited username must equal current auditor
+            if (!currentUserName.equals(user.getUserName())) {
+                return false;
             }
-            return false;
-        } else {
-            return false;
+
+            // old password must match input old password
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            boolean isMatch = encoder.matches(userChangePasswordReqDto.getOldPassword(), user.getPassword());
+            if (!isMatch) {
+                return false;
+            }
+
+            user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
+            user.setUpdatedBy(userChangePasswordReqDto.getUsername());
+            userDao.save(user);
+            return true;
         }
+        return false;
     }
 
     @Override

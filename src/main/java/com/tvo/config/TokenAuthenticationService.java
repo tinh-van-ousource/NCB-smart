@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.tvo.service;
+package com.tvo.config;
 
 import com.google.gson.Gson;
 import com.tvo.common.AppConstant;
