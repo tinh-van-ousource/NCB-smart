@@ -27,9 +27,9 @@ public interface UserService {
 
     public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable);
 
-    ContentResDto getUserDetail(Long id);
+    ContentResDto getUserDetail(String username);
 
-    Boolean deleteUser(Long id);
+    Boolean deleteUser(String username);
 
     ContentResDto update(UserUpdateReqDto userDto);
 
