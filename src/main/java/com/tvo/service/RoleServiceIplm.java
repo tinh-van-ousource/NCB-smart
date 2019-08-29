@@ -1,11 +1,12 @@
 /**
- * 
+ *
  */
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.RoleUpdateReqDto;
 import com.tvo.dao.AppRoleDAO;
-import com.tvo.dto.RoleDto;
+import com.tvo.dto.RoleResDto;
 import com.tvo.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,20 +20,25 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class RoleServiceIplm implements RoleService{
+public class RoleServiceIplm implements RoleService {
 
-	@Autowired
-	AppRoleDAO appRoleDAO;
-	
-	@Override
-	public List<RoleDto> findAllRole() {
-		return ModelMapperUtils.mapAll(appRoleDAO.findAll(), RoleDto.class);
-	}
+    @Autowired
+    AppRoleDAO appRoleDAO;
 
-	@Override
-	public Role save(RoleDto roleDto) {
-		Role role = ModelMapperUtils.map(roleDto, Role.class);
-		return appRoleDAO.save(role);
-	}
+    @Override
+    public List<RoleResDto> findAllRole() {
+        return ModelMapperUtils.mapAll(appRoleDAO.findAll(), RoleResDto.class);
+    }
+
+    @Override
+    public RoleResDto updateRole(RoleUpdateReqDto roleReqDto) {
+        Role role = appRoleDAO.findByRoleName(roleReqDto.getRoleName());
+        if (role != null) {
+            role.setStatus(roleReqDto.getStatus());
+            role.setDescription(roleReqDto.getDescription());
+            return ModelMapperUtils.map(appRoleDAO.save(role), RoleResDto.class);
+        }
+        return null;
+    }
 
 }
