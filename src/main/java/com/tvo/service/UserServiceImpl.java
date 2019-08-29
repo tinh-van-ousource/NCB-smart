@@ -3,7 +3,6 @@
  */
 package com.tvo.service;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.JpaConfig;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
@@ -168,20 +167,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ContentResDto getUserDetail(Long id) {
+    public ContentResDto getUserDetail(String username) {
         ContentResDto contentResDto = new ContentResDto();
-        Optional<User> optionalUser = userDao.findById(id);
-        optionalUser.ifPresent(user -> contentResDto.setContent(ModelMapperUtils.map(user, UserResDto.class)));
+        User user = userDao.findByUserName(username);
+        contentResDto.setContent(user);
         return contentResDto;
     }
 
     @Override
-    public Boolean deleteUser(Long id) {
+    public Boolean deleteUser(String username) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<User> optionalUser = userDao.findById(id);
-
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        User user = userDao.findByUserName(username);
+        if (user != null) {
             user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
             user.setUpdatedBy(currentUserName);
             userDao.save(user);

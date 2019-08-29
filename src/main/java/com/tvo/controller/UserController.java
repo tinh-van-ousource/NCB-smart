@@ -55,15 +55,15 @@ public class UserController {
         return new ResponeData<UserResDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-    @GetMapping(value = "/{id}/detail")
-    public ResponeData<ContentResDto> getUserDetail(@PathVariable("id") Long id) {
-        ContentResDto contentResDto = userService.getUserDetail(id);
+    @GetMapping(value = "/{username}/detail")
+    public ResponeData<ContentResDto> getUserDetail(@PathVariable("username") String username) {
+        ContentResDto contentResDto = userService.getUserDetail(username);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
     }
 
-    @DeleteMapping(value = "/{id}/delete")
-    public ResponeData<Boolean> deleteUser(@PathVariable("id") Long id) {
-        Boolean result = userService.deleteUser(id);
+    @DeleteMapping(value = "/{username}/delete")
+    public ResponeData<Boolean> deleteUser(@PathVariable("username") String username) {
+        Boolean result = userService.deleteUser(username);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
         }
