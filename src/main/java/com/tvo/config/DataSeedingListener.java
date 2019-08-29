@@ -3,7 +3,6 @@
  */
 package com.tvo.config;
 
-import com.tvo.common.AppConstant;
 import com.tvo.dao.AppRoleDAO;
 import com.tvo.dao.AppUserDAO;
 import com.tvo.enums.StatusActivate;

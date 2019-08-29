@@ -11,6 +11,8 @@ tags:
   description: "User Api"
 - name: "Branch"
   description: "Branch Api"
+- name: "Role"
+  description: "Role Api"
 schemes:
 - "https"
 - "http"
@@ -313,6 +315,51 @@ paths:
         400:
           description: "Bad request"
 
+  /role/get-all:
+    get:
+      tags:
+      - "Role"
+      summary: "Get All Role"
+      description: "Get All Role"
+      operationId: "getAllRole"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
+  /role/update:
+    patch:
+      tags:
+      - "Role"
+      summary: "Update Role"
+      description: "Update Role"
+      operationId: "updateRole"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "RoleUpdateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/RoleUpdateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
 definitions:
   ServiceRegisterSearchCardResDto:
     type: "object"
@@ -513,7 +560,7 @@ definitions:
         type: string
         description: ""
       role:
-        $ref: "#/definitions/RoleDto"
+        $ref: "#/definitions/RoleResDto"
       email:
         type: string
         description: ""
@@ -538,28 +585,6 @@ definitions:
     properties:
       content:
         $ref: "#/definitions/UserResDto"
-
-  RoleDto:
-    type: "object"
-    properties:
-      createdDate:
-        type: string
-        description: ""
-      createdBy:
-        type: number
-        description: ""
-      status:
-        type: string
-        description: ""
-      roleId:
-        type: number
-        description: ""
-      roleName:
-        type: string
-        description: ""
-      description:
-        type: string
-        description: ""
 
   UserChangePasswordReqDto:
     type: "object"
@@ -615,4 +640,32 @@ definitions:
       branchName:
         type: string
         description: "Đà Nẵng"
-      
+
+  RoleUpdateReqDto:
+    type: "object"
+    properties:
+      roleName:
+        type: string
+        description: "Đà Nẵng"
+      description:
+        type: string
+        description: "Đà Nẵng"
+      status:
+        type: string
+        description: "Đà Nẵng"
+
+  RoleResDto:
+    type: "object"
+    properties:
+      roleId:
+        type: number
+        description: "VN0010112"
+      roleName:
+        type: string
+        description: "Đà Nẵng"
+      description:
+        type: string
+        description: "Đà Nẵng"
+      status:
+        type: string
+        description: "Đà Nẵng"

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.tvo.model;
 
@@ -24,16 +24,16 @@ import java.util.Date;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_DATE", updatable = false)
-	private Date createdDate = DateTimeUtil.getNow();
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_DATE", updatable = false)
+    private Date createdDate = DateTimeUtil.getNow();
 
-	@CreatedBy
-	@Column(name = "CREATED_USER", updatable = false)
-	private Long createdBy;
-	
-	@Column(name = "STATUS")
-	private String  status;
-	
+    @CreatedBy
+    @Column(name = "CREATED_USER", updatable = false)
+    private Long createdBy;
+
+    @Column(name = "STATUS")
+    private String status;
+
 }

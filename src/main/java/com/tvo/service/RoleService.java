@@ -1,10 +1,10 @@
 /**
- * 
+ *
  */
 package com.tvo.service;
 
-import com.tvo.dto.RoleDto;
-import com.tvo.model.Role;
+import com.tvo.controllerDto.RoleUpdateReqDto;
+import com.tvo.dto.RoleResDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +15,9 @@ import java.util.List;
  */
 @Service
 public interface RoleService {
-	public List<RoleDto> findAllRole();
-	public Role save(RoleDto roleDto);
+    List<RoleResDto> findAllRole();
+
+    RoleResDto updateRole(RoleUpdateReqDto roleReqDto);
 }
 
 
