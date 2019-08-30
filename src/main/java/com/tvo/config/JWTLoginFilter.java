@@ -1,12 +1,11 @@
 /**
  *
  */
-package com.tvo.filter;
+package com.tvo.config;
 
 import com.google.gson.Gson;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
-import com.tvo.service.TokenAuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

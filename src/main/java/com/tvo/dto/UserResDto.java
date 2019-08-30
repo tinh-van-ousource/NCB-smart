@@ -3,7 +3,6 @@
  */
 package com.tvo.dto;
 
-import com.tvo.common.AppConstant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +34,7 @@ public class UserResDto {
 	
 	private String passChange;
 	
-    private RoleDto role;
+    private RoleResDto role;
 	
 	private String email;
 	
@@ -53,6 +52,6 @@ public class UserResDto {
 
 	private String updatedBy;
 
-	private AppConstant.Status  status;
+	private String status;
 	
 }

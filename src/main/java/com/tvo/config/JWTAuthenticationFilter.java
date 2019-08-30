@@ -1,9 +1,8 @@
 /**
  *
  */
-package com.tvo.filter;
+package com.tvo.config;
 
-import com.tvo.service.TokenAuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -27,8 +26,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
         System.out.println("JWTAuthenticationFilter.doFilter");
 
-        Authentication authentication = TokenAuthenticationService
-                .getAuthentication((HttpServletRequest) servletRequest);
+        Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest) servletRequest);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

@@ -125,7 +125,7 @@ public class FunctionServiceImpl implements FunctionService {
 	public String delete(String typeId) {
 		if (!typeId.isEmpty()) {
 			Function function = functionDao.findByTypeId(typeId);
-			function.setStatus("DEACTIVE");
+			function.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
 			functionDao.saveAndFlush(function);
 			return AppConstant.SUCCSESSFUL_CODE;
 		}

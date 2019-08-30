@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
@@ -23,10 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-/**
- * @author Ace
- *
- */
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "user Controller")
@@ -55,15 +48,15 @@ public class UserController {
         return new ResponeData<UserResDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-    @GetMapping(value = "/{id}/detail")
-    public ResponeData<ContentResDto> getUserDetail(@PathVariable("id") Long id) {
-        ContentResDto contentResDto = userService.getUserDetail(id);
+    @GetMapping(value = "/{username}/detail")
+    public ResponeData<ContentResDto> getUserDetail(@PathVariable("username") String username) {
+        ContentResDto contentResDto = userService.getUserDetail(username);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
     }
 
-    @DeleteMapping(value = "/{id}/delete")
-    public ResponeData<Boolean> deleteUser(@PathVariable("id") Long id) {
-        Boolean result = userService.deleteUser(id);
+    @DeleteMapping(value = "/{username}/delete")
+    public ResponeData<Boolean> deleteUser(@PathVariable("username") String username) {
+        Boolean result = userService.deleteUser(username);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
         }
@@ -82,19 +75,19 @@ public class UserController {
     @PatchMapping(value = "/update-user")
     public ResponeData<ContentResDto> updateUser(@RequestBody UserUpdateReqDto userDto) {
         ContentResDto contentResDto = userService.update(userDto);
-        if (contentResDto.getContent().equals(true)) {
+        if (contentResDto.getContent() != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_CODE, contentResDto);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, contentResDto);
     }
 
     @PatchMapping(value = "/update-user-status")
     public ResponeData<ContentResDto> updateUser(@Valid @RequestBody UserUpdateStatusReqDto userDto) {
         ContentResDto contentResDto = userService.updateStatus(userDto);
-        if (contentResDto.getContent().equals(true)) {
+        if (contentResDto.getContent() != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_CODE, contentResDto);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, contentResDto);
     }
 
 }
