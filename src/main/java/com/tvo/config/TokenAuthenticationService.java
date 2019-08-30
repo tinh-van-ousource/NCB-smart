@@ -8,7 +8,6 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.dao.UserRepo;
 import com.tvo.dto.UserResDto;
-import com.tvo.enums.StatusActivate;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
 import com.tvo.response.ResponeData;
@@ -77,10 +76,8 @@ public class TokenAuthenticationService {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
-
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
             User user = userRepo.findByUserName(userName);
-            user.setLoginCount(user.getLoginCount() + 1);
             user.setCountLoginFail(0);
             user = userRepo.save(user);
 

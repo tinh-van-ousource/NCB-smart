@@ -13,6 +13,7 @@ import com.tvo.dao.UserRepo;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.enums.UserChangePasswordStatus;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.request.CreateUserRequest;
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        user.setLoginCount(0L);
+        user.setPassChange(UserChangePasswordStatus.NOT_YET.getType());
         user.setCountLoginFail(0);
         user.setUpdatedBy(currentUserName);
 
@@ -190,6 +191,7 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
 
+            user.setPassChange(UserChangePasswordStatus.CHANGED.getType());
             user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
             user.setUpdatedBy(userChangePasswordReqDto.getUsername());
             userRepo.save(user);
