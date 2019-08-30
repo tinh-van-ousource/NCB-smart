@@ -46,7 +46,9 @@ public class TokenAuthenticationService {
         userRepo = ctx.getBean(UserRepo.class);
     }
 
-    public static void unsuccessfulAuthentication(HttpServletResponse res, AuthenticationException failed) {
+    public static void unsuccessfulAuthentication(HttpServletRequest req,
+                                                  HttpServletResponse res,
+                                                  AuthenticationException failed) {
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
         res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -74,10 +76,9 @@ public class TokenAuthenticationService {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
-
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
             User user = userRepo.findByUserName(userName);
-            user.setLoginCount(user.getLoginCount() + 1);
+            user.setCountLoginFail(0);
             user = userRepo.save(user);
 
             gson = new Gson();

@@ -3,6 +3,7 @@ package com.tvo.config;
 import com.tvo.dao.RoleRepo;
 import com.tvo.dao.UserRepo;
 import com.tvo.enums.StatusActivate;
+import com.tvo.enums.UserChangePasswordStatus;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setTransactionCode("VN0010001");
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-            admin.setLoginCount(0L);
+            admin.setPassChange(UserChangePasswordStatus.CHANGED.getType());
+            admin.setCountLoginFail(0);
             userRepository.save(admin);
         }
 
@@ -70,7 +72,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setTransactionCode("VN0010001");
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
             user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-            user.setLoginCount(0L);
+            user.setPassChange(UserChangePasswordStatus.CHANGED.getType());
+            user.setCountLoginFail(0);
             userRepository.save(user);
         }
 

@@ -43,9 +43,9 @@ public class UserController {
     public ResponeData<UserResDto> createUser(@RequestBody CreateUserRequest request) {
         UserResDto dto = userService.createUser(request);
         if (dto == null) {
-            return new ResponeData<UserResDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        return new ResponeData<UserResDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/{username}/detail")
