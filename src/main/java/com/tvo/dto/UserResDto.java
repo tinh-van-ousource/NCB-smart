@@ -46,8 +46,6 @@ public class UserResDto {
 	
 	private String token;
 
-	private Long loginCount;
-
 	private Date createdDate;
 
 	private String updatedBy;

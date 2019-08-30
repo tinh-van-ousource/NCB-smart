@@ -621,9 +621,6 @@ definitions:
       token:
         type: string
         description: ""
-      loginCount:
-        type: number
-        description: ""
 
   UserGetDetailContentResDto:
     type: "object"
