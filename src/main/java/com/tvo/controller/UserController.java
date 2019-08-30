@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
@@ -23,10 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-/**
- * @author Ace
- *
- */
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "user Controller")
@@ -82,19 +75,19 @@ public class UserController {
     @PatchMapping(value = "/update-user")
     public ResponeData<ContentResDto> updateUser(@RequestBody UserUpdateReqDto userDto) {
         ContentResDto contentResDto = userService.update(userDto);
-        if (contentResDto.getContent().equals(true)) {
+        if (contentResDto.getContent() != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_CODE, contentResDto);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, contentResDto);
     }
 
     @PatchMapping(value = "/update-user-status")
     public ResponeData<ContentResDto> updateUser(@Valid @RequestBody UserUpdateStatusReqDto userDto) {
         ContentResDto contentResDto = userService.updateStatus(userDto);
-        if (contentResDto.getContent().equals(true)) {
+        if (contentResDto.getContent() != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_CODE, contentResDto);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, contentResDto);
     }
 
 }
