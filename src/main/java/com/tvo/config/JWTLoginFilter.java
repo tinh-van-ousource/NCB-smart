@@ -58,7 +58,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) {
-        TokenAuthenticationService.unsuccessfulAuthentication(response, failed);
+        TokenAuthenticationService.unsuccessfulAuthentication(request, response, failed);
     }
 
 }
