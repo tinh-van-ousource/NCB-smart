@@ -55,6 +55,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             admin.setLoginCount(0L);
+            admin.setCountLoginFail(0);
             userRepository.save(admin);
         }
 
@@ -71,6 +72,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
             user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             user.setLoginCount(0L);
+            user.setCountLoginFail(0);
             userRepository.save(user);
         }
 

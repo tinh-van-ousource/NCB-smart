@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         user.setLoginCount(0L);
+        user.setCountLoginFail(0);
         user.setUpdatedBy(currentUserName);
 
         User save = userRepo.save(user);
@@ -228,6 +229,9 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             user.setStatus(userDto.getStatus());
             user.setUpdatedBy(currentUserName);
+            if (userDto.getStatus().equals(StatusActivate.STATUS_ACTIVATED.getStatus())) {
+                user.setCountLoginFail(0);
+            }
             contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         }

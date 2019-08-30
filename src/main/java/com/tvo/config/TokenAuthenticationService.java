@@ -8,6 +8,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.dao.UserRepo;
 import com.tvo.dto.UserResDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.User;
 import com.tvo.model.UserDetailsImpl;
 import com.tvo.response.ResponeData;
@@ -46,7 +47,9 @@ public class TokenAuthenticationService {
         userRepo = ctx.getBean(UserRepo.class);
     }
 
-    public static void unsuccessfulAuthentication(HttpServletResponse res, AuthenticationException failed) {
+    public static void unsuccessfulAuthentication(HttpServletRequest req,
+                                                  HttpServletResponse res,
+                                                  AuthenticationException failed) {
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
         res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -78,6 +81,7 @@ public class TokenAuthenticationService {
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
             User user = userRepo.findByUserName(userName);
             user.setLoginCount(user.getLoginCount() + 1);
+            user.setCountLoginFail(0);
             user = userRepo.save(user);
 
             gson = new Gson();
