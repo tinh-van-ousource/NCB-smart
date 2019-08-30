@@ -14,4 +14,6 @@ public class RoleResDto {
     private String description;
 
     private String status;
+
+    private String updatedBy;
 }
