@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserResDto createUser(CreateUserRequest request) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(request.getUserName());
         if (user != null) {
             return null;
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         user.setLoginCount(0L);
+        user.setUpdatedBy(currentUserName);
 
         User save = userRepo.save(user);
         return ModelMapperUtils.map(save, UserResDto.class);
@@ -212,7 +214,7 @@ public class UserServiceImpl implements UserService {
             contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         } else {
-            contentResDto.setContent(false);
+            contentResDto.setContent(null);
             return contentResDto;
         }
     }
@@ -229,7 +231,7 @@ public class UserServiceImpl implements UserService {
             contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         }
-        contentResDto.setContent(false);
+        contentResDto.setContent(null);
         return contentResDto;
     }
 

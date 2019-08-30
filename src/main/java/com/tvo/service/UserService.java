@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.service;
 
 import com.tvo.controllerDto.UserChangePasswordReqDto;
@@ -13,10 +10,6 @@ import com.tvo.request.CreateUserRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-/**
- * @author Ace
- *
- */
 public interface UserService {
     public Page<UserResDto> findAllUser(Pageable pageable);
 

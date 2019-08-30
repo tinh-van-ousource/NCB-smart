@@ -43,7 +43,7 @@ public class TokenAuthenticationService {
     private static Gson gson;
 
     public TokenAuthenticationService(ApplicationContext ctx) {
-        this.userRepo = ctx.getBean(UserRepo.class);
+        userRepo = ctx.getBean(UserRepo.class);
     }
 
     public static void unsuccessfulAuthentication(HttpServletResponse res, AuthenticationException failed) {

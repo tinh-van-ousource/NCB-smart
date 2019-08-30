@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
@@ -20,10 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Ace
- *
- */
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
