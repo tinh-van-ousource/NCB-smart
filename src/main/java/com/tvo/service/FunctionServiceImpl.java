@@ -127,7 +127,7 @@ public class FunctionServiceImpl implements FunctionService {
 			Function function = functionDao.findByTypeId(typeId);
 			function.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
 			functionDao.saveAndFlush(function);
-			return AppConstant.SUCCSESSFUL_CODE;
+			return AppConstant.SYSTEM_SUCCESS_CODE;
 		}
 		return AppConstant.SYSTEM_ERROR_CODE;
 	}

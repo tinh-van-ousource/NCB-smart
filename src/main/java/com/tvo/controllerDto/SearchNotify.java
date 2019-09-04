@@ -1,12 +1,10 @@
 package com.tvo.controllerDto;
 
-import java.sql.Date;
-
-import com.tvo.dto.NotifyDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor

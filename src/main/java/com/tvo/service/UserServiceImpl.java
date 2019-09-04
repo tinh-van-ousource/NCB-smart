@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
@@ -38,10 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Ace
- *
- */
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -74,9 +67,12 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return null;
         }
-        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
+
         user = ModelMapperUtils.map(request, User.class);
+
+        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
         user.setRole(role);
+
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         user.setPassChange(UserChangePasswordStatus.NOT_YET.getType());

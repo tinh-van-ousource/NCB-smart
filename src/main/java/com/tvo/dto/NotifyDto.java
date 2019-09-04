@@ -1,12 +1,10 @@
 package com.tvo.dto;
 
-import java.util.Date;
-
-import com.tvo.request.CreateNotifyRequest;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
