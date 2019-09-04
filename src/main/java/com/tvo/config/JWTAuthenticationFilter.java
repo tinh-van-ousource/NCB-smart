@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.config;
 
 import org.springframework.security.core.Authentication;
@@ -14,10 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * @author Ace
- *
- */
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
     @Override

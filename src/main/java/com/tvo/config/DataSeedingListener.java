@@ -26,7 +26,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
-//         Roles
+        // Roles
         if (roleRepository.findByRoleName("ROLE_ADMIN") == null) {
         	Role role = new Role();
         	role.setRoleName("ROLE_ADMIN");
@@ -43,7 +43,15 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             roleRepository.save(role);
         }
 
-        // Admin account
+        if (roleRepository.findByRoleName("ROLE_DEFAULT") == null) {
+            Role role = new Role();
+            role.setRoleName("ROLE_DEFAULT");
+            role.setDescription("default");
+            role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            roleRepository.save(role);
+        }
+
+        // admin account
         if (userRepository.findByUserName("admin") == null) {
             User admin = new User();
             admin.setEmail("admin@gmail.com");
@@ -57,10 +65,12 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             admin.setPassChange(UserChangePasswordStatus.CHANGED.getType());
             admin.setCountLoginFail(0);
+            admin.setUserCode("Ma Nhan Vien: Admin");
+            admin.setUpdatedBy("system");
             userRepository.save(admin);
         }
 
-        // USER account
+        // user account
         if (userRepository.findByUserName("user") == null) {
             User user = new User();
             user.setEmail("USER@gmail.com");
@@ -74,6 +84,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             user.setPassChange(UserChangePasswordStatus.CHANGED.getType());
             user.setCountLoginFail(0);
+            user.setUserCode("Ma Nhan Vien: User");
+            user.setUpdatedBy("system");
             userRepository.save(user);
         }
 

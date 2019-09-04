@@ -63,23 +63,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.cors().and().csrf().disable()
                 // No need authentication.
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll() //
-                .antMatchers(HttpMethod.GET, "/login").permitAll() // For Test on Browser
                 // Need authentication.
                 .anyRequest().authenticated()
                 // Response if auth error
-                .and().
-                exceptionHandling().accessDeniedHandler(accessDeniedHandler).
-                authenticationEntryPoint(authenticationEntryPoint())
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(authenticationEntryPoint())
                 .and()
                 // Add Filter 1 - JWTLoginFilter
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 // Add Filter 2 - JWTAuthenticationFilter
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

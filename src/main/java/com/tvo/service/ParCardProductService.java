@@ -143,7 +143,7 @@ public class ParCardProductService {
 			ParCardProduct parCardProduct = parCardProductDao.findByPrdcode(prdCode);
 			parCardProduct.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
 			parCardProductDao.saveAndFlush(parCardProduct);
-			return AppConstant.SUCCSESSFUL_CODE;
+			return AppConstant.SYSTEM_SUCCESS_CODE;
 		}
 		return AppConstant.SYSTEM_ERROR_CODE;
 	}
