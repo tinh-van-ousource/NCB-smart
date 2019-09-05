@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // No need authentication.
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 // Need authentication.
                 .anyRequest().authenticated()
                 // Response if auth error
