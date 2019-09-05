@@ -58,7 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("v2/swagger.json", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
-
     }
 
     @Override
@@ -67,7 +66,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // No need authentication.
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll() //
                 // Need authentication.
                 .anyRequest().authenticated()
                 // Response if auth error

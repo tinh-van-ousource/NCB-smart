@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.model;
 
 import com.tvo.common.DateTimeUtil;
@@ -11,19 +8,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author Ace
- *
- */
 @Entity
 @Table(name = "CMS_ROLE")
 @Getter
 @Setter
 public class Role implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 8912960400201534248L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_ROLE_SQ_GENERATOR")

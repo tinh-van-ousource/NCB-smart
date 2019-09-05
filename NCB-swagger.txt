@@ -379,6 +379,30 @@ paths:
         400:
           description: "Bad request"
 
+  /role/{id}/detail:
+    get:
+      tags:
+      - "Role"
+      summary: "Detail Role"
+      description: "Detail Role"
+      operationId: "detailRole"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "id"
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleResDto"
+        400:
+          description: "Bad request"
+
   /role/create:
     post:
       tags:
@@ -724,6 +748,9 @@ definitions:
       status:
         type: string
         description: "A"
+      updatedBy:
+        type: string
+        description: "Dex"
 
   RoleContentResDto:
     type: "object"
