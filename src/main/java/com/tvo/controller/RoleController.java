@@ -28,6 +28,11 @@ public class RoleController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.search(roleSearchReqDto));
     }
 
+    @GetMapping(value = "/{id}/detail")
+    public ResponeData<RoleResDto> searchRole(@PathVariable("id") Long id) {
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.getRoleById(id));
+    }
+
     @PatchMapping(value = "/update")
     public ResponeData<RoleResDto> updateRole(@RequestBody RoleUpdateReqDto roleReqDto) {
         RoleResDto role = roleService.updateRole(roleReqDto);
