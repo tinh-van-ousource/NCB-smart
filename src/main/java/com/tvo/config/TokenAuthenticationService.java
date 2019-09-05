@@ -48,6 +48,9 @@ public class TokenAuthenticationService {
 
     public static void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse res,
                                                   AuthenticationException failed) {
+        res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         try {
             gson = new Gson();
             ResponeData respLogin;
@@ -58,9 +61,6 @@ public class TokenAuthenticationService {
                 respLogin = new ResponeData(AppConstant.LOGIN_FAILURE_CODE, failed.getMessage());
             }
 
-            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
             res.getWriter().write(gson.toJson(respLogin));
         } catch (IOException e) {
             e.printStackTrace();

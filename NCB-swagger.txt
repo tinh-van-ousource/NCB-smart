@@ -712,7 +712,7 @@ definitions:
     properties:
       roleName:
         type: string
-        description: MODERATOR"
+        description: "MODERATOR"
       description:
         type: string
         description: "json screen"
@@ -725,7 +725,7 @@ definitions:
     properties:
       roleName:
         type: string
-        description: MODERATOR"
+        description: "MODERATOR"
       description:
         type: string
         description: "json screen"
@@ -741,7 +741,7 @@ definitions:
         description: "VN0010112"
       roleName:
         type: string
-        description: MODERATOR"
+        description: "MODERATOR"
       description:
         type: string
         description: "json screen"
