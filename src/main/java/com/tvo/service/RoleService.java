@@ -14,6 +14,8 @@ public interface RoleService {
     RoleResDto updateRole(RoleUpdateReqDto roleReqDto);
 
     RoleResDto createRole(RoleCreateReqDto roleReqDto);
+
+    RoleResDto getRoleById(Long id);
 }
 
 

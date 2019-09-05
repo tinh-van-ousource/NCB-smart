@@ -44,6 +44,14 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.status = :status ");
         }
 
+        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+            queryString.append(" AND sr.requestDate >= :fromDate ");
+        }
+
+        if (serviceRegisterSearchReqDto.getToDate() != null) {
+            queryString.append(" AND sr.requestDate <= :toDate ");
+        }
+
         queryString.append(" ORDER BY sr.requestDate ");
 
         TypedQuery<ServiceRegisterEntity> query = em.createQuery(queryString.toString(), ServiceRegisterEntity.class);
@@ -66,6 +74,14 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         if (serviceRegisterSearchReqDto.getStatus() != null) {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
+        }
+
+        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+            query.setParameter("fromDate", serviceRegisterSearchReqDto.getFromDate());
+        }
+
+        if (serviceRegisterSearchReqDto.getToDate() != null) {
+            query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
         }
 
         query.setFirstResult(AppConstant.getOffset(serviceRegisterSearchReqDto.getPage(), serviceRegisterSearchReqDto.getSize()))
@@ -102,6 +118,14 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.status = :status ");
         }
 
+        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+            queryString.append(" AND sr.requestDate >= :fromDate ");
+        }
+
+        if (serviceRegisterSearchReqDto.getToDate() != null) {
+            queryString.append(" AND sr.requestDate <= :toDate ");
+        }
+
         TypedQuery<Long> query = em.createQuery(queryString.toString(), Long.class);
 
         if (serviceRegisterSearchReqDto.getCompCode() != null) {
@@ -122,6 +146,14 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         if (serviceRegisterSearchReqDto.getStatus() != null) {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
+        }
+
+        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+            query.setParameter("fromDate", serviceRegisterSearchReqDto.getFromDate());
+        }
+
+        if (serviceRegisterSearchReqDto.getToDate() != null) {
+            query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
         }
 
         return query.getSingleResult();

@@ -1,6 +1,7 @@
 package com.tvo.validator;
 
 import com.tvo.enums.StatusActivate;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -16,7 +17,7 @@ public class StatusActivateValidator implements
     public boolean isValid(String status, ConstraintValidatorContext cxt) {
         StatusActivate[] allStatuses = StatusActivate.values();
 
-        if (status == null) {
+        if (status == null || status.trim().equals(StringUtils.EMPTY)) {
             return true;
         }
 

@@ -39,7 +39,7 @@ public class ServiceRegisterController {
 
     @PatchMapping(value = "/{service_id}/update")
     public ResponeData<ContentResDto> updateServiceRegisterDetail(@PathVariable("service_id") Long id,
-                                                                                   @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
+                                                                  @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
         ContentResDto serviceRegisterGetDetailResDto =
                 serviceRegisterService.updateServiceRegisterDetail(id, serviceRegisterUpdateReqDto);
         if (serviceRegisterGetDetailResDto != null) {
