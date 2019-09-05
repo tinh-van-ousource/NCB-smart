@@ -32,6 +32,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         	role.setRoleName("ROLE_ADMIN");
         	role.setDescription("admin");
         	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
             roleRepository.save(role);
         }
 
@@ -40,6 +41,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         	role.setRoleName("ROLE_USER");
         	role.setDescription("user");
         	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
             roleRepository.save(role);
         }
 
@@ -48,6 +50,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             role.setRoleName("ROLE_DEFAULT");
             role.setDescription("default");
             role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
             roleRepository.save(role);
         }
 
