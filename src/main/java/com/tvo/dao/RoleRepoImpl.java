@@ -3,6 +3,7 @@ package com.tvo.dao;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.RoleSearchReqDto;
 import com.tvo.model.Role;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,11 +25,11 @@ public class RoleRepoImpl implements RoleRepoCustom {
         queryString.append(" WHERE ");
         queryString.append(" 1 = 1 ");
 
-        if (roleSearchReqDto.getRoleName() != null) {
+        if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND r.roleName = :roleName ");
         }
 
-        if (roleSearchReqDto.getStatus() != null) {
+        if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND r.status = :status ");
         }
 
@@ -36,11 +37,11 @@ public class RoleRepoImpl implements RoleRepoCustom {
 
         TypedQuery<Role> query = em.createQuery(queryString.toString(), Role.class);
 
-        if (roleSearchReqDto.getRoleName() != null) {
+        if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("roleName", roleSearchReqDto.getRoleName());
         }
 
-        if (roleSearchReqDto.getStatus() != null) {
+        if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("status", roleSearchReqDto.getStatus());
         }
 
@@ -58,21 +59,21 @@ public class RoleRepoImpl implements RoleRepoCustom {
         queryString.append(" WHERE ");
         queryString.append(" 1 = 1 ");
 
-        if (roleSearchReqDto.getRoleName() != null) {
+        if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND r.roleName = :roleName ");
         }
 
-        if (roleSearchReqDto.getStatus() != null) {
+        if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND r.status = :status ");
         }
 
         TypedQuery<Long> query = em.createQuery(queryString.toString(), Long.class);
 
-        if (roleSearchReqDto.getRoleName() != null) {
+        if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("roleName", roleSearchReqDto.getRoleName());
         }
 
-        if (roleSearchReqDto.getStatus() != null) {
+        if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("status", roleSearchReqDto.getStatus());
         }
 
