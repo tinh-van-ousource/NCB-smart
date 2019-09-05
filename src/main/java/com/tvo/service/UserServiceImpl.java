@@ -131,15 +131,19 @@ public class UserServiceImpl implements UserService {
         }
 
         if (resource.getFromDate() != null && resource.getToDate() != null) {
-            // den_ngay >= toDate >= tu_ngay
-            predicates.add(cb.and(
-                    cb.between(rootPersist.<Date>get("createdDate"), resource.getFromDate(), resource.getToDate())));
+            // toDate >= createdDate >= fromDate
+            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getFromDate()));
+            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getToDate()));
         } else if (resource.getFromDate() != null) {
-            // toDate >= tu_ngay
-            predicates.add(cb.greaterThan(rootPersist.<Date>get("createdDate"), resource.getFromDate()));
+            // createdDate >= fromDate
+            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getFromDate()));
         } else if (resource.getToDate() != null) {
-            // toDate >= den_ngay
-            predicates.add(cb.lessThan(rootPersist.<Date>get("createdDate"), resource.getToDate()));
+            // createdDate <= toDate
+            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getToDate()));
         }
 
         Object[] results = new Object[2];
