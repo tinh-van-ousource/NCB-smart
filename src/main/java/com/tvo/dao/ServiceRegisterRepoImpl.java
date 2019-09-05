@@ -3,6 +3,7 @@ package com.tvo.dao;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.model.ServiceRegisterEntity;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,18 +25,20 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         queryString.append(" WHERE ");
         queryString.append(" 1 = 1 ");
 
-        if (serviceRegisterSearchReqDto.getCompCode() != null) {
+        if (serviceRegisterSearchReqDto.getCompCode() != null
+                && !serviceRegisterSearchReqDto.getCompCode().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.compCode = :compCode ");
         }
 
-        if (serviceRegisterSearchReqDto.getIdCard() != null) {
+        if (serviceRegisterSearchReqDto.getIdCard() != null
+                && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
         if (serviceRegisterSearchReqDto.getType() != null) {
             queryString.append(" AND sr.type = :type ");
         }
-;
+        
         if (serviceRegisterSearchReqDto.getService() != null) {
             queryString.append(" AND sr.service = :service ");
         }
@@ -44,11 +47,13 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.status = :status ");
         }
 
-        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+        if (serviceRegisterSearchReqDto.getFromDate() != null
+                && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.requestDate >= :fromDate ");
         }
 
-        if (serviceRegisterSearchReqDto.getToDate() != null) {
+        if (serviceRegisterSearchReqDto.getToDate() != null
+                && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.requestDate <= :toDate ");
         }
 
@@ -56,11 +61,13 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         TypedQuery<ServiceRegisterEntity> query = em.createQuery(queryString.toString(), ServiceRegisterEntity.class);
 
-        if (serviceRegisterSearchReqDto.getCompCode() != null) {
+        if (serviceRegisterSearchReqDto.getCompCode() != null
+                && !serviceRegisterSearchReqDto.getCompCode().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("compCode", serviceRegisterSearchReqDto.getCompCode());
         }
 
-        if (serviceRegisterSearchReqDto.getIdCard() != null) {
+        if (serviceRegisterSearchReqDto.getIdCard() != null
+                && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
         }
 
@@ -76,11 +83,13 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
-        if (serviceRegisterSearchReqDto.getFromDate() != null) {
+        if (serviceRegisterSearchReqDto.getFromDate() != null
+                && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("fromDate", serviceRegisterSearchReqDto.getFromDate());
         }
 
-        if (serviceRegisterSearchReqDto.getToDate() != null) {
+        if (serviceRegisterSearchReqDto.getToDate() != null
+                && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
         }
 

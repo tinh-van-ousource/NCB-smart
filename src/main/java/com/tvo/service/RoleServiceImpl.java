@@ -73,7 +73,10 @@ public class RoleServiceImpl implements RoleService {
 
         Role role = ModelMapperUtils.map(roleReqDto, Role.class);
         role.setUpdatedBy(currentUserName);
-        role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        if (roleReqDto.getStatus() == null) {
+            role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        }
+
         return ModelMapperUtils.map(roleRepo.save(role), RoleResDto.class);
     }
 
