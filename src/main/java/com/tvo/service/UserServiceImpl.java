@@ -130,17 +130,13 @@ public class UserServiceImpl implements UserService {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("userName"), resource.getUserName())));
         }
 
-        if (resource.getFromDate() != null && resource.getToDate() != null) {
-            // toDate >= createdDate >= fromDate
-            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
-                    resource.getFromDate()));
-            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
-                    resource.getToDate()));
-        } else if (resource.getFromDate() != null) {
+        if (resource.getFromDate() != null) {
             // createdDate >= fromDate
             predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
                     resource.getFromDate()));
-        } else if (resource.getToDate() != null) {
+        }
+
+        if (resource.getToDate() != null) {
             // createdDate <= toDate
             predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
                     resource.getToDate()));

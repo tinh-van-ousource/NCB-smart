@@ -9,7 +9,7 @@ public class AppConstant {
 
     public static final String SECRET = "Unknown";
     public static final String HEADER_STRING = "Authorization";
-    public static final long EXPIRATION_TIME_MS = 1000 * 60 * 60; // 60 minutes
+    public static final long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 4; // 4 hours
 
     public static final String USER_STATUS_STRING_ACTIVATED = "Activated";
     public static final String USER_STATUS_STRING_DEACTIVATED = "Deactivated";
@@ -21,7 +21,6 @@ public class AppConstant {
     public static final String SYSTEM_ERROR_MESSAGE = "System error";
 
     public static final int LIMIT_PAGE = 15;
-    public static final int MAX_PAGE_ITEM_DISPLAY = 5;
 
     public static final String RESOURCE_IMG = "C:\\upload\\card-img\\";
 

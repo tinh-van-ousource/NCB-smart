@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.tvo.controllerDto;
 
 import lombok.Getter;
@@ -8,10 +5,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * @author Ace
- *
- */
 @Setter
 @Getter
 public class UserSearchModel {
