@@ -21,7 +21,7 @@ public interface UserService {
 
     ContentResDto update(UserUpdateReqDto userDto);
 
-    Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto);
+    boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto);
 
     ContentResDto updateStatus(UserUpdateStatusReqDto userDto);
 }
