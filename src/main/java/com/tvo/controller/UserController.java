@@ -37,7 +37,7 @@ public class UserController {
     public ResponeData<UserResDto> createUser(@Valid @RequestBody CreateUserRequest request) {
         UserResDto dto = userService.createUser(request);
         if (dto == null) {
-            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+            return new ResponeData<>(AppConstant.ACCOUNT_IS_ALREADY_EXISTS_CODE, AppConstant.ACCOUNT_IS_ALREADY_EXISTS_MESSAGE, null);
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
