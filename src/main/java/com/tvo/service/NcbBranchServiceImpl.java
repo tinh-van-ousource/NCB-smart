@@ -4,6 +4,7 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
+import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.NcbBranch;
@@ -161,7 +162,20 @@ public class NcbBranchServiceImpl implements NcbBranchService {
                     new NcbActiveBranchOnlyResDto(branches[0].toString(), branches[1].toString()));
         }
 
-        return ModelMapperUtils.mapAll(ncbActiveBranchOnlyResDtoList, NcbActiveBranchOnlyResDto.class);
+        return ncbActiveBranchOnlyResDtoList;
+    }
+
+    @Override
+    public List<NcbActiveDepartOnlyResDto> getAllActivatedDepart() {
+        List<NcbActiveDepartOnlyResDto> ncbActiveDepartOnlyResDtoList = new ArrayList<>();
+        List<Object> listDepart = ncbBranchDao.retrieveAllActivatedDepart();
+        for (Object depart : listDepart) {
+            Object[] departs = (Object[]) depart;
+            ncbActiveDepartOnlyResDtoList.add(
+                    new NcbActiveDepartOnlyResDto(departs[0].toString(), departs[1].toString()));
+        }
+
+        return ncbActiveDepartOnlyResDtoList;
     }
 
 }
