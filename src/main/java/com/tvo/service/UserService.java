@@ -11,11 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-    public Page<UserResDto> findAllUser(Pageable pageable);
+    UserResDto createUser(CreateUserRequest request);
 
-    public UserResDto createUser(CreateUserRequest request);
-
-    public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable);
+    Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable);
 
     ContentResDto getUserDetail(String username);
 
