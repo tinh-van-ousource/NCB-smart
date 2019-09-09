@@ -37,7 +37,7 @@ public class UserController {
     public ResponeData<UserResDto> createUser(@Valid @RequestBody CreateUserRequest request) {
         UserResDto dto = userService.createUser(request);
         if (dto == null) {
-            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+            return new ResponeData<>(AppConstant.ACCOUNT_IS_ALREADY_EXISTS_CODE, AppConstant.ACCOUNT_IS_ALREADY_EXISTS_MESSAGE, null);
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
@@ -52,18 +52,18 @@ public class UserController {
     public ResponeData<Boolean> deleteUser(@PathVariable("username") String username) {
         Boolean result = userService.deleteUser(username);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, result);
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
 
     @PatchMapping(value = "/change-password")
     public ResponeData<Boolean> changeUserPassword(@RequestBody UserChangePasswordReqDto userChangePasswordReqDto) {
-        Boolean result = userService.changeUserPassword(userChangePasswordReqDto);
+        boolean result = userService.changeUserPassword(userChangePasswordReqDto);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, result);
+        return new ResponeData<>(AppConstant.OLD_PASSWORD_IS_INCORRECT_CODE, AppConstant.OLD_PASSWORD_IS_INCORRECT_MESSAGE, false);
     }
 
     @PatchMapping(value = "/update-user")
