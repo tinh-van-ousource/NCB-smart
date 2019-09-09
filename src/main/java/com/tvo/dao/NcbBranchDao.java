@@ -14,4 +14,7 @@ public interface NcbBranchDao extends JpaRepository<NcbBranch, String>, JpaSpeci
 
 	@Query("SELECT DISTINCT b.brnCode, b.branchName from NcbBranch b WHERE b.status = 'A' ORDER BY b.branchName")
 	List<Object> retrieveAllActivatedBranch();
+
+	@Query("SELECT DISTINCT b.departCode, b.departName from NcbBranch b WHERE b.status = 'A' ORDER BY b.departName")
+	List<Object> retrieveAllActivatedDepart();
 }

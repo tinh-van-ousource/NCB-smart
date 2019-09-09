@@ -315,6 +315,25 @@ paths:
         400:
           description: "Bad request"
 
+  /ncb-branch/depart/activated-list:
+    get:
+      tags:
+      - "Branch"
+      summary: "Get All Activated Depart Only"
+      description: "Get All Activated Depart Only"
+      operationId: "getAllActivatedDepart"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/NcbActivatedDepartOnlyResDto"
+        400:
+          description: "Bad request"
+
   /role/search:
     get:
       tags:
@@ -706,6 +725,16 @@ definitions:
       branchName:
         type: string
         description: "Đà Nẵng"
+
+  NcbActivatedDepartOnlyResDto:
+    type: "object"
+    properties:
+      departCode:
+        type: string
+        description: "VN0010113"
+      departName:
+        type: string
+        description: "Hải Châu"
 
   RoleUpdateReqDto:
     type: "object"

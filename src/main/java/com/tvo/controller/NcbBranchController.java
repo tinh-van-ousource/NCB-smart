@@ -4,6 +4,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
+import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
@@ -42,6 +43,11 @@ public class NcbBranchController {
     @GetMapping(value = "branch/activated-list")
     public ResponeData<List<NcbActiveBranchOnlyResDto>> getAllActivatedBranch() {
 		List<NcbActiveBranchOnlyResDto> res = ncbBranchService.getAllActivatedBranch();
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
+    }
+    @GetMapping(value = "depart/activated-list")
+    public ResponeData<List<NcbActiveDepartOnlyResDto>> getAllActivatedDepart() {
+        List<NcbActiveDepartOnlyResDto> res = ncbBranchService.getAllActivatedDepart();
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
 
