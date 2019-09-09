@@ -54,13 +54,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RoleRepo roleRepo;
 
-    @Override
-    public Page<UserResDto> findAllUser(Pageable pageable) {
-        Page<User> users = userRepo.findAll(pageable);
-        List<UserResDto> userDto = ModelMapperUtils.mapAll(users.getContent(), UserResDto.class);
-        return new PageImpl<>(userDto, pageable, users.getTotalElements());
-    }
-
     public UserResDto createUser(CreateUserRequest request) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(request.getUserName());
@@ -85,23 +78,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable) {
-        final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-        final CriteriaQuery<User> query = cb.createQuery(User.class);
-        Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
-        query.select((Root<User>) queryObjs[0]);
-        query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<User> typedQuery = this.entityManager.createQuery(query);
+        final CriteriaBuilder criteriaBuilder = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Object[] queryObjs = this.createUserRootPersist(criteriaBuilder, criteriaQuery, searchModel);
+        Root<User> root = (Root<User>) queryObjs[0];
+        criteriaQuery.select((root));
+        criteriaQuery.where((Predicate[]) queryObjs[1]);
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("userId")));
+
+        TypedQuery<User> typedQuery = this.entityManager.createQuery(criteriaQuery);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<User> objects = typedQuery.getResultList();
-        List<UserResDto> UserDtos = ModelMapperUtils.mapAll(objects, UserResDto.class);
+        List<UserResDto> userResDtos = ModelMapperUtils.mapAll(objects, UserResDto.class);
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        final CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(User.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
-        return new PageImpl<>(UserDtos, pageable, total);
+        return new PageImpl<>(userResDtos, pageable, total);
     }
 
     private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, UserSearchModel resource) {

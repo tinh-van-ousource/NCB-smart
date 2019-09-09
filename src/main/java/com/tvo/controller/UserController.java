@@ -29,14 +29,8 @@ public class UserController {
 
     @GetMapping(value = "/searchUser")
     public ResponeData<Page<UserResDto>> searchUser(UserSearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-        Page<UserResDto> UserDtos = userService.searchUser(searchModel, pageable);
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, UserDtos);
-    }
-
-    @GetMapping(value = "/get-listUser")
-    public ResponeData<Page<UserResDto>> listUser(@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-        Page<UserResDto> page = userService.findAllUser(pageable);
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, page);
+        Page<UserResDto> resDto = userService.searchUser(searchModel, pageable);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
     }
 
     @PostMapping(value = "/createUser")
