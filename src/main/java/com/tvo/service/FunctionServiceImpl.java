@@ -5,8 +5,12 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dto.FunctionDto;
+import com.tvo.dto.NotifyDto;
 import com.tvo.model.Function;
+import com.tvo.model.Notify;
 import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.UpdateFunctionRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +27,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -130,5 +135,46 @@ public class FunctionServiceImpl implements FunctionService {
 			return AppConstant.SYSTEM_SUCCESS_CODE;
 		}
 		return AppConstant.SYSTEM_ERROR_CODE;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public FunctionDto update(UpdateFunctionRequest request) {
+		Optional<Function> opt = functionDao.findById(request.getTypeId());
+		if (opt.isPresent()) {
+			Function function = ModelMapperUtils.map(request,Function.class);
+			function.setTypeId(opt.get().getTypeId());
+			function.setType(opt.get().getType());
+			function.setUser_Id(opt.get().getUser_Id());
+			function.setMsg_Code_1(opt.get().getMsg_Code());
+			function.setMsg_Code(opt.get().getMsg_Code_1());
+			function.setMes_En(opt.get().getMes_En());
+			function.setMes_Vn(opt.get().getMes_Vn());
+			function.setError(opt.get().getError());
+			function.setCreate_Date(opt.get().getCreate_Date());
+
+			Notify save = notifyDao.save(notify);
+
+			return ModelMapperUtils.map(save, NotifyDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Boolean delete(Long id) {
+		Notify notifys = new Notify();
+		if (id != null) {
+			Optional<Notify> opt = notifyDao.findById(String.valueOf(id));
+			if (opt.isPresent()) {
+				notifys = opt.get();
+				notifys.setProvider(" ");
+				notifys.setType(" ");
+				notifys.setType(" ");
+				notifyDao.save(notifys);
+				return true;
+			}
+		}
+		return false;
 	}
 }
