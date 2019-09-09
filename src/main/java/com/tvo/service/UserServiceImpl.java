@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         Root<User> root = (Root<User>) queryObjs[0];
         criteriaQuery.select((root));
         criteriaQuery.where((Predicate[]) queryObjs[1]);
-        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("userId")));
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("userId")));
 
         TypedQuery<User> typedQuery = this.entityManager.createQuery(criteriaQuery);
         typedQuery.setFirstResult((int) pageable.getOffset());
@@ -111,8 +111,7 @@ public class UserServiceImpl implements UserService {
 
         if (resource.getFullName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFullName().trim())) {
-            predicates.add(cb.and(cb.like(cb.lower(
-                    rootPersist.get("fullName")),
+            predicates.add(cb.and(cb.like(cb.lower(rootPersist.get("fullName")),
                     "%" + resource.getFullName().toLowerCase() + "%")));
         }
 
