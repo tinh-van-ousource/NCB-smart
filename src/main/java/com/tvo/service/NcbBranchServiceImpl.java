@@ -93,7 +93,8 @@ public class NcbBranchServiceImpl implements NcbBranchService {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<NcbBranch> query = cb.createQuery(NcbBranch.class);
         Object[] queryObjs = this.createNcbBranchRootPersist(cb, query, searchModel);
-        query.select((Root<NcbBranch>) queryObjs[0]);
+        Root<NcbBranch> root = (Root<NcbBranch>) queryObjs[0];
+        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
         TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
 
