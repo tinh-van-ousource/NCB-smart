@@ -90,7 +90,7 @@ public class PromotionsServiceImpl implements PromotionsService{
 	}
 
 	@Override
-	public PromotionsDto createPromotions(CreatePromotionsRequest request) {
+	public PromotionsDto create(CreatePromotionsRequest request) {
 		Promotions promotions = promotionsDao.findByType(request.getType());
 		if (promotions != null) {
 			return null;
@@ -110,6 +110,7 @@ public class PromotionsServiceImpl implements PromotionsService{
 
 
 	@Override
+	@Transactional(readOnly = false)
 	public PromotionsDto update(UpdatePromotionRequest request) {
 		Optional<Promotions> opt = promotionsDao.findById(request.getType());
 		if (opt.isPresent()) {
@@ -131,9 +132,19 @@ public class PromotionsServiceImpl implements PromotionsService{
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Promotions promotions = new Promotions();
+		if (id != null) {
+			Optional<Promotions> opt = promotionsDao.findById(String.valueOf(id));
+			if (opt.isPresent()) {
+				promotions = opt.get();
+				promotions.setType(" ");
+				promotionsDao.save(promotions);
+				return true;
+			}
+		}
+		return false;
 	}	
 	
 }

@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface PromotionsService {
 	public Page<PromotionsDto> searchPromotion(SearchPromotion searchPromotion, Pageable pageable);
-	public PromotionsDto createPromotions(CreatePromotionsRequest request) ;
+	public PromotionsDto create(CreatePromotionsRequest request) ;
 	public PromotionsDto update(UpdatePromotionRequest request);
 	public Boolean delete(Long id);
 }

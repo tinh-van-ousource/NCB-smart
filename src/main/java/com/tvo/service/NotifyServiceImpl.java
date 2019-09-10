@@ -155,7 +155,6 @@ public class NotifyServiceImpl implements NotifyService{
 				notifys = opt.get();
 				notifys.setProvider(" ");
 				notifys.setType(" ");
-				notifys.setType(" ");
 				notifyDao.save(notifys);
 				return true;
 			}
