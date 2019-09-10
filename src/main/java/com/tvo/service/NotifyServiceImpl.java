@@ -117,6 +117,7 @@ public class NotifyServiceImpl implements NotifyService{
 		notify.setCreate_Date(request.getCreate_Date());
 		notify.setMes_En(request.getMes_En());
 		notify.setMes_Vn(request.getMes_Vn());
+		
 		Notify save = notifyDao.save(notify);
 		return ModelMapperUtils.map(save, NotifyDto.class);
 	}

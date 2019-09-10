@@ -1,5 +1,24 @@
 package com.tvo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
@@ -10,24 +29,6 @@ import com.tvo.model.Function;
 import com.tvo.model.Notify;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -123,19 +124,32 @@ public class FunctionServiceImpl implements FunctionService {
 			return null;
 		}
 		function = ModelMapperUtils.map(request, Function.class);
+		function.setTypeId(request.getTypeId());
+		function.setTranType(request.getTranType());
+		function.setQuantity(request.getQuantity());
+		function.setPromotion(request.getPromotion());
+		function.setPromotionName(request.getPromotionName());
+		function.setCreatedBy(request.getCreatedBy());
+		function.setCreatedDate(request.getCreatedDate());
+		function.setCustomerType(request.getCustomerType());
+		function.setFromDate(request.getFromDate());
+		function.setStatus(request.getStatus());
+		function.setToDate(request.getToDate());
+		function.setPrdName(request.getPrdName());
+		function.setPrd(request.getPrd());
+		function.setPercentage(request.getPercentage());
+		function.setMin(request.getMin());
+		function.setMax(request.getMax());
+		function.setLimitDaily(request.getLimitDaily());
+		function.setLimitFaceid(request.getLimitFaceid());
+		function.setLimitFinger(request.getLimitFinger());
+		function.setId(request.getId());
+		function.setCcy(request.getCcy());
+		
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
 	}
 
-	public String delete(String typeId) {
-		if (!typeId.isEmpty()) {
-			Function function = functionDao.findByTypeId(typeId);
-			function.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
-			functionDao.saveAndFlush(function);
-			return AppConstant.SYSTEM_SUCCESS_CODE;
-		}
-		return AppConstant.SYSTEM_ERROR_CODE;
-	}
 
 	@Override
 	@Transactional(readOnly = false)
@@ -144,18 +158,30 @@ public class FunctionServiceImpl implements FunctionService {
 		if (opt.isPresent()) {
 			Function function = ModelMapperUtils.map(request,Function.class);
 			function.setTypeId(opt.get().getTypeId());
-			function.setType(opt.get().getType());
-			function.setUser_Id(opt.get().getUser_Id());
-			function.setMsg_Code_1(opt.get().getMsg_Code());
-			function.setMsg_Code(opt.get().getMsg_Code_1());
-			function.setMes_En(opt.get().getMes_En());
-			function.setMes_Vn(opt.get().getMes_Vn());
-			function.setError(opt.get().getError());
-			function.setCreate_Date(opt.get().getCreate_Date());
+			function.setTranType(opt.get().getTranType());
+			function.setQuantity(opt.get().getQuantity());
+			function.setPromotion(opt.get().getPromotion());
+			function.setPromotionName(opt.get().getPromotionName());
+			function.setCreatedBy(opt.get().getCreatedBy());
+			function.setCreatedDate(opt.get().getCreatedDate());
+			function.setCustomerType(opt.get().getCustomerType());
+			function.setFromDate(opt.get().getFromDate());
+			function.setStatus(opt.get().getStatus());
+			function.setToDate(opt.get().getToDate());
+			function.setPrdName(opt.get().getPrdName());
+			function.setPrd(opt.get().getPrd());
+			function.setPercentage(opt.get().getPercentage());
+			function.setMin(opt.get().getMin());
+			function.setMax(opt.get().getMax());
+			function.setLimitDaily(opt.get().getLimitDaily());
+			function.setLimitFaceid(opt.get().getLimitFaceid());
+			function.setLimitFinger(opt.get().getLimitFinger());
+			function.setId(opt.get().getId());
+			function.setCcy(opt.get().getCcy());
+			
+			Function save = functionDao.save(function);
 
-			Notify save = notifyDao.save(notify);
-
-			return ModelMapperUtils.map(save, NotifyDto.class);
+			return ModelMapperUtils.map(save, FunctionDto.class);
 		}
 		return null;
 	}
@@ -163,15 +189,20 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	@Transactional(readOnly = false)
 	public Boolean delete(Long id) {
-		Notify notifys = new Notify();
+		Function function = new Function();
 		if (id != null) {
-			Optional<Notify> opt = notifyDao.findById(String.valueOf(id));
+			Optional<Function> opt = functionDao.findById(String.valueOf(id));
 			if (opt.isPresent()) {
-				notifys = opt.get();
-				notifys.setProvider(" ");
-				notifys.setType(" ");
-				notifys.setType(" ");
-				notifyDao.save(notifys);
+				function = opt.get();
+				function.setTypeId(" ");
+				function.setTranType(" ");
+				function.setStatus(" ");
+				function.setQuantity(" ");
+				function.setPromotionName(" ");
+				function.setPromotion(" ");
+				function.setPrdName(" ");
+				function.setCcy(" ");
+				functionDao.save(function);
 				return true;
 			}
 		}

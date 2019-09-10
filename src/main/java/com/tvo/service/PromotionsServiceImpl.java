@@ -3,10 +3,14 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dao.PromotionsDAO;
+import com.tvo.dto.NotifyDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.model.Function;
+import com.tvo.model.Notify;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
+import com.tvo.request.UpdatePromotionRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +27,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -77,8 +82,6 @@ public class PromotionsServiceImpl implements PromotionsService{
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cuType"), resource.getCuType())));
 		}
 		
-		
-	
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -105,8 +108,30 @@ public class PromotionsServiceImpl implements PromotionsService{
 		return ModelMapperUtils.map(save, PromotionsDto.class);
 	}
 
+
 	@Override
-	public PromotionsDto update(PromotionsDto promotionsDto) {
+	public PromotionsDto update(UpdatePromotionRequest request) {
+		Optional<Promotions> opt = promotionsDao.findById(request.getType());
+		if (opt.isPresent()) {
+			Promotions promotions = ModelMapperUtils.map(request,Promotions.class);
+			promotions.setPromotion(opt.get().getPromotion());
+			promotions.setPromotionName(opt.get().getPromotionName());
+			promotions.setCuType(opt.get().getCuType());
+			promotions.setType(opt.get().getType());
+			promotions.setPercentage(opt.get().getPercentage());
+			promotions.setFunctionType(opt.get().getFunctionType());
+			promotions.setFromDate(opt.get().getFromDate());
+			promotions.setToDate(opt.get().getToDate());
+			Promotions save = promotionsDao.save(promotions);
+
+
+			return ModelMapperUtils.map(save, PromotionsDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean delete(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}	
