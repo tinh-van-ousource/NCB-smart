@@ -7,10 +7,8 @@ import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dao.ServiceRegisterLogRepo;
 import com.tvo.dao.ServiceRegisterRepo;
-import com.tvo.dto.ContentResDto;
-import com.tvo.dto.ServiceRegisterGetDetailResDto;
-import com.tvo.dto.ServiceRegisterLogResDto;
-import com.tvo.dto.ServiceRegisterSearchCardResDto;
+import com.tvo.dto.*;
+import com.tvo.enums.ServiceRegisterSearchType;
 import com.tvo.model.ServiceRegisterEntity;
 import com.tvo.model.ServiceRegisterLogEntity;
 import org.springframework.stereotype.Service;
@@ -47,18 +45,18 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
         ContentResDto contentResDto = new ContentResDto(Collections.EMPTY_LIST, 0L);
 
         if (!serviceRegisterEntityList.isEmpty()) {
-            List<ServiceRegisterSearchCardResDto> serviceRegisterSearchCardResDtoList;
+            List serviceRegisterSearchResDtoList;
 
-            if (serviceRegisterSearchReqDto.getType() != null) {
-                serviceRegisterSearchCardResDtoList =
+            if (serviceRegisterSearchReqDto.getType() != null
+                    && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
+                serviceRegisterSearchResDtoList =
                         ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
-
             } else {
-                serviceRegisterSearchCardResDtoList =
-                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
+                serviceRegisterSearchResDtoList =
+                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
             }
 
-            contentResDto.setContent(serviceRegisterSearchCardResDtoList);
+            contentResDto.setContent(serviceRegisterSearchResDtoList);
             contentResDto.setTotal(totalServiceRegister);
             return contentResDto;
         }
