@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
@@ -49,12 +51,12 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         if (serviceRegisterSearchReqDto.getFromDate() != null
                 && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
-            queryString.append(" AND sr.requestDate >= :fromDate ");
+            queryString.append(" AND TRUNC(sr.requestDate) >= :fromDate ");
         }
 
         if (serviceRegisterSearchReqDto.getToDate() != null
                 && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
-            queryString.append(" AND sr.requestDate <= :toDate ");
+            queryString.append(" AND TRUNC(sr.requestDate) <= :toDate ");
         }
 
         queryString.append(" ORDER BY sr.requestDate ");
@@ -83,14 +85,16 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+
         if (serviceRegisterSearchReqDto.getFromDate() != null
                 && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
-            query.setParameter("fromDate", serviceRegisterSearchReqDto.getFromDate());
+            query.setParameter("fromDate", LocalDate.parse(serviceRegisterSearchReqDto.getFromDate(), formatter));
         }
 
         if (serviceRegisterSearchReqDto.getToDate() != null
                 && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
-            query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
+            query.setParameter("toDate", LocalDate.parse(serviceRegisterSearchReqDto.getToDate(), formatter));
         }
 
         query.setFirstResult(AppConstant.getOffset(serviceRegisterSearchReqDto.getPage(), serviceRegisterSearchReqDto.getSize()))
@@ -127,12 +131,14 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.status = :status ");
         }
 
-        if (serviceRegisterSearchReqDto.getFromDate() != null) {
-            queryString.append(" AND sr.requestDate >= :fromDate ");
+        if (serviceRegisterSearchReqDto.getFromDate() != null
+                && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
+            queryString.append(" AND TRUNC(sr.requestDate) >= :fromDate ");
         }
 
-        if (serviceRegisterSearchReqDto.getToDate() != null) {
-            queryString.append(" AND sr.requestDate <= :toDate ");
+        if (serviceRegisterSearchReqDto.getToDate() != null
+                && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
+            queryString.append(" AND TRUNC(sr.requestDate) <= :toDate ");
         }
 
         TypedQuery<Long> query = em.createQuery(queryString.toString(), Long.class);
@@ -157,12 +163,16 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
-        if (serviceRegisterSearchReqDto.getFromDate() != null) {
-            query.setParameter("fromDate", serviceRegisterSearchReqDto.getFromDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+
+        if (serviceRegisterSearchReqDto.getFromDate() != null
+                && !serviceRegisterSearchReqDto.getFromDate().trim().equals(StringUtils.EMPTY)) {
+            query.setParameter("fromDate", LocalDate.parse(serviceRegisterSearchReqDto.getFromDate(), formatter));
         }
 
-        if (serviceRegisterSearchReqDto.getToDate() != null) {
-            query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
+        if (serviceRegisterSearchReqDto.getToDate() != null
+                && !serviceRegisterSearchReqDto.getToDate().trim().equals(StringUtils.EMPTY)) {
+            query.setParameter("toDate", LocalDate.parse(serviceRegisterSearchReqDto.getToDate(), formatter));
         }
 
         return query.getSingleResult();
