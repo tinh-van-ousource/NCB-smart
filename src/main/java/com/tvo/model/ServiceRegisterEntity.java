@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP")
@@ -42,7 +43,7 @@ public class ServiceRegisterEntity implements Serializable {
     private String idCard;
 
     @Column(name = "IDCARD_ISSUEDATE")
-    private String idCardIssueDate;
+    private LocalDate idCardIssueDate;
 
     @Column(name = "PHONE")
     private String phone;
@@ -66,10 +67,10 @@ public class ServiceRegisterEntity implements Serializable {
     private BigInteger fee;
 
     @Column(name = "REQUEST_DATE")
-    private String requestDate;
+    private LocalDate requestDate;
 
     @Column(name = "COMPLETED_DATE")
-    private String completedDate;
+    private LocalDate completedDate;
 
     @Column(name = "STATUS")
     private String status;

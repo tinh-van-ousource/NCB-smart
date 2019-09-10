@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -30,7 +31,7 @@ public class ServiceRegisterSearchCardResDto {
     private String idCard;
 
     @JsonProperty("id_card_issue_date")
-    private String idCardIssueDate;
+    private LocalDate idCardIssueDate;
 
     @JsonProperty("phone")
     private String phone;
@@ -81,10 +82,10 @@ public class ServiceRegisterSearchCardResDto {
     private String autoDebitBankAcct;
 
     @JsonProperty("request_date")
-    private String requestDate;
+    private LocalDate requestDate;
 
     @JsonProperty("completed_date")
-    private String completedDate;
+    private LocalDate completedDate;
 
     @JsonProperty("status")
     private String status;
