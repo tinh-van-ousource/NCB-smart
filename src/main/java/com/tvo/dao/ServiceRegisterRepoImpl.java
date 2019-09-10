@@ -111,11 +111,13 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         queryString.append(" WHERE ");
         queryString.append(" 1 = 1 ");
 
-        if (serviceRegisterSearchReqDto.getCompCode() != null) {
+        if (serviceRegisterSearchReqDto.getCompCode() != null
+                && !serviceRegisterSearchReqDto.getCompCode().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.compCode = :compCode ");
         }
 
-        if (serviceRegisterSearchReqDto.getIdCard() != null) {
+        if (serviceRegisterSearchReqDto.getIdCard() != null
+                && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
@@ -143,11 +145,13 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         TypedQuery<Long> query = em.createQuery(queryString.toString(), Long.class);
 
-        if (serviceRegisterSearchReqDto.getCompCode() != null) {
+        if (serviceRegisterSearchReqDto.getCompCode() != null
+                && !serviceRegisterSearchReqDto.getCompCode().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("compCode", serviceRegisterSearchReqDto.getCompCode());
         }
 
-        if (serviceRegisterSearchReqDto.getIdCard() != null) {
+        if (serviceRegisterSearchReqDto.getIdCard() != null
+                && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
         }
 
