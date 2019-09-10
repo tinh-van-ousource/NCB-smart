@@ -26,6 +26,9 @@ public class ServiceRegisterSearchAllResDto {
     @JsonProperty("service")
     private String service;
 
+    @JsonProperty("comp_code")
+    private String compCode;
+
     @JsonProperty("comp_name")
     private String compName;
 
