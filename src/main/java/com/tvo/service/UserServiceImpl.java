@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
+    public boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(userChangePasswordReqDto.getUsername());
         // edited user must exist
