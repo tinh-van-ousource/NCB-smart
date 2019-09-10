@@ -37,10 +37,6 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
-        if (serviceRegisterSearchReqDto.getType() != null) {
-            queryString.append(" AND sr.type = :type ");
-        }
-        
         if (serviceRegisterSearchReqDto.getService() != null) {
             queryString.append(" AND sr.service = :service ");
         }
@@ -71,10 +67,6 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         if (serviceRegisterSearchReqDto.getIdCard() != null
                 && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
-        }
-
-        if (serviceRegisterSearchReqDto.getType() != null) {
-            query.setParameter("type", serviceRegisterSearchReqDto.getType().toString());
         }
 
         if (serviceRegisterSearchReqDto.getService() != null) {
@@ -121,10 +113,6 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
-        if (serviceRegisterSearchReqDto.getType() != null) {
-            queryString.append(" AND sr.type = :type ");
-        }
-        ;
         if (serviceRegisterSearchReqDto.getService() != null) {
             queryString.append(" AND sr.service = :service ");
         }
@@ -153,10 +141,6 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         if (serviceRegisterSearchReqDto.getIdCard() != null
                 && !serviceRegisterSearchReqDto.getIdCard().trim().equals(StringUtils.EMPTY)) {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
-        }
-
-        if (serviceRegisterSearchReqDto.getType() != null) {
-            query.setParameter("type", serviceRegisterSearchReqDto.getType().toString());
         }
 
         if (serviceRegisterSearchReqDto.getService() != null) {
