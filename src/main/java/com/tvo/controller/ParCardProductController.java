@@ -50,7 +50,6 @@ public class ParCardProductController {
 			e.printStackTrace();
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
 	@GetMapping(value = "search")
