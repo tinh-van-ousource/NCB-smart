@@ -29,8 +29,8 @@ public class PromotionsController {
 	@Autowired 	
 	PromotionsServiceImpl promotionsService; 
 	
-	@GetMapping(value = "/searchPromotions")
-	public ResponeData<Page<PromotionsDto>> searchFunction(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	@GetMapping(value = "/search")
+	public ResponeData<Page<PromotionsDto>> search(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<PromotionsDto> PromotionsDtos = promotionsService.searchPromotion(searchPromotion, pageable);
 		return new ResponeData<Page<PromotionsDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, PromotionsDtos) ;
 	}

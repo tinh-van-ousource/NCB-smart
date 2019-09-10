@@ -42,7 +42,7 @@ public class FunctionServiceImpl implements FunctionService {
 	FunctionDAO functionDao;
 
 	@Override
-	public Page<FunctionDto> searchFunction(SearchFunction searchFunction, Pageable pageable) {
+	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
@@ -118,7 +118,7 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionDto createFunction(CreateFunctionRequest request) {
+	public FunctionDto create(CreateFunctionRequest request) {
 		Function function = functionDao.findByTypeId(request.getTypeId());
 		if (function != null) {
 			return null;
