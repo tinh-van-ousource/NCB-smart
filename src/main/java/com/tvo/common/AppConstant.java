@@ -11,6 +11,9 @@ public class AppConstant {
     public static final String OLD_PASSWORD_IS_INCORRECT_CODE = "405";
     public static final String OLD_PASSWORD_IS_INCORRECT_MESSAGE = "Old password is incorrect.";
 
+    public static final String PAR_CARD_EXISTED_CODE = "901";
+    public static final String PAR_CARD_EXISTED_MESSAGE = "Par card existed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 

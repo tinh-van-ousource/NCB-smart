@@ -1,16 +1,12 @@
-/**
- * 
- */
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.ParCardSearch;
-import com.tvo.dto.ParCardProductDto;
-import com.tvo.model.ParCardProduct;
-import com.tvo.request.PardCardProductCreate;
+import com.tvo.dto.ParCardProductResDto;
+import com.tvo.model.ParCardProductEntity;
+import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.response.ResponeData;
-import com.tvo.response.UploadFileResponse;
 import com.tvo.service.ParCardProductService;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
@@ -29,13 +25,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * @author Ace
- *
- */
 @RestController
 @RequestMapping(value = "par-card")
-@Api(tags = "ParCardProduct")
+@Api(tags = "ParCardProductEntity")
 public class ParCardProductController {
 	@Autowired
 	private ParCardProductService parCardProductService;
@@ -53,55 +45,38 @@ public class ParCardProductController {
 	}
 
 	@GetMapping(value = "search")
-	public ResponeData<Page<ParCardProductDto>> search(@ModelAttribute ParCardSearch searchModel,
-			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-		Page<ParCardProductDto> dts = parCardProductService.search(searchModel, pageable);
-		return new ResponeData<Page<ParCardProductDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
+	public ResponeData<Page<ParCardProductResDto>> search(@ModelAttribute ParCardSearch searchModel,
+														  @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+		Page<ParCardProductResDto> dts = parCardProductService.search(searchModel, pageable);
+		return new ResponeData<Page<ParCardProductResDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
 				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 
 	@GetMapping(value = "detail")
-	public ResponeData<ParCardProductDto> detail(@RequestParam String prdcode) {
+	public ResponeData<ParCardProductResDto> detail(@RequestParam String prdcode) {
 		if (StringUtils.isEmpty(prdcode.trim())) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
+			return new ResponeData<ParCardProductResDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
-		ParCardProduct parCardProduct = parCardProductService.findPrdcode(prdcode);
-		ParCardProductDto result = ModelMapperUtils.map(parCardProduct, ParCardProductDto.class);
-		return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+		ParCardProductEntity parCardProductEntity = parCardProductService.findPrdcode(prdcode);
+		ParCardProductResDto result = ModelMapperUtils.map(parCardProductEntity, ParCardProductResDto.class);
+		return new ResponeData<ParCardProductResDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
 	}
 
-	@PostMapping(value = "create")
-	public ResponeData<ParCardProductDto> create(final @RequestParam("img") MultipartFile multipartFiles,
-			@ModelAttribute PardCardProductCreate pardCardProductCreate) {
-		try {
-			UploadFileResponse uploadFileResponse = parCardProductService.uploadFile(multipartFiles);
-			pardCardProductCreate.setLinkUlr(uploadFileResponse.getFileUploadUri());
-			pardCardProductCreate.setFileName(uploadFileResponse.getFileName());
-			ParCardProductDto parCardProduc = ModelMapperUtils.map(parCardProductService.create(pardCardProductCreate),
-					ParCardProductDto.class);
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
-					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
-		} catch (Exception e) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_MESSAGE,
-					AppConstant.SYSTEM_ERROR_MESSAGE, null);
-		}
-	}
-
 	@PostMapping(value = "edit")
-	public ResponeData<ParCardProductDto> edit(final @RequestParam("IMG") MultipartFile multipartFiles,
-			@RequestBody PardCardProductCreate pardCardProductCreate) {
+	public ResponeData<ParCardProductResDto> edit(final @RequestParam("IMG") MultipartFile multipartFiles,
+												  @RequestBody ParCardProductCreateReqDto parCardProductCreateReqDto) {
 		try {
 			Path path = Paths.get(AppConstant.RESOURCE_IMG + multipartFiles.getOriginalFilename());
-			pardCardProductCreate.setLinkUlr(path.toString());
-			pardCardProductCreate.setFileName(path.getFileName().toString());
-			ParCardProductDto parCardProduc = ModelMapperUtils.map(parCardProductService.edit(pardCardProductCreate),
-					ParCardProductDto.class);
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_SUCCESS_CODE,
+			parCardProductCreateReqDto.setLinkUrl(path.toString());
+			parCardProductCreateReqDto.setFileName(path.getFileName().toString());
+			ParCardProductResDto parCardProduc = ModelMapperUtils.map(parCardProductService.edit(parCardProductCreateReqDto),
+					ParCardProductResDto.class);
+			return new ResponeData<ParCardProductResDto>(AppConstant.SYSTEM_SUCCESS_CODE,
 					AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduc);
 		} catch (Exception e) {
-			return new ResponeData<ParCardProductDto>(AppConstant.SYSTEM_ERROR_MESSAGE,
+			return new ResponeData<ParCardProductResDto>(AppConstant.SYSTEM_ERROR_MESSAGE,
 					AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 	}
@@ -109,5 +84,20 @@ public class ParCardProductController {
 	@PostMapping(value = "delete")
 	public ResponeData<String> delete(@RequestParam String prdCode) {
 		return new ResponeData<String>(parCardProductService.delete(prdCode), AppConstant.SYSTEM_SUCCESS_MESSAGE, null);
+	}
+
+	@PostMapping(value = "create")
+	public ResponeData<ParCardProductResDto> create(final @RequestParam("img") MultipartFile multipartFiles,
+													@ModelAttribute ParCardProductCreateReqDto parCardProductCreateReqDto) {
+		try {
+			ParCardProductResDto parCardProduct = parCardProductService.create(multipartFiles, parCardProductCreateReqDto);
+			if (parCardProduct != null) {
+				return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
+			}
+			return new ResponeData<>(AppConstant.PAR_CARD_EXISTED_CODE, AppConstant.PAR_CARD_EXISTED_MESSAGE, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
 	}
 }
