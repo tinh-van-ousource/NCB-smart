@@ -6,7 +6,6 @@ import com.tvo.model.ParCardProductEntity;
 import com.tvo.request.ParCardProductCreateReqDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface ParCardProductService {
     Page<ParCardProductResDto> search(ParCardSearch searchModel, Pageable pageable);
@@ -17,5 +16,6 @@ public interface ParCardProductService {
 
     String delete(String prdCode);
 
-    ParCardProductResDto create(MultipartFile multipartFiles, ParCardProductCreateReqDto parCardProductCreateReqDto);
+    ParCardProductResDto create(ParCardProductCreateReqDto parCardProductCreateReqDto);
+
 }
