@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ParCardProductServiceImpl implements ParCardProductService{
+public class ParCardProductServiceImpl implements ParCardProductService {
 
     private final Path fileStorageLocation;
 
@@ -140,7 +140,7 @@ public class ParCardProductServiceImpl implements ParCardProductService{
     private String storeFile(MultipartFile file) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddhhmmssSSS");;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddhhmmssSSS");
 
         // Normalize file name
         String fileName = file.getOriginalFilename();
@@ -163,7 +163,7 @@ public class ParCardProductServiceImpl implements ParCardProductService{
     private UploadFileResponse uploadFile(MultipartFile file) {
         String fileName = storeFile(file);
 
-        String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/uploadFile/")
+        String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/")
                 .path(fileName).toUriString();
 
         return new UploadFileResponse(fileName, fileUploadUri, file.getContentType(), file.getSize());

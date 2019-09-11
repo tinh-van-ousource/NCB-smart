@@ -18,4 +18,5 @@ public interface ParCardProductService {
     String delete(String prdCode);
 
     ParCardProductResDto create(MultipartFile multipartFiles, ParCardProductCreateReqDto parCardProductCreateReqDto);
+
 }
