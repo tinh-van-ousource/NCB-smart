@@ -13,6 +13,8 @@ tags:
   description: "Branch Api"
 - name: "Role"
   description: "Role Api"
+- name: "Par Card"
+  description: "Par Card Api"
 schemes:
 - "https"
 - "http"
@@ -448,6 +450,32 @@ paths:
         400:
           description: "Bad request"
 
+  /par-card/create:
+    post:
+      tags:
+      - "Par Card"
+      summary: "Create Par Card"
+      description: "Create Par Card"
+      operationId: "createParCard"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "ParCardProductCreateReqDto"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/ParCardProductCreateReqDto"
+      responses:
+        200:
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ParCardProductResDto"
+        400:
+          description: "Bad request"
+
 definitions:
   ServiceRegisterSearchCardResDto:
     type: "object"
@@ -583,10 +611,10 @@ definitions:
   ServiceRegisterUpdateReqDto:
     type: "object"
     properties:
-      comp_code:
+      compCode:
         type: string
         description: ""
-      comp_name:
+      compName:
         type: string
         description: ""
       status:
@@ -595,7 +623,7 @@ definitions:
       comment:
         type: string
         description: ""
-      user_id:
+      userId:
         type: string
         description: ""
 
@@ -788,4 +816,120 @@ definitions:
         $ref: "#/definitions/RoleResDto"
       total:
         type: number
+        description: ""
+
+  ParCardProductCreateReqDto:
+    type: "object"
+    properties:
+      prdcode:
+        type: string
+        description: ""
+      product:
+        type: string
+        description: ""
+      activeFee:
+        type: string
+        description: ""
+      cardtype:
+        type: string
+        description: ""
+      changesttFee:
+        type: string
+        description: ""
+      class_:
+        type: string
+        description: ""
+      directddFee:
+        type: string
+        description: ""
+      f01:
+        type: string
+        description: ""
+      f02:
+        type: string
+        description: ""
+      f03:
+        type: string
+        description: ""
+      f04:
+        type: string
+        description: ""
+      f05:
+        type: string
+        description: ""
+      fileName:
+        type: string
+        description: ""
+      issueFee:
+        type: string
+        description: ""
+      linkUrl:
+        type: string
+        description: ""
+      reissueFee:
+        type: string
+        description: ""
+      repinFee:
+        type: string
+        description: ""
+      status:
+        type: string
+        description: ""
+
+  ParCardProductResDto:
+    type: "object"
+    properties:
+      prdcode:
+        type: string
+        description: ""
+      product:
+        type: string
+        description: ""
+      activeFee:
+        type: string
+        description: ""
+      cardtype:
+        type: string
+        description: ""
+      changesttFee:
+        type: string
+        description: ""
+      class_:
+        type: string
+        description: ""
+      directddFee:
+        type: string
+        description: ""
+      f01:
+        type: string
+        description: ""
+      f02:
+        type: string
+        description: ""
+      f03:
+        type: string
+        description: ""
+      f04:
+        type: string
+        description: ""
+      f05:
+        type: string
+        description: ""
+      fileName:
+        type: string
+        description: ""
+      issueFee:
+        type: string
+        description: ""
+      linkUrl:
+        type: string
+        description: ""
+      reissueFee:
+        type: string
+        description: ""
+      repinFee:
+        type: string
+        description: ""
+      status:
+        type: string
         description: ""
