@@ -22,12 +22,12 @@ public class FunctionController {
 	@Autowired
 	FunctionServiceImpl functionService; 
 	@GetMapping(value = "/search")
-	public ResponeData<Page<FunctionDto>> search(@ModelAttribute SearchFunction searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+	public ResponeData<Page<FunctionDto>> search(@RequestBody SearchFunction searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		 Page<FunctionDto> FunctionDtos = functionService.search(searchFunction, pageable);
 		return new ResponeData<Page<FunctionDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, FunctionDtos) ;
 	}
 	@PostMapping(value="/create")
-		public ResponeData<FunctionDto> create(@ModelAttribute CreateFunctionRequest request) {
+		public ResponeData<FunctionDto> create(@RequestBody CreateFunctionRequest request) {
 		FunctionDto dto = functionService.create(request);
 		if(dto == null) {
 			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -37,7 +37,7 @@ public class FunctionController {
 	
 
 	@PatchMapping(value = "update")
-	public ResponeData<FunctionDto> update(@ModelAttribute UpdateFunctionRequest request) {
+	public ResponeData<FunctionDto> update(@RequestBody UpdateFunctionRequest request) {
 		FunctionDto functionDto = functionService.update(request);
 		if (functionDto == null) {
 			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
