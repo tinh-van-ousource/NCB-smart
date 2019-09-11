@@ -32,7 +32,7 @@ public class AppConstant {
 
     public static final int LIMIT_PAGE = 15;
 
-    public static final String RESOURCE_IMG = "C:\\upload\\";
+    public static final String RESOURCE_IMG = "C:\\uploads\\";
 
     public enum Status {
         ACTIVATED("A"), DEACTIVATED("D");
