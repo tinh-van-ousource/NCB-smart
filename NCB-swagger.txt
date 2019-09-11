@@ -857,13 +857,7 @@ definitions:
       f05:
         type: string
         description: ""
-      fileName:
-        type: string
-        description: ""
       issueFee:
-        type: string
-        description: ""
-      linkUrl:
         type: string
         description: ""
       reissueFee:
@@ -875,6 +869,9 @@ definitions:
       status:
         type: string
         description: ""
+      img:
+        type: object
+        description: "MultipartFile"
 
   ParCardProductResDto:
     type: "object"
