@@ -14,6 +14,9 @@ public class AppConstant {
     public static final String PAR_CARD_EXISTED_CODE = "901";
     public static final String PAR_CARD_EXISTED_MESSAGE = "Par card existed.";
 
+    public static final String UPLOAD_FILE_FAILED_CODE = "902";
+    public static final String UPLOAD_FILE_FAILED_MESSAGE = "Upload file failed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 

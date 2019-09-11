@@ -70,15 +70,15 @@ public class ParCardProductController {
     }
 
     @PostMapping(value = "create")
-    public ResponeData<ParCardProductResDto> create(@RequestPart("img") MultipartFile multipartFiles,
-                                                    @ModelAttribute ParCardProductCreateReqDto parCardProductCreateReqDto) {
+    public ResponeData<ParCardProductResDto> create(@RequestBody ParCardProductCreateReqDto parCardProductCreateReqDto) {
         try {
-            ParCardProductResDto parCardProduct = parCardProductService.create(multipartFiles, parCardProductCreateReqDto);
+            ParCardProductResDto parCardProduct = parCardProductService.create(parCardProductCreateReqDto);
             if (parCardProduct != null) {
                 return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
             }
             return new ResponeData<>(AppConstant.PAR_CARD_EXISTED_CODE, AppConstant.PAR_CARD_EXISTED_MESSAGE, null);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
     }
