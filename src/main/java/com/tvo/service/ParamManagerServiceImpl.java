@@ -7,6 +7,7 @@ import com.tvo.dto.ParamManagerDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
+import com.tvo.request.UpdateParamManagerRequest;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public ParamManager update(CreateParamManagerRequest request) {
+	public ParamManager update(UpdateParamManagerRequest request) {
 		ParamManager paramManager = paramManagerDao.findByParamNo(request.getParamNo());
 		if (!ObjectUtils.isEmpty(paramManager)) {
 			ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
