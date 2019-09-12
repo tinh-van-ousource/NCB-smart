@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class CreateBankTransferRequest {
+public class UpdateBankTransferRequest {
     private String bankCode;
 
     private String bankName;
@@ -19,4 +19,6 @@ public class CreateBankTransferRequest {
     private String citad_gt;
 
     private String citad_tt;
+
+    private String status;
 }

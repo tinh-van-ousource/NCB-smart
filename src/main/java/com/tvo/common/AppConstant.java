@@ -20,6 +20,9 @@ public class AppConstant {
     public static final String PARAM_MANAGER_EXISTED_CODE = "903";
     public static final String PARAM_MANAGER_EXISTED_MESSAGE = "Param is existed.";
 
+    public static final String BANK_TRANSFER_EXISTED_CODE = "904";
+    public static final String BANK_TRANSFER_EXISTED_MESSAGE = "Bank transfer is existed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 
