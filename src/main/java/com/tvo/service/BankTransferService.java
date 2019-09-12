@@ -3,13 +3,19 @@ package com.tvo.service;
 import com.tvo.controllerDto.SearchBankTransfer;
 import com.tvo.dto.BankTransferDto;
 import com.tvo.request.CreateBankTransferRequest;
+import com.tvo.request.UpdateBankTransferRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface BankTransferService {
-	public List<BankTransferDto> findAll();
-	public Page<BankTransferDto> searchBankTransfer(SearchBankTransfer searchBankTransfer, Pageable pageable);
-	public BankTransferDto createBankTransfer(CreateBankTransferRequest request) ;
+
+    Page<BankTransferDto> search(SearchBankTransfer searchBankTransfer, Pageable pageable);
+
+    BankTransferDto create(CreateBankTransferRequest request);
+
+    BankTransferDto update(UpdateBankTransferRequest request);
+
+    BankTransferDto detail(String bankCode);
+
+    BankTransferDto delete(String bankCode);
 }
