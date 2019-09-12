@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
@@ -124,27 +126,8 @@ public class FunctionServiceImpl implements FunctionService {
 			return null;
 		}
 		function = ModelMapperUtils.map(request, Function.class);
-		function.setTypeId(request.getTypeId());
-		function.setTranType(request.getTranType());
-		function.setQuantity(request.getQuantity());
-		function.setPromotion(request.getPromotion());
-		function.setPromotionName(request.getPromotionName());
-		function.setCreatedBy(request.getCreatedBy());
-		function.setCreatedDate(request.getCreatedDate());
-		function.setCustomerType(request.getCustomerType());
-		function.setFromDate(request.getFromDate());
-		function.setStatus(request.getStatus());
-		function.setToDate(request.getToDate());
-		function.setPrdName(request.getPrdName());
-		function.setPrd(request.getPrd());
-		function.setPercentage(request.getPercentage());
-		function.setMin(request.getMin());
-		function.setMax(request.getMax());
-		function.setLimitDaily(request.getLimitDaily());
-		function.setLimitFaceid(request.getLimitFaceid());
-		function.setLimitFinger(request.getLimitFinger());
-		function.setId(request.getId());
-		function.setCcy(request.getCcy());
+		function.setCreatedDate(DateTimeUtil.getNow());
+		
 		
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
@@ -154,30 +137,10 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	@Transactional(readOnly = false)
 	public FunctionDto update(UpdateFunctionRequest request) {
-		Optional<Function> opt = functionDao.findById(request.getTypeId());
+		Optional<Function> opt = functionDao.findById(request.getId());
 		if (opt.isPresent()) {
 			Function function = ModelMapperUtils.map(request,Function.class);
-			function.setTypeId(opt.get().getTypeId());
-			function.setTranType(opt.get().getTranType());
-			function.setQuantity(opt.get().getQuantity());
-			function.setPromotion(opt.get().getPromotion());
-			function.setPromotionName(opt.get().getPromotionName());
-			function.setCreatedBy(opt.get().getCreatedBy());
-			function.setCreatedDate(opt.get().getCreatedDate());
-			function.setCustomerType(opt.get().getCustomerType());
-			function.setFromDate(opt.get().getFromDate());
-			function.setStatus(opt.get().getStatus());
-			function.setToDate(opt.get().getToDate());
-			function.setPrdName(opt.get().getPrdName());
-			function.setPrd(opt.get().getPrd());
-			function.setPercentage(opt.get().getPercentage());
-			function.setMin(opt.get().getMin());
-			function.setMax(opt.get().getMax());
-			function.setLimitDaily(opt.get().getLimitDaily());
-			function.setLimitFaceid(opt.get().getLimitFaceid());
-			function.setLimitFinger(opt.get().getLimitFinger());
-			function.setId(opt.get().getId());
-			function.setCcy(opt.get().getCcy());
+			function.setCreatedDate(DateTimeUtil.getNow());
 			
 			Function save = functionDao.save(function);
 
@@ -191,17 +154,17 @@ public class FunctionServiceImpl implements FunctionService {
 	public Boolean delete(Long id) {
 		Function function = new Function();
 		if (id != null) {
-			Optional<Function> opt = functionDao.findById(String.valueOf(id));
+			Optional<Function> opt = functionDao.findById(id);
 			if (opt.isPresent()) {
-				function = opt.get();
-				function.setTypeId(" ");
-				function.setTranType(" ");
-				function.setStatus(" ");
-				function.setQuantity(" ");
-				function.setPromotionName(" ");
-				function.setPromotion(" ");
-				function.setPrdName(" ");
-				function.setCcy(" ");
+//				function = opt.get();
+//				function.setTypeId(" ");
+//				function.setTranType(" ");
+				function.setStatus("D");
+//				function.setQuantity(null);
+//				function.setPromotionName(" ");
+//				function.setPromotion(" ");
+//				function.setPrdName(" ");
+//				function.setCcy(" ");
 				functionDao.save(function);
 				return true;
 			}

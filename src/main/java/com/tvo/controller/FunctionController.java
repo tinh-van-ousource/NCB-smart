@@ -36,7 +36,7 @@ public class FunctionController {
 	}
 	
 
-	@PatchMapping(value = "update")
+	@PostMapping(value = "update")
 	public ResponeData<FunctionDto> update(@RequestBody UpdateFunctionRequest request) {
 		FunctionDto functionDto = functionService.update(request);
 		if (functionDto == null) {

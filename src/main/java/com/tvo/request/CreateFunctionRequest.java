@@ -2,6 +2,8 @@ package com.tvo.request;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class CreateFunctionRequest {
 
 	private String status;
 
-	private String quantity;
+	private Long quantity;
 
 	private String customerType;
 
@@ -43,12 +45,15 @@ public class CreateFunctionRequest {
 
 	private Long percentage;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
 
 	private String createdBy;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date createdDate;
 
 	private String prd;

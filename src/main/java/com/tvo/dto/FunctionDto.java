@@ -38,7 +38,7 @@ public class FunctionDto {
 	
 	private String max;
 	
-	private Date createDate;
+	private Date createdDate;
 
 	private String limitFinger;
 

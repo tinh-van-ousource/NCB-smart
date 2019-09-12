@@ -35,7 +35,7 @@ public class Function implements Serializable {
 	private String status;
 
 	@Column(name = "QUANTITY")
-	private String quantity;
+	private Long quantity;
 
 	@Column(name = "CUSTOMER_TYPE")
 	private String customerType;
