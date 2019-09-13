@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +28,6 @@ public class UpdateNotifyRequest {
 	private String mes_En;
 	
 	private String user_Id;
-	
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date create_Date;
 }
