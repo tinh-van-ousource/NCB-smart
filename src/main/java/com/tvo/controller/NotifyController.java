@@ -2,6 +2,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.SearchNotify;
+import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.NotifyDto;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
@@ -46,6 +47,15 @@ public class NotifyController {
 		}
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
+	 @GetMapping(value = "/detail")
+	    public ResponeData<NotifyDto> detail(@RequestParam String type) {
+		 NotifyDto dto = notifyService.detail(type);
+	        if (dto == null) {
+	            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+	        }
+	        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+	    }
+
 
 	@DeleteMapping(value = "delete")
 	public ResponeData<Boolean> delete(@RequestParam Long id) {

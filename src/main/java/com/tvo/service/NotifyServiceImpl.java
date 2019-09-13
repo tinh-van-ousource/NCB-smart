@@ -3,7 +3,10 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNotify;
 import com.tvo.dao.NotifyDAO;
+import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.NotifyDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.BankTransfer;
 import com.tvo.model.Notify;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
@@ -160,6 +163,14 @@ public class NotifyServiceImpl implements NotifyService{
 			}
 		}
 		return false;
+	}
+	@Override
+	public NotifyDto detail(String type) {
+        Notify notity = notifyDao.findByType(type);
+        if (notity == null) {
+            return null;
+        }
+        return ModelMapperUtils.map(notity, NotifyDto.class);
 	}
 
 }
