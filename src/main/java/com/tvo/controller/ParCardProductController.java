@@ -1,7 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.ParCardSearch;
+import com.tvo.controllerDto.ParCardSearchReqDto;
 import com.tvo.dto.ParCardProductResDto;
 import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.ParCardProductUpdateReqDto;
@@ -22,7 +22,7 @@ public class ParCardProductController {
     private ParCardProductService parCardProductService;
 
     @GetMapping(value = "search")
-    public ResponeData<Page<ParCardProductResDto>> search(@ModelAttribute ParCardSearch searchModel,
+    public ResponeData<Page<ParCardProductResDto>> search(@ModelAttribute ParCardSearchReqDto searchModel,
                                                           @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<ParCardProductResDto> dts = parCardProductService.search(searchModel, pageable);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE,
