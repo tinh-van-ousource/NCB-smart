@@ -8,6 +8,7 @@ import com.tvo.dto.ParCardProductResDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.ParCardProductEntity;
 import com.tvo.request.ParCardProductCreateReqDto;
+import com.tvo.request.ParCardProductUpdateReqDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -85,33 +86,35 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     }
 
     @Override
-    public ParCardProductEntity findPrdcode(String prdcode) {
+    public ParCardProductResDto findByPrdcode(String prdcode) {
         ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(prdcode);
         if (parCardProductEntity == null) {
-            return new ParCardProductEntity();
+            return null;
         }
-        return parCardProductEntity;
+
+        return ModelMapperUtils.map(parCardProductEntity, ParCardProductResDto.class);
     }
 
     @Override
-    public ParCardProductResDto edit(ParCardProductCreateReqDto request) {
-        ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(request.getPrdcode());
+    public ParCardProductResDto update(ParCardProductUpdateReqDto parCardProductUpdateReqDto) {
+        ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(parCardProductUpdateReqDto.getPrdcode());
         if (!ObjectUtils.isEmpty(parCardProductEntity)) {
-            ParCardProductEntity save = parCardProductDao.saveAndFlush(ModelMapperUtils.map(request, ParCardProductEntity.class));
-            return ModelMapperUtils.map(save, ParCardProductResDto.class);
+            ParCardProductEntity entity = parCardProductDao.save(
+                    ModelMapperUtils.map(parCardProductUpdateReqDto, ParCardProductEntity.class));
+            return ModelMapperUtils.map(entity, ParCardProductResDto.class);
         }
         return null;
     }
 
     @Override
-    public String delete(String prdCode) {
-        if (!prdCode.isEmpty()) {
-            ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(prdCode);
-            parCardProductEntity.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
-            parCardProductDao.saveAndFlush(parCardProductEntity);
-            return AppConstant.SYSTEM_SUCCESS_CODE;
+    public boolean delete(String prdCode) {
+        ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(prdCode);
+        if (parCardProductEntity != null) {
+            parCardProductEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            parCardProductDao.save(parCardProductEntity);
+            return true;
         }
-        return AppConstant.SYSTEM_ERROR_CODE;
+        return false;
     }
 
     @Transactional

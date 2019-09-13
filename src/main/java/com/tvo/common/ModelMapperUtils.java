@@ -1,6 +1,7 @@
 package com.tvo.common;
 
 import com.tvo.common.AppConstant.Status;
+import com.tvo.enums.StatusActivate;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
@@ -107,7 +108,7 @@ public class ModelMapperUtils {
 				String source = context.getSource();
 				if (StringUtils.isBlank(source)) {
 					return Boolean.FALSE;
-				} else if (AppConstant.USER_STATUS_STRING_ACTIVATED.equals(source)) {
+				} else if (StatusActivate.STATUS_ACTIVATED.getStatus().equals(source)) {
 					return Boolean.TRUE;
 				}
 				return Boolean.TRUE;
@@ -121,9 +122,9 @@ public class ModelMapperUtils {
 			public String convert(MappingContext<Boolean, String> context) {
 				Boolean source = context.getSource();
 				if(source) {
-					return AppConstant.USER_STATUS_STRING_ACTIVATED;
+					return StatusActivate.STATUS_ACTIVATED.getStatus();
 				}
-				return AppConstant.USER_STATUS_STRING_DEACTIVATED;
+				return StatusActivate.STATUS_DEACTIVATED.getStatus();
 			}
 			
 		};
