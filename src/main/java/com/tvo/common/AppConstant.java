@@ -32,9 +32,6 @@ public class AppConstant {
     public static final String SYSTEM_ERROR_CODE = "99";
     public static final String SYSTEM_ERROR_MESSAGE = "System error";
 
-    public static final String USER_STATUS_STRING_ACTIVATED = "Activated";
-    public static final String USER_STATUS_STRING_DEACTIVATED = "Deactivated";
-
     public static final String SECRET = "Unknown";
     public static final String HEADER_STRING = "Authorization";
     public static final long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 4; // 4 hours

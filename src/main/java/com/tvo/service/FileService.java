@@ -9,4 +9,5 @@ public interface FileService {
     UploadFileResponse uploadFile(MultipartFile multipartFiles);
 
     boolean deleteImage(String imageName);
+
 }

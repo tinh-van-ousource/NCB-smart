@@ -36,4 +36,13 @@ public class FileController {
         return new ResponeData<>(AppConstant.UPLOAD_FILE_FAILED_CODE, AppConstant.UPLOAD_FILE_FAILED_MESSAGE, null);
     }
 
+    @DeleteMapping(value = "/deleteFile")
+    public ResponeData<Boolean> deleteFile(String fileName) {
+        boolean result = fileService.deleteImage(fileName);
+        if (result) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+    }
+
 }
