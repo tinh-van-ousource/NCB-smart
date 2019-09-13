@@ -66,7 +66,7 @@ public class NcbBranchController {
     public ResponeData<NcbBranchDto> create(@RequestBody CreateNcbBranchRequest request) {
         NcbBranchDto ncbBranch = ncbBranchService.create(request);
         if (ncbBranch == null) {
-            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+            return new ResponeData<>(AppConstant.BRANCH_EXISTED_CODE, AppConstant.BRANCH_EXISTED_MESSAGE, null);
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
                 ncbBranch);
