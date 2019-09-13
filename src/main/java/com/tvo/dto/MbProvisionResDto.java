@@ -1,13 +1,16 @@
-package com.tvo.request;
+package com.tvo.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class CreateMbProvisionRequest {
+@Getter
+public class MbProvisionResDto {
+    private String id;
+
     private String provisionName;
 
     private String provisionLink;
 
+    private String status;
 }
