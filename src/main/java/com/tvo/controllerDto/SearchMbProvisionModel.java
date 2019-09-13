@@ -1,8 +1,10 @@
 package com.tvo.controllerDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class SearchMbProvisionModel {
 	private String provisionName;
 
