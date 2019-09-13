@@ -3,7 +3,6 @@ package com.tvo.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-=======
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
@@ -18,8 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
->>>>>>> develop
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -175,7 +172,8 @@ public class FunctionServiceImpl implements FunctionService {
 				function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 				functionDao.save(function);
 				return true;
-			}}
-
-}
+			}
+		}
+		return false;
+	}
 }

@@ -11,3 +11,4 @@ public interface ServiceRegisterService {
 
     ContentResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto);
 }
+	
