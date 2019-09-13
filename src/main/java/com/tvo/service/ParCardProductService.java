@@ -4,18 +4,18 @@ import com.tvo.controllerDto.ParCardSearch;
 import com.tvo.dto.ParCardProductResDto;
 import com.tvo.model.ParCardProductEntity;
 import com.tvo.request.ParCardProductCreateReqDto;
+import com.tvo.request.ParCardProductUpdateReqDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ParCardProductService {
     Page<ParCardProductResDto> search(ParCardSearch searchModel, Pageable pageable);
 
-    ParCardProductEntity findPrdcode(String prdcode);
+    ParCardProductResDto findByPrdcode(String prdcode);
 
-    ParCardProductResDto edit(ParCardProductCreateReqDto request);
-
-    String delete(String prdCode);
+    boolean delete(String prdCode);
 
     ParCardProductResDto create(ParCardProductCreateReqDto parCardProductCreateReqDto);
 
+    ParCardProductResDto update(ParCardProductUpdateReqDto parCardProductUpdateReqDto);
 }

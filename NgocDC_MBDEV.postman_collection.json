@@ -912,14 +912,14 @@
 			"response": []
 		},
 		{
-			"name": "upload file",
+			"name": "file upload",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODE5OTkzNn0.-zvAwobolaDl6HbwcXMbhxJvjVpl3k4cvxgv2NScbm1R0lE11TBZdt-caC7A-QDFU2jE6BmbLc23qVU5WBxnBw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
 					}
 				],
 				"body": {
@@ -948,6 +948,68 @@
 			"response": []
 		},
 		{
+			"name": "file delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/img/deleteFile?fileName=admin_20190913083309625_65035812_367459510572063_8312762983541374976_n.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"img",
+						"deleteFile"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": "admin_20190913083309625_65035812_367459510572063_8312762983541374976_n.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "file get path",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/img/admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"img",
+						"admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "par card create",
 			"request": {
 				"method": "POST",
@@ -955,7 +1017,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4MjY3MTY4fQ.7AqEDL_-pffcPhk-aqgUBozBZx-WCdkUO2nedaIRf6qv7-mxNYRAEPOk1DBz2MyrW5RedbT489_l_dZwlGMNeA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
 					},
 					{
 						"key": "Content-Type",
@@ -972,7 +1034,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"product\": \"112\",\r\n    \"prdcode\": \"1123\",\r\n    \"class_\": \"6\",\r\n    \"cardtype\": \"4\",\r\n    \"status\": \"A\",\r\n    \"issueFee\": \"13\",\r\n    \"reissueFee\": \"14\",\r\n    \"repinFee\": \"15\",\r\n    \"activeFee\": \"3\",\r\n    \"changesttFee\": \"5\",\r\n    \"directddFee\": \"7\",\r\n    \"f01\": \"8\",\r\n    \"f02\": \"9\",\r\n    \"f03\": \"10\",\r\n    \"f04\": \"11\",\r\n    \"f05\": \"12\",\r\n    \"linkUrl\": \"http://localhost:8081/NCB-smart/img/admin_20190911024347225_65035812_367459510572063_8312762983541374976_n.jpg\",\r\n    \"fileName\": \"admin_20190911024949524_65035812_367459510572063_8312762983541374976_n.jpg\"\r\n}"
+					"raw": "{\r\n    \"product\": \"112\",\r\n    \"prdcode\": \"112\",\r\n    \"class_\": \"6\",\r\n    \"cardtype\": \"4\",\r\n    \"status\": \"A\",\r\n    \"issueFee\": \"13\",\r\n    \"reissueFee\": \"14\",\r\n    \"repinFee\": \"15\",\r\n    \"activeFee\": \"3\",\r\n    \"changesttFee\": \"5\",\r\n    \"directddFee\": \"7\",\r\n    \"f01\": \"8\",\r\n    \"f02\": \"9\",\r\n    \"f03\": \"10\",\r\n    \"f04\": \"11\",\r\n    \"f05\": \"12\",\r\n    \"linkUrl\": \"\",\r\n    \"fileName\": \"\"\r\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/par-card/create",
@@ -990,26 +1052,106 @@
 			"response": []
 		},
 		{
-			"name": "par card get file",
+			"name": "par card update",
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODE4MTU1NH0.xzlIld8fr5WZgd5TPxNC1WrJu_qvJ5OuYifODEh75h8qyBWd8tEVElnHY_vloRO0m7FrsRtcO1V1lCsSK5Luow",
-						"type": "text"
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": \"112\",\r\n    \"prdcode\": \"112\",\r\n    \"class_\": \"6\",\r\n    \"cardtype\": \"4\",\r\n    \"status\": \"A\",\r\n    \"issueFee\": \"13\",\r\n    \"reissueFee\": \"14\",\r\n    \"repinFee\": \"15\",\r\n    \"activeFee\": \"3\",\r\n    \"changesttFee\": \"5\",\r\n    \"directddFee\": \"7\",\r\n    \"f01\": \"8\",\r\n    \"f02\": \"9\",\r\n    \"f03\": \"10\",\r\n    \"f04\": \"11\",\r\n    \"f05\": \"12\",\r\n    \"linkUrl\": \"\",\r\n    \"fileName\": \"\"\r\n}"
+				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/img/admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg",
+					"raw": "http://{{host}}/NCB-smart/par-card/update",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"NCB-smart",
-						"img",
-						"admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg"
+						"par-card",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par card detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-card/detail?prdcode=112",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-card",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "prdcode",
+							"value": "112"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par card delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-card/delete?prdCode=112",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-card",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "prdCode",
+							"value": "112"
+						}
 					]
 				}
 			},
