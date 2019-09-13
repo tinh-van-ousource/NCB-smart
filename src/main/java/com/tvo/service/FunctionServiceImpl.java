@@ -5,6 +5,7 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dto.FunctionDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
 import com.tvo.request.CreateFunctionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,10 +126,11 @@ public class FunctionServiceImpl implements FunctionService {
 	public String delete(String typeId) {
 		if (!typeId.isEmpty()) {
 			Function function = functionDao.findByTypeId(typeId);
-			function.setStatus(AppConstant.USER_STATUS_STRING_DEACTIVATED);
+			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 			functionDao.saveAndFlush(function);
 			return AppConstant.SYSTEM_SUCCESS_CODE;
 		}
 		return AppConstant.SYSTEM_ERROR_CODE;
 	}
+
 }
