@@ -1,19 +1,18 @@
-package com.tvo.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package com.tvo.request;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Getter
-@Setter
-@AllArgsConstructor
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @NoArgsConstructor
-public class FunctionDto {
+@AllArgsConstructor
+public class UpdateFunctionRequest {
+
 	private Long id;
 
 	private String prdName;
@@ -46,12 +45,15 @@ public class FunctionDto {
 
 	private Long percentage;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
 
 	private String createdBy;
 
+	@JsonFormat(pattern = "yyyy/M/d")
 
 	private Date createdDate;
 

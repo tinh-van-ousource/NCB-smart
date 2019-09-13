@@ -3,7 +3,10 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNotify;
 import com.tvo.dao.NotifyDAO;
+import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.NotifyDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.BankTransfer;
 import com.tvo.model.Notify;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
@@ -117,6 +120,7 @@ public class NotifyServiceImpl implements NotifyService{
 		notify.setCreate_Date(request.getCreate_Date());
 		notify.setMes_En(request.getMes_En());
 		notify.setMes_Vn(request.getMes_Vn());
+		
 		Notify save = notifyDao.save(notify);
 		return ModelMapperUtils.map(save, NotifyDto.class);
 	}
@@ -154,12 +158,19 @@ public class NotifyServiceImpl implements NotifyService{
 				notifys = opt.get();
 				notifys.setProvider(" ");
 				notifys.setType(" ");
-				notifys.setType(" ");
 				notifyDao.save(notifys);
 				return true;
 			}
 		}
 		return false;
+	}
+	@Override
+	public NotifyDto detail(String type) {
+        Notify notity = notifyDao.findByType(type);
+        if (notity == null) {
+            return null;
+        }
+        return ModelMapperUtils.map(notity, NotifyDto.class);
 	}
 
 }

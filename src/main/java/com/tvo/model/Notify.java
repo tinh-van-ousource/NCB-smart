@@ -35,7 +35,7 @@ public class Notify implements Serializable{
 	private String msg_Code_1;
 	
 	@Column(name = "MES_VN")
-	private String mes_Vn;
+	private String mes_Vn;	
 	
 	@Column(name = "MES_EN")
 	private String mes_En;

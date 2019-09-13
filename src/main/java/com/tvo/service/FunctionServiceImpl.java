@@ -1,5 +1,8 @@
 package com.tvo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchFunction;
@@ -14,7 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -22,8 +24,26 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tvo.common.AppConstant;
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dao.FunctionDAO;
+import com.tvo.dto.FunctionDto;
+import com.tvo.dto.NotifyDto;
+import com.tvo.model.Function;
+import com.tvo.model.Notify;
+import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.UpdateFunctionRequest;
 
 @Service
 @Transactional
@@ -37,7 +57,7 @@ public class FunctionServiceImpl implements FunctionService {
 	FunctionDAO functionDao;
 
 	@Override
-	public Page<FunctionDto> searchFunction(SearchFunction searchFunction, Pageable pageable) {
+	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
@@ -113,24 +133,47 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionDto createFunction(CreateFunctionRequest request) {
+	public FunctionDto create(CreateFunctionRequest request) {
 		Function function = functionDao.findByTypeId(request.getTypeId());
 		if (function != null) {
 			return null;
 		}
 		function = ModelMapperUtils.map(request, Function.class);
+		function.setCreatedDate(DateTimeUtil.getNow());
+		
+		
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
 	}
 
-	public String delete(String typeId) {
-		if (!typeId.isEmpty()) {
-			Function function = functionDao.findByTypeId(typeId);
-			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-			functionDao.saveAndFlush(function);
-			return AppConstant.SYSTEM_SUCCESS_CODE;
+
+	@Override
+	@Transactional(readOnly = false)
+	public FunctionDto update(UpdateFunctionRequest request) {
+		Optional<Function> opt = functionDao.findById(request.getId());
+		if (opt.isPresent()) {
+			Function function = ModelMapperUtils.map(request,Function.class);
+			function.setCreatedDate(DateTimeUtil.getNow());
+			
+			Function save = functionDao.save(function);
+
+			return ModelMapperUtils.map(save, FunctionDto.class);
 		}
-		return AppConstant.SYSTEM_ERROR_CODE;
+		return null;
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public Boolean delete(Long id) {
+		Function function = new Function();
+		if (id != null) {
+			Optional<Function> opt = functionDao.findById(id);
+			if (opt.isPresent()) {
+				function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+				functionDao.save(function);
+				return true;
+			}
+		}
+		return false;
+	}
 }

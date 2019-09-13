@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "GROUP_FUNCTION_MBAPP")
@@ -34,7 +35,7 @@ public class Function implements Serializable {
 	private String status;
 
 	@Column(name = "QUANTITY")
-	private String quantity;
+	private Long quantity;
 
 	@Column(name = "CUSTOMER_TYPE")
 	private String customerType;
@@ -67,16 +68,16 @@ public class Function implements Serializable {
 	private Long percentage;
 
 	@Column(name = "FROM_DATE")
-	private LocalDate fromDate;
+	private Date fromDate;
 
 	@Column(name = "TO_DATE")
-	private LocalDate toDate;
+	private Date toDate;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
 
 	@Column(name = "CREATED_DATE")
-	private LocalDate createdDate;
+	private Date createdDate;
 
 	@Column(name = "PRD")
 	private String prd;

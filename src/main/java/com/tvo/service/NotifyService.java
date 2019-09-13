@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.controllerDto.SearchNotify;
+import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.NotifyDto;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
@@ -17,4 +18,6 @@ public interface NotifyService {
 	public NotifyDto update(UpdateNotifyRequest request);
 	
 	public Boolean delete(Long id);
+	
+	public NotifyDto detail(String bankCode);
 }
