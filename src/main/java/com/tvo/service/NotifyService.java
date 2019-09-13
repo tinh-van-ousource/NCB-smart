@@ -17,7 +17,7 @@ public interface NotifyService {
 	
 	public NotifyDto update(UpdateNotifyRequest request);
 	
-	public Boolean delete(Long id);
+	public Boolean delete(String type);
 	
 	public NotifyDto detail(String bankCode);
 }

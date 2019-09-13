@@ -23,14 +23,14 @@ public class NotifyController {
 	private NotifyServiceImpl notifyService;
 	
 	@GetMapping(value = "search")
-	public ResponeData<Page<NotifyDto>> searchNcbQA(@ModelAttribute SearchNotify searchModel,
+	public ResponeData<Page<NotifyDto>> searchNcbQA(@RequestBody SearchNotify searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NotifyDto> dts = notifyService.search(searchModel, pageable);
 		return new ResponeData<Page<NotifyDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				dts);
 	}
 	@PostMapping(value = "create")
-	public ResponeData<NotifyDto> create(@ModelAttribute CreateNotifyRequest request) {
+	public ResponeData<NotifyDto> create(@RequestBody CreateNotifyRequest request) {
 		
 		NotifyDto notifyDto = notifyService.create(request);
 		if (notifyDto == null) {
@@ -39,15 +39,15 @@ public class NotifyController {
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
 
-	@PatchMapping(value = "update")
-	public ResponeData<NotifyDto> update(@ModelAttribute UpdateNotifyRequest request) {
+	@PostMapping(value = "update")
+	public ResponeData<NotifyDto> update(@RequestBody UpdateNotifyRequest request) {
 		NotifyDto notifyDto = notifyService.update(request);
 		if (notifyDto == null) {
 			return new ResponeData<NotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
-	 @GetMapping(value = "/detail")
+	@PostMapping(value = "/detail")
 	    public ResponeData<NotifyDto> detail(@RequestParam String type) {
 		 NotifyDto dto = notifyService.detail(type);
 	        if (dto == null) {
@@ -57,9 +57,9 @@ public class NotifyController {
 	    }
 
 
-	@DeleteMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam Long id) {
-		boolean deleteFlag = notifyService.delete(id);
+	@PostMapping(value = "delete")
+	public ResponeData<Boolean> delete(@RequestParam String type) {
+		boolean deleteFlag = notifyService.delete(type);
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}

@@ -1,12 +1,15 @@
 package com.tvo.service;
 
+import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNotify;
 import com.tvo.dao.NotifyDAO;
 import com.tvo.dto.BankTransferDto;
+import com.tvo.dto.FunctionDto;
 import com.tvo.dto.NotifyDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.BankTransfer;
+import com.tvo.model.Function;
 import com.tvo.model.Notify;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
@@ -130,39 +133,25 @@ public class NotifyServiceImpl implements NotifyService{
 	public NotifyDto update(UpdateNotifyRequest request) {
 		Optional<Notify> opt = notifyDao.findById(request.getType());
 		if (opt.isPresent()) {
-			Notify notify = ModelMapperUtils.map(request,Notify.class);
-			notify.setProvider(opt.get().getProvider());
-			notify.setType(opt.get().getType());
-			notify.setUser_Id(opt.get().getUser_Id());
-			notify.setMsg_Code_1(opt.get().getMsg_Code());
-			notify.setMsg_Code(opt.get().getMsg_Code_1());
-			notify.setMes_En(opt.get().getMes_En());
-			notify.setMes_Vn(opt.get().getMes_Vn());
-			notify.setError(opt.get().getError());
-			notify.setCreate_Date(opt.get().getCreate_Date());
-
-			Notify save = notifyDao.save(notify);
+			Notify function = ModelMapperUtils.map(request,Notify.class);
+			function.setCreate_Date(DateTimeUtil.getNow());
+			
+			Notify save = notifyDao.save(function);
 
 			return ModelMapperUtils.map(save, NotifyDto.class);
 		}
-		return null;
-	}
+		return null;	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(Long id) {
-		Notify notifys = new Notify();
-		if (id != null) {
-			Optional<Notify> opt = notifyDao.findById(String.valueOf(id));
-			if (opt.isPresent()) {
-				notifys = opt.get();
-				notifys.setProvider(" ");
-				notifys.setType(" ");
-				notifyDao.save(notifys);
-				return true;
-			}
+	public Boolean delete(String type) {
+		Notify notify = notifyDao.findByType(type);
+		if (type != null) {
+			notifyDao.delete(notify);
+			return true;
 		}
 		return false;
+
 	}
 	@Override
 	public NotifyDto detail(String type) {
