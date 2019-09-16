@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class FunctionController {
 	}
 	
 
-	@PostMapping(value = "update")
+	@PutMapping(value = "update")
 	public ResponeData<FunctionDto> update(@RequestBody UpdateFunctionRequest request) {
 		FunctionDto functionDto = functionService.update(request);
 		if (functionDto == null) {
@@ -52,7 +53,7 @@ public class FunctionController {
 		return new ResponeData<FunctionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDto);
 	}
 
-	@PostMapping(value = "delete")
+	@DeleteMapping(value = "delete")
 	public ResponeData<Boolean> delete(@RequestParam Long id) {
 		boolean deleteFlag = functionService.delete(id);
 		if (deleteFlag == true) {
@@ -60,7 +61,7 @@ public class FunctionController {
 		}
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
-	@PostMapping(value = "/detail")
+	@GetMapping(value = "/detail")
     public ResponeData<FunctionDto> detail(@RequestParam String prdName) {
 		FunctionDto dto = functionService.detail(prdName);
         if (dto == null) {
