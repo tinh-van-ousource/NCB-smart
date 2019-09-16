@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userName\":\"xxxx\",\n\t\"password\":\"xxxx\"\n}"
+					"raw": "{\n\t\"userName\":\"user\",\n\t\"password\":\"user\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/login",
@@ -1137,7 +1137,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-card/search?prdcode=&product=&status=A",
+					"raw": "http://{{host}}/NCB-smart/par-card/search?prdcode=&product=&status=",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1158,7 +1158,7 @@
 						},
 						{
 							"key": "status",
-							"value": "A"
+							"value": ""
 						}
 					]
 				}
@@ -1563,6 +1563,388 @@
 							"key": "bankCode",
 							"value": "999"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mb-privision search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/mb-provision/search?id=1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"mb-provision",
+						"search"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mb-privision detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/mb-provision/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"mb-provision",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mb-privision create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"provisionName\": \"name1\",\n\t\"provisionLink\": \"link1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/mb-provision/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"mb-provision",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mb-privision update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"provisionName\": \"name1\",\n\t\"provisionLink\": \"link1111\",\n\t\"status\": \"A\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/mb-provision/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"mb-provision",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mb-privision delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/mb-provision/delete?id=1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"mb-provision",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/provider/search?providerCode=&providerName=&status=",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"provider",
+						"search"
+					],
+					"query": [
+						{
+							"key": "providerCode",
+							"value": ""
+						},
+						{
+							"key": "providerName",
+							"value": ""
+						},
+						{
+							"key": "status",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/provider/detail?id=29",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"provider",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "29"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider detail Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/provider/delete?id=29",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"provider",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "29"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"providerCode\":\"providerCode2\",\n\t\"providerName\":\"providerName2\",\n\t\"serviceCode\":\"serviceCode2\",\n\t\"partner\":\"partner2\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/provider/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"provider",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"providerCode\":\"providerCode2\",\n\t\"providerName\":\"providerName2\",\n\t\"serviceCode\":\"serviceCode2\",\n\t\"partner\":\"partner22\",\n\t\"status\": \"A\",\n\t\"id\": 29\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/provider/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"provider",
+						"update"
 					]
 				}
 			},
