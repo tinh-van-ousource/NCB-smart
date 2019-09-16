@@ -44,6 +44,7 @@ public class BankTransferServiceImpl implements BankTransferService {
         Root<BankTransfer> root = (Root<BankTransfer>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("bankCode")));
 
         TypedQuery<BankTransfer> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
