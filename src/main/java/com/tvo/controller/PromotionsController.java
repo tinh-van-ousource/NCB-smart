@@ -2,6 +2,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.SearchPromotion;
+import com.tvo.dto.FunctionDto;
 import com.tvo.dto.NotifyDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.request.CreateNotifyRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +38,7 @@ public class PromotionsController {
 		return new ResponeData<Page<PromotionsDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, PromotionsDtos) ;
 	}
 	@PostMapping(value = "create")
-	public ResponeData<PromotionsDto> create(@ModelAttribute CreatePromotionsRequest request) {
+	public ResponeData<PromotionsDto> create(@RequestBody CreatePromotionsRequest request) {
 		
 		PromotionsDto promotionDto = promotionsService.create(request);
 		if (promotionDto == null) {
@@ -44,8 +47,8 @@ public class PromotionsController {
 		return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
 	}
 
-	@PatchMapping(value = "update")
-	public ResponeData<PromotionsDto> update(@ModelAttribute UpdatePromotionRequest request) {
+	@PutMapping(value = "update")
+	public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
 		PromotionsDto promotionDto = promotionsService.update(request);
 		if (promotionDto == null) {
 			return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -61,4 +64,12 @@ public class PromotionsController {
 		}
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
+	@GetMapping(value = "/detail")
+    public ResponeData<PromotionsDto> detail(@RequestParam Long id) {
+		PromotionsDto dto = promotionsService.detail(id);
+        if (dto == null) {
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+    }
 }

@@ -2,6 +2,8 @@ package com.tvo.request;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,19 +13,19 @@ import lombok.NoArgsConstructor;
 public class UpdatePromotionRequest {
 private Long id;
 	
-	private String type;
+	private String tranType;
 	
-	private String functionType;
-
-	private String cuType;
-	
-	private String promotion;
+	private String typeId;
+ 
+	private String customerType;
 	
 	private String promotionName;
 
+	private String promotion;
+	
 	private String percentage;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
 }

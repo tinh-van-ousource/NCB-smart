@@ -11,21 +11,22 @@ import java.util.Date;
 @Setter
 @Getter
 public class PromotionsDto {
-	private Long id;
+private Long id;
 	
-	private String type;
+	private String tranType;
 	
-	private String functionType;
-
-	private String cuType;
+	private String typeId;
+ 
+	private String customerType;
 	
-	private String promotion;
-
 	private String promotionName;
 
+	private String promotion;
+	
 	private String percentage;
 
 	private Date fromDate;
 
 	private Date toDate;
+
 }
