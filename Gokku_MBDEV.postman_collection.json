@@ -468,7 +468,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4MjY3MTY4fQ.7AqEDL_-pffcPhk-aqgUBozBZx-WCdkUO2nedaIRf6qv7-mxNYRAEPOk1DBz2MyrW5RedbT489_l_dZwlGMNeA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
 					}
 				],
 				"body": {
@@ -749,7 +749,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MDI5MDUyfQ.IvoE1KiCvX-WxY-UxWTrs3AT5tgPpYSBHGUZu2hvSmfKKIfCCPKIw6uz9xScDtngvom0a0XZI4uXTko_3j7JVw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
 					}
 				],
 				"body": {
@@ -1133,7 +1133,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4MzYxOTE3fQ.PngKPmxjc3mh2svDFiTH8_N8sLwIynLEj-qWTYtpWMZ2KIEYVZ-zruvwe4YMBhWjVFZa1RZSi5BwoYGuJExBnw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
 					}
 				],
 				"url": {
@@ -1205,7 +1205,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODI4NzExMX0.nlpESgolI4gmwbIbiKq60vw15Et7jWLSp3CU5zJ1gSoJqmoqHo--Vqf-KS2ZG7MVkTiB-_XLwLsR70kHPCBUqg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
 					}
 				],
 				"url": {
@@ -1394,11 +1394,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODI4NzExMX0.nlpESgolI4gmwbIbiKq60vw15Et7jWLSp3CU5zJ1gSoJqmoqHo--Vqf-KS2ZG7MVkTiB-_XLwLsR70kHPCBUqg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIyOTgyfQ.fy7sbLRGymFaA3zQELB0KRuaD-twBw5i7q8ed2hsPQI0JWTBskGDkeNpC9wRnGIqk0HNg7dmzru08QuK4lmA6w"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/bank-transfer/search?bankCode=999&status=",
+					"raw": "http://{{host}}/NCB-smart/bank-transfer/search?status=",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1411,7 +1411,8 @@
 					"query": [
 						{
 							"key": "bankCode",
-							"value": "999"
+							"value": "999",
+							"disabled": true
 						},
 						{
 							"key": "status",
@@ -1579,7 +1580,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MzcxMjUxfQ.Fvko7_46yweG7FZYZ5w9CM_S60cMiF1j6_ULW_M4sKAe0ihipigF45I3SHB2aAL-BIH5MVvisJlwIKIiACdJtQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
 					}
 				],
 				"body": {
@@ -1587,7 +1588,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/mb-provision/search?id=1",
+					"raw": "http://{{host}}/NCB-smart/mb-provision/search?",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1596,12 +1597,6 @@
 						"NCB-smart",
 						"mb-provision",
 						"search"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -1822,7 +1817,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/provider/detail?id=22",
+					"raw": "http://{{host}}/NCB-smart/provider/detail?id=28",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1835,7 +1830,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "22"
+							"value": "28"
 						}
 					]
 				}
@@ -1897,7 +1892,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"providerCode\":\"VNPT\",\n\t\"providerName\":\"VNPT\",\n\t\"serviceCode\":\"CABLE\",\n\t\"partner\":\"VIETTEL\"\n}"
+					"raw": "{\n\t\"providerCode\":\"VNPT-DN\",\n\t\"providerName\":\"VNPT\",\n\t\"serviceCode\":\"CABLE\",\n\t\"partner\":\"VIETTEL\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/provider/create",
@@ -1945,6 +1940,214 @@
 						"NCB-smart",
 						"provider",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "company create",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao1\",\n\t\"mcn\":\"mcnmcn1\",\n\t\"mp\":\"mpmpmpmp1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/company/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"company",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "company update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/company/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"company",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "company search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/company/search?compCode=&compName=",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"company",
+						"search"
+					],
+					"query": [
+						{
+							"key": "compCode",
+							"value": ""
+						},
+						{
+							"key": "compName",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "company detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/company/detail?compCode=VN0099999",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"company",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "compCode",
+							"value": "VN0099999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "company delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/company/delete?compCode=VN0099999",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"company",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "compCode",
+							"value": "VN0099999"
+						}
 					]
 				}
 			},
