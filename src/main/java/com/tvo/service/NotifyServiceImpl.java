@@ -97,15 +97,6 @@ public class NotifyServiceImpl implements NotifyService{
 			return null;
 		}
 		notify = ModelMapperUtils.map(request, Notify.class);
-		notify.setType(request.getType());
-		notify.setProvider(request.getProvider());
-		notify.setMsg_Code_1(request.getMsg_Code_1());
-		notify.setMsg_Code(request.getMsg_Code());
-		notify.setUser_Id(request.getUser_Id());
-		notify.setError(request.getError());
-		notify.setCreate_Date(request.getCreate_Date());
-		notify.setMes_En(request.getMes_En());
-		notify.setMes_Vn(request.getMes_Vn());
 		
 		Notify save = notifyDao.save(notify);
 		return ModelMapperUtils.map(save, NotifyDto.class);
