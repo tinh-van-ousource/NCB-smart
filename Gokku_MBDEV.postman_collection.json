@@ -1822,7 +1822,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/provider/detail?id=29",
+					"raw": "http://{{host}}/NCB-smart/provider/detail?id=22",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1835,7 +1835,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "29"
+							"value": "22"
 						}
 					]
 				}
@@ -1843,7 +1843,7 @@
 			"response": []
 		},
 		{
-			"name": "provider detail Copy",
+			"name": "provider delete",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -1897,7 +1897,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"providerCode\":\"providerCode2\",\n\t\"providerName\":\"providerName2\",\n\t\"serviceCode\":\"serviceCode2\",\n\t\"partner\":\"partner2\"\n}"
+					"raw": "{\n\t\"providerCode\":\"VNPT\",\n\t\"providerName\":\"VNPT\",\n\t\"serviceCode\":\"CABLE\",\n\t\"partner\":\"VIETTEL\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/provider/create",

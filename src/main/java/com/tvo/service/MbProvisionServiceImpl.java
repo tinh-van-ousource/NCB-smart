@@ -69,8 +69,9 @@ public class MbProvisionServiceImpl implements MbProvisionService {
         Root<MbProvision> root = (Root<MbProvision>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<MbProvision> typedQuery = this.entityManager.createQuery(query);
+        query.orderBy(cb.desc(root.get("id")));
 
+        TypedQuery<MbProvision> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         List<MbProvision> objects = typedQuery.getResultList();

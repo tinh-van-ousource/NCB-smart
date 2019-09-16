@@ -45,6 +45,7 @@ public class ProviderServiceImpl implements ProviderService {
         Root<ProviderEntity> root = (Root<ProviderEntity>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("id")));
 
         TypedQuery<ProviderEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());

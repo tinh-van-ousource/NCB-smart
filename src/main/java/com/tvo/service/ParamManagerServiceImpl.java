@@ -80,10 +80,12 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<ParamManager> query = cb.createQuery(ParamManager.class);
 		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
-		query.select((Root<ParamManager>) queryObjs[0]);
+		Root<ParamManager> root = (Root<ParamManager>) queryObjs[0];
+		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		TypedQuery<ParamManager> typedQuery = this.entityManager.createQuery(query);
+		query.orderBy(cb.desc(root.get("paramNo")));
 
+		TypedQuery<ParamManager> typedQuery = this.entityManager.createQuery(query);
 		typedQuery.setFirstResult((int) pageable.getOffset());
 		typedQuery.setMaxResults(pageable.getPageSize());
 		List<ParamManager> objects = typedQuery.getResultList();
