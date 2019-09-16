@@ -18,14 +18,14 @@ public class Promotions {
 		@Column(name = "ID")
 		private Long id;
 		
-		@Column(name = "TYPE")
-		private String type;
+		@Column(name = "TRAN_TYPE")
+		private String tranType;
 		
-		@Column(name = "FUNCTION_TYPE")
-		private String functionType;
+		@Column(name = "TYPE_ID")
+		private String typeId;
 	
-		@Column(name = "CU_TYPE")
-		private String cuType;
+		@Column(name = "CUSTOMER_TYPE")
+		private String customerType;
 		
 		@Column(name = "PROMOTION")
 		private String promotion;

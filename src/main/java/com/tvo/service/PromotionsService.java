@@ -15,4 +15,5 @@ public interface PromotionsService {
 	public PromotionsDto create(CreatePromotionsRequest request) ;
 	public PromotionsDto update(UpdatePromotionRequest request);
 	public Boolean delete(Long id);
+	public PromotionsDto detail(Long id);
 }

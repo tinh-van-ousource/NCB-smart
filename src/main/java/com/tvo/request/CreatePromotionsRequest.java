@@ -9,26 +9,28 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePromotionsRequest {
 	private Long id;
 	
-	private String type;
+	private String tranType;
 	
-	private String functionType;
-
-	private String cuType;
-	
-	private String promotion;
+	private String typeId;
+ 
+	private String customerType;
 	
 	private String promotionName;
 
+	private String promotion;
+	
 	private String percentage;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
 
 }

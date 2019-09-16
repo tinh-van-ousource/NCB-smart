@@ -67,21 +67,13 @@ public class PromotionsServiceImpl implements PromotionsService{
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		
-		if (resource.getType() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("typyFunction"), resource.getType())));
-		}
-
-		if (resource.getFunctionType()!= null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFunctionType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("function"), resource.getFunctionType())));
-		}
-
-		if (resource.getCuType() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCuType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cuType"), resource.getCuType())));
-		}
 		
+
+		if (resource.getPromotionName()!= null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPromotionName().trim())) {
+			predicates.add(cb.and(cb.equal(rootPersist.<String>get("promotionName"), resource.getPromotionName())));
+		}
+
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -91,19 +83,12 @@ public class PromotionsServiceImpl implements PromotionsService{
 
 	@Override
 	public PromotionsDto create(CreatePromotionsRequest request) {
-		Promotions promotions = promotionsDao.findByType(request.getType());
+		Promotions promotions = promotionsDao.findByid(request.getId());
 		if (promotions != null) {
 			return null;
 		}
 		promotions = ModelMapperUtils.map(request, Promotions.class);
-		promotions.setPromotion(request.getPromotion());
-		promotions.setPromotionName(request.getPromotionName());
-		promotions.setCuType(request.getCuType());
-		promotions.setType(request.getType());
-		promotions.setPercentage(request.getPercentage());
-		promotions.setFunctionType(request.getFunctionType());
-		promotions.setFromDate(request.getFromDate());
-		promotions.setToDate(request.getToDate());
+		
 		Promotions save = promotionsDao.save(promotions);
 		return ModelMapperUtils.map(save, PromotionsDto.class);
 	}
@@ -112,17 +97,10 @@ public class PromotionsServiceImpl implements PromotionsService{
 	@Override
 	@Transactional(readOnly = false)
 	public PromotionsDto update(UpdatePromotionRequest request) {
-		Optional<Promotions> opt = promotionsDao.findById(request.getType());
-		if (opt.isPresent()) {
+		Promotions opt = promotionsDao.findByid(request.getId());
+		if (opt != null) {
 			Promotions promotions = ModelMapperUtils.map(request,Promotions.class);
-			promotions.setPromotion(opt.get().getPromotion());
-			promotions.setPromotionName(opt.get().getPromotionName());
-			promotions.setCuType(opt.get().getCuType());
-			promotions.setType(opt.get().getType());
-			promotions.setPercentage(opt.get().getPercentage());
-			promotions.setFunctionType(opt.get().getFunctionType());
-			promotions.setFromDate(opt.get().getFromDate());
-			promotions.setToDate(opt.get().getToDate());
+			
 			Promotions save = promotionsDao.save(promotions);
 
 
@@ -134,18 +112,24 @@ public class PromotionsServiceImpl implements PromotionsService{
 	@Override
 	@Transactional(readOnly = false)
 	public Boolean delete(Long id) {
-		Promotions promotions = new Promotions();
+		Promotions function = promotionsDao.findByid(id);
 		if (id != null) {
-			Optional<Promotions> opt = promotionsDao.findById(String.valueOf(id));
-			if (opt.isPresent()) {
-				promotions = opt.get();
-				promotions.setType(" ");
-				promotionsDao.save(promotions);
-				return true;
-			}
+			promotionsDao.delete(function);
+			return true;
 		}
 		return false;
-	}	
+	}
+
+	@Override
+	public PromotionsDto detail(Long id) {
+		 Promotions promotions = promotionsDao.findByid(id);
+	        if (promotions == null) {
+	            return null;
+	        }
+	        return ModelMapperUtils.map(promotions, PromotionsDto.class);
+	}
+
+	
 	
 }
 	
