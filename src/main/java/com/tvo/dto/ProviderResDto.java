@@ -5,16 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * @author Ace
- *
- */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProviderDto {
-	private String providerId;
+public class ProviderResDto {
+	private String id;
 	
 	private String providerCode;
 	
@@ -22,7 +18,7 @@ public class ProviderDto {
 	
 	private String serviceCode;
 
-	private String providerPartner;
+	private String partner;
 	
-	private String providerStatus;
+	private String status;
 }

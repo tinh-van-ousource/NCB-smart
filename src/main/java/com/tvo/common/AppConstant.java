@@ -26,6 +26,9 @@ public class AppConstant {
     public static final String BRANCH_EXISTED_CODE = "905";
     public static final String BRANCH_EXISTED_MESSAGE = "Branch is existed.";
 
+    public static final String PROVIDER_EXISTED_CODE = "906";
+    public static final String PROVIDER_EXISTED_MESSAGE = "Provider is existed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 
