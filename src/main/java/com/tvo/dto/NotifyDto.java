@@ -24,7 +24,7 @@ public class NotifyDto {
 	
 	private String mes_En;
 	
-	private String user_Id;
+	private Long user_Id;
 	
 	private Date create_Date;
 }

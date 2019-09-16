@@ -1,17 +1,16 @@
-package com.tvo.request;
+package com.tvo.controllerDto;
+
+import java.util.Date;
+
+import com.tvo.dto.NotifyDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class  CreateNotifyRequest {
+public class CreateNotifyDto {
 private String provider;
 	
 	private String type;
@@ -27,6 +26,4 @@ private String provider;
 	private String mes_En;
 	
 	private Long user_Id;
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date create_Date;
 }

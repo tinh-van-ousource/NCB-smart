@@ -41,7 +41,7 @@ public class Notify implements Serializable{
 	private String mes_En;
 	
 	@Column(name = "USER_ID")
-	private String user_Id;
+	private Long user_Id;
 	
 	@Column(name = "CREATE_DATE")
 	private Date create_Date;
