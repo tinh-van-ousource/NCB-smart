@@ -97,8 +97,9 @@ public class NcbBranchServiceImpl implements NcbBranchService {
         Root<NcbBranch> root = (Root<NcbBranch>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
+        query.orderBy(cb.asc(root.get("branchName")));
 
+        TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         List<NcbBranch> objects = typedQuery.getResultList();

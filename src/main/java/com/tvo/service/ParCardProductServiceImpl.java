@@ -46,8 +46,11 @@ public class ParCardProductServiceImpl implements ParCardProductService {
         final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<ParCardProductEntity> query = cb.createQuery(ParCardProductEntity.class);
         Object[] queryObjs = this.createRootPersist(cb, query, searchModel);
-        query.select((Root<ParCardProductEntity>) queryObjs[0]);
+        Root<ParCardProductEntity> root = (Root<ParCardProductEntity>) queryObjs[0];
+        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("prdcode")));
+
         TypedQuery<ParCardProductEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
