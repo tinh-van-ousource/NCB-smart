@@ -1,4 +1,4 @@
-package com.tvo.request;
+package com.tvo.controllerDto;
 
 import java.util.Date;
 
@@ -7,12 +7,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateFunctionRequest {
-
+public class CreateFunctionDto {
 	private Long id;
 
 	private String prdName;
@@ -44,18 +42,13 @@ public class CreateFunctionRequest {
 	private String promotionName;
 
 	private Long percentage;
-
 	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
 
 	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
-	
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
 
 	private String createdBy;
-
 
 	private String prd;
 }
