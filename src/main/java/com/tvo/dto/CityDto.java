@@ -10,6 +10,8 @@ package com.tvo.dto;
 
     import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author Ace
  *
@@ -26,6 +28,6 @@ public class CityDto {
 		private String cityName;
 	
 		private String status;
-	
+		@JsonFormat(pattern = "yyyy/M/d")
 		private Date createdDate;
 }

@@ -112,7 +112,8 @@ public class NotifyServiceImpl implements NotifyService{
 
 			return ModelMapperUtils.map(save, NotifyDto.class);
 		}
-		return null;	}
+		return null;	
+	}
 
 	@Override
 	@Transactional(readOnly = false)
