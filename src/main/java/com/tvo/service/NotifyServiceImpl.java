@@ -97,7 +97,7 @@ public class NotifyServiceImpl implements NotifyService{
 			return null;
 		}
 		notify = ModelMapperUtils.map(request, Notify.class);
-		
+		notify.setCreate_Date(DateTimeUtil.getNow());
 		Notify save = notifyDao.save(notify);
 		return ModelMapperUtils.map(save, NotifyDto.class);
 	}
@@ -108,7 +108,6 @@ public class NotifyServiceImpl implements NotifyService{
 		Optional<Notify> opt = notifyDao.findById(request.getType());
 		if (opt.isPresent()) {
 			Notify function = ModelMapperUtils.map(request,Notify.class);
-			function.setCreate_Date(DateTimeUtil.getNow());
 			
 			Notify save = notifyDao.save(function);
 
