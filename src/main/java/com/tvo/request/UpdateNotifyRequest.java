@@ -27,7 +27,7 @@ public class UpdateNotifyRequest {
 	
 	private String mes_En;
 	
-	private String user_Id;
+	private Long user_Id;
 	@JsonFormat(pattern = "yyyy/M/d")
 	private Date create_Date;
 }

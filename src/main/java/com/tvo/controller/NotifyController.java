@@ -1,19 +1,27 @@
 package com.tvo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.CreateNotifyDto;
 import com.tvo.controllerDto.SearchNotify;
-import com.tvo.dto.BankTransferDto;
 import com.tvo.dto.NotifyDto;
 import com.tvo.request.CreateNotifyRequest;
 import com.tvo.request.UpdateNotifyRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NotifyServiceImpl;
+
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/notify")
 @Api(tags = "Notify")
@@ -23,20 +31,20 @@ public class NotifyController {
 	private NotifyServiceImpl notifyService;
 	
 	@GetMapping(value = "search")
-	public ResponeData<Page<NotifyDto>> searchNcbQA(@RequestBody SearchNotify searchModel,
+	public ResponeData<Page<NotifyDto>> searchNcbQA(@ModelAttribute SearchNotify searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NotifyDto> dts = notifyService.search(searchModel, pageable);
 		return new ResponeData<Page<NotifyDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				dts);
 	}
 	@PostMapping(value = "create")
-	public ResponeData<NotifyDto> create(@RequestBody CreateNotifyRequest request) {
+	public ResponeData<CreateNotifyDto> create(@RequestBody CreateNotifyRequest request) {
 		
-		NotifyDto notifyDto = notifyService.create(request);
+		CreateNotifyDto notifyDto = notifyService.create(request);
 		if (notifyDto == null) {
-			return new ResponeData<NotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+			return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
+		return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
 
 	@PostMapping(value = "update")
