@@ -1,26 +1,8 @@
 package com.tvo.service;
 
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNotify;
-import com.tvo.dao.NotifyDAO;
-import com.tvo.dto.BankTransferDto;
-import com.tvo.dto.FunctionDto;
-import com.tvo.dto.NotifyDto;
-import com.tvo.enums.StatusActivate;
-import com.tvo.model.BankTransfer;
-import com.tvo.model.Function;
-import com.tvo.model.Notify;
-import com.tvo.request.CreateNotifyRequest;
-import com.tvo.request.UpdateNotifyRequest;
-import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -29,9 +11,26 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.CreateNotifyDto;
+import com.tvo.controllerDto.SearchNotify;
+import com.tvo.dao.NotifyDAO;
+import com.tvo.dto.NotifyDto;
+import com.tvo.model.Notify;
+import com.tvo.request.CreateNotifyRequest;
+import com.tvo.request.UpdateNotifyRequest;
+
+import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class NotifyServiceImpl implements NotifyService{
@@ -91,7 +90,7 @@ public class NotifyServiceImpl implements NotifyService{
 	}
 
 	@Override
-	public NotifyDto create(CreateNotifyRequest request) {
+	public CreateNotifyDto create(CreateNotifyRequest request) {
 		Notify notify = notifyDao.findByType(request.getType());
 		if (notify != null) {
 			return null;
@@ -99,7 +98,7 @@ public class NotifyServiceImpl implements NotifyService{
 		notify = ModelMapperUtils.map(request, Notify.class);
 		notify.setCreate_Date(DateTimeUtil.getNow());
 		Notify save = notifyDao.save(notify);
-		return ModelMapperUtils.map(save, NotifyDto.class);
+		return ModelMapperUtils.map(save, CreateNotifyDto.class);
 	}
 
 	@Override
