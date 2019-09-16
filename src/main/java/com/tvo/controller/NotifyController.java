@@ -23,7 +23,7 @@ public class NotifyController {
 	private NotifyServiceImpl notifyService;
 	
 	@GetMapping(value = "search")
-	public ResponeData<Page<NotifyDto>> searchNcbQA(@RequestBody SearchNotify searchModel,
+	public ResponeData<Page<NotifyDto>> searchNcbQA(@ModelAttribute SearchNotify searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NotifyDto> dts = notifyService.search(searchModel, pageable);
 		return new ResponeData<Page<NotifyDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,

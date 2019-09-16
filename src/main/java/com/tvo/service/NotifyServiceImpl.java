@@ -67,14 +67,8 @@ public class NotifyServiceImpl implements NotifyService{
 		final Root<Notify> rootPersist = query.from(Notify.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		if (searchNotify.getMsg_Code() != null && !StringUtils.isEmpty(searchNotify.getMsg_Code().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msg_Code")),
-					searchNotify.getMsg_Code().toUpperCase())));
-		}
-		if (searchNotify.getMsg_Code_1() != null && !StringUtils.isEmpty(searchNotify.getMsg_Code_1().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msg_Code_1")),
-					searchNotify.getMsg_Code_1().toUpperCase())));
-		}
+		
+		
 		if (searchNotify.getProvider() != null && !StringUtils.isEmpty(searchNotify.getProvider().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
 					searchNotify.getProvider().toUpperCase())));
@@ -83,23 +77,12 @@ public class NotifyServiceImpl implements NotifyService{
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
 					searchNotify.getType().toUpperCase())));
 		}
-//		if (searchNotify.getUser_Id() != null && !StringUtils.isEmpty(searchNotify.getUser_Id().trim())) {
-//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("user_id")),
-//					searchNotify.getUser_Id().toUpperCase())));
-//		}
-		if (searchNotify.getMes_Vn() != null && !StringUtils.isEmpty(searchNotify.getMes_Vn().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("mes_vn")),
-					searchNotify.getMes_Vn().toUpperCase())));
-		}
-		if (searchNotify.getMes_En() != null && !StringUtils.isEmpty(searchNotify.getMes_En().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("mes_en")),
-					searchNotify.getMes_En().toUpperCase())));
-		}
+		 
+		
 		if (searchNotify.getError() != null && !StringUtils.isEmpty(searchNotify.getError().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("error")),
 					searchNotify.getError().toUpperCase())));
 		}
-		
 		
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
