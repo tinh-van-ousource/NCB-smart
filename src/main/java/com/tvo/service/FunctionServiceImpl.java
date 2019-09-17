@@ -71,17 +71,17 @@ public class FunctionServiceImpl implements FunctionService {
 
 		if (resource.getPrdName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
 		}
 
 		if (resource.getTranType() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTranType().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
 		}
 
 		if (resource.getTypeId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeId().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
 		}
 
 		
