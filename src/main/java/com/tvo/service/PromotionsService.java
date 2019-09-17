@@ -10,10 +10,18 @@ import com.tvo.request.UpdatePromotionRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PromotionsService {
-	public Page<PromotionsDto> searchPromotion(SearchPromotion searchPromotion, Pageable pageable);
-	public PromotionsDto create(CreatePromotionsRequest request) ;
-	public PromotionsDto update(UpdatePromotionRequest request);
-	public Boolean delete(Long id);
-	public PromotionsDto detail(Long id);
+
+	Page<PromotionsDto> searchPromotion(SearchPromotion searchPromotion, Pageable pageable);
+
+	List<PromotionsDto> create(CreatePromotionsRequest request) ;
+
+	PromotionsDto update(UpdatePromotionRequest request);
+
+	Boolean delete(Long id);
+
+	PromotionsDto detail(Long id);
+
 }
