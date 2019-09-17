@@ -62,11 +62,11 @@ public class CityServiceImpl implements CityService{
 		}
 		if (resource.getCityId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityId().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getCityId().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityId().toUpperCase())));
 		}
 		if (resource.getCityName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getCityName().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityName().toUpperCase())));
 		}
 
 		Object[] results = new Object[2];

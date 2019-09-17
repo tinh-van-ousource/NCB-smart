@@ -69,17 +69,17 @@ public class NotifyServiceImpl implements NotifyService{
 		
 		
 		if (searchNotify.getProvider() != null && !StringUtils.isEmpty(searchNotify.getProvider().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("provider")),
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
 					searchNotify.getProvider().toUpperCase())));
 		}
 		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("type")),
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
 					searchNotify.getType().toUpperCase())));
 		}
 		 
 		
 		if (searchNotify.getError() != null && !StringUtils.isEmpty(searchNotify.getError().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("error")),
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("error")),
 					searchNotify.getError().toUpperCase())));
 		}
 		
