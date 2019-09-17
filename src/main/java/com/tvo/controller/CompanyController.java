@@ -18,7 +18,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/company", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "CompanyController")
 public class CompanyController {
 
     private CompanyService companyService;

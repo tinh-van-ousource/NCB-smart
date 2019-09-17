@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "param-manager")
-@Api(tags = "ParamManager")
 public class ParamManagerController {
 	@Autowired
 	private ParamManagerService paramManagerService;

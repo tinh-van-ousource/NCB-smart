@@ -20,11 +20,6 @@ public interface DatUserProfileService {
 	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
 			Pageable pageable);
 
-	Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, String filter, Pageable pageable);
+	Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, Pageable pageable);
 
-//	public Page<DatUserProfileDto> filterUser(List<SearchCriteria> params,Pageable pageable);
-//	
-//	public Page<DatUserProfileDto> search(List<SearchCriteria> params,Pageable pageable);
-
-//	public Page<DatUserProfileDto> findAll(Specification<DatUserProfile> spec, Pageable pageable);
 }
