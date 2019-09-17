@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateFunctionRequest {
 
-	private Long id;
-
 	private String prdName;
 
 	private String tranType;
