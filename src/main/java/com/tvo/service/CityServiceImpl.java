@@ -3,17 +3,9 @@
  */
 package com.tvo.service;
 
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchCity;
-import com.tvo.dao.CityDao;
-import com.tvo.dto.CityDto;
-import com.tvo.model.City;
-import com.tvo.request.CreateCityRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,8 +14,24 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dao.CityDao;
+import com.tvo.dto.CityDto;
+import com.tvo.dto.CreateCityDto;
+import com.tvo.dto.NotifyDto;
+import com.tvo.model.City;
+import com.tvo.model.Notify;
+import com.tvo.request.CreateCityRequest;
+import com.tvo.request.UpdateCityRequest;
 
 /**
  * @author Ace
@@ -54,15 +62,13 @@ public class CityServiceImpl implements CityService{
 		}
 		if (resource.getCityName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("fullName"), resource.getCityName())));
+			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cityName"), resource.getCityName())));
 		}
 
-		if (resource.getStatus() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("transactionCode"), resource.getStatus())));
+		if (resource.getCityId() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityId().trim())) {
+			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cityId"), resource.getCityId())));
 		}
-
-	
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -70,18 +76,16 @@ public class CityServiceImpl implements CityService{
 		return results;
 	}
 	@Override
-	public CityDto createCity(CreateCityRequest request) {
-		City city = cityDao.findByCityName(request.getCityName());
+	public CreateCityDto createCity(CreateCityRequest request) {
+		City city = cityDao.findByCityId(request.getCityId());
 		if (city != null) {
 			return null;
 		}
 		
 		city = ModelMapperUtils.map(request, City.class);
-		city.setCityName(request.getCityName());
-		city.setCityCode(request.getCityCode());
-		city.setStatus(request.getStatus());
+		city.setCreatedDate(DateTimeUtil.getNow());
 		City save = cityDao.save(city);
-		return ModelMapperUtils.map(save, CityDto.class);
+		return ModelMapperUtils.map(save, CreateCityDto.class);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -106,6 +110,35 @@ public class CityServiceImpl implements CityService{
 	    countQuery.where((Predicate[]) queryObjs[1]);
 	    Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(CityDtos, pageable, total);
+	}
+	@Override
+	public CityDto update(UpdateCityRequest request) {
+		Optional<City> opt = cityDao.findById(request.getCityId());
+		if (opt.isPresent()) {
+			City city = ModelMapperUtils.map(request,City.class);
+			
+			City save = cityDao.save(city);
+
+			return ModelMapperUtils.map(save, CityDto.class);
+		}
+		return null;	
+	}
+	@Override
+	public Boolean delete(Long cityId) {
+		City city = cityDao.findByCityId(cityId);
+		if (cityId != null) {
+			cityDao.delete(city);
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public CityDto detail(Long cityId) {
+		City city = cityDao.findByCityId(cityId);
+	        if (city == null) {
+	            return null;
+	        }
+	        return ModelMapperUtils.map(city, CityDto.class);
 	}
 	
 	

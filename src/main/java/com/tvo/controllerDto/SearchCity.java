@@ -10,5 +10,5 @@ public class SearchCity {
 
 	private String cityName;
 
-	private String status;
+	private String cityId;
 }
