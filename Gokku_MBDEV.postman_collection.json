@@ -1280,7 +1280,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODI4NzExMX0.nlpESgolI4gmwbIbiKq60vw15Et7jWLSp3CU5zJ1gSoJqmoqHo--Vqf-KS2ZG7MVkTiB-_XLwLsR70kHPCBUqg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjQyNDIwfQ.XrF-AHCJjDBpo3FkO21Oq2VeFJV0BZQk5n36J2Hx89ByOtXim7z2lR9FrO-NF3Mdtko9wdSCW6CnYxG_PpgIBw"
 					},
 					{
 						"key": "Content-Type",
@@ -2147,6 +2147,263 @@
 						{
 							"key": "compCode",
 							"value": "VN0099999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzAwMDYyfQ.Ud22jJO19144LeHJnaxhhFuiSe6GvrS7EbrDM1KqiLZog3AxphiLYm86QFg4vI_do3_gBLE8KcwK-ABvnn6qHw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/user-profile/searchConsumer?usrid=VANHONG&cifgrp=10025932&idno=271522211",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"user-profile",
+						"searchConsumer"
+					],
+					"query": [
+						{
+							"key": "usrid",
+							"value": "VANHONG"
+						},
+						{
+							"key": "cifgrp",
+							"value": "10025932"
+						},
+						{
+							"key": "idno",
+							"value": "271522211"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzIzNDQ0fQ.sSIU1LQqUYyPQGvE1gDUDBntyRcKtFERlEqgL8OZm6ZusprNAjGmlUGuYhI_e18tkbUD3ZNf0idra3mHU6ubhA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzIzNDQ0fQ.sSIU1LQqUYyPQGvE1gDUDBntyRcKtFERlEqgL8OZm6ZusprNAjGmlUGuYhI_e18tkbUD3ZNf0idra3mHU6ubhA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/search?promotionName=Ten khuyen",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"search"
+					],
+					"query": [
+						{
+							"key": "promotionName",
+							"value": "Ten khuyen "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzIzNDQ0fQ.sSIU1LQqUYyPQGvE1gDUDBntyRcKtFERlEqgL8OZm6ZusprNAjGmlUGuYhI_e18tkbUD3ZNf0idra3mHU6ubhA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/detail?id=32",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzIzNDQ0fQ.sSIU1LQqUYyPQGvE1gDUDBntyRcKtFERlEqgL8OZm6ZusprNAjGmlUGuYhI_e18tkbUD3ZNf0idra3mHU6ubhA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 32,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"A\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzIzNDQ0fQ.sSIU1LQqUYyPQGvE1gDUDBntyRcKtFERlEqgL8OZm6ZusprNAjGmlUGuYhI_e18tkbUD3ZNf0idra3mHU6ubhA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 32,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"A\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/delete?id=32",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "32"
 						}
 					]
 				}

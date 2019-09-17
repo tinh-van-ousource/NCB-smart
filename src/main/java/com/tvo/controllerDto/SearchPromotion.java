@@ -8,8 +8,6 @@ import java.util.Date;
 @Getter
 public class SearchPromotion {
 	
-	
 	private String promotionName;
-
 
 }
