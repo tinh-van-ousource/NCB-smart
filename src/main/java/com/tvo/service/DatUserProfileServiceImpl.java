@@ -84,7 +84,6 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
 			predicates.add(
 					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
-//			predicates.add(cb.or(cb.like(rootPersist.<String>get("usrid"), "%" +filter+ "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -93,30 +92,27 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 	public Object[] createConsumerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchConsumerModel searchModel, String filter) {
+			SearchConsumerModel searchModel) {
 		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
 		rootPersist.join(DatUserProfile_.function);
 		rootPersist.join(DatUserProfile_.datCfmast);
-//		Join<DatUserProfile, DatCfmast> datCfmast = rootPersist.join(DatUserProfile_.datCfmast);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
+
 		if (searchModel.getUsrid() != null && !StringUtils.isEmpty(searchModel.getUsrid().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("usrid")),
 					"%" + searchModel.getUsrid().toUpperCase() + "%")));
 		}
+
 		if (searchModel.getCifgrp() != null && !StringUtils.isEmpty(searchModel.getCifgrp().trim())) {
 			predicates.add(cb
 					.and(cb.equal(cb.upper(rootPersist.<String>get("cifgrp")), searchModel.getCifgrp().toUpperCase())));
 		}
+
 		if (searchModel.getIdno() != null && !StringUtils.isEmpty(searchModel.getIdno().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<DatCfmast>get("datCfmast").<String>get("idno")),
 					searchModel.getIdno().toUpperCase())));
 		}
-		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
-			predicates.add(
-					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
-//			predicates.add(
-//					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
-		}
+
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -148,10 +144,10 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	}
 
 	@Override
-	public Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, String filter, Pageable pageable) {
+	public Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, Pageable pageable) {
 		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-		Object[] queryObjs = this.createConsumerRootPersist(cb, query, searchModel, filter);
+		Object[] queryObjs = this.createConsumerRootPersist(cb, query, searchModel);
 		query.select((Root<DatUserProfile>) queryObjs[0]);
 		query.where((Predicate[]) queryObjs[1]);
 		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);

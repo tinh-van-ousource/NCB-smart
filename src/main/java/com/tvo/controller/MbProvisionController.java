@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(value = "mb-provision")
-@Api(tags = "Mb Provision")
 public class MbProvisionController {
 
     @Autowired

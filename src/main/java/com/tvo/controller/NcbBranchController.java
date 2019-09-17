@@ -28,7 +28,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "ncb-branch")
-@Api(tags = "Ncb Branch")
 public class NcbBranchController {
     @Autowired
     private NcbBranchService ncbBranchService;

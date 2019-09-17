@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/bank-transfer")
-@Api(tags = "BankTransferController")
 public class BankTransferController {
 
     @Autowired

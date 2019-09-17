@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "par-card")
-@Api(tags = "ParCardProductEntity")
 public class ParCardProductController {
     @Autowired
     private ParCardProductService parCardProductService;
