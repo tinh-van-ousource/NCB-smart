@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCityDto {
-	private Long cityId;
 	
 	private String cityCode;
 

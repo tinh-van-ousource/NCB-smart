@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateFunctionDto {
-	private Long id;
 
 	private String prdName;
 

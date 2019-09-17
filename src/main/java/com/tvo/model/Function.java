@@ -1,15 +1,18 @@
 package com.tvo.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "GROUP_FUNCTION_MBAPP")
@@ -19,6 +22,8 @@ public class Function implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
+	@SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
 	@Column(name = "ID")
 	private Long id;
 
@@ -81,5 +86,4 @@ public class Function implements Serializable {
 
 	@Column(name = "PRD")
 	private String prd;
-
 }
