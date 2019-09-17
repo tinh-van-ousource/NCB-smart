@@ -2,6 +2,7 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
+import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.model.NcbBranch;
 import com.tvo.request.CreateNcbBranchRequest;
@@ -30,4 +31,6 @@ public interface NcbBranchService {
     public Boolean delete(String brnCode);
 
     List<NcbActiveBranchOnlyResDto> getAllActivatedBranch();
+
+    List<NcbActiveDepartOnlyResDto> getAllActivatedDepart();
 }

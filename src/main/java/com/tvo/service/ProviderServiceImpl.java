@@ -1,12 +1,13 @@
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchProvider;
+import com.tvo.controllerDto.SearchProviderReqDto;
 import com.tvo.dao.ProviderDAO;
-import com.tvo.dto.ProviderDto;
-import com.tvo.model.City;
-import com.tvo.model.Provider;
-import com.tvo.request.CreateProviderRequest;
+import com.tvo.dto.ProviderResDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.ProviderEntity;
+import com.tvo.request.ProviderCreateReqDto;
+import com.tvo.request.ProviderUpdateReqDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,85 +23,109 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
-public class ProviderServiceImpl implements ProviderService{
-	@Autowired
-	ProviderDAO providerDao;
-	@Autowired
-	private EntityManagerFactory entityManagerFactory;
-	@Autowired
-	private EntityManager entityManager;
-	@Override
-	public List<ProviderDto> findAll() {
-		List<ProviderDto> ctdt = ModelMapperUtils.mapAll(providerDao.findAll(), ProviderDto.class);
-		return ctdt;
-	}
-	@Override
-	public ProviderDto createProvider(CreateProviderRequest request) {
-		Provider provider = providerDao.findByProviderName(request.getProviderName());
-		if (provider != null) {
-			return null;
-		}
-		
-		provider = ModelMapperUtils.map(request, Provider.class);
-		provider.setProviderName(request.getProviderName());
-		provider.setProviderCode(request.getProviderCode());
-		provider.setProviderStatus(request.getProviderStatus());
-		Provider save = providerDao.save(provider);
-		return ModelMapperUtils.map(save, ProviderDto.class);
-	}
-	@Override
-	public Page<ProviderDto> searchProvider(SearchProvider searchProvider, Pageable pageable) {
-		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<Provider> query = cb.createQuery(Provider.class);
-		Object[] queryObjs = this.createProviderRootPersist(cb, query, searchProvider);
-		query.select((Root<Provider>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
+public class ProviderServiceImpl implements ProviderService {
 
-		TypedQuery<Provider> typedQuery = this.entityManager.createQuery(query);
-		typedQuery.setFirstResult((int)pageable.getOffset());
-	    typedQuery.setMaxResults(pageable.getPageSize());
-	    final List<Provider> objects = typedQuery.getResultList();
-		List<ProviderDto> ProviderDtos = ModelMapperUtils.mapAll(objects, ProviderDto.class);
+    @Autowired
+    ProviderDAO providerDao;
 
-		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-	    final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-//	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
-	    countQuery.select(cbTotal.count(countQuery.from(City.class)));
-	    countQuery.where((Predicate[]) queryObjs[1]);
-	    Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(ProviderDtos, pageable, total);
-	}
-	public Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchProvider resource) {
-		final Root<Provider> rootPersist = query.from(Provider.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		if (resource.getProviderCode() != null	
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderCode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("providerCode"), resource.getProviderCode())));
-		}
-		if (resource.getProviderName() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderName().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("providerName"), resource.getProviderName())));
-		}
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
-		if (resource.getServiceCode() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getServiceCode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("serviceCode"), resource.getServiceCode())));
-		}
+    @Autowired
+    private EntityManager entityManager;
 
-		if (resource.getProviderPartner() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderPartner().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("providerPartner"), resource.getProviderPartner())));
-		}
+    @Override
+    public Page<ProviderResDto> search(SearchProviderReqDto searchProviderReqDto, Pageable pageable) {
+        final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<ProviderEntity> query = cb.createQuery(ProviderEntity.class);
+        Object[] queryObjs = this.createProviderRootPersist(cb, query, searchProviderReqDto);
+        Root<ProviderEntity> root = (Root<ProviderEntity>) queryObjs[0];
+        query.select(root);
+        query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("id")));
 
-	
+        TypedQuery<ProviderEntity> typedQuery = this.entityManager.createQuery(query);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        final List<ProviderEntity> objects = typedQuery.getResultList();
+        List<ProviderResDto> providerResDtos = ModelMapperUtils.mapAll(objects, ProviderResDto.class);
 
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
-	
-	
+        final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(ProviderEntity.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(providerResDtos, pageable, total);
+    }
+
+    private Object[] createProviderRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchProviderReqDto resource) {
+        final Root<ProviderEntity> rootPersist = query.from(ProviderEntity.class);
+        final List<Predicate> predicates = new ArrayList<>();
+
+        if (resource.getProviderCode() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderCode().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("providerCode"), resource.getProviderCode())));
+        }
+
+        if (resource.getProviderName() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderName().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("providerName")),
+                    "%" + resource.getProviderName().toUpperCase() + "%")));
+        }
+
+        if (resource.getStatus() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+        }
+
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
+
+    @Override
+    public ProviderResDto detail(Long id) {
+        Optional<ProviderEntity> existedProvider = providerDao.findById(id);
+        return existedProvider.map(providerEntity -> ModelMapperUtils.map(providerEntity, ProviderResDto.class)).orElse(null);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        Optional<ProviderEntity> existedProvider = providerDao.findById(id);
+        if (existedProvider.isPresent()) {
+            ProviderEntity providerEntity = existedProvider.get();
+            providerEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            providerDao.save(providerEntity);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ProviderResDto create(ProviderCreateReqDto request) {
+        ProviderEntity providerEntity = providerDao.findByProviderCode(request.getProviderCode());
+        if (providerEntity != null) {
+            return null;
+        }
+
+        providerEntity = ModelMapperUtils.map(request, ProviderEntity.class);
+        providerEntity.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        ProviderEntity save = providerDao.save(providerEntity);
+        return ModelMapperUtils.map(save, ProviderResDto.class);
+    }
+
+    @Override
+    public ProviderResDto update(ProviderUpdateReqDto request) {
+        Optional<ProviderEntity> existedProvider = providerDao.findById(request.getId());
+        if (existedProvider.isPresent()) {
+            ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
+            return ModelMapperUtils.map(entity, ProviderResDto.class);
+        }
+        return null;
+    }
 
 }

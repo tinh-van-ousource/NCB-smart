@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
@@ -13,6 +10,7 @@ import com.tvo.dao.UserRepo;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.UserResDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.enums.UserChangePasswordStatus;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.request.CreateUserRequest;
@@ -37,10 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Ace
- *
- */
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,25 +54,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RoleRepo roleRepo;
 
-    @Override
-    public Page<UserResDto> findAllUser(Pageable pageable) {
-        Page<User> users = userRepo.findAll(pageable);
-        List<UserResDto> userDto = ModelMapperUtils.mapAll(users.getContent(), UserResDto.class);
-        return new PageImpl<>(userDto, pageable, users.getTotalElements());
-    }
-
     public UserResDto createUser(CreateUserRequest request) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(request.getUserName());
         if (user != null) {
             return null;
         }
-        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
+
         user = ModelMapperUtils.map(request, User.class);
+
+        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
         user.setRole(role);
+
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        user.setLoginCount(0L);
+        user.setPassChange(UserChangePasswordStatus.NOT_YET.getType());
+        user.setCountLoginFail(0);
         user.setUpdatedBy(currentUserName);
 
         User save = userRepo.save(user);
@@ -87,23 +78,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable) {
-        final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-        final CriteriaQuery<User> query = cb.createQuery(User.class);
-        Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
-        query.select((Root<User>) queryObjs[0]);
-        query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<User> typedQuery = this.entityManager.createQuery(query);
+        final CriteriaBuilder criteriaBuilder = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Object[] queryObjs = this.createUserRootPersist(criteriaBuilder, criteriaQuery, searchModel);
+        Root<User> root = (Root<User>) queryObjs[0];
+        criteriaQuery.select((root));
+        criteriaQuery.where((Predicate[]) queryObjs[1]);
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("userId")));
+
+        TypedQuery<User> typedQuery = this.entityManager.createQuery(criteriaQuery);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<User> objects = typedQuery.getResultList();
-        List<UserResDto> UserDtos = ModelMapperUtils.mapAll(objects, UserResDto.class);
+        List<UserResDto> userResDtos = ModelMapperUtils.mapAll(objects, UserResDto.class);
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        final CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(User.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
-        return new PageImpl<>(UserDtos, pageable, total);
+        return new PageImpl<>(userResDtos, pageable, total);
     }
 
     private Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, UserSearchModel resource) {
@@ -117,8 +111,7 @@ public class UserServiceImpl implements UserService {
 
         if (resource.getFullName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFullName().trim())) {
-            predicates.add(cb.and(cb.like(cb.lower(
-                    rootPersist.get("fullName")),
+            predicates.add(cb.and(cb.like(cb.lower(rootPersist.get("fullName")),
                     "%" + resource.getFullName().toLowerCase() + "%")));
         }
 
@@ -132,16 +125,16 @@ public class UserServiceImpl implements UserService {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("userName"), resource.getUserName())));
         }
 
-        if (resource.getFromDate() != null && resource.getToDate() != null) {
-            // den_ngay >= toDate >= tu_ngay
-            predicates.add(cb.and(
-                    cb.between(rootPersist.<Date>get("createdDate"), resource.getFromDate(), resource.getToDate())));
-        } else if (resource.getFromDate() != null) {
-            // toDate >= tu_ngay
-            predicates.add(cb.greaterThan(rootPersist.<Date>get("createdDate"), resource.getFromDate()));
-        } else if (resource.getToDate() != null) {
-            // toDate >= den_ngay
-            predicates.add(cb.lessThan(rootPersist.<Date>get("createdDate"), resource.getToDate()));
+        if (resource.getFromDate() != null) {
+            // createdDate >= fromDate
+            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getFromDate()));
+        }
+
+        if (resource.getToDate() != null) {
+            // createdDate <= toDate
+            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+                    resource.getToDate()));
         }
 
         Object[] results = new Object[2];
@@ -172,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
+    public boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(userChangePasswordReqDto.getUsername());
         // edited user must exist
@@ -189,6 +182,7 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
 
+            user.setPassChange(UserChangePasswordStatus.CHANGED.getType());
             user.setPassword(passwordEncoder.encode(userChangePasswordReqDto.getNewPassword()));
             user.setUpdatedBy(userChangePasswordReqDto.getUsername());
             userRepo.save(user);
@@ -228,6 +222,9 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             user.setStatus(userDto.getStatus());
             user.setUpdatedBy(currentUserName);
+            if (userDto.getStatus().equals(StatusActivate.STATUS_ACTIVATED.getStatus())) {
+                user.setCountLoginFail(0);
+            }
             contentResDto.setContent(userRepo.save(user));
             return contentResDto;
         }

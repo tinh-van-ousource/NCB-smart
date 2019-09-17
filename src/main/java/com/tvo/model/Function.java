@@ -1,14 +1,18 @@
 package com.tvo.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.time.LocalDate;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "GROUP_FUNCTION_MBAPP")
@@ -18,6 +22,8 @@ public class Function implements Serializable {
 
 	private static final long serialVersionUID = 2478521582208471030L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
+	@SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
 	@Column(name = "ID")
 	private Long id;
 
@@ -34,7 +40,7 @@ public class Function implements Serializable {
 	private String status;
 
 	@Column(name = "QUANTITY")
-	private String quantity;
+	private Long quantity;
 
 	@Column(name = "CUSTOMER_TYPE")
 	private String customerType;
@@ -67,18 +73,17 @@ public class Function implements Serializable {
 	private Long percentage;
 
 	@Column(name = "FROM_DATE")
-	private LocalDate fromDate;
+	private Date fromDate;
 
 	@Column(name = "TO_DATE")
-	private LocalDate toDate;
+	private Date toDate;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
 
 	@Column(name = "CREATED_DATE")
-	private LocalDate createdDate;
+	private Date createdDate;
 
 	@Column(name = "PRD")
 	private String prd;
-
 }

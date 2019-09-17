@@ -1,2 +1,1 @@
-# NCB-smart
-NCB Bank
+Fake code

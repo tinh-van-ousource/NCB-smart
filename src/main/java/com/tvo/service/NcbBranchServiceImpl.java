@@ -4,6 +4,7 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
+import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.NcbBranch;
@@ -93,10 +94,12 @@ public class NcbBranchServiceImpl implements NcbBranchService {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<NcbBranch> query = cb.createQuery(NcbBranch.class);
         Object[] queryObjs = this.createNcbBranchRootPersist(cb, query, searchModel);
-        query.select((Root<NcbBranch>) queryObjs[0]);
+        Root<NcbBranch> root = (Root<NcbBranch>) queryObjs[0];
+        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
+        query.orderBy(cb.asc(root.get("branchName")));
 
+        TypedQuery<NcbBranch> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         List<NcbBranch> objects = typedQuery.getResultList();
@@ -160,7 +163,20 @@ public class NcbBranchServiceImpl implements NcbBranchService {
                     new NcbActiveBranchOnlyResDto(branches[0].toString(), branches[1].toString()));
         }
 
-        return ModelMapperUtils.mapAll(ncbActiveBranchOnlyResDtoList, NcbActiveBranchOnlyResDto.class);
+        return ncbActiveBranchOnlyResDtoList;
+    }
+
+    @Override
+    public List<NcbActiveDepartOnlyResDto> getAllActivatedDepart() {
+        List<NcbActiveDepartOnlyResDto> ncbActiveDepartOnlyResDtoList = new ArrayList<>();
+        List<Object> listDepart = ncbBranchDao.retrieveAllActivatedDepart();
+        for (Object depart : listDepart) {
+            Object[] departs = (Object[]) depart;
+            ncbActiveDepartOnlyResDtoList.add(
+                    new NcbActiveDepartOnlyResDto(departs[0].toString(), departs[1].toString()));
+        }
+
+        return ncbActiveDepartOnlyResDtoList;
     }
 
 }

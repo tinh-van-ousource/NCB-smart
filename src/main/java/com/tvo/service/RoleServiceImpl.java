@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,6 +40,12 @@ public class RoleServiceImpl implements RoleService {
         }
 
         return contentResDto;
+    }
+
+    @Override
+    public RoleResDto getRoleById(Long id) {
+        Optional<Role> role = roleRepo.findById(id);
+        return role.map(value -> ModelMapperUtils.map(value, RoleResDto.class)).orElse(null);
     }
 
     @Override
@@ -66,7 +73,10 @@ public class RoleServiceImpl implements RoleService {
 
         Role role = ModelMapperUtils.map(roleReqDto, Role.class);
         role.setUpdatedBy(currentUserName);
-        role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        if (roleReqDto.getStatus() == null) {
+            role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        }
+
         return ModelMapperUtils.map(roleRepo.save(role), RoleResDto.class);
     }
 

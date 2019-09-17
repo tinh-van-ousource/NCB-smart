@@ -27,146 +27,143 @@ import java.util.List;
 
 @Service
 public class DatUserProfileServiceImpl implements DatUserProfileService {
-	@Autowired
-	private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
-	@Autowired
-	private DatUserProfileDao datUserProfileDao;
+    @Autowired
+    private DatUserProfileDao datUserProfileDao;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	public DatUserProfileServiceImpl() {
-	}
+    public DatUserProfileServiceImpl() {
+    }
 
-	public DatUserProfileServiceImpl(EntityManagerFactory entityManagerFactory, DatUserProfileDao datUserProfileDao,
-			EntityManager entityManager) {
-		this.entityManagerFactory = entityManagerFactory;
-		this.datUserProfileDao = datUserProfileDao;
-		this.entityManager = entityManager;
-	}
+    public DatUserProfileServiceImpl(EntityManagerFactory entityManagerFactory, DatUserProfileDao datUserProfileDao,
+                                     EntityManager entityManager) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.datUserProfileDao = datUserProfileDao;
+        this.entityManager = entityManager;
+    }
 
-	@Override
-	public List<DatUserProfileDto> findAll() {
-		List<DatUserProfileDto> listResult = ModelMapperUtils.mapAll(datUserProfileDao.findAll(),
-				DatUserProfileDto.class);
-		return listResult;
-	}
+    @Override
+    public List<DatUserProfileDto> findAll() {
+        List<DatUserProfileDto> listResult = ModelMapperUtils.mapAll(datUserProfileDao.findAll(),
+                DatUserProfileDto.class);
+        return listResult;
+    }
 
-	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchDatUserProfileModel searchModel, String filter) {
-		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
-		rootPersist.join(DatUserProfile_.function);
-		final List<Predicate> predicates = new ArrayList<Predicate>();
+    public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+                                          SearchDatUserProfileModel searchModel, String filter) {
+        final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
+        rootPersist.join(DatUserProfile_.function);
+        final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		if (searchModel.getBrncode() != null && !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
-			predicates.add(cb.and(
-					cb.equal(cb.upper(rootPersist.<String>get("brncode")), searchModel.getBrncode().toUpperCase())));
-		}
-		if (searchModel.getOfficecode() != null && !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("officecode")),
-					searchModel.getOfficecode().toUpperCase())));
-		}
-		if (searchModel.getUsrfname() != null && !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")),
-					"%" + searchModel.getUsrfname().toUpperCase() + "%")));
-		}
-		if (searchModel.getCifname() != null && !StringUtils.isEmpty(searchModel.getCifname().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")),
-					"%" + searchModel.getCifname().toUpperCase() + "%")));
-		}
+        if (searchModel.getBrncode() != null && !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
+            predicates.add(cb.and(
+                    cb.equal(cb.upper(rootPersist.<String>get("brncode")), searchModel.getBrncode().toUpperCase())));
+        }
+        if (searchModel.getOfficecode() != null && !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("officecode")),
+                    searchModel.getOfficecode().toUpperCase())));
+        }
+        if (searchModel.getUsrfname() != null && !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")),
+                    "%" + searchModel.getUsrfname().toUpperCase() + "%")));
+        }
+        if (searchModel.getCifname() != null && !StringUtils.isEmpty(searchModel.getCifname().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")),
+                    "%" + searchModel.getCifname().toUpperCase() + "%")));
+        }
 
-		if (searchModel.getUsrstatus() != null && !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrstatus"), searchModel.getUsrstatus())));
-		}
-		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
-			predicates.add(
-					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
-			predicates.add(
-					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
-//			predicates.add(cb.or(cb.like(rootPersist.<String>get("usrid"), "%" +filter+ "%")));
-		}
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
+        if (searchModel.getUsrstatus() != null && !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrstatus"), searchModel.getUsrstatus())));
+        }
+        if (filter != null && !StringUtils.isEmpty(filter.trim())) {
+            predicates.add(
+                    cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
+            predicates.add(
+                    cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
+        }
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
 
-	public Object[] createConsumerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchConsumerModel searchModel, String filter) {
-		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
-		rootPersist.join(DatUserProfile_.function);
-		rootPersist.join(DatUserProfile_.datCfmast);
-//		Join<DatUserProfile, DatCfmast> datCfmast = rootPersist.join(DatUserProfile_.datCfmast);
-		final List<Predicate> predicates = new ArrayList<Predicate>();
-		if (searchModel.getUsrid() != null && !StringUtils.isEmpty(searchModel.getUsrid().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("usrid")),
-					"%" + searchModel.getUsrid().toUpperCase() + "%")));
-		}
-		if (searchModel.getCifgrp() != null && !StringUtils.isEmpty(searchModel.getCifgrp().trim())) {
-			predicates.add(cb
-					.and(cb.equal(cb.upper(rootPersist.<String>get("cifgrp")), searchModel.getCifgrp().toUpperCase())));
-		}
-		if (searchModel.getIdno() != null && !StringUtils.isEmpty(searchModel.getIdno().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<DatCfmast>get("datCfmast").<String>get("idno")),
-					searchModel.getIdno().toUpperCase())));
-		}
-		if (filter != null && !StringUtils.isEmpty(filter.trim())) {
-			predicates.add(
-					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
-//			predicates.add(
-//					cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
-		}
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
+    @Override
+    public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
+                                                        Pageable pageable) {
+        CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+        CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
+        Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel, filter);
+        query.select((Root<DatUserProfile>) queryObjs[0]);
+        query.where((Predicate[]) queryObjs[1]);
+        TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
-	@Override
-	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
-			Pageable pageable) {
-		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel, filter);
-		query.select((Root<DatUserProfile>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
-		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        List<DatUserProfile> objects = typedQuery.getResultList();
+        List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
 
-		typedQuery.setFirstResult((int) pageable.getOffset());
-		typedQuery.setMaxResults(pageable.getPageSize());
-		List<DatUserProfile> objects = typedQuery.getResultList();
-		List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
+        CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(datUserProfileDtos, pageable, total);
 
-		CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
-		countQuery.where((Predicate[]) queryObjs[1]);
-		Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(datUserProfileDtos, pageable, total);
-//		return null;
-	}
+    }
 
-	@Override
-	public Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, String filter, Pageable pageable) {
-		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-		Object[] queryObjs = this.createConsumerRootPersist(cb, query, searchModel, filter);
-		query.select((Root<DatUserProfile>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
-		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
+    @Override
+    public Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, Pageable pageable) {
+        CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+        CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
+        Object[] queryObjs = this.createConsumerRootPersist(cb, query, searchModel);
+		Root<DatUserProfile> root = (Root<DatUserProfile>) queryObjs[0];
+        query.select(root);
+        query.where((Predicate[]) queryObjs[1]);
+        TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
-		typedQuery.setFirstResult((int) pageable.getOffset());
-		typedQuery.setMaxResults(pageable.getPageSize());
-		List<DatUserProfile> objects = typedQuery.getResultList();
-		List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        List<DatUserProfile> objects = typedQuery.getResultList();
+        List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
 
-		CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
-		countQuery.where((Predicate[]) queryObjs[1]);
-		Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(datUserProfileDtos, pageable, total);
-	}
+        CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(datUserProfileDtos, pageable, total);
+    }
+
+    private Object[] createConsumerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+                                               SearchConsumerModel searchModel) {
+        final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
+        rootPersist.join(DatUserProfile_.function);
+        rootPersist.join(DatUserProfile_.datCfmast);
+        final List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (searchModel.getUsrid() != null && !StringUtils.isEmpty(searchModel.getUsrid().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(
+                    rootPersist.get("usrid")), searchModel.getUsrid().toUpperCase())));
+        }
+
+        if (searchModel.getCifgrp() != null && !StringUtils.isEmpty(searchModel.getCifgrp().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(
+                    rootPersist.get("cifgrp")), searchModel.getCifgrp().toUpperCase())));
+        }
+
+        if (searchModel.getIdno() != null && !StringUtils.isEmpty(searchModel.getIdno().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(
+                    rootPersist.<DatCfmast>get("datCfmast").get("idno")), searchModel.getIdno().toUpperCase())));
+        }
+
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
 
 }

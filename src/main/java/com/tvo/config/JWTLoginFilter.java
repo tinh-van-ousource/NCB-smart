@@ -39,6 +39,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         System.out.println("JWTLoginFilter.attemptAuthentication: username = " + userName);
 
+        // Execute authenticate then call UserDetailsServiceImpl.loadUserByUsername
         return getAuthenticationManager()
                 .authenticate(new UsernamePasswordAuthenticationToken(userName, password, Collections.emptyList()));
     }
@@ -58,7 +59,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) {
-        TokenAuthenticationService.unsuccessfulAuthentication(response, failed);
+        TokenAuthenticationService.unsuccessfulAuthentication(request, response, failed);
     }
 
 }

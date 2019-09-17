@@ -4,8 +4,10 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchBankTransfer;
 import com.tvo.dao.BankTransferDAO;
 import com.tvo.dto.BankTransferDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.BankTransfer;
 import com.tvo.request.CreateBankTransferRequest;
+import com.tvo.request.UpdateBankTransferRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,85 +23,108 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
-public class BankTransferServiceImpl implements BankTransferService{
-	@Autowired
-	BankTransferDAO bankDao;
-	@Autowired
-	private EntityManagerFactory entityManagerFactory;
-	@Autowired
-	private EntityManager entityManager;
-	@Override
-	public List<BankTransferDto> findAll() {
-		List<BankTransferDto> ctdt = ModelMapperUtils.mapAll(bankDao.findAll(), BankTransferDto.class);
-		return ctdt;
-	}
-	@Override
-	public Page<BankTransferDto> searchBankTransfer(SearchBankTransfer searchBankTransfer, Pageable pageable) {
-		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<BankTransfer> query = cb.createQuery(BankTransfer.class);
-		Object[] queryObjs = this.createCityRootPersist(cb, query, searchBankTransfer);
-		query.select((Root<BankTransfer>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
+public class BankTransferServiceImpl implements BankTransferService {
 
-		TypedQuery<BankTransfer> typedQuery = this.entityManager.createQuery(query);
+    @Autowired
+    private BankTransferDAO bankDao;
 
-		typedQuery.setFirstResult((int)pageable.getOffset());
-	    typedQuery.setMaxResults(pageable.getPageSize());
-	    final List<BankTransfer> objects = typedQuery.getResultList();
-		List<BankTransferDto> BankTransferDtos = ModelMapperUtils.mapAll(objects, BankTransferDto.class);
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
-		
-		final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-	    final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-//	    countQuery.select(cbTotal.count((Root<User>) queryObjs[0]));
-	    countQuery.select(cbTotal.count(countQuery.from(BankTransfer.class)));
-	    countQuery.where((Predicate[]) queryObjs[1]);
-	    Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(BankTransferDtos, pageable, total);
-	}
-	
-	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchBankTransfer resource) {
-		final Root<BankTransfer> rootPersist = query.from(BankTransfer.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		if (resource.getBankCode() != null	
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBankCode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("branchCode"), resource.getBankCode())));
-		}
-		if (resource.getBankName() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBankName().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("fullName"), resource.getBankName())));
-		}
+    @Autowired
+    private EntityManager entityManager;
 
-		if (resource.getStatus() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("transactionCode"), resource.getStatus())));
-		}
+    @Override
+    public Page<BankTransferDto> search(SearchBankTransfer searchBankTransfer, Pageable pageable) {
+        final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<BankTransfer> query = cb.createQuery(BankTransfer.class);
+        Object[] queryObjs = this.createRootPersist(cb, query, searchBankTransfer);
+        Root<BankTransfer> root = (Root<BankTransfer>) queryObjs[0];
+        query.select(root);
+        query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("bankCode")));
 
-	
+        TypedQuery<BankTransfer> typedQuery = this.entityManager.createQuery(query);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
 
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
-	@Override
-	public BankTransferDto createBankTransfer(CreateBankTransferRequest request) {
-		BankTransfer bankTransfer = bankDao.findByBankName(request.getBankName());
-		if (bankTransfer != null) {
-			return null;
-		}
-		
-		bankTransfer = ModelMapperUtils.map(request, BankTransfer.class);
-		bankTransfer.setBankCode(request.getBankCode());
-		bankTransfer.setBankName(request.getBankName());
-		bankTransfer.setShtname(request.getShtname());
-		bankTransfer.setStatus(request.getStatus());
-		bankTransfer.setBin(request.getBin());
-		bankTransfer.setCitad_gt(request.getCitad_gt());
-		bankTransfer.setCitad_tt(request.getCitad_tt());
-		BankTransfer save = bankDao.save(bankTransfer);
-		return ModelMapperUtils.map(save, BankTransferDto.class);
-	}
+        final List<BankTransfer> objects = typedQuery.getResultList();
+        List<BankTransferDto> BankTransferDtos = ModelMapperUtils.mapAll(objects, BankTransferDto.class);
+
+        final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(BankTransfer.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(BankTransferDtos, pageable, total);
+    }
+
+    private Object[] createRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchBankTransfer resource) {
+        final Root<BankTransfer> rootPersist = query.from(BankTransfer.class);
+        final List<Predicate> predicates = new ArrayList<>();
+
+        if (resource.getBankCode() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBankCode().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("bankCode"), resource.getBankCode())));
+        }
+        if (resource.getStatus() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+        }
+
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
+
+    @Override
+    public BankTransferDto create(CreateBankTransferRequest request) {
+        BankTransfer bankTransfer = bankDao.findByBankCode(request.getBankCode());
+        if (bankTransfer != null) {
+            return null;
+        }
+
+        bankTransfer = ModelMapperUtils.map(request, BankTransfer.class);
+        bankTransfer.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+
+        BankTransfer save = bankDao.save(bankTransfer);
+        return ModelMapperUtils.map(save, BankTransferDto.class);
+    }
+
+    @Override
+    public BankTransferDto update(UpdateBankTransferRequest request) {
+        BankTransfer bankTransfer = bankDao.findByBankCode(request.getBankCode());
+        if (bankTransfer == null) {
+            return null;
+        }
+
+        bankTransfer = ModelMapperUtils.map(request, BankTransfer.class);
+
+        BankTransfer save = bankDao.save(bankTransfer);
+        return ModelMapperUtils.map(save, BankTransferDto.class);
+    }
+
+    @Override
+    public BankTransferDto detail(String bankCode) {
+        BankTransfer bankTransfer = bankDao.findByBankCode(bankCode);
+        if (bankTransfer == null) {
+            return null;
+        }
+        return ModelMapperUtils.map(bankTransfer, BankTransferDto.class);
+    }
+
+    @Override
+    public BankTransferDto delete(String bankCode) {
+        BankTransfer bankTransfer = bankDao.findByBankCode(bankCode);
+        if (bankTransfer == null) {
+            return null;
+        }
+
+        bankTransfer.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+        return ModelMapperUtils.map(bankDao.save(bankTransfer), BankTransferDto.class);
+    }
 
 }

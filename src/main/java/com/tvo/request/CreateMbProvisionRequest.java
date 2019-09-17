@@ -6,9 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateMbProvisionRequest {
+    private String provisionName;
 
-	private String provisionName;
-
-	private String provisionLink;
+    private String provisionLink;
 
 }

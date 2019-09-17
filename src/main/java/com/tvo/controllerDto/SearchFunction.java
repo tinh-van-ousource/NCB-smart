@@ -1,50 +1,25 @@
 package com.tvo.controllerDto;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-@Setter
-@Getter
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchFunction {
-private Long id;
-	
-	private String idName;
-	
-	private String typeFunction;
-	
-	private String function;
-	
-	private String status;
-	
-	private String quantity;
-	
-	private String cuType;
-	
-	private String ccy;
-	
-	private String limitDaily;
-	
-	private String limitFace;
-	
-	private String userId;
-	
-	private String min;
-	
-	private String max;
-	
-	private Date createDate;
 
-	private String limitFinger;
+	private String prdName;
 
-	private String promotion;
+	private String tranType;
 
-	private String promotionName;
+	private String typeId;
 
-	private String percentage;
-
-	private Date fromDate;
-
-	private Date toDate;
 }

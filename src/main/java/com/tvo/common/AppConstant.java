@@ -1,28 +1,39 @@
-/**
- *
- */
 package com.tvo.common;
 
-/**
- * @author Ace
- *
- */
 public class AppConstant {
     public static final String LOGIN_FAILURE_CODE = "401";
-    public static final String SUCCSESSFUL_CODE = "200";
     public static final String ACCOUNT_DEACTIVATED_CODE = "402";
     public static final String ACCESS_DENIED_CODE = "403";
+
+    public static final String ACCOUNT_IS_ALREADY_EXISTS_CODE = "404";
+    public static final String ACCOUNT_IS_ALREADY_EXISTS_MESSAGE = "Account is already exists.";
+
+    public static final String OLD_PASSWORD_IS_INCORRECT_CODE = "405";
+    public static final String OLD_PASSWORD_IS_INCORRECT_MESSAGE = "Old password is incorrect.";
+
+    public static final String PAR_CARD_EXISTED_CODE = "901";
+    public static final String PAR_CARD_EXISTED_MESSAGE = "Par card existed.";
+
+    public static final String UPLOAD_FILE_FAILED_CODE = "902";
+    public static final String UPLOAD_FILE_FAILED_MESSAGE = "Upload file failed.";
+
+    public static final String PARAM_MANAGER_EXISTED_CODE = "903";
+    public static final String PARAM_MANAGER_EXISTED_MESSAGE = "Param is existed.";
+
+    public static final String BANK_TRANSFER_EXISTED_CODE = "904";
+    public static final String BANK_TRANSFER_EXISTED_MESSAGE = "Bank transfer is existed.";
+
+    public static final String BRANCH_EXISTED_CODE = "905";
+    public static final String BRANCH_EXISTED_MESSAGE = "Branch is existed.";
+
+    public static final String PROVIDER_EXISTED_CODE = "906";
+    public static final String PROVIDER_EXISTED_MESSAGE = "Provider is existed.";
+
+    public static final String COMPANY_EXISTED_CODE = "907";
+    public static final String COMPANY_EXISTED_MESSAGE = "Company is existed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
-    public static final String LOGIN_FAILURE_STATUS = "login failure";
-    public static final String LOGIN_SUCCSESSFUL_STATUS = "login successful";
-
-    public static final String SECRET = "Unknow";
-    public static final String TOKEN_PREFIX = "Bearer";
-    public static final String HEADER_STRING = "Authorization";
-    public static final long EXPIRATIONTIME = 1000 * 60 * 60 * 24; // 1 day
-
-    public static final String USER_STATUS_STRING_ACTIVATED = "Activated";
-    public static final String USER_STATUS_STRING_DEACTIVATED = "Deactivated";
+    public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 
     public static final String SYSTEM_SUCCESS_CODE = "00";
     public static final String SYSTEM_SUCCESS_MESSAGE = "Successful";
@@ -30,10 +41,13 @@ public class AppConstant {
     public static final String SYSTEM_ERROR_CODE = "99";
     public static final String SYSTEM_ERROR_MESSAGE = "System error";
 
-    public static final int LIMIT_PAGE = 15;
-    public static final int MAX_PAGE_ITEM_DISPLAY = 5;
+    public static final String SECRET = "Unknown";
+    public static final String HEADER_STRING = "Authorization";
+    public static final long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 4; // 4 hours
 
-    public static final String RESOURCE_IMG = "C:\\upload\\card-img\\";
+    public static final int LIMIT_PAGE = 15;
+
+    public static final String RESOURCE_IMG = "C:\\uploads\\";
 
     public enum Status {
         ACTIVATED("A"), DEACTIVATED("D");

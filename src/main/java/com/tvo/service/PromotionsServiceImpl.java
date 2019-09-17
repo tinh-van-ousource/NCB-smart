@@ -3,10 +3,14 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dao.PromotionsDAO;
+import com.tvo.dto.NotifyDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.model.Function;
+import com.tvo.model.Notify;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
+import com.tvo.request.UpdatePromotionRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +27,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -62,23 +67,13 @@ public class PromotionsServiceImpl implements PromotionsService{
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		
-		if (resource.getType() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("typyFunction"), resource.getType())));
+		
+
+		if (resource.getPromotionName()!= null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPromotionName().trim())) {
+			predicates.add(cb.and(cb.equal(rootPersist.<String>get("promotionName"), resource.getPromotionName())));
 		}
 
-		if (resource.getFunctionType()!= null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFunctionType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("function"), resource.getFunctionType())));
-		}
-
-		if (resource.getCuType() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCuType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cuType"), resource.getCuType())));
-		}
-		
-		
-	
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -87,29 +82,54 @@ public class PromotionsServiceImpl implements PromotionsService{
 	}
 
 	@Override
-	public PromotionsDto createPromotions(CreatePromotionsRequest request) {
-		Promotions promotions = promotionsDao.findByType(request.getType());
+	public PromotionsDto create(CreatePromotionsRequest request) {
+		Promotions promotions = promotionsDao.findByid(request.getId());
 		if (promotions != null) {
 			return null;
 		}
 		promotions = ModelMapperUtils.map(request, Promotions.class);
-		promotions.setPromotion(request.getPromotion());
-		promotions.setPromotionName(request.getPromotionName());
-		promotions.setCuType(request.getCuType());
-		promotions.setType(request.getType());
-		promotions.setPercentage(request.getPercentage());
-		promotions.setFunctionType(request.getFunctionType());
-		promotions.setFromDate(request.getFromDate());
-		promotions.setToDate(request.getToDate());
+		
 		Promotions save = promotionsDao.save(promotions);
 		return ModelMapperUtils.map(save, PromotionsDto.class);
 	}
 
+
 	@Override
-	public PromotionsDto update(PromotionsDto promotionsDto) {
-		// TODO Auto-generated method stub
+	@Transactional(readOnly = false)
+	public PromotionsDto update(UpdatePromotionRequest request) {
+		Promotions opt = promotionsDao.findByid(request.getId());
+		if (opt != null) {
+			Promotions promotions = ModelMapperUtils.map(request,Promotions.class);
+			
+			Promotions save = promotionsDao.save(promotions);
+
+
+			return ModelMapperUtils.map(save, PromotionsDto.class);
+		}
 		return null;
-	}	
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Boolean delete(Long id) {
+		Promotions function = promotionsDao.findByid(id);
+		if (id != null) {
+			promotionsDao.delete(function);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public PromotionsDto detail(Long id) {
+		 Promotions promotions = promotionsDao.findByid(id);
+	        if (promotions == null) {
+	            return null;
+	        }
+	        return ModelMapperUtils.map(promotions, PromotionsDto.class);
+	}
+
+	
 	
 }
 	

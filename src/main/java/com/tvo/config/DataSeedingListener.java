@@ -3,6 +3,7 @@ package com.tvo.config;
 import com.tvo.dao.RoleRepo;
 import com.tvo.dao.UserRepo;
 import com.tvo.enums.StatusActivate;
+import com.tvo.enums.UserChangePasswordStatus;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,13 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
-//         Roles
+        // Roles
         if (roleRepository.findByRoleName("ROLE_ADMIN") == null) {
         	Role role = new Role();
         	role.setRoleName("ROLE_ADMIN");
         	role.setDescription("admin");
         	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
             roleRepository.save(role);
         }
 
@@ -39,10 +41,20 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         	role.setRoleName("ROLE_USER");
         	role.setDescription("user");
         	role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
             roleRepository.save(role);
         }
 
-        // Admin account
+        if (roleRepository.findByRoleName("ROLE_DEFAULT") == null) {
+            Role role = new Role();
+            role.setRoleName("ROLE_DEFAULT");
+            role.setDescription("default");
+            role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            role.setUpdatedBy("system");
+            roleRepository.save(role);
+        }
+
+        // admin account
         if (userRepository.findByUserName("admin") == null) {
             User admin = new User();
             admin.setEmail("admin@gmail.com");
@@ -54,11 +66,14 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setTransactionCode("VN0010001");
             admin.setRole(roleRepository.findByRoleName("ROLE_ADMIN"));
             admin.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-            admin.setLoginCount(0L);
+            admin.setPassChange(UserChangePasswordStatus.CHANGED.getType());
+            admin.setCountLoginFail(0);
+            admin.setUserCode("Ma Nhan Vien: Admin");
+            admin.setUpdatedBy("system");
             userRepository.save(admin);
         }
 
-        // USER account
+        // user account
         if (userRepository.findByUserName("user") == null) {
             User user = new User();
             user.setEmail("USER@gmail.com");
@@ -70,7 +85,10 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setTransactionCode("VN0010001");
             user.setRole(roleRepository.findByRoleName("ROLE_USER"));
             user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-            user.setLoginCount(0L);
+            user.setPassChange(UserChangePasswordStatus.CHANGED.getType());
+            user.setCountLoginFail(0);
+            user.setUserCode("Ma Nhan Vien: User");
+            user.setUpdatedBy("system");
             userRepository.save(user);
         }
 

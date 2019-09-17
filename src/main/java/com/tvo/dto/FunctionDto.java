@@ -7,48 +7,53 @@ import lombok.Setter;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FunctionDto {
 	private Long id;
-	
-	private String idName;
-	
-	private String typeFunction;
-	
-	private String function;
-	
-	private String status;
-	
-	private String quantity;
-	
-	private String cuType;
-	
-	private String ccy;
-	
-	private String limitDaily;
-	
-	private String limitFace;
-	
-	private String userId;
-	
-	private String min;
-	
-	private String max;
-	
-	private Date createDate;
 
-	private String limitFinger;
+	private String prdName;
+
+	private String tranType;
+
+	private String typeId;
+
+	private String status;
+
+	private Long quantity;
+
+	private String customerType;
+
+	private String ccy;
+
+	private Long limitDaily;
+
+	private Long min;
+
+	private Long max;
+
+	private Long limitFaceid;
+
+	private Long limitFinger;
 
 	private String promotion;
 
 	private String promotionName;
 
-	private String percentage;
+	private Long percentage;
 
 	private Date fromDate;
 
 	private Date toDate;
+
+	private String createdBy;
+
+
+	private Date createdDate;
+
+	private String prd;
 }

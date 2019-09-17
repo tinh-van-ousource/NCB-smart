@@ -46,11 +46,11 @@ public class TokenAuthenticationService {
         userRepo = ctx.getBean(UserRepo.class);
     }
 
-    public static void unsuccessfulAuthentication(HttpServletResponse res, AuthenticationException failed) {
+    public static void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse res,
+                                                  AuthenticationException failed) {
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
         res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-
         try {
             gson = new Gson();
             ResponeData respLogin;
@@ -69,22 +69,25 @@ public class TokenAuthenticationService {
 
     public static void addAuthentication(HttpServletResponse res, UserDetailsImpl userDetails, Authentication authResult) {
         String JWT = Jwts.builder().setSubject(userDetails.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + AppConstant.EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + AppConstant.EXPIRATION_TIME_MS))
                 .signWith(SignatureAlgorithm.HS512, AppConstant.SECRET).compact();
-        res.setContentType("application/json");
-        res.setCharacterEncoding("UTF-8");
-        try {
 
+        try {
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
             User user = userRepo.findByUserName(userName);
-            user.setLoginCount(user.getLoginCount() + 1);
+            user.setCountLoginFail(0);
             user = userRepo.save(user);
 
             gson = new Gson();
             UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);
             userDto.setToken(JWT);
-            ResponeData respLogin = new ResponeData(AppConstant.SUCCSESSFUL_CODE, AppConstant.LOGIN_SUCCSESSFUL_STATUS,
+            ResponeData respLogin = new ResponeData(
+                    AppConstant.SYSTEM_SUCCESS_CODE,
+                    AppConstant.LOGIN_SUCCESSFUL_MESSAGE,
                     userDto);
+
+            res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
             res.getWriter().write(gson.toJson(respLogin));
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,16 +99,21 @@ public class TokenAuthenticationService {
         if (token != null) {
             // parse the token.
             try {
-                String user = Jwts.parser().setSigningKey(AppConstant.SECRET)
-                        .parseClaimsJws(token.replace(AppConstant.TOKEN_PREFIX, "")).getBody().getSubject();
-                return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList())
+                String user = Jwts.parser()
+                        .setSigningKey(AppConstant.SECRET)
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .getSubject();
+
+                return user != null
+                        ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList())
                         : null;
             } catch (ExpiredJwtException e) {
-                System.out.println(" Token expired ");
+                System.out.println("ExpiredJwtException");
             } catch (SignatureException e) {
-                System.out.println(" token exception ");
+                System.out.println("SignatureException");
             } catch (Exception e) {
-                System.out.println(" Some other exception in JWT parsing ");
+                System.out.println("JWT parsing error");
             }
         }
         return null;

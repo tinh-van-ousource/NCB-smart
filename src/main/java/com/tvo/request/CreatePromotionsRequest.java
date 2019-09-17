@@ -6,45 +6,31 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePromotionsRequest {
-	private String idName;
+	private Long id;
 	
-	private String type;
+	private String tranType;
 	
-	private String functionType;
+	private String typeId;
+ 
+	private String customerType;
 	
-	private String status;
-	
-	private String quantity;
-	
-	private String cuType;
-	
-	private String ccy;
-	
-	private String limitDaily;
-	
-	private String limitFace;
-	
-	private String userId;
-	
-	private String min;
-	
-	private String max;
-	
-	private Date createDate;
-
-	private String limitFinger;
-
-	private String promotion;
-
 	private String promotionName;
 
+	private String promotion;
+	
 	private String percentage;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date fromDate;
-
+	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
+
 }

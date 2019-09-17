@@ -17,7 +17,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Role Controller")
 public class RoleController {
 
     @Autowired
@@ -26,6 +25,11 @@ public class RoleController {
     @GetMapping(value = "/search")
     public ResponeData<ContentResDto> searchRole(@Valid RoleSearchReqDto roleSearchReqDto) {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.search(roleSearchReqDto));
+    }
+
+    @GetMapping(value = "/{id}/detail")
+    public ResponeData<RoleResDto> searchRole(@PathVariable("id") Long id) {
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, roleService.getRoleById(id));
     }
 
     @PatchMapping(value = "/update")
