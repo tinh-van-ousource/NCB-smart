@@ -17,7 +17,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Role Controller")
 public class RoleController {
 
     @Autowired
