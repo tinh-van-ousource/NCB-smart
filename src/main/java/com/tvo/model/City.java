@@ -24,13 +24,9 @@ public class City implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2478521582208471030L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_CITY_SQ")
 	@SequenceGenerator(sequenceName = "AI_CMS_CITY_SQ", allocationSize = 1, name = "AI_CMS_CITY_SQ")
-	
-
-
 	@Column(name = "CITY_ID", insertable = false)
 	private Long cityId;
 
@@ -45,5 +41,4 @@ public class City implements Serializable {
 
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
-
 }

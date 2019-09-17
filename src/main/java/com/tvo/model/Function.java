@@ -24,8 +24,6 @@ public class Function implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
 	@SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
-
-
 	@Column(name = "ID")
 	private Long id;
 
@@ -88,5 +86,4 @@ public class Function implements Serializable {
 
 	@Column(name = "PRD")
 	private String prd;
-
 }
