@@ -10,6 +10,7 @@ import com.tvo.model.Function;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,15 +49,16 @@ public class PromotionsServiceImpl implements PromotionsService {
         final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Promotions> query = cb.createQuery(Promotions.class);
         Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchPromotion);
-        query.select((Root<Promotions>) queryObjs[0]);
+        Root<Promotions> root = (Root<Promotions>) queryObjs[0];
+        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        TypedQuery<Promotions> typedQuery = this.entityManager.createQuery(query);
 
+        TypedQuery<Promotions> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<Promotions> objects = typedQuery.getResultList();
-        List<PromotionsDto> PromotionsDtos = ModelMapperUtils.mapAll(objects, PromotionsDto.class);
 
+        List<PromotionsDto> PromotionsDtos = ModelMapperUtils.mapAll(objects, PromotionsDto.class);
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(Function.class)));
@@ -69,10 +71,14 @@ public class PromotionsServiceImpl implements PromotionsService {
         final Root<Function> rootPersist = query.from(Function.class);
         final List<Predicate> predicates = new ArrayList<>();
 
-        if (resource.getPromotionName() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPromotionName().trim())) {
+        if (StringUtils.isNotBlank(resource.getPromotionName())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("promotionName")),
                     "%" + resource.getPromotionName().toUpperCase() + "%")));
+        }
+
+        if (StringUtils.isNotBlank(resource.getStatus())) {
+            predicates.add(cb.and(cb.equal(rootPersist.get("status"),
+                    resource.getStatus())));
         }
 
         Object[] results = new Object[2];
