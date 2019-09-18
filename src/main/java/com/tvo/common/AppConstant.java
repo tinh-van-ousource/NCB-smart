@@ -48,6 +48,7 @@ public class AppConstant {
     public static final int LIMIT_PAGE = 15;
 
     public static final String RESOURCE_IMG = "C:\\uploads\\";
+    public static final String RESOURCE_BANNER_IMG = "C:\\uploads\\banner\\";
 
     public enum Status {
         ACTIVATED("A"), DEACTIVATED("D");
