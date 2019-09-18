@@ -1,7 +1,7 @@
 package com.tvo.service;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.FileStorageException;
+import com.tvo.config.FileBannerStorageProperties;
 import com.tvo.config.FileStorageProperties;
 import com.tvo.response.UploadFileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,17 @@ import java.time.format.DateTimeFormatter;
 public class FileServiceImpl implements FileService {
 
     private final Path fileStorageLocation;
+    private final Path fileBannerStorageLocation;
 
     @Autowired
-    public FileServiceImpl(FileStorageProperties fileStorageProperties) {
+    public FileServiceImpl(FileStorageProperties fileStorageProperties,
+                           FileBannerStorageProperties fileBannerStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
+        this.fileBannerStorageLocation = Paths.get(fileBannerStorageProperties.getUploadDir()).toAbsolutePath().normalize();
 
         try {
             Files.createDirectories(this.fileStorageLocation);
+            Files.createDirectories(this.fileBannerStorageLocation);
         } catch (Exception ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.",
                     ex);
@@ -38,7 +42,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public UploadFileResponse uploadFile(MultipartFile file) {
         try {
-            String fileName = storeFile(file);
+            String fileName = storeFile(this.fileStorageLocation, file);
 
             String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/")
                     .path(fileName).toUriString();
@@ -50,7 +54,22 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    private String storeFile(MultipartFile file) {
+    @Override
+    public UploadFileResponse uploadBannerFile(MultipartFile file) {
+        try {
+            String fileName = storeFile(this.fileBannerStorageLocation, file);
+
+            String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/")
+                    .path(fileName).toUriString();
+
+            return new UploadFileResponse(fileName, fileUploadUri);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String storeFile(Path path, MultipartFile file) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddhhmmssSSS");
@@ -64,7 +83,7 @@ public class FileServiceImpl implements FileService {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
             // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Path targetLocation = path.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
@@ -74,14 +93,14 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String getImagePath(String imageName) {
-        File file = new File(AppConstant.RESOURCE_IMG + imageName);
+    public String getImagePath(String directory, String imageName) {
+        File file = new File(directory + imageName);
         return file.getAbsolutePath();
     }
 
     @Override
-    public boolean deleteImage(String imageName) {
-        File file = new File(AppConstant.RESOURCE_IMG + imageName);
+    public boolean deleteImage(String directory, String imageName) {
+        File file = new File(directory + imageName);
         return file.delete();
     }
 

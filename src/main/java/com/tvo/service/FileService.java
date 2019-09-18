@@ -4,10 +4,12 @@ import com.tvo.response.UploadFileResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
-    String getImagePath(String imageName);
+    String getImagePath(String directory, String imageName);
 
     UploadFileResponse uploadFile(MultipartFile multipartFiles);
 
-    boolean deleteImage(String imageName);
+    UploadFileResponse uploadBannerFile(MultipartFile multipartFiles);
+
+    boolean deleteImage(String directory, String imageName);
 
 }
