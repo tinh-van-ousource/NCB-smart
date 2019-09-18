@@ -20,12 +20,6 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/{imageName}")
-    public ResponeData<String> getImagePath(@PathVariable("imageName") String imageName) {
-        String imagePath = fileService.getImagePath(imageName);
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, imagePath);
-    }
-
     @PostMapping(value = "/uploadFile")
     public ResponeData<UploadFileResponse> uploadFile(@RequestParam("img") MultipartFile file) {
         UploadFileResponse uploadFileResponse = fileService.uploadFile(file);
@@ -36,9 +30,40 @@ public class FileController {
         return new ResponeData<>(AppConstant.UPLOAD_FILE_FAILED_CODE, AppConstant.UPLOAD_FILE_FAILED_MESSAGE, null);
     }
 
+    @GetMapping("/{imageName}")
+    public ResponeData<String> getImagePath(@PathVariable("imageName") String imageName) {
+        String imagePath = fileService.getImagePath(AppConstant.RESOURCE_IMG, imageName);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, imagePath);
+    }
+
     @DeleteMapping(value = "/deleteFile")
     public ResponeData<Boolean> deleteFile(String fileName) {
-        boolean result = fileService.deleteImage(fileName);
+        boolean result = fileService.deleteImage(AppConstant.RESOURCE_IMG, fileName);
+        if (result) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+    }
+
+    @PostMapping(value = "banner/uploadFile")
+    public ResponeData<UploadFileResponse> uploadBannerFile(@RequestParam("img") MultipartFile file) {
+        UploadFileResponse uploadFileResponse = fileService.uploadBannerFile(file);
+
+        if (uploadFileResponse != null) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, uploadFileResponse);
+        }
+        return new ResponeData<>(AppConstant.UPLOAD_FILE_FAILED_CODE, AppConstant.UPLOAD_FILE_FAILED_MESSAGE, null);
+    }
+
+    @GetMapping("banner/{imageName}")
+    public ResponeData<String> getBannerImagePath(@PathVariable("imageName") String imageName) {
+        String imagePath = fileService.getImagePath(AppConstant.RESOURCE_BANNER_IMG, imageName);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, imagePath);
+    }
+
+    @DeleteMapping(value = "banner/deleteFile")
+    public ResponeData<Boolean> deleteBannerFile(String fileName) {
+        boolean result = fileService.deleteImage(AppConstant.RESOURCE_BANNER_IMG, fileName);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }

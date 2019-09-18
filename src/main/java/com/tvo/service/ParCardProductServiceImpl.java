@@ -1,5 +1,6 @@
 package com.tvo.service;
 
+import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.ParCardSearchReqDto;
 import com.tvo.dao.ParCardProductDao;
@@ -127,7 +128,7 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     public ParCardProductResDto create(ParCardProductCreateReqDto request) {
         ParCardProductEntity findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
         if (!ObjectUtils.isEmpty(findByPrdcode)) {
-            fileService.deleteImage(request.getFileName());
+            fileService.deleteImage(AppConstant.RESOURCE_IMG, request.getFileName());
             return null;
         }
 
