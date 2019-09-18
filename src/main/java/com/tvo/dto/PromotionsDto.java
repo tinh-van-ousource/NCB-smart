@@ -1,5 +1,6 @@
 package com.tvo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +27,10 @@ public class PromotionsDto {
 
     private String percentage;
 
+    @JsonFormat(pattern = "yyyy-M-d")
     private Date fromDate;
 
+    @JsonFormat(pattern = "yyyy-M-d")
     private Date toDate;
 
 	private String prdName;
@@ -36,6 +39,7 @@ public class PromotionsDto {
 
 	private String createdBy;
 
+    @JsonFormat(pattern = "yyyy-M-d")
 	private Date createdDate;
 
 }
