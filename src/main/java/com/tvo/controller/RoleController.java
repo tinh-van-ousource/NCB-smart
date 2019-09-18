@@ -8,7 +8,6 @@ import com.tvo.dto.ContentResDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.RoleService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

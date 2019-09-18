@@ -9,7 +9,6 @@ import com.tvo.request.CreateParamManagerRequest;
 import com.tvo.request.UpdateParamManagerRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParamManagerService;
-import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

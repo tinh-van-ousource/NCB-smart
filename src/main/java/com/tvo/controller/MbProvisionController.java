@@ -7,7 +7,6 @@ import com.tvo.request.CreateMbProvisionRequest;
 import com.tvo.request.UpdateMbProvisionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.MbProvisionService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -11,7 +11,6 @@ import com.tvo.request.CreateNcbBranchRequest;
 import com.tvo.request.UpdateNcbBranchRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbBranchService;
-import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

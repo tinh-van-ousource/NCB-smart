@@ -7,7 +7,6 @@ import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.ParCardProductUpdateReqDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParCardProductService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
