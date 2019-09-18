@@ -1,9 +1,5 @@
 package com.tvo.controllerDto;
 
-import java.util.Date;
-
-import com.tvo.dto.NotifyDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

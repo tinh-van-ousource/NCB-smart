@@ -6,7 +6,6 @@ import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
-import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

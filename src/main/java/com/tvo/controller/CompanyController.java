@@ -7,7 +7,6 @@ import com.tvo.controllerDto.CompanyUpdateReqDto;
 import com.tvo.dto.CompanyResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.CompanyService;
-import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
