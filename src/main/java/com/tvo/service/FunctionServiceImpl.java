@@ -89,7 +89,7 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	public CreateFunctionDto create(CreateFunctionRequest request) {
-		Function function = functionDao.findByTypeId(request.getTypeId());
+		Function function = functionDao.findByPrd(request.getPrd());
 		if (function != null) {
 			return null;
 		}
