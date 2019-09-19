@@ -7,24 +7,19 @@ import com.tvo.request.CreateNcbBannerRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 13, 2019
  */
 public interface NcbBannerService {
-	public List<NcbBannerDto> findAll();
+    public NcbBannerDto findById(Long id);
 
-	public NcbBannerDto findById(Long id);
+    public Page<NcbBannerDto> searchNcbBanner(SearchNcbBannerModel searchModel, Pageable pageable);
 
-	public Page<NcbBannerDto> searchNcbBanner(SearchNcbBannerModel searchModel, Pageable pageable);
+    public NcbBannerDto create(CreateNcbBannerRequest request);
 
-	public NcbBannerDto create(CreateNcbBannerRequest request);
-	
-	public NcbBannerDto update(UpdateNcbBannerRequest request);
+    public NcbBannerDto update(UpdateNcbBannerRequest request);
 
-	public Boolean delete(Long id);
+    public Boolean delete(Long id);
 }

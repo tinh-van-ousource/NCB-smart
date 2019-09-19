@@ -18,53 +18,47 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "ncb-banner")
 @Api(tags = "Ncb Banner")
 public class NcbBannerController {
-	@Autowired
-	private NcbBannerService ncbBannerService;
+    @Autowired
+    private NcbBannerService ncbBannerService;
 
-	@GetMapping(value = "search")
-	public ResponeData<Page<NcbBannerDto>> searchNcbBanner(@ModelAttribute SearchNcbBannerModel searchModel,
-			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-		Page<NcbBannerDto> dts = ncbBannerService.searchNcbBanner(searchModel, pageable);
-		return new ResponeData<Page<NcbBannerDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				dts);
-	}
+    @PostMapping(value = "create")
+    public ResponeData<NcbBannerDto> create(@RequestBody CreateNcbBannerRequest request) {
+        NcbBannerDto ncbBanner = ncbBannerService.create(request);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbBanner);
+    }
 
-	@GetMapping(value = "detail")
-	public ResponeData<NcbBannerDto> detail(@RequestParam Long id) {
-		if (id == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-		}
-		NcbBannerDto result = ncbBannerService.findById(id);
-		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				result);
-	}
+    @GetMapping(value = "search")
+    public ResponeData<Page<NcbBannerDto>> searchNcbBanner(@ModelAttribute SearchNcbBannerModel searchModel,
+                                                           @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+        Page<NcbBannerDto> dts = ncbBannerService.searchNcbBanner(searchModel, pageable);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+    }
 
-	@PostMapping(value = "create")
-	public ResponeData<NcbBannerDto> create(@RequestBody CreateNcbBannerRequest request) {
-		NcbBannerDto ncbBanner = ncbBannerService.create(request);
-		if (ncbBanner == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-		}
-		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				ncbBanner);
-	}
+    @GetMapping(value = "detail")
+    public ResponeData<NcbBannerDto> detail(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+        }
+        NcbBannerDto result = ncbBannerService.findById(id);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
+    }
 
-	@PutMapping(value = "update")
-	public ResponeData<NcbBannerDto> update(@RequestBody UpdateNcbBannerRequest request) {
-		NcbBannerDto ncbBanner = ncbBannerService.update(request);
-		if (ncbBanner == null) {
-			return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-		}
-		return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
-				ncbBanner);
-	}
+    @PutMapping(value = "update")
+    public ResponeData<NcbBannerDto> update(@RequestBody UpdateNcbBannerRequest request) {
+        NcbBannerDto ncbBanner = ncbBannerService.update(request);
+        if (ncbBanner == null) {
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
+                ncbBanner);
+    }
 
-	@DeleteMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam Long id) {
-		boolean deleteFlag = ncbBannerService.delete(id);
-		if (deleteFlag == true) {
-			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
-		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
-	}
+    @DeleteMapping(value = "delete")
+    public ResponeData<Boolean> delete(@RequestParam Long id) {
+        boolean deleteFlag = ncbBannerService.delete(id);
+        if (deleteFlag) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+    }
 }

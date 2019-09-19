@@ -28,117 +28,106 @@ import java.util.Optional;
 
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 13, 2019
  */
 @Service
 public class NcbBannerServiceImpl implements NcbBannerService {
 
-	@Autowired
-	private NcbBannerDao ncbBannerDao;
+    @Autowired
+    private NcbBannerDao ncbBannerDao;
 
-	private final EntityManager entityManager;
+    private final EntityManager entityManager;
 
-	public NcbBannerServiceImpl(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+    public NcbBannerServiceImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
-	@Override
-	public List<NcbBannerDto> findAll() {
-		return ModelMapperUtils.mapAll(ncbBannerDao.findAll(), NcbBannerDto.class);
-	}
+    @Override
+    public NcbBannerDto findById(Long id) {
+        Optional<NcbBanner> opt = ncbBannerDao.findById(id);
+        return opt.map(banner -> ModelMapperUtils.map(banner, NcbBannerDto.class)).orElse(null);
 
-	@Override
-	public NcbBannerDto findById(Long id) {
-		NcbBanner ncbBanner = new NcbBanner();
-		Optional<NcbBanner> opt = ncbBannerDao.findById(id);
-		if (opt.isPresent()) {
-			ncbBanner = opt.get();
-		}
-		return ModelMapperUtils.map(ncbBanner, NcbBannerDto.class);
-	}
+    }
 
-	@SuppressWarnings("unused")
-	private Object[] createNcbBannerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchNcbBannerModel searchModel) {
-		final Root<NcbBanner> rootPersist = query.from(NcbBanner.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>();
+    private Object[] createNcbBannerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+                                                SearchNcbBannerModel searchModel) {
+        final Root<NcbBanner> rootPersist = query.from(NcbBanner.class);
+        final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		if (searchModel.getBannerCode() != null && !StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("bannerCode")),
-					searchModel.getBannerCode().toUpperCase())));
-		}
-		if (searchModel.getBannerName() != null && !StringUtils.isEmpty(searchModel.getBannerName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("bannerName")),
-					searchModel.getBannerName().toUpperCase())));
-		}
-		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));
-		}
-		Object[] results = new Object[2];
-		results[0] = rootPersist;
-		results[1] = predicates.toArray(new Predicate[predicates.size()]);
-		return results;
-	}
+        if (searchModel.getBannerCode() != null && !StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("bannerCode")),
+                    searchModel.getBannerCode().toUpperCase())));
+        }
+        if (searchModel.getBannerName() != null && !StringUtils.isEmpty(searchModel.getBannerName().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("bannerName")),
+                    "%" + searchModel.getBannerName().toUpperCase() + "%")));
+        }
+        if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));
+        }
+        Object[] results = new Object[2];
+        results[0] = rootPersist;
+        results[1] = predicates.toArray(new Predicate[predicates.size()]);
+        return results;
+    }
 
-	@Override
-	public Page<NcbBannerDto> searchNcbBanner(SearchNcbBannerModel searchModel, Pageable pageable) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<NcbBanner> query = cb.createQuery(NcbBanner.class);
-		Object[] queryObjs = createNcbBannerRootPersist(cb, query, searchModel);
-		query.select((Root<NcbBanner>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
-		TypedQuery<NcbBanner> typedQuery = this.entityManager.createQuery(query);
+    @Override
+    public Page<NcbBannerDto> searchNcbBanner(SearchNcbBannerModel searchModel, Pageable pageable) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<NcbBanner> query = cb.createQuery(NcbBanner.class);
+        Object[] queryObjs = createNcbBannerRootPersist(cb, query, searchModel);
+        Root<NcbBanner> root = (Root<NcbBanner>) queryObjs[0];
+        query.select(root);
+        query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("id")));
 
-		typedQuery.setFirstResult((int) pageable.getOffset());
-		typedQuery.setMaxResults(pageable.getPageSize());
-		List<NcbBanner> objects = typedQuery.getResultList();
-		List<NcbBannerDto> ncbBannerDtos = ModelMapperUtils.mapAll(objects, NcbBannerDto.class);
+        TypedQuery<NcbBanner> typedQuery = this.entityManager.createQuery(query);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        List<NcbBanner> objects = typedQuery.getResultList();
 
-		CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cbTotal.count(countQuery.from(NcbBanner.class)));
-		countQuery.where((Predicate[]) queryObjs[1]);
-		Long total = entityManager.createQuery(countQuery).getSingleResult();
-		return new PageImpl<>(ncbBannerDtos, pageable, total);
-	}
+        List<NcbBannerDto> ncbBannerDtos = ModelMapperUtils.mapAll(objects, NcbBannerDto.class);
+        CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        countQuery.select(cbTotal.count(countQuery.from(NcbBanner.class)));
+        countQuery.where((Predicate[]) queryObjs[1]);
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        return new PageImpl<>(ncbBannerDtos, pageable, total);
+    }
 
-	@Override
-	public NcbBannerDto create(CreateNcbBannerRequest request) {
-		NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
-		ncbBanner.setCreatedDate(LocalDateTime.now());
-		ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-		return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
-	}
+    @Override
+    public NcbBannerDto create(CreateNcbBannerRequest request) {
+        NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
+        ncbBanner.setCreatedDate(LocalDateTime.now());
+        ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
+    }
 
-	@Override
-	public NcbBannerDto update(UpdateNcbBannerRequest request) {
-		Optional<NcbBanner> opt = ncbBannerDao.findById(request.getId());
-		if (opt.isPresent()) {
-			NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
-			ncbBanner.setCreatedDate(opt.get().getCreatedDate());
+    @Override
+    public NcbBannerDto update(UpdateNcbBannerRequest request) {
+        Optional<NcbBanner> opt = ncbBannerDao.findById(request.getId());
+        if (opt.isPresent()) {
+            NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
+            ncbBanner.setCreatedDate(opt.get().getCreatedDate());
+            NcbBanner save = ncbBannerDao.save(ncbBanner);
+            return ModelMapperUtils.map(save, NcbBannerDto.class);
+        }
+        return null;
+    }
 
-			NcbBanner save = ncbBannerDao.save(ncbBanner);
-
-			return ModelMapperUtils.map(save, NcbBannerDto.class);
-		}
-		return null;
-	}
-
-	@Override
-	public Boolean delete(Long id) {
-		NcbBanner ncbBanner = new NcbBanner();
-		if (id != null) {
-			Optional<NcbBanner> opt = ncbBannerDao.findById(id);
-			if (opt.isPresent()) {
-				ncbBanner = opt.get();
-				ncbBanner.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-				ncbBannerDao.save(ncbBanner);
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public Boolean delete(Long id) {
+        if (id != null) {
+            Optional<NcbBanner> opt = ncbBannerDao.findById(id);
+            if (opt.isPresent()) {
+                NcbBanner ncbBanner = opt.get();
+                ncbBanner.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+                ncbBannerDao.save(ncbBanner);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

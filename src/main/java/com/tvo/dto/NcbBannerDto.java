@@ -1,13 +1,15 @@
 package com.tvo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 13, 2019
  */
@@ -16,19 +18,23 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class NcbBannerDto {
-	private String id;
+    private String id;
 
-	private String bannerCode;
+    private String bannerCode;
 
-	private String bannerName;
+    private String bannerName;
 
-	private String linkImg;
+    private String linkImg;
 
-	private String linkUrlVn;
+    private String linkUrlVn;
 
-	private String linkUrlEn;
+    private String linkUrlEn;
 
-	private String status;
+    private String status;
 
-	private String createdDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private LocalDateTime createdDate;
+
+    private String actionScreen;
+
 }

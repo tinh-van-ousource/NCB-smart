@@ -473,7 +473,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
 					}
 				],
 				"body": {
@@ -637,7 +637,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4MjY3MTY4fQ.7AqEDL_-pffcPhk-aqgUBozBZx-WCdkUO2nedaIRf6qv7-mxNYRAEPOk1DBz2MyrW5RedbT489_l_dZwlGMNeA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
 					},
 					{
 						"key": "Content-Type",
@@ -648,7 +648,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"brnCode\": \"DE0010112\",\n\t\"branchName\": \"Chi Nhanh Dex\",\n\t\"departCode\": \"DE0010112\",\n\t\"departName\": \"Phong Giao Dich Dex\",\n\t\"address\": \"TVO\",\n\t\"phone\": \"0019001009\",\n\t\"fax\": \"0019001009\",\n\t\"latitude\": \"latitude D\",\n\t\"longitude\": \"longitude D\",\n\t\"urlImg\": \"xxx\",\n\t\"dao\": \"D\"\n}"
+					"raw": "{\n\t\"brnCode\": \"ZE0010112\",\n\t\"branchName\": \"Chi Nhanh Dex\",\n\t\"departCode\": \"ZE0010112\",\n\t\"departName\": \"Phong Giao Dich Dex\",\n\t\"address\": \"TVO\",\n\t\"phone\": \"0019001009\",\n\t\"fax\": \"0019001009\",\n\t\"latitude\": \"latitude D\",\n\t\"longitude\": \"longitude D\",\n\t\"urlImg\": \"xxx\",\n\t\"dao\": \"D\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/ncb-branch/create",
@@ -1094,7 +1099,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/img/banner/deleteFile?fileName=user_20190918040305938_65035812_367459510572063_8312762983541374976_n.jpg",
+					"raw": "http://{{host}}/NCB-smart/img/banner/deleteFile?fileName=user_20190918042418475_65035812_367459510572063_8312762983541374976_n.jpg",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1108,7 +1113,7 @@
 					"query": [
 						{
 							"key": "fileName",
-							"value": "user_20190918040305938_65035812_367459510572063_8312762983541374976_n.jpg"
+							"value": "user_20190918042418475_65035812_367459510572063_8312762983541374976_n.jpg"
 						}
 					]
 				}
@@ -2325,7 +2330,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
 					},
 					{
 						"key": "Content-Type",
@@ -2336,7 +2341,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"customerType\": \"CN\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}",
+					"raw": "{\r\n\t\"customerType\": \"CN\",\r\n    \"promotionName\": \"Ten khuyen mai\",\r\n    \"promotion\": \"Noi Dung Chuong Trinh\",\r\n    \"percentage1\": \"10\",\r\n\t\"fromDate1\": \"2019/1/1\",\r\n    \"toDate1\": \"2019/1/2\",\r\n\t\"percentage2\": \"20\",\r\n\t\"fromDate2\": \"2019/1/1\",\r\n    \"toDate2\": \"2019/1/2\",\r\n\t\"percentage3\": \"30\",\r\n    \"fromDate3\": \"2019/1/1\",\r\n\t\"toDate3\": \"2019/1/2\",\r\n    \"percentage4\": \"40\",\r\n    \"fromDate4\": \"2019/1/1\",\r\n\t\"toDate4\": \"2019/1/2\",\r\n\t\"prdName\": \"IZI,NCB\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2550,6 +2555,278 @@
 						"NCB-smart",
 						"promotions",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"bannerCode\": \"1\",\n    \"bannerName\": \"2\",\n    \"linkImg\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n    \"linkUrlVn\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n\t\"linkUrlEn\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n\t\"actionScreen\": \"6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/create?",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/search?bannerCode=&bannerName=&status=A",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"search"
+					],
+					"query": [
+						{
+							"key": "bannerCode",
+							"value": ""
+						},
+						{
+							"key": "bannerName",
+							"value": ""
+						},
+						{
+							"key": "status",
+							"value": "A"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/detail?id=10",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": \"10\",\r\n        \"bannerCode\": \"1\",\r\n        \"bannerName\": \"2\",\r\n        \"linkImg\": \"3\",\r\n        \"linkUrlVn\": \"4\",\r\n        \"linkUrlEn\": \"5\",\r\n        \"status\": \"A\",\r\n        \"actionScreen\": \"7\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/delete?id=10",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "10"
+						}
 					]
 				}
 			},
