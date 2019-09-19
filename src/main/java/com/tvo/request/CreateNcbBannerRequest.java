@@ -5,7 +5,6 @@ import lombok.Setter;
 
 /**
  * @author Thanglt
- *
  * @version 1.0
  * @date Aug 13, 2019
  */
@@ -13,14 +12,16 @@ import lombok.Setter;
 @Setter
 public class CreateNcbBannerRequest {
 
-	private String bannerCode;
+    private String bannerCode;
 
-	private String bannerName;
+    private String bannerName;
 
-	private String linkImg;
+    private String linkImg;
 
-	private String linkUrlVn;
+    private String linkUrlVn;
 
-	private String linkUrlEn;
+    private String linkUrlEn;
+
+    private String actionScreen;
 
 }
