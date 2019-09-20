@@ -3,6 +3,7 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
@@ -59,4 +60,11 @@ public class FunctionController {
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
+
+	@GetMapping("get-all-prd")
+	public ResponeData<ContentResDto> getAllPrd() {
+		ContentResDto dto = functionService.getAllPrd();
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+	}
+
 }

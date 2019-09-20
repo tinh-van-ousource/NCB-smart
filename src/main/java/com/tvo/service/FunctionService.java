@@ -2,6 +2,7 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
@@ -16,6 +17,8 @@ public interface FunctionService {
 	
 	public Boolean delete(Long id);
 	public FunctionDto detail(String prdName);
+
+	ContentResDto getAllPrd();
 }
 
 
