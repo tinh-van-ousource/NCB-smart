@@ -138,9 +138,9 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public ContentResDto getAllPrd() {
+	public ContentResDto getAllPrdName() {
 		ContentResDto contentResDto = new ContentResDto();
-		List<Function> functionList = functionDao.getAllPrd();
+		List<String> functionList = functionDao.getAllPrdName();
 		contentResDto.setContent(functionList);
 		return contentResDto;
 	}

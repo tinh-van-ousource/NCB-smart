@@ -61,9 +61,9 @@ public class FunctionController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-	@GetMapping("get-all-prd")
-	public ResponeData<ContentResDto> getAllPrd() {
-		ContentResDto dto = functionService.getAllPrd();
+	@GetMapping("getAllPrdName")
+	public ResponeData<ContentResDto> getAllPrdName() {
+		ContentResDto dto = functionService.getAllPrdName();
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 
