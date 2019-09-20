@@ -1,8 +1,21 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.CreateFunctionDto;
+import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dao.FunctionDAO;
+import com.tvo.dto.ContentResDto;
+import com.tvo.dto.FunctionDto;
+import com.tvo.model.Function;
+import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.UpdateFunctionRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,26 +24,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.CreateFunctionDto;
-import com.tvo.controllerDto.SearchFunction;
-import com.tvo.dao.FunctionDAO;
-import com.tvo.dto.FunctionDto;
-import com.tvo.dto.NotifyDto;
-import com.tvo.enums.StatusActivate;
-import com.tvo.model.Function;
-import com.tvo.model.Notify;
-import com.tvo.request.CreateFunctionRequest;
-import com.tvo.request.UpdateFunctionRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -71,18 +67,19 @@ public class FunctionServiceImpl implements FunctionService {
 
 		if (resource.getPrdName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("prdname"), resource.getPrdName())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
 		}
 
 		if (resource.getTranType() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTranType().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("tranType"), resource.getTranType())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
 		}
 
 		if (resource.getTypeId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeId().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("typeId"), resource.getTypeId())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
 		}
+
 		
 
 		Object[] results = new Object[2];
@@ -93,7 +90,7 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	public CreateFunctionDto create(CreateFunctionRequest request) {
-		Function function = functionDao.findByTypeId(request.getTypeId());
+		Function function = functionDao.findByPrd(request.getPrd());
 		if (function != null) {
 			return null;
 		}
@@ -138,5 +135,13 @@ public class FunctionServiceImpl implements FunctionService {
             return null;
         }
         return ModelMapperUtils.map(function, FunctionDto.class);
+	}
+
+	@Override
+	public ContentResDto getAllPrdName() {
+		ContentResDto contentResDto = new ContentResDto();
+		List<String> functionList = functionDao.getAllPrdName();
+		contentResDto.setContent(functionList);
+		return contentResDto;
 	}
 }

@@ -19,7 +19,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userName\":\"user\",\n\t\"password\":\"user\"\n}"
+					"raw": "{\n\t\"userName\":\"user\",\n\t\"password\":\"user\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/login",
@@ -178,11 +183,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODAxNDQ1N30.MFFYcyQ3pp0SMcGMhw7LLpYiDD-6aRNb49Ff-1clI40BU3xeib50srYS3EfEr3apyRqW9RQBwTxsRNEa4Njr8w"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/user/searchUser?fullName=&branchCode=&transactionCode=&page=1&size=10",
+					"raw": "http://{{host}}/NCB-smart/user/searchUser?fullName=&branchCode=&transactionCode=&page=0&size=10",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -222,7 +227,7 @@
 						},
 						{
 							"key": "page",
-							"value": "1"
+							"value": "0"
 						},
 						{
 							"key": "size",
@@ -468,7 +473,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTY4NDYyfQ.reAi2j0vA4V8iNzavDTdwIQh7o5-eHjScoWGK86PcYsM55Bu5lkyTmZ-O117YJQNYz5LP0d1T3MLYqUjWEfwkg"
 					}
 				],
 				"body": {
@@ -476,7 +481,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/ncb-branch/search?",
+					"raw": "http://{{host}}/NCB-smart/ncb-branch/search?branchName=Hà Nội&page=0&size=100",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -489,13 +494,12 @@
 					"query": [
 						{
 							"key": "brnCode",
-							"value": "VN0010112",
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "branchName",
-							"value": "i",
-							"disabled": true
+							"value": "Hà Nội"
 						},
 						{
 							"key": "departCode",
@@ -504,13 +508,21 @@
 						},
 						{
 							"key": "departName",
-							"value": "i",
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "status",
-							"value": "A",
+							"value": "",
 							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "100"
 						}
 					]
 				}
@@ -528,7 +540,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MDI5MDUyfQ.IvoE1KiCvX-WxY-UxWTrs3AT5tgPpYSBHGUZu2hvSmfKKIfCCPKIw6uz9xScDtngvom0a0XZI4uXTko_3j7JVw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTY4NDYyfQ.reAi2j0vA4V8iNzavDTdwIQh7o5-eHjScoWGK86PcYsM55Bu5lkyTmZ-O117YJQNYz5LP0d1T3MLYqUjWEfwkg"
 					}
 				],
 				"body": {
@@ -562,7 +574,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4MDI5MDUyfQ.IvoE1KiCvX-WxY-UxWTrs3AT5tgPpYSBHGUZu2hvSmfKKIfCCPKIw6uz9xScDtngvom0a0XZI4uXTko_3j7JVw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTY4NDYyfQ.reAi2j0vA4V8iNzavDTdwIQh7o5-eHjScoWGK86PcYsM55Bu5lkyTmZ-O117YJQNYz5LP0d1T3MLYqUjWEfwkg"
 					}
 				],
 				"body": {
@@ -632,7 +644,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4MjY3MTY4fQ.7AqEDL_-pffcPhk-aqgUBozBZx-WCdkUO2nedaIRf6qv7-mxNYRAEPOk1DBz2MyrW5RedbT489_l_dZwlGMNeA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
 					},
 					{
 						"key": "Content-Type",
@@ -643,7 +655,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"brnCode\": \"DE0010112\",\n\t\"branchName\": \"Chi Nhanh Dex\",\n\t\"departCode\": \"DE0010112\",\n\t\"departName\": \"Phong Giao Dich Dex\",\n\t\"address\": \"TVO\",\n\t\"phone\": \"0019001009\",\n\t\"fax\": \"0019001009\",\n\t\"latitude\": \"latitude D\",\n\t\"longitude\": \"longitude D\",\n\t\"urlImg\": \"xxx\",\n\t\"dao\": \"D\"\n}"
+					"raw": "{\n\t\"brnCode\": \"ZE0010112\",\n\t\"branchName\": \"Chi Nhanh Dex\",\n\t\"departCode\": \"ZE0010112\",\n\t\"departName\": \"Phong Giao Dich Dex\",\n\t\"address\": \"TVO\",\n\t\"phone\": \"0019001009\",\n\t\"fax\": \"0019001009\",\n\t\"latitude\": \"latitude D\",\n\t\"longitude\": \"longitude D\",\n\t\"urlImg\": \"xxx\",\n\t\"dao\": \"D\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/ncb-branch/create",
@@ -749,7 +766,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"body": {
@@ -919,7 +936,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTU4NDAwfQ.ehZZZm39Ju4EA9USfAealIo2DHhq4OjwFp6gyKKbjvuuRVM6IiL1whP7EBcQmcp2cdBuoFZrSaPcImc5eCIeuA"
 					}
 				],
 				"body": {
@@ -928,7 +945,7 @@
 						{
 							"key": "img",
 							"type": "file",
-							"src": "/C:/Users/ngocdc/Desktop/65035812_367459510572063_8312762983541374976_n.jpg"
+							"src": "/C:/Users/ngocdc/Desktop/67935895_2102685443169138_1082933573704482816_o.jpg"
 						}
 					]
 				},
@@ -948,6 +965,32 @@
 			"response": []
 		},
 		{
+			"name": "file get path",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/img/user_20190918035908930_65035812_367459510572063_8312762983541374976_n.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"img",
+						"user_20190918035908930_65035812_367459510572063_8312762983541374976_n.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "file delete",
 			"request": {
 				"method": "DELETE",
@@ -955,7 +998,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTU4NDAwfQ.ehZZZm39Ju4EA9USfAealIo2DHhq4OjwFp6gyKKbjvuuRVM6IiL1whP7EBcQmcp2cdBuoFZrSaPcImc5eCIeuA"
 					}
 				],
 				"body": {
@@ -963,7 +1006,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/img/deleteFile?fileName=admin_20190913100708170_65035812_367459510572063_8312762983541374976_n.jpg",
+					"raw": "http://{{host}}/NCB-smart/img/deleteFile?fileName=user_20190920091307857_65035812_367459510572063_8312762983541374976_n.jpg",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -976,7 +1019,7 @@
 					"query": [
 						{
 							"key": "fileName",
-							"value": "admin_20190913100708170_65035812_367459510572063_8312762983541374976_n.jpg"
+							"value": "user_20190920091307857_65035812_367459510572063_8312762983541374976_n.jpg"
 						}
 					]
 				}
@@ -984,18 +1027,28 @@
 			"response": []
 		},
 		{
-			"name": "file get path",
+			"name": "file banner upload",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ",
-						"type": "text"
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODgxMzU0fQ.zUIuX5jzUoeNbk-CHJUuys3RlG7a-5MX49Hndu6NiLe3BJyKP6Vi2JZl51A1AK32_v0DzhvOyDG38YOWRhMopA"
 					}
 				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img",
+							"type": "file",
+							"src": "/C:/Users/ngocdc/Desktop/65035812_367459510572063_8312762983541374976_n.jpg"
+						}
+					]
+				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/img/admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg",
+					"raw": "http://{{host}}/NCB-smart/img/banner/uploadFile",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1003,7 +1056,72 @@
 					"path": [
 						"NCB-smart",
 						"img",
-						"admin_20190911110101734_65035812_367459510572063_8312762983541374976_n.jpg"
+						"banner",
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "file banner get path",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODgyNjUwfQ.YH0zRK5U7gchMQoJf2w_nlM3ULJj87QZKIcv2PnqwqN0T2KnkWjIfhbg3D2yMxqWL8CR-UqQi89GRx2VZY69Cg"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/img/banner/user_20190918040305938_65035812_367459510572063_8312762983541374976_n.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"img",
+						"banner",
+						"user_20190918040305938_65035812_367459510572063_8312762983541374976_n.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "file banner delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/img/banner/deleteFile?fileName=user_20190918042418475_65035812_367459510572063_8312762983541374976_n.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"img",
+						"banner",
+						"deleteFile"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": "user_20190918042418475_65035812_367459510572063_8312762983541374976_n.jpg"
+						}
 					]
 				}
 			},
@@ -1017,13 +1135,13 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTU4NDAwfQ.ehZZZm39Ju4EA9USfAealIo2DHhq4OjwFp6gyKKbjvuuRVM6IiL1whP7EBcQmcp2cdBuoFZrSaPcImc5eCIeuA"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					},
 					{
 						"key": "",
@@ -1034,7 +1152,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"product\": \"113\",\r\n    \"prdcode\": \"113\",\r\n    \"class_\": \"6\",\r\n    \"cardtype\": \"4\",\r\n    \"status\": \"A\",\r\n    \"issueFee\": \"13\",\r\n    \"reissueFee\": \"14\",\r\n    \"repinFee\": \"15\",\r\n    \"activeFee\": \"3\",\r\n    \"changesttFee\": \"5\",\r\n    \"directddFee\": \"7\",\r\n    \"f01\": \"8\",\r\n    \"f02\": \"9\",\r\n    \"f03\": \"10\",\r\n    \"f04\": \"11\",\r\n    \"f05\": \"12\",\r\n    \"linkUrl\": \"http://localhost:8081/NCB-smart/img/admin_20190913100708170_65035812_367459510572063_8312762983541374976_n.jpg\",\r\n    \"fileName\": \"admin_20190913100708170_65035812_367459510572063_8312762983541374976_n.jpg\"\r\n}"
+					"raw": "{\r\n    \"product\": \"113\",\r\n    \"prdcode\": \"113\",\r\n    \"class_\": \"6\",\r\n    \"cardtype\": \"4\",\r\n    \"status\": \"A\",\r\n    \"issueFee\": \"13\",\r\n    \"reissueFee\": \"14\",\r\n    \"repinFee\": \"15\",\r\n    \"activeFee\": \"3\",\r\n    \"changesttFee\": \"5\",\r\n    \"directddFee\": \"7\",\r\n    \"f01\": \"8\",\r\n    \"f02\": \"9\",\r\n    \"f03\": \"10\",\r\n    \"f04\": \"11\",\r\n    \"f05\": \"12\",\r\n    \"linkUrl\": \"http://localhost:8081/NCB-smart/img/user_20190920091307857_65035812_367459510572063_8312762983541374976_n.jpg\",\r\n    \"fileName\": \"user_20190920091307857_65035812_367459510572063_8312762983541374976_n.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/par-card/create",
@@ -1101,11 +1224,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODM1MjYzOX0.MrGeGoTwpxbb5D0AdkMD9yhTnoUOxdhp-faeQ7zQ90BbfXNYbIjcsIogyobSFIEDdnf8xpXY2szp848MpoEpyQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTU4NDAwfQ.ehZZZm39Ju4EA9USfAealIo2DHhq4OjwFp6gyKKbjvuuRVM6IiL1whP7EBcQmcp2cdBuoFZrSaPcImc5eCIeuA"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-card/detail?prdcode=1",
+					"raw": "http://{{host}}/NCB-smart/par-card/detail?prdcode=70000-WOMEN HOME DB",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -1118,7 +1241,7 @@
 					"query": [
 						{
 							"key": "prdcode",
-							"value": "1"
+							"value": "70000-WOMEN HOME DB"
 						}
 					]
 				}
@@ -1133,7 +1256,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTU4NDAwfQ.ehZZZm39Ju4EA9USfAealIo2DHhq4OjwFp6gyKKbjvuuRVM6IiL1whP7EBcQmcp2cdBuoFZrSaPcImc5eCIeuA"
 					}
 				],
 				"url": {
@@ -1205,7 +1328,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"url": {
@@ -1280,7 +1403,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODI4NzExMX0.nlpESgolI4gmwbIbiKq60vw15Et7jWLSp3CU5zJ1gSoJqmoqHo--Vqf-KS2ZG7MVkTiB-_XLwLsR70kHPCBUqg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjQyNDIwfQ.XrF-AHCJjDBpo3FkO21Oq2VeFJV0BZQk5n36J2Hx89ByOtXim7z2lR9FrO-NF3Mdtko9wdSCW6CnYxG_PpgIBw"
 					},
 					{
 						"key": "Content-Type",
@@ -1394,7 +1517,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIyOTgyfQ.fy7sbLRGymFaA3zQELB0KRuaD-twBw5i7q8ed2hsPQI0JWTBskGDkeNpC9wRnGIqk0HNg7dmzru08QuK4lmA6w"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"url": {
@@ -1580,7 +1703,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjIzNjI0fQ.adne4GlVHnNEEFQ8dKNS-2ZDRU0HRs5vIJ2sIgrzHXoBwAeALAv_oXG-lHs6OloGJtT92dPWlJmvUNTdCm9pIQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"body": {
@@ -1762,7 +1885,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjEyOTAyfQ.CBcmS05X-Yn_8xR9nT5gionxOHW8g2qCKL7BTMabV45nrMdQoUN1jZ04Xd-KyiS60g_ScYDY_CWo_225w7Ubzg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					}
 				],
 				"body": {
@@ -2028,18 +2151,23 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NjMxNjE2fQ.p95x_2mw2TizJovlVQaEedgQ1pQOjnUZj5NdxwfOyWh42t6qiw6yovs7avDyJGtkI57YETvsgFMhWSvlBJZwrA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}"
+					"raw": "{\n\t\"compCode\":\"VN0099999\",\n\t\"compName\":\"Dex Company\",\n\t\"address\":\"Ha Noi\",\n\t\"dao\":\"daodaodao\",\n\t\"mcn\":\"mcnmcn\",\n\t\"mp\":\"mpmpmpmp\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/NCB-smart/company/search?compCode=&compName=",
@@ -2148,6 +2276,623 @@
 							"key": "compCode",
 							"value": "VN0099999"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4NzAwMDYyfQ.Ud22jJO19144LeHJnaxhhFuiSe6GvrS7EbrDM1KqiLZog3AxphiLYm86QFg4vI_do3_gBLE8KcwK-ABvnn6qHw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/user-profile/searchConsumer?usrid=VANHONG&cifgrp=10025932&idno=271522211",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"user-profile",
+						"searchConsumer"
+					],
+					"query": [
+						{
+							"key": "usrid",
+							"value": "VANHONG"
+						},
+						{
+							"key": "cifgrp",
+							"value": "10025932"
+						},
+						{
+							"key": "idno",
+							"value": "271522211"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"customerType\": \"CN\",\r\n    \"promotionName\": \"Ten khuyen mai\",\r\n    \"promotion\": \"Noi Dung Chuong Trinh\",\r\n    \"percentage1\": \"10\",\r\n\t\"fromDate1\": \"2019/1/1\",\r\n    \"toDate1\": \"2019/1/2\",\r\n\t\"percentage2\": \"20\",\r\n\t\"fromDate2\": \"2019/1/1\",\r\n    \"toDate2\": \"2019/1/2\",\r\n\t\"percentage3\": \"30\",\r\n    \"fromDate3\": \"2019/1/1\",\r\n\t\"toDate3\": \"2019/1/2\",\r\n    \"percentage4\": \"40\",\r\n    \"fromDate4\": \"2019/1/1\",\r\n\t\"toDate4\": \"2019/1/2\",\r\n\t\"prdName\": \"IZI,NCB\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "page",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "limit",
+						"value": "100",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/search?promotionName=&status=",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"search"
+					],
+					"query": [
+						{
+							"key": "promotionName",
+							"value": ""
+						},
+						{
+							"key": "status",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 32,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"A\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/delete?id=25",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promotions update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 1,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"A\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/promotions/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"promotions",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"bannerCode\": \"1\",\n    \"bannerName\": \"2\",\n    \"linkImg\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n    \"linkUrlVn\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n\t\"linkUrlEn\": \"http://{{host}}/NCB-smart/img/banner/uploadFile\",\n\t\"actionScreen\": \"6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/create?",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/search?bannerCode=&bannerName=&status=",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"search"
+					],
+					"query": [
+						{
+							"key": "bannerCode",
+							"value": ""
+						},
+						{
+							"key": "bannerName",
+							"value": ""
+						},
+						{
+							"key": "status",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODg5ODY2fQ.r3B-fXzHUHUx5gCp2KMFmJ40TN45HKob6UqvmmYtkpNyPcbwiwcP7mZZ9jcrwMZKfgB7goIhGt1m3L9sIUiLZg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/detail?id=6",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": \"10\",\r\n        \"bannerCode\": \"1\",\r\n        \"bannerName\": \"2\",\r\n        \"linkImg\": \"3\",\r\n        \"linkUrlVn\": \"4\",\r\n        \"linkUrlEn\": \"5\",\r\n        \"status\": \"A\",\r\n        \"actionScreen\": \"7\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-banner delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-banner/delete?id=10",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-banner",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "function get all prd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTgyNzcyfQ.99l65zqycMdQIg71pHLlBxiHI_03_855SnDsdgEwXeIBRXMbtvC6_RlDmt9_De90v_5Dx_e26EEpLp2zGCqiCA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "page",
+						"type": "text",
+						"value": "1"
+					},
+					{
+						"key": "limit",
+						"type": "text",
+						"value": "100"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/function/getAllPrdName",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"function",
+						"getAllPrdName"
 					]
 				}
 			},

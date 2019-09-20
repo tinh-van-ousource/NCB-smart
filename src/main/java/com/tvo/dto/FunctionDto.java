@@ -7,8 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Getter
 @Setter
 @AllArgsConstructor

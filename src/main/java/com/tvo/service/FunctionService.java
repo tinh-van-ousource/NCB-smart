@@ -1,14 +1,13 @@
 package com.tvo.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dto.ContentResDto;
 import com.tvo.dto.FunctionDto;
-import com.tvo.dto.NotifyDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface FunctionService {
 //	public List<FunctionDto> findAll();
@@ -18,6 +17,8 @@ public interface FunctionService {
 	
 	public Boolean delete(Long id);
 	public FunctionDto detail(String prdName);
+
+	ContentResDto getAllPrdName();
 }
 
 

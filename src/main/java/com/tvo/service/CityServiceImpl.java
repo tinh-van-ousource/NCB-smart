@@ -3,9 +3,20 @@
  */
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dao.CityDao;
+import com.tvo.dto.CityDto;
+import com.tvo.dto.CreateCityDto;
+import com.tvo.model.City;
+import com.tvo.request.CreateCityRequest;
+import com.tvo.request.UpdateCityRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,24 +25,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchCity;
-import com.tvo.dao.CityDao;
-import com.tvo.dto.CityDto;
-import com.tvo.dto.CreateCityDto;
-import com.tvo.dto.NotifyDto;
-import com.tvo.model.City;
-import com.tvo.model.Notify;
-import com.tvo.request.CreateCityRequest;
-import com.tvo.request.UpdateCityRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ace
@@ -56,18 +52,17 @@ public class CityServiceImpl implements CityService{
 	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchCity resource) {
 		final Root<City> rootPersist = query.from(City.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		if (resource.getCityCode() != null	
+		if (resource.getCityCode() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityCode().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cityCode"), resource.getCityCode())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getCityCode().toUpperCase())));
+		}
+		if (resource.getCityId() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityId().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityId().toUpperCase())));
 		}
 		if (resource.getCityName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cityName"), resource.getCityName())));
-		}
-
-		if (resource.getCityId() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityId().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<String>get("cityId"), resource.getCityId())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityName().toUpperCase())));
 		}
 
 		Object[] results = new Object[2];

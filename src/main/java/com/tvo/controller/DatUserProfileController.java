@@ -3,7 +3,9 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.SearchConsumerModel;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
+import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dto.DatUserProfileDto;
+import com.tvo.dto.FunctionDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.DatUserProfileService;
 import io.swagger.annotations.Api;
@@ -27,12 +29,9 @@ public class DatUserProfileController {
 	private DatUserProfileService datUserProfileService;
 
 	@GetMapping(value = "searchUser")
-	public ResponeData<Page<DatUserProfileDto>> searchDatUserProfile(
-			@ModelAttribute SearchDatUserProfileModel searchModel, @RequestParam(value = "filter") String filter,
-			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-		Page<DatUserProfileDto> dts = datUserProfileService.searchDatUserProfile(searchModel, filter, pageable);
-		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
-				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+	public ResponeData<Page<DatUserProfileDto>> search(@ModelAttribute SearchDatUserProfileModel searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
+		 Page<DatUserProfileDto> FunctionDtos = datUserProfileService.searchDatUserProfile(searchFunction, pageable);
+		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, FunctionDtos) ;
 	}
 
 	@GetMapping(value = "searchConsumer")
