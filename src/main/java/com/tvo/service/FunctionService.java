@@ -18,7 +18,7 @@ public interface FunctionService {
 	public Boolean delete(Long id);
 	public FunctionDto detail(String prdName);
 
-	ContentResDto getAllPrd();
+	ContentResDto getAllPrdName();
 }
 
 
