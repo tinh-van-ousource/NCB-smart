@@ -53,38 +53,34 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
         return listResult;
     }
 
-    public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-                                          SearchDatUserProfileModel searchModel, String filter) {
+    public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,SearchDatUserProfileModel resource) {
         final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
-        rootPersist.join(DatUserProfile_.function);
         final List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (searchModel.getBrncode() != null && !StringUtils.isEmpty(searchModel.getBrncode().trim())) {
-            predicates.add(cb.and(
-                    cb.equal(cb.upper(rootPersist.<String>get("brncode")), searchModel.getBrncode().toUpperCase())));
-        }
-        if (searchModel.getOfficecode() != null && !StringUtils.isEmpty(searchModel.getOfficecode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("officecode")),
-                    searchModel.getOfficecode().toUpperCase())));
-        }
-        if (searchModel.getUsrfname() != null && !StringUtils.isEmpty(searchModel.getUsrfname().trim())) {
-            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")),
-                    "%" + searchModel.getUsrfname().toUpperCase() + "%")));
-        }
-        if (searchModel.getCifname() != null && !StringUtils.isEmpty(searchModel.getCifname().trim())) {
-            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")),
-                    "%" + searchModel.getCifname().toUpperCase() + "%")));
-        }
-
-        if (searchModel.getUsrstatus() != null && !StringUtils.isEmpty(searchModel.getUsrstatus().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("usrstatus"), searchModel.getUsrstatus())));
-        }
-        if (filter != null && !StringUtils.isEmpty(filter.trim())) {
-            predicates.add(
-                    cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), "%" + filter.toUpperCase() + "%")));
-            predicates.add(
-                    cb.or(cb.like(cb.upper(rootPersist.<String>get("cifname")), "%" + filter.toUpperCase() + "%")));
-        }
+       
+        if (resource.getBrncode() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBrncode().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("brncode")), resource.getBrncode().toUpperCase())));
+}
+        
+        if (resource.getOfficecode() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getOfficecode().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("officecode")), resource.getOfficecode().toUpperCase())));
+}
+        
+        if (resource.getUsrfname() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrfname().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), resource.getUsrfname().toUpperCase())));
+}
+        
+        if (resource.getCifname() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifname().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")), resource.getCifname().toUpperCase())));
+}
+        
+        if (resource.getUsrstatus() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrstatus().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrstatus")), resource.getUsrstatus().toUpperCase())));
+}
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -92,22 +88,21 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
     }
 
     @Override
-    public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
-                                                        Pageable pageable) {
+    public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel,Pageable pageable) {
         CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
-        Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel, filter);
+        Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
         query.select((Root<DatUserProfile>) queryObjs[0]);
         query.where((Predicate[]) queryObjs[1]);
         TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
-        List<DatUserProfile> objects = typedQuery.getResultList();
+        final List<DatUserProfile> objects = typedQuery.getResultList();
         List<DatUserProfileDto> datUserProfileDtos = ModelMapperUtils.mapAll(objects, DatUserProfileDto.class);
 
-        CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
-        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
+        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(DatUserProfile.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();

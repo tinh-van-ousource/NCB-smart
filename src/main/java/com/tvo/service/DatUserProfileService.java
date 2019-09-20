@@ -17,8 +17,7 @@ import java.util.List;
 public interface DatUserProfileService {
 	public List<DatUserProfileDto> findAll();
 
-	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, String filter,
-			Pageable pageable);
+	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, Pageable pageable);
 
 	Page<DatUserProfileDto> searchConsumer(SearchConsumerModel searchModel, Pageable pageable);
 
