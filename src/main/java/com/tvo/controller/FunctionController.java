@@ -3,7 +3,6 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
-import com.tvo.dto.ContentResDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
@@ -14,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/function")
@@ -62,8 +63,8 @@ public class FunctionController {
     }
 
 	@GetMapping("getAllPrdName")
-	public ResponeData<ContentResDto> getAllPrdName() {
-		ContentResDto dto = functionService.getAllPrdName();
+	public ResponeData<List<String>> getAllPrdName() {
+		List<String> dto = functionService.getAllPrdName();
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 

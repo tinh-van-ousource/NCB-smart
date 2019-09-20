@@ -5,7 +5,6 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
-import com.tvo.dto.ContentResDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.model.Function;
 import com.tvo.request.CreateFunctionRequest;
@@ -138,10 +137,7 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public ContentResDto getAllPrdName() {
-		ContentResDto contentResDto = new ContentResDto();
-		List<String> functionList = functionDao.getAllPrdName();
-		contentResDto.setContent(functionList);
-		return contentResDto;
+	public List<String> getAllPrdName() {
+		return functionDao.getAllPrdName();
 	}
 }
