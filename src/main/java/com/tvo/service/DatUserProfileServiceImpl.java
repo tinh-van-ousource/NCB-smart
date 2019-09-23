@@ -8,6 +8,8 @@ import com.tvo.dto.DatUserProfileDto;
 import com.tvo.model.DatCfmast;
 import com.tvo.model.DatUserProfile;
 import com.tvo.model.DatUserProfile_;
+import com.tvo.model.ParCardProductEntity;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,8 +94,10 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
         CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
         Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
-        query.select((Root<DatUserProfile>) queryObjs[0]);
+        Root<DatUserProfile> root = (Root<DatUserProfile>) queryObjs[0];
+        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
+        query.orderBy(cb.desc(root.get("brncode")));
         TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
         typedQuery.setFirstResult((int) pageable.getOffset());
