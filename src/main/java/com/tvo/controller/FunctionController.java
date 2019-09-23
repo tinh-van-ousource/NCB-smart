@@ -54,8 +54,8 @@ public class FunctionController {
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 	@GetMapping(value = "/detail")
-    public ResponeData<FunctionDto> detail(@RequestParam String prdName) {
-		FunctionDto dto = functionService.detail(prdName);
+    public ResponeData<FunctionDto> detail(@RequestParam String prd) {
+		FunctionDto dto = functionService.detail(prd);
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }

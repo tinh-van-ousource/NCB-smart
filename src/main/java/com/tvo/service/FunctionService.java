@@ -17,7 +17,7 @@ public interface FunctionService {
 	public FunctionDto update(UpdateFunctionRequest request);
 	
 	public Boolean delete(String prd);
-	public FunctionDto detail(String prdName);
+	public FunctionDto detail(String prd);
 
 	List<String> getAllPrdName();
 }

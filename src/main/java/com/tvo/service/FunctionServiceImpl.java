@@ -137,8 +137,8 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionDto detail(String prdName) {
-		Function function = functionDao.findByPrdName(prdName);
+	public FunctionDto detail(String prd) {
+		Function function = functionDao.findByPrd(prd);
         if (function == null) {
             return null;
         }
