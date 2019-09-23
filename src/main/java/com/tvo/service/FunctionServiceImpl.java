@@ -67,11 +67,11 @@ public class FunctionServiceImpl implements FunctionService {
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 
 
-		if (resource.getId() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getId().toString().trim())) {
-			predicates.add(cb.and(cb.equal(rootPersist.<Long>get("id"), resource.getId())));
-//			predicates.add(cb.and(cb.like(cb.equal(rootPersist.<Long>get("getId")), resource.getId())));
+		if (resource.getStatus() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
 		}
+
 		
 		if (resource.getPrdName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {

@@ -9,12 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchFunction {
-	private Long id;
 	
 	private String prdName;
 
 	private String tranType;
 
 	private String typeId;
+	
+	private String status;
 
 }
