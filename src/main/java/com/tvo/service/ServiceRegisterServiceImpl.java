@@ -176,6 +176,11 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
         return contentResDto;
     }
 
+    @Override
+    public List<String> getAllService() {
+        return serviceRegisterRepo.retrieveAllService();
+    }
+
     private ServiceRegisterGetDetailResDto getRegisterServiceDetail(ServiceRegisterEntity serviceRegisterEntity) {
         ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto = ModelMapperUtils.map(
                 serviceRegisterEntity,
