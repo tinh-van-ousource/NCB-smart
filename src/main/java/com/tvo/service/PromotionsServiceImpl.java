@@ -94,7 +94,6 @@ public class PromotionsServiceImpl implements PromotionsService {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         List<Promotions> promotionsList = new ArrayList<>();
         Promotions promotionBase = ModelMapperUtils.map(request, Promotions.class);
-        promotionBase.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         promotionBase.setCreatedDate(now);
         promotionBase.setCreatedBy(currentUserName);
 
