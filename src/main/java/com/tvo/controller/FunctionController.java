@@ -44,8 +44,8 @@ public class FunctionController {
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam Long id) {
-		boolean deleteFlag = functionService.delete(id);
+	public ResponeData<Boolean> delete(@RequestParam String prd) {
+		boolean deleteFlag = functionService.delete(prd);
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
