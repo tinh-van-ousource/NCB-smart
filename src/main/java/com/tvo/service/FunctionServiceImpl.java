@@ -26,6 +26,7 @@ import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dto.FunctionDto;
 import com.tvo.model.Function;
+import com.tvo.model.ParCardProductEntity;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
 
@@ -45,8 +46,10 @@ public class FunctionServiceImpl implements FunctionService {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
-		query.select((Root<Function>) queryObjs[0]);
+		Root<Function> root = (Root<Function>) queryObjs[0];
+        query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
+		query.orderBy(cb.desc(root.get("id")));
 		TypedQuery<Function> typedQuery = this.entityManager.createQuery(query);
 
 		typedQuery.setFirstResult((int) pageable.getOffset());
@@ -137,8 +140,8 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionDto detail(String prdName) {
-		Function function = functionDao.findByPrdName(prdName);
+	public FunctionDto detail(String prd) {
+		Function function = functionDao.findByPrd(prd);
         if (function == null) {
             return null;
         }
