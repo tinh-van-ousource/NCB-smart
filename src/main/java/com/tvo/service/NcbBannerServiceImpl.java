@@ -98,7 +98,12 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 
     @Override
     public NcbBannerDto create(CreateNcbBannerRequest request) {
-        NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
+        NcbBanner ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
+        if(ncbBanner != null) {
+            return null;
+        }
+
+        ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
         ncbBanner.setCreatedDate(LocalDateTime.now());
         ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
