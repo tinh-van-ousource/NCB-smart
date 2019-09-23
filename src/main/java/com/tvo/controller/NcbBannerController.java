@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "ncb-banner")
 @Api(tags = "Ncb Banner")
 public class NcbBannerController {
+    
     @Autowired
     private NcbBannerService ncbBannerService;
 
     @PostMapping(value = "create")
     public ResponeData<NcbBannerDto> create(@RequestBody CreateNcbBannerRequest request) {
         NcbBannerDto ncbBanner = ncbBannerService.create(request);
+        if (ncbBanner == null) {
+            return new ResponeData<>(AppConstant.BANNER_EXISTED_CODE, AppConstant.BANNER_EXISTED_MESSAGE, null);
+        }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbBanner);
     }
 

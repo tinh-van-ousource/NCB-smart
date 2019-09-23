@@ -32,6 +32,9 @@ public class AppConstant {
     public static final String COMPANY_EXISTED_CODE = "907";
     public static final String COMPANY_EXISTED_MESSAGE = "Company is existed.";
 
+    public static final String BANNER_EXISTED_CODE = "908";
+    public static final String BANNER_EXISTED_MESSAGE = "Banner is existed.";
+
     public static final String ACCESS_DENIED_STATUS = "access denied";
     public static final String LOGIN_SUCCESSFUL_MESSAGE = "Login successful";
 
