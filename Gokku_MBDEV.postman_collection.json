@@ -2580,18 +2580,13 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODcxMjMwfQ.3V2rp1mb2joomH82LUuv1MNZabFnoK4coFYhJRyrFHjrQ72Q1HQDr0rZ0BllrJqm0OMogB0DjUvDHaU7o1Gjeg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjE2OTUzfQ.YWzTMyuvw9NdjlXZIOOTno65sYkK26W4GpLLJRhZHF-29gMRoczsaWaL1eGdmkfALeGmLl97oBkZQrn8okXvGw"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "limit",
-						"type": "text",
-						"value": "100"
 					}
 				],
 				"body": {
@@ -2893,6 +2888,109 @@
 						"NCB-smart",
 						"function",
 						"getAllPrdName"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-feedback create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjI0MjEyfQ.fMFR572E9urad-yNhUu5NcMWv-5eAuN4ae-nXp4B_Cs64sb2VJvwuBC4bn0AED-s7tEtj1hJvnRelesEANPLlA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productCode\": \"Code001\",\n\t\"productName\": \"Name001\",\n\t\"type\": \"YY\",\n\t\"phone\": \"0000000191\",\n\t\"email\": \"xxx@xxx.xxx\",\n\t\"name\": \"name name\",\n\t\"address\": \"Dịa chỉ\",\n\t\"description\": \"Chsu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-feedback/create?",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-feedback",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ncb-feedback search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjI0MjEyfQ.fMFR572E9urad-yNhUu5NcMWv-5eAuN4ae-nXp4B_Cs64sb2VJvwuBC4bn0AED-s7tEtj1hJvnRelesEANPLlA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productCode\": \"Code001\",\n\t\"productName\": \"Name001\",\n\t\"type\": \"YY\",\n\t\"phone\": \"0000000191\",\n\t\"email\": \"xxx@xxx.xxx\",\n\t\"name\": \"name name\",\n\t\"address\": \"Dịa chỉ\",\n\t\"description\": \"Chsu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/ncb-feedback/search?productCode=Code001&productName=me&type=YY&status=A",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"ncb-feedback",
+						"search"
+					],
+					"query": [
+						{
+							"key": "productCode",
+							"value": "Code001"
+						},
+						{
+							"key": "productName",
+							"value": "me"
+						},
+						{
+							"key": "type",
+							"value": "YY"
+						},
+						{
+							"key": "status",
+							"value": "A"
+						}
 					]
 				}
 			},
