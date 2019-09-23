@@ -1,5 +1,24 @@
 package com.tvo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.CreateFunctionDto;
@@ -9,23 +28,6 @@ import com.tvo.dto.FunctionDto;
 import com.tvo.model.Function;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.UpdateFunctionRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,22 +66,29 @@ public class FunctionServiceImpl implements FunctionService {
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 
-		if (resource.getPrdName() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
+
+		if (resource.getStatus() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+		}
+
+		
+		if (resource.getPrd() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrd().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
 		}
 
 		if (resource.getTranType() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTranType().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
-		}
+		}	
 
 		if (resource.getTypeId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeId().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
 		}
 
-		
+
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -118,9 +127,9 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(Long id) {
-		Function function = functionDao.findByid(id);
-		if (id != null) {
+	public Boolean delete(String prd) {
+		Function function = functionDao.findByPrd(prd);
+		if (prd != null) {
 			functionDao.delete(function);
 			return true;
 		}

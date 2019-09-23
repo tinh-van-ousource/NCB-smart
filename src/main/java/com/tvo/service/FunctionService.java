@@ -16,7 +16,7 @@ public interface FunctionService {
 	public CreateFunctionDto create(CreateFunctionRequest request) ;
 	public FunctionDto update(UpdateFunctionRequest request);
 	
-	public Boolean delete(Long id);
+	public Boolean delete(String prd);
 	public FunctionDto detail(String prdName);
 
 	List<String> getAllPrdName();
