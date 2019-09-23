@@ -68,8 +68,8 @@ public class FunctionServiceImpl implements FunctionService {
 
 
 		if (resource.getStatus() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getStatus().toUpperCase())));
 		}
 
 		
