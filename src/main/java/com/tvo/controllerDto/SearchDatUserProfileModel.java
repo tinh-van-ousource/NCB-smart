@@ -14,4 +14,5 @@ public class SearchDatUserProfileModel {
 	private String cifname;
 	
 	private String usrstatus;
+	
 }

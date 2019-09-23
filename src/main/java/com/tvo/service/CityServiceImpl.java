@@ -10,6 +10,7 @@ import com.tvo.dao.CityDao;
 import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
 import com.tvo.model.City;
+import com.tvo.model.Function;
 import com.tvo.request.CreateCityRequest;
 import com.tvo.request.UpdateCityRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,17 +53,15 @@ public class CityServiceImpl implements CityService{
 	public Object[] createCityRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchCity resource) {
 		final Root<City> rootPersist = query.from(City.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
+		
+		
 		if (resource.getCityCode() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityCode().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getCityCode().toUpperCase())));
-		}
-		if (resource.getCityId() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityId().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityId().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityCode")), resource.getCityCode().toUpperCase())));
 		}
 		if (resource.getCityName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getCityName().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityName")), resource.getCityName().toUpperCase())));
 		}
 
 		Object[] results = new Object[2];
@@ -88,8 +87,11 @@ public class CityServiceImpl implements CityService{
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
 		final CriteriaQuery<City> query = cb.createQuery(City.class);
 		Object[] queryObjs = this.createCityRootPersist(cb, query, searchCity);
-		query.select((Root<City>) queryObjs[0]);
+		Root<City> root = (Root<City>) queryObjs[0];
+        query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
+
+		query.orderBy(cb.desc(root.get("cityId")));
 		TypedQuery<City> typedQuery = this.entityManager.createQuery(query);
 		
 		typedQuery.setFirstResult((int)pageable.getOffset());
