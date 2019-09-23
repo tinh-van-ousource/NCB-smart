@@ -139,6 +139,39 @@
 			"response": []
 		},
 		{
+			"name": "service register get all service",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjQyMDQ5fQ.r2q3dbtw5vFwPB5NFLbujzq10cB6CTI-cqxQvonAd3shi64UJe2zc8dSBMLhU7iCye-NBun7wXh4dU-iOMcAjw"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/service-register/get-all-service",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"service-register",
+						"get-all-service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "service register update",
 			"request": {
 				"method": "PATCH",
@@ -2342,7 +2375,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4ODA5ODU2fQ.ZLMLVxI0fk2mas6JuaiqBOfubFfF4PZm8yyfdGr-XjLIe2dmgjyPz-ofEVLjt3W3dzBKY7z7lQxvg7pFCR2oOQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY5MjM2NjE4fQ.0QdBelJHBEEk93BiBjITL0ikZGUA8U9N4vWJL5UG5G6mTvbX5Tt0XT4XCVOOUbAq4Ftq54AYZGVaIO4Qg8gJCQ"
 					},
 					{
 						"key": "Content-Type",
@@ -2386,28 +2419,18 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY5MjM2NjE4fQ.0QdBelJHBEEk93BiBjITL0ikZGUA8U9N4vWJL5UG5G6mTvbX5Tt0XT4XCVOOUbAq4Ftq54AYZGVaIO4Qg8gJCQ"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "page",
-						"value": "1",
-						"type": "text"
-					},
-					{
-						"key": "limit",
-						"value": "100",
-						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"percentage1\": \"10\",\n\t\"fromDate1\": \"2019/1/1\",\n    \"toDate1\": \"2019/1/2\",\n\t\"percentage2\": \"20\",\n\t\"fromDate2\": \"2019/1/1\",\n    \"toDate2\": \"2019/1/2\",\n\t\"percentage3\": \"30\",\n    \"fromDate3\": \"2019/1/1\",\n\t\"toDate3\": \"2019/1/2\",\n    \"percentage4\": \"40\",\n    \"fromDate4\": \"2019/1/1\",\n\t\"toDate4\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2415,7 +2438,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/promotions/search?promotionName=&status=",
+					"raw": "http://{{host}}/NCB-smart/promotions/search?promotionName&status=",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -2428,7 +2451,7 @@
 					"query": [
 						{
 							"key": "promotionName",
-							"value": ""
+							"value": null
 						},
 						{
 							"key": "status",
@@ -2539,7 +2562,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY4NzkyNTc0fQ.Dcp03FnYXKZQUSMCv8Lipva82mL4l6RTaEGbbQuvkTxXq8C7yTWyOcnaYlsSkYSYvk_aOu6XWNG76KP_QwUVkA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY5MjI1MzgwfQ.FyXhtjsxB9YvrkcPm3NIlGB2f6nuIEU7qPPrV0-jB1JaAPvV7dEM1oPe9FSihPG-CMUbS_AdYKNyqlrg88qvFQ"
 					},
 					{
 						"key": "Content-Type",
@@ -2550,7 +2573,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 1,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"A\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}",
+					"raw": "{\n\t\"tranType\": \"IBT\",\n    \"typeId\": \"CK\",\n\t\"customerType\": \"2C\",\n    \"promotionName\": \"Ten khuyen mai\",\n    \"promotion\": \"Noi Dung Chuong Trinh\",\n    \"id\": 106,\n    \"percentage\": \"11\",\n\t\"fromDate\": \"2019/1/1\",\n    \"toDate\": \"2019/1/2\",\n\t\"prdName\": \"IZI,NCB\",\n\t\"status\": \"D\",\n\t\"createdBy\": \"Dex\",\n\t\"createdDate\": \"2019/10/1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2850,23 +2873,13 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY4OTgyNzcyfQ.99l65zqycMdQIg71pHLlBxiHI_03_855SnDsdgEwXeIBRXMbtvC6_RlDmt9_De90v_5Dx_e26EEpLp2zGCqiCA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY5MjI1MzgwfQ.FyXhtjsxB9YvrkcPm3NIlGB2f6nuIEU7qPPrV0-jB1JaAPvV7dEM1oPe9FSihPG-CMUbS_AdYKNyqlrg88qvFQ"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "page",
-						"type": "text",
-						"value": "1"
-					},
-					{
-						"key": "limit",
-						"type": "text",
-						"value": "100"
 					}
 				],
 				"body": {
@@ -2945,7 +2958,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjI0MjEyfQ.fMFR572E9urad-yNhUu5NcMWv-5eAuN4ae-nXp4B_Cs64sb2VJvwuBC4bn0AED-s7tEtj1hJvnRelesEANPLlA"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4eHh4IiwiZXhwIjoxNTY5MjM2NjE4fQ.0QdBelJHBEEk93BiBjITL0ikZGUA8U9N4vWJL5UG5G6mTvbX5Tt0XT4XCVOOUbAq4Ftq54AYZGVaIO4Qg8gJCQ"
 					},
 					{
 						"key": "Content-Type",
@@ -2964,7 +2977,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/ncb-feedback/search?productCode=Code001&productName=me&type=YY&status=A",
+					"raw": "http://{{host}}/NCB-smart/ncb-feedback/search?productCode=&productName=&type=&status=",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -2977,19 +2990,19 @@
 					"query": [
 						{
 							"key": "productCode",
-							"value": "Code001"
+							"value": ""
 						},
 						{
 							"key": "productName",
-							"value": "me"
+							"value": ""
 						},
 						{
 							"key": "type",
-							"value": "YY"
+							"value": ""
 						},
 						{
 							"key": "status",
-							"value": "A"
+							"value": ""
 						}
 					]
 				}

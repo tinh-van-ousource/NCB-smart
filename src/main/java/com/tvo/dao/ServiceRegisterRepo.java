@@ -14,4 +14,7 @@ public interface ServiceRegisterRepo extends JpaRepository<ServiceRegisterEntity
 
     @Query("SELECT srl FROM ServiceRegisterLogEntity srl WHERE srl.serviceRegisterId = :id ORDER BY srl.datetime DESC")
     List<ServiceRegisterLogEntity> retrieveServiceRegisterLogByServiceRegisterId(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT sr.service FROM ServiceRegisterEntity sr ORDER BY sr.service ASC")
+    List<String> retrieveAllService();
 }
