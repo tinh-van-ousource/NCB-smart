@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SearchFunction {
 	
-	private String prdName;
+	private String prd;
 
 	private String tranType;
 

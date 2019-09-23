@@ -69,19 +69,19 @@ public class FunctionServiceImpl implements FunctionService {
 
 		if (resource.getStatus() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
 		}
 
 		
-		if (resource.getPrdName() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
+		if (resource.getPrd() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrd().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
 		}
 
 		if (resource.getTranType() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTranType().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
-		}
+		}	
 
 		if (resource.getTypeId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeId().trim())) {
