@@ -7,7 +7,6 @@ import com.tvo.dao.PromotionsDAO;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
-import com.tvo.model.ParCardProductEntity;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
@@ -52,9 +51,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchPromotion);
         Root<Promotions> root = (Root<Promotions>) queryObjs[0];
         query.select(root);
-        query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("id")));
         query.orderBy(cb.desc(root.get("id")));
 
         TypedQuery<Promotions> typedQuery = this.entityManager.createQuery(query);
