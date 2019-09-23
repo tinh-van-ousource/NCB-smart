@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/service-register", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,6 +27,12 @@ public class ServiceRegisterController {
         ContentResDto serviceRegisterResDtoList =
                 serviceRegisterService.getServiceRegisterList(serviceRegisterSearchReqDto);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterResDtoList);
+    }
+
+    @GetMapping(value = "/get-all-service")
+    public ResponeData<List<String>> getAllService() {
+        List<String> serviceList = serviceRegisterService.getAllService();
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceList);
     }
 
     @GetMapping(value = "/{id}/detail")
