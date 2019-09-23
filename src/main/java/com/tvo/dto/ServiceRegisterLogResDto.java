@@ -11,13 +11,10 @@ import java.time.LocalDateTime;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceRegisterLogResDto {
-    @JsonProperty("datetime")
     private LocalDateTime datetime;
 
-    @JsonProperty("user_id")
     private String userId;
 
-    @JsonProperty("new_value")
     private String newValue;
 
 }

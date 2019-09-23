@@ -50,7 +50,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2ODExNDM5OX0.S9Jfy3s-M3MUY0oCxnNwDkvKu4ZjbqqWR1TcdvY46pDTMIEDjNQvvYRGJFPEjwX9hRqgAVaBrZ-qTcxXnKcC6g",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjQzNjI4fQ.DXMUxCnyiBrYfLcccX5oqoeBRuCjg8R8oIKPWYbErWKSbKa5vhRM1NCVSTDrRMIlbnB9ASPSSMYMadzBJPOkAQ",
 						"type": "text"
 					}
 				],
@@ -59,7 +59,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/service-register/search?comp_code=&id_card=&type=&service=&status=&size=10&page=1&from_date=2019/9/3&to_date=2019/9/19",
+					"raw": "http://{{host}}/NCB-smart/service-register/search?compCode=VN00100061&idCard=082066106&type=2&service=PHAT HANH MOI THE ATM&status=1&size=10&page=1&fromDate=2019/9/3&toDate=2019/9/19",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -71,24 +71,24 @@
 					],
 					"query": [
 						{
-							"key": "comp_code",
-							"value": ""
+							"key": "compCode",
+							"value": "VN00100061"
 						},
 						{
-							"key": "id_card",
-							"value": ""
+							"key": "idCard",
+							"value": "082066106"
 						},
 						{
 							"key": "type",
-							"value": ""
+							"value": "2"
 						},
 						{
 							"key": "service",
-							"value": ""
+							"value": "PHAT HANH MOI THE ATM"
 						},
 						{
 							"key": "status",
-							"value": ""
+							"value": "1"
 						},
 						{
 							"key": "size",
@@ -99,11 +99,11 @@
 							"value": "1"
 						},
 						{
-							"key": "from_date",
+							"key": "fromDate",
 							"value": "2019/9/3"
 						},
 						{
-							"key": "to_date",
+							"key": "toDate",
 							"value": "2019/9/19"
 						}
 					]
