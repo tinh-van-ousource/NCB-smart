@@ -35,7 +35,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
-        if (serviceRegisterSearchReqDto.getService() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             queryString.append(" AND sr.service = :service ");
         }
 
@@ -63,8 +63,8 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
         }
 
-        if (serviceRegisterSearchReqDto.getService() != null) {
-            query.setParameter("service", serviceRegisterSearchReqDto.getService().toString());
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
+            query.setParameter("service", serviceRegisterSearchReqDto.getService());
         }
 
         if (serviceRegisterSearchReqDto.getStatus() != null) {
@@ -103,7 +103,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.idCard = :idCard ");
         }
 
-        if (serviceRegisterSearchReqDto.getService() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             queryString.append(" AND sr.service = :service ");
         }
 
@@ -129,8 +129,8 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
         }
 
-        if (serviceRegisterSearchReqDto.getService() != null) {
-            query.setParameter("service", serviceRegisterSearchReqDto.getService().toString());
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
+            query.setParameter("service", serviceRegisterSearchReqDto.getService());
         }
 
         if (serviceRegisterSearchReqDto.getStatus() != null) {
