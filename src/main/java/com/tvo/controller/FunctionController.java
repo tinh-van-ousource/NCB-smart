@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/function")
 public class FunctionController {
@@ -59,4 +61,11 @@ public class FunctionController {
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
+
+	@GetMapping("getAllPrdName")
+	public ResponeData<List<String>> getAllPrdName() {
+		List<String> dto = functionService.getAllPrdName();
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+	}
+
 }

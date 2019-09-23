@@ -144,4 +144,9 @@ public class FunctionServiceImpl implements FunctionService {
         }
         return ModelMapperUtils.map(function, FunctionDto.class);
 	}
+
+	@Override
+	public List<String> getAllPrdName() {
+		return functionDao.getAllPrdName();
+	}
 }
