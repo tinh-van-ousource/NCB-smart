@@ -27,6 +27,7 @@ import com.tvo.controllerDto.SearchCity;
 import com.tvo.dao.CityDao;
 import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.City;
 import com.tvo.request.CreateCityRequest;
 import com.tvo.request.DeleteCityRequest;
@@ -59,11 +60,11 @@ public class CityServiceImpl implements CityService{
 		
 		if (resource.getCityCode() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityCode().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityCode")), resource.getCityCode().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityCode")), "%" +resource.getCityCode().toUpperCase() + "%")));
 		}
 		if (resource.getCityName() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityName")), resource.getCityName().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityName")), "%" + resource.getCityName().toUpperCase()+ "%")));
 		}
 
 		Object[] results = new Object[2];
@@ -129,7 +130,7 @@ public class CityServiceImpl implements CityService{
 			return null;
 		}
 		city = ModelMapperUtils.map(deleterequest, City.class);
-		city.setStatus("D");
+		city.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 		City save = cityDao.save(city);
 		return ModelMapperUtils.map(save, CityDto.class);
 	}
