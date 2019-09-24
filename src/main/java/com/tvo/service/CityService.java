@@ -3,15 +3,17 @@
  */
 package com.tvo.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.tvo.controllerDto.SearchCity;
 import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
 import com.tvo.request.CreateCityRequest;
+import com.tvo.request.DeleteCityRequest;
 import com.tvo.request.UpdateCityRequest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 
 /**
@@ -25,7 +27,7 @@ public interface CityService {
 	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable);
 	public CityDto update(UpdateCityRequest request);
 	
-	public Boolean delete(Long cityId);
+	public CityDto delete(DeleteCityRequest request);
 	
 	public CityDto detail(Long cityId);
 }
