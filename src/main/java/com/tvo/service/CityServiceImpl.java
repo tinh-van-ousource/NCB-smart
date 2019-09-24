@@ -3,21 +3,9 @@
  */
 package com.tvo.service;
 
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchCity;
-import com.tvo.dao.CityDao;
-import com.tvo.dto.CityDto;
-import com.tvo.dto.CreateCityDto;
-import com.tvo.model.City;
-import com.tvo.model.Function;
-import com.tvo.request.CreateCityRequest;
-import com.tvo.request.UpdateCityRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,9 +14,23 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchCity;
+import com.tvo.dao.CityDao;
+import com.tvo.dto.CityDto;
+import com.tvo.dto.CreateCityDto;
+import com.tvo.model.City;
+import com.tvo.request.CreateCityRequest;
+import com.tvo.request.DeleteCityRequest;
+import com.tvo.request.UpdateCityRequest;
 
 /**
  * @author Ace
@@ -71,7 +73,7 @@ public class CityServiceImpl implements CityService{
 	}
 	@Override
 	public CreateCityDto createCity(CreateCityRequest request) {
-		City city = cityDao.findByCityId(request.getCityId());
+		City city = cityDao.findByCityCode(request.getCityCode());
 		if (city != null) {
 			return null;
 		}
@@ -121,13 +123,15 @@ public class CityServiceImpl implements CityService{
 		return null;	
 	}
 	@Override
-	public Boolean delete(Long cityId) {
-		City city = cityDao.findByCityId(cityId);
-		if (cityId != null) {
-			cityDao.delete(city);
-			return true;
+	public CityDto delete(DeleteCityRequest deleterequest) {
+		City city = cityDao.findByCityCode(deleterequest.getCityCode());
+		if (city == null) {
+			return null;
 		}
-		return false;
+		city = ModelMapperUtils.map(deleterequest, City.class);
+		city.setStatus("D");
+		City save = cityDao.save(city);
+		return ModelMapperUtils.map(save, CityDto.class);
 	}
 	@Override
 	public CityDto detail(Long cityId) {
