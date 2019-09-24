@@ -53,4 +53,7 @@ public class Promotions {
     @Column(name = "CREATED_DATE")
     private Date createdDate;
 
+    @Column(name = "PRD")
+    private String prd;
+
 }
