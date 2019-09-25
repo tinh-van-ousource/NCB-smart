@@ -31,19 +31,23 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class NotifyServiceImpl implements NotifyService{
+	
 	@Autowired
 	private NotifyDAO notifyDao;
+	
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
+	
 	@Autowired
 	private EntityManager entityManager;
+	
 	@Override
 	public Page<NotifyDto> search(SearchNotify searchNotify, Pageable pageable) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Notify> query = cb.createQuery(Notify.class);
 		Object[] queryObjs = createNcbQARootPersist(cb, query, searchNotify);
 		query.select((Root<Notify>) queryObjs[0]);
-		query.where((Predicate[]) queryObjs[1]);
+		query.where((Predicate[]) queryObjs[1]);	
 		TypedQuery<Notify> typedQuery = this.entityManager.createQuery(query);
 
 		typedQuery.setFirstResult((int) pageable.getOffset());
@@ -58,6 +62,7 @@ public class NotifyServiceImpl implements NotifyService{
 		Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(notifyDtos, pageable, total);
 	}
+	
 	@SuppressWarnings("unused")
 	private Object[] createNcbQARootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchNotify searchNotify) {
 		final Root<Notify> rootPersist = query.from(Notify.class);
