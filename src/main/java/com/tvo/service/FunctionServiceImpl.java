@@ -70,9 +70,10 @@ public class FunctionServiceImpl implements FunctionService {
 
 	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchFunction resource) {
 		final Root<Function> rootPersist = query.from(Function.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>(6);
-		cb.and(cb.notEqual(rootPersist.<String>get("prd"), null));
+		final List<Predicate> predicates = new ArrayList<Predicate>();
+
 		
+		predicates.add(cb.and(rootPersist.get("prd").isNotNull()));
 
 
 		if (resource.getStatus() != null
