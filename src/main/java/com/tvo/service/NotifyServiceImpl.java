@@ -26,6 +26,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -74,9 +75,9 @@ public class NotifyServiceImpl implements NotifyService{
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
 					searchNotify.getProvider().toUpperCase())));
 		}
-		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
-					searchNotify.getType().toUpperCase())));
+		if (searchNotify.getMsgCode() != null && !StringUtils.isEmpty(searchNotify.getMsgCode().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msgCode")),
+					searchNotify.getMsgCode().toUpperCase())));
 		}
 		 
 		
@@ -93,7 +94,7 @@ public class NotifyServiceImpl implements NotifyService{
 
 	@Override
 	public CreateNotifyDto create(CreateNotifyRequest request) {
-		Notify notify = notifyDao.findByType(request.getType());
+		Notify notify = notifyDao.findByMsgCode(request.getType());
 		if (notify != null) {
 			return null;
 		}
@@ -106,11 +107,12 @@ public class NotifyServiceImpl implements NotifyService{
 	@Override
 	@Transactional(readOnly = false)
 	public NotifyDto update(UpdateNotifyRequest request) {
-		Optional<Notify> opt = notifyDao.findById(request.getType());
-		if (opt.isPresent()) {
-			Notify function = ModelMapperUtils.map(request,Notify.class);
-			
-			Notify save = notifyDao.save(function);
+		Notify opt = notifyDao.findByMsgCode(request.getMsgCode());
+		Date createDateOld = opt.getCreate_Date();
+		if (opt != null) {
+			Notify notify = ModelMapperUtils.map(request,Notify.class);
+			notify.setCreate_Date(createDateOld);
+			Notify save = notifyDao.save(notify);
 
 			return ModelMapperUtils.map(save, NotifyDto.class);
 		}
@@ -119,9 +121,9 @@ public class NotifyServiceImpl implements NotifyService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String type) {
-		Notify notify = notifyDao.findByType(type);
-		if (type != null) {
+	public Boolean delete(String msgCode) {
+		Notify notify = notifyDao.findByMsgCode(msgCode);
+		if (msgCode != null) {
 			notifyDao.delete(notify);
 			return true;
 		}
@@ -129,8 +131,8 @@ public class NotifyServiceImpl implements NotifyService{
 
 	}
 	@Override
-	public NotifyDto detail(String type) {
-        Notify notity = notifyDao.findByType(type);
+	public NotifyDto detail(String msgCode) {
+        Notify notity = notifyDao.findByMsgCode(msgCode);
         if (notity == null) {
             return null;
         }
