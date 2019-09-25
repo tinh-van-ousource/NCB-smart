@@ -36,6 +36,9 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
 
     @Override
     public ContentResDto getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
+        serviceRegisterSearchReqDto.setFromDate(serviceRegisterSearchReqDto.getFromDate().replace("/", ""));
+        serviceRegisterSearchReqDto.setToDate(serviceRegisterSearchReqDto.getToDate().replace("/", ""));
+
         List<ServiceRegisterEntity> serviceRegisterEntityList =
                 serviceRegisterRepo.retrieveListServiceRegister(serviceRegisterSearchReqDto);
 

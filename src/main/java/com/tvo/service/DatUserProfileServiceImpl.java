@@ -8,8 +8,6 @@ import com.tvo.dto.DatUserProfileDto;
 import com.tvo.model.DatCfmast;
 import com.tvo.model.DatUserProfile;
 import com.tvo.model.DatUserProfile_;
-import com.tvo.model.ParCardProductEntity;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
