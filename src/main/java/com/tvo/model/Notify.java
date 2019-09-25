@@ -29,7 +29,7 @@ public class Notify implements Serializable{
 	
 	@Id
 	@Column(name = "MSG_CODE")
-	private String msg_Code;
+	private String msgCode;
 	
 	@Column(name = "MSG_CODE_1")
 	private String msg_Code_1;

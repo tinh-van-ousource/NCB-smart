@@ -26,6 +26,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -69,9 +70,9 @@ public class NotifyServiceImpl implements NotifyService{
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
 					searchNotify.getProvider().toUpperCase())));
 		}
-		if (searchNotify.getMsg_Code() != null && !StringUtils.isEmpty(searchNotify.getMsg_Code().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msg_Code")),
-					searchNotify.getMsg_Code().toUpperCase())));
+		if (searchNotify.getMsgCode() != null && !StringUtils.isEmpty(searchNotify.getMsgCode().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msgCode")),
+					searchNotify.getMsgCode().toUpperCase())));
 		}
 		 
 		
@@ -101,11 +102,12 @@ public class NotifyServiceImpl implements NotifyService{
 	@Override
 	@Transactional(readOnly = false)
 	public NotifyDto update(UpdateNotifyRequest request) {
-		Notify opt = notifyDao.findByMsgCode(request.getMsg_Code());
+		Notify opt = notifyDao.findByMsgCode(request.getMsgCode());
+		Date createDateOld = opt.getCreate_Date();
 		if (opt != null) {
-			Notify function = ModelMapperUtils.map(request,Notify.class);
-			
-			Notify save = notifyDao.save(function);
+			Notify notify = ModelMapperUtils.map(request,Notify.class);
+			notify.setCreate_Date(createDateOld);
+			Notify save = notifyDao.save(notify);
 
 			return ModelMapperUtils.map(save, NotifyDto.class);
 		}
@@ -114,9 +116,9 @@ public class NotifyServiceImpl implements NotifyService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String msg_Code) {
-		Notify notify = notifyDao.findByMsgCode(msg_Code);
-		if (msg_Code != null) {
+	public Boolean delete(String msgCode) {
+		Notify notify = notifyDao.findByMsgCode(msgCode);
+		if (msgCode != null) {
 			notifyDao.delete(notify);
 			return true;
 		}
@@ -124,8 +126,8 @@ public class NotifyServiceImpl implements NotifyService{
 
 	}
 	@Override
-	public NotifyDto detail(String msg_Code) {
-        Notify notity = notifyDao.findByMsgCode(msg_Code);
+	public NotifyDto detail(String msgCode) {
+        Notify notity = notifyDao.findByMsgCode(msgCode);
         if (notity == null) {
             return null;
         }
