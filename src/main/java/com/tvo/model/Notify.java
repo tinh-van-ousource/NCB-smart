@@ -20,14 +20,14 @@ public class Notify implements Serializable{
 	
 	@Column(name = "PROVIDER")
 	private String provider;
-	@Id	
+	
 	@Column(name = "TYPE")
 	private String type;
 	
 	@Column(name = "ERROR")
 	private String error;
 	
-	
+	@Id
 	@Column(name = "MSG_CODE")
 	private String msg_Code;
 	

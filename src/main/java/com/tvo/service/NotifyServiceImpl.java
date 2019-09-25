@@ -69,9 +69,9 @@ public class NotifyServiceImpl implements NotifyService{
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
 					searchNotify.getProvider().toUpperCase())));
 		}
-		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
-					searchNotify.getType().toUpperCase())));
+		if (searchNotify.getMsg_Code() != null && !StringUtils.isEmpty(searchNotify.getMsg_Code().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msg_Code")),
+					searchNotify.getMsg_Code().toUpperCase())));
 		}
 		 
 		
@@ -88,7 +88,7 @@ public class NotifyServiceImpl implements NotifyService{
 
 	@Override
 	public CreateNotifyDto create(CreateNotifyRequest request) {
-		Notify notify = notifyDao.findByType(request.getType());
+		Notify notify = notifyDao.findByMsgCode(request.getType());
 		if (notify != null) {
 			return null;
 		}
@@ -101,8 +101,8 @@ public class NotifyServiceImpl implements NotifyService{
 	@Override
 	@Transactional(readOnly = false)
 	public NotifyDto update(UpdateNotifyRequest request) {
-		Optional<Notify> opt = notifyDao.findById(request.getType());
-		if (opt.isPresent()) {
+		Notify opt = notifyDao.findByMsgCode(request.getMsg_Code());
+		if (opt != null) {
 			Notify function = ModelMapperUtils.map(request,Notify.class);
 			
 			Notify save = notifyDao.save(function);
@@ -114,9 +114,9 @@ public class NotifyServiceImpl implements NotifyService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String type) {
-		Notify notify = notifyDao.findByType(type);
-		if (type != null) {
+	public Boolean delete(String msg_Code) {
+		Notify notify = notifyDao.findByMsgCode(msg_Code);
+		if (msg_Code != null) {
 			notifyDao.delete(notify);
 			return true;
 		}
@@ -124,8 +124,8 @@ public class NotifyServiceImpl implements NotifyService{
 
 	}
 	@Override
-	public NotifyDto detail(String type) {
-        Notify notity = notifyDao.findByType(type);
+	public NotifyDto detail(String msg_Code) {
+        Notify notity = notifyDao.findByMsgCode(msg_Code);
         if (notity == null) {
             return null;
         }
