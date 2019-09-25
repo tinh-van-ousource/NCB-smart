@@ -39,7 +39,7 @@ public class NotifyController {
 		return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
 
-	@PostMapping(value = "update")
+	@PutMapping(value = "update")
 	public ResponeData<NotifyDto> update(@RequestBody UpdateNotifyRequest request) {
 		NotifyDto notifyDto = notifyService.update(request);
 		if (notifyDto == null) {
@@ -47,9 +47,9 @@ public class NotifyController {
 		}
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notifyDto);
 	}
-	@PostMapping(value = "/detail")
-	    public ResponeData<NotifyDto> detail(@RequestParam String type) {
-		 NotifyDto dto = notifyService.detail(type);
+	@GetMapping(value = "/detail")
+	    public ResponeData<NotifyDto> detail(@RequestParam String msgCode) {
+		 NotifyDto dto = notifyService.detail(msgCode);
 	        if (dto == null) {
 	            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 	        }
@@ -57,9 +57,9 @@ public class NotifyController {
 	    }
 
 
-	@PostMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam String type) {
-		boolean deleteFlag = notifyService.delete(type);
+	@DeleteMapping(value = "delete")
+	public ResponeData<Boolean> delete(@RequestParam String msgCode) {
+		boolean deleteFlag = notifyService.delete(msgCode);
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}

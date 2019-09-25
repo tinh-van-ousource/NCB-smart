@@ -18,7 +18,7 @@ public class UpdateNotifyRequest {
 	
 	private String error;
 	
-	private String msg_Code;
+	private String msgCode;
 	
 	private String msg_Code_1;
 	
