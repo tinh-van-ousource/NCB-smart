@@ -50,6 +50,8 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
         if (!serviceRegisterEntityList.isEmpty()) {
             List serviceRegisterSearchResDtoList;
 
+            convertStringToDateForServiceRegisterList(serviceRegisterEntityList);
+
             if (serviceRegisterSearchReqDto.getType() != null
                     && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
                 serviceRegisterSearchResDtoList =
@@ -199,6 +201,27 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                 .collect(Collectors.toList()));
 
         return serviceRegisterGetDetailResDto;
+    }
+
+    private void convertStringToDateForServiceRegisterList(List<ServiceRegisterEntity> serviceRegisterEntityList) {
+        serviceRegisterEntityList.forEach(sre -> {
+            String requestDate = sre.getRequestDate();
+            String completedDate = sre.getCompletedDate();
+            if (requestDate != null) {
+                sre.setRequestDate(
+                        requestDate.substring(0,4) + "/" +
+                        requestDate.substring(4,6) + "/" +
+                        requestDate.substring(6,8)
+                );
+            }
+            if (completedDate != null) {
+                sre.setCompletedDate(
+                        completedDate.substring(0,4) + "/" +
+                        completedDate.substring(4,6) + "/" +
+                        completedDate.substring(6,8)
+                );
+            }
+        });
     }
 
 }
