@@ -1,11 +1,9 @@
 package com.tvo.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Getter
@@ -40,17 +38,17 @@ public class ServiceRegisterSearchCardResDto {
 
     private String cardClass;
 
-    private BigInteger fee;
+    private Long fee;
 
     private String salaryCode;
 
     private String salaryBank;
 
-    private BigInteger creditLimit;
+    private Long creditLimit;
 
-    private BigInteger monthlyIncome;
+    private Long monthlyIncome;
 
-    private BigInteger monthlySpend;
+    private Long monthlySpend;
 
     private String autoDebit;
 
@@ -58,9 +56,9 @@ public class ServiceRegisterSearchCardResDto {
 
     private String autoDebitBankAcct;
 
-    private LocalDate requestDate;
+    private String requestDate;
 
-    private LocalDate completedDate;
+    private String completedDate;
 
     private String status;
 

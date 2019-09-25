@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Entity
@@ -64,13 +63,13 @@ public class ServiceRegisterEntity implements Serializable {
     private String cardClass;
 
     @Column(name = "FEE")
-    private BigInteger fee;
+    private Long fee;
 
     @Column(name = "REQUEST_DATE")
-    private LocalDate requestDate;
+    private String requestDate;
 
     @Column(name = "COMPLETED_DATE")
-    private LocalDate completedDate;
+    private String completedDate;
 
     @Column(name = "STATUS")
     private String status;
@@ -88,13 +87,13 @@ public class ServiceRegisterEntity implements Serializable {
     private String salaryBank;
 
     @Column(name = "CREDITLIMIT")
-    private BigInteger creditLimit;
+    private Long creditLimit;
 
     @Column(name = "MONTHLY_INCOME")
-    private BigInteger monthlyIncome;
+    private Long monthlyIncome;
 
     @Column(name = "MONTHLY_SPEND")
-    private BigInteger monthlySpend;
+    private Long monthlySpend;
 
     @Column(name = "AUTODEBIT")
     private String autoDebit;
