@@ -66,7 +66,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
-            query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
+            query.setParameter("status", serviceRegisterSearchReqDto.getStatus());
         }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getFromDate())) {
@@ -130,7 +130,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
-            query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
+            query.setParameter("status", serviceRegisterSearchReqDto.getStatus());
         }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getFromDate())) {
