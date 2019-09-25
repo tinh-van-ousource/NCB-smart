@@ -82,6 +82,8 @@ public class PromotionsServiceImpl implements PromotionsService {
                     resource.getStatus())));
         }
 
+        predicates.add(cb.and(rootPersist.get("prd").isNull()));
+
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -96,6 +98,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         Promotions promotionBase = ModelMapperUtils.map(request, Promotions.class);
         promotionBase.setCreatedDate(now);
         promotionBase.setCreatedBy(currentUserName);
+        promotionBase.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 
         Promotions promotions1 = ModelMapperUtils.map(promotionBase, new Promotions());
         promotions1.setTypeId("QLTK");

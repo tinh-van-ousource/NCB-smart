@@ -39,7 +39,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.service = :service ");
         }
 
-        if (serviceRegisterSearchReqDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
             queryString.append(" AND sr.status = :status ");
         }
 
@@ -67,7 +67,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("service", serviceRegisterSearchReqDto.getService());
         }
 
-        if (serviceRegisterSearchReqDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
@@ -107,7 +107,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.service = :service ");
         }
 
-        if (serviceRegisterSearchReqDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
             queryString.append(" AND sr.status = :status ");
         }
 
@@ -133,7 +133,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("service", serviceRegisterSearchReqDto.getService());
         }
 
-        if (serviceRegisterSearchReqDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
             query.setParameter("status", serviceRegisterSearchReqDto.getStatus().toString());
         }
 
