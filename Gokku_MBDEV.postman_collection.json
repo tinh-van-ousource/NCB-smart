@@ -50,7 +50,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MzI5Njk4fQ.cAu_eMjRCOSfYgXX_rCxH8NzBLdw-7ZUW-dGpKz_tlT46417IN5GOCE50ZoPhO0BmXVYFoEeRY5BaLOZYjySUg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NDA3NzExfQ.4aIKtSztS80acqUgUB894vZut851C2ulzlUl_1db3jid0YqFHazbNuMs5U1yK45GP3nYJBAq1_IKKnJySmUb3A",
 						"type": "text"
 					}
 				],
@@ -59,7 +59,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/service-register/search?compCode=VN00100061&idCard=1&type=2&service=THAY DOI THONG TIN TRICH NO TU DONG&status=CLOSED&fromDate=2019/9/1&toDate=2019/9/3&page=1&size=10",
+					"raw": "http://{{host}}/NCB-smart/service-register/search?compCode=VN00100061&idCard=&type=2&service=CAP LAI PIN&status=CLOSED&fromDate=2019/09/23&toDate=2019/09/28&page=1&size=10",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -76,7 +76,7 @@
 						},
 						{
 							"key": "idCard",
-							"value": "1"
+							"value": ""
 						},
 						{
 							"key": "type",
@@ -84,7 +84,7 @@
 						},
 						{
 							"key": "service",
-							"value": "THAY DOI THONG TIN TRICH NO TU DONG"
+							"value": "CAP LAI PIN"
 						},
 						{
 							"key": "status",
@@ -92,11 +92,11 @@
 						},
 						{
 							"key": "fromDate",
-							"value": "2019/9/1"
+							"value": "2019/09/23"
 						},
 						{
 							"key": "toDate",
-							"value": "2019/9/3"
+							"value": "2019/09/28"
 						},
 						{
 							"key": "page",
@@ -119,11 +119,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MzI5Njk4fQ.cAu_eMjRCOSfYgXX_rCxH8NzBLdw-7ZUW-dGpKz_tlT46417IN5GOCE50ZoPhO0BmXVYFoEeRY5BaLOZYjySUg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NDA3NzExfQ.4aIKtSztS80acqUgUB894vZut851C2ulzlUl_1db3jid0YqFHazbNuMs5U1yK45GP3nYJBAq1_IKKnJySmUb3A"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/service-register/231/detail",
+					"raw": "http://{{host}}/NCB-smart/service-register/250/detail",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -131,7 +131,7 @@
 					"path": [
 						"NCB-smart",
 						"service-register",
-						"231",
+						"250",
 						"detail"
 					]
 				}
@@ -149,7 +149,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MjQyMDQ5fQ.r2q3dbtw5vFwPB5NFLbujzq10cB6CTI-cqxQvonAd3shi64UJe2zc8dSBMLhU7iCye-NBun7wXh4dU-iOMcAjw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NDA3NzExfQ.4aIKtSztS80acqUgUB894vZut851C2ulzlUl_1db3jid0YqFHazbNuMs5U1yK45GP3nYJBAq1_IKKnJySmUb3A"
 					}
 				],
 				"body": {
@@ -178,7 +178,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MzI5Njk4fQ.cAu_eMjRCOSfYgXX_rCxH8NzBLdw-7ZUW-dGpKz_tlT46417IN5GOCE50ZoPhO0BmXVYFoEeRY5BaLOZYjySUg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NDA3NzExfQ.4aIKtSztS80acqUgUB894vZut851C2ulzlUl_1db3jid0YqFHazbNuMs5U1yK45GP3nYJBAq1_IKKnJySmUb3A",
 						"type": "text"
 					},
 					{
@@ -193,7 +193,7 @@
 					"raw": "{\n    \"compCode\": \"VN00100061\",\n    \"compName\": \"PGD HA NOI\",\n    \"status\": \"CLOSED\",\n\t\"comment\": \"ahihi2\",\n    \"userId\" : \"bestUSER\"\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/service-register/231/update",
+					"raw": "http://{{host}}/NCB-smart/service-register/250/update",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -201,7 +201,7 @@
 					"path": [
 						"NCB-smart",
 						"service-register",
-						"231",
+						"250",
 						"update"
 					]
 				}
