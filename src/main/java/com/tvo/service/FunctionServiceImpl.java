@@ -1,8 +1,24 @@
 package com.tvo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.CreateFunctionDto;
+import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dao.FunctionDAO;
+import com.tvo.dto.CityDto;
+import com.tvo.dto.FunctionDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.City;
+import com.tvo.model.Function;
+import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.DeleteFunctionRequest;
+import com.tvo.request.UpdateFunctionRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,24 +27,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.CreateFunctionDto;
-import com.tvo.controllerDto.SearchFunction;
-import com.tvo.dao.FunctionDAO;
-import com.tvo.dto.FunctionDto;
-import com.tvo.model.Function;
-import com.tvo.model.ParCardProductEntity;
-import com.tvo.request.CreateFunctionRequest;
-import com.tvo.request.UpdateFunctionRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -44,7 +45,7 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable) {
 		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<Function> query = cb.createQuery(Function.class);
+		final CriteriaQuery<Function> query = 	cb.createQuery(Function.class);
 		Object[] queryObjs = this.createFunctionRootPersist(cb, query, searchFunction);
 		Root<Function> root = (Root<Function>) queryObjs[0];
         query.select(root);
@@ -67,7 +68,10 @@ public class FunctionServiceImpl implements FunctionService {
 
 	public Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchFunction resource) {
 		final Root<Function> rootPersist = query.from(Function.class);
-		final List<Predicate> predicates = new ArrayList<Predicate>(6);
+		final List<Predicate> predicates = new ArrayList<Predicate>();
+
+		
+		predicates.add(cb.and(rootPersist.get("prd").isNotNull()));
 
 
 		if (resource.getStatus() != null
@@ -130,13 +134,15 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String prd) {
-		Function function = functionDao.findByPrd(prd);
-		if (prd != null) {
-			functionDao.delete(function);
-			return true;
+	public FunctionDto delete(DeleteFunctionRequest deleteFunctionRequest) {
+		Function function = functionDao.findByPrd(deleteFunctionRequest.getPrd());
+		if (function == null) {
+			return null;
 		}
-		return false;
+		function = ModelMapperUtils.map(deleteFunctionRequest, Function.class);
+		function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+		Function save = functionDao.save(function);
+		return ModelMapperUtils.map(save, FunctionDto.class);
 	}
 
 	@Override

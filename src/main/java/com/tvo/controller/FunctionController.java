@@ -1,20 +1,31 @@
 package com.tvo.controller;
 
-import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.CreateFunctionDto;
-import com.tvo.controllerDto.SearchFunction;
-import com.tvo.dto.FunctionDto;
-import com.tvo.request.CreateFunctionRequest;
-import com.tvo.request.UpdateFunctionRequest;
-import com.tvo.response.ResponeData;
-import com.tvo.service.FunctionServiceImpl;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.tvo.common.AppConstant;
+import com.tvo.controllerDto.CreateFunctionDto;
+import com.tvo.controllerDto.SearchFunction;
+import com.tvo.dto.CityDto;
+import com.tvo.dto.FunctionDto;
+import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.DeleteFunctionRequest;
+import com.tvo.request.UpdateFunctionRequest;
+import com.tvo.response.ResponeData;
+import com.tvo.service.FunctionServiceImpl;
 
 @RestController
 @RequestMapping(value = "/function")
@@ -46,12 +57,12 @@ public class FunctionController {
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam String prd) {
-		boolean deleteFlag = functionService.delete(prd);
-		if (deleteFlag == true) {
-			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+	public ResponeData<FunctionDto> delete(@RequestBody DeleteFunctionRequest deleterequest) {
+		FunctionDto functionDto = functionService.delete(deleterequest);
+		if (functionDto == null) {
+			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+		return new ResponeData<FunctionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDto);
 	}
 	@GetMapping(value = "/detail")
     public ResponeData<FunctionDto> detail(@RequestParam String prd) {
