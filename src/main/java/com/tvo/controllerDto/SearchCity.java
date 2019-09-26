@@ -9,4 +9,6 @@ public class SearchCity {
 	private String cityCode;
 
 	private String cityName;
+	
+	private String status;
 }
