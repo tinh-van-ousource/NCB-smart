@@ -10,8 +10,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateNotifyRequest {
 	
+public class UpdateNotifyRequest {
 	private String provider;
 	
 	private String type;
