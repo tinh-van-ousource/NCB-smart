@@ -33,7 +33,7 @@ public class NotifyController {
 
 	@PostMapping(value = "create")
 	public ResponeData<CreateNotifyDto> create(@RequestBody CreateNotifyRequest request) {
-
+		
 		CreateNotifyDto notifyDto = notifyService.create(request);
 		if (notifyDto == null) {
 			return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,

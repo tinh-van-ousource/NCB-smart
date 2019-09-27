@@ -32,7 +32,7 @@ public class CityController {
 	public ResponeData<CreateCityDto> createUser(@RequestBody CreateCityRequest request) {
 		CreateCityDto dto = cityService.createCity(request);
 		if(dto == null) {
-			return new ResponeData<CreateCityDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+			return new ResponeData<CreateCityDto>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<CreateCityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
