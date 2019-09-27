@@ -59,7 +59,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/service-register/search?compCode=VN00100061&idCard=&type=2&service=CAP LAI PIN&status=CLOSED&fromDate=2019/09/23&toDate=2019/09/28&page=1&size=10",
+					"raw": "http://{{host}}/NCB-smart/service-register/search?compCode=&idCard=&type=2&service=&status=&fromDate=2019/09/23&toDate=2019/09/28&page=1&size=10",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -72,7 +72,7 @@
 					"query": [
 						{
 							"key": "compCode",
-							"value": "VN00100061"
+							"value": ""
 						},
 						{
 							"key": "idCard",
@@ -84,11 +84,11 @@
 						},
 						{
 							"key": "service",
-							"value": "CAP LAI PIN"
+							"value": ""
 						},
 						{
 							"key": "status",
-							"value": "CLOSED"
+							"value": ""
 						},
 						{
 							"key": "fromDate",
@@ -3011,6 +3011,545 @@
 						{
 							"key": "status",
 							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config get-credit-card-number",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/get-credit-card-number",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"get-credit-card-number"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config create-credit-card-number",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\":\"test creditcardnumber 3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/create-credit-card-number",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"create-credit-card-number"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config check-duplicate-credit-card-number",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/check-duplicate-credit-card-number?value=test creditcardnumber 3",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"check-duplicate-credit-card-number"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "test creditcardnumber 3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config update-credit-card-number",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/update-credit-card-number?oldValue=test creditcardnumber 3&newValue=test creditcardnumber 4",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"update-credit-card-number"
+					],
+					"query": [
+						{
+							"key": "oldValue",
+							"value": "test creditcardnumber 3"
+						},
+						{
+							"key": "newValue",
+							"value": "test creditcardnumber 4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config delete-credit-card-number",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/delete-credit-card-number?value=test creditcardnumber 4",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"delete-credit-card-number"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "test creditcardnumber 4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config get-reissue-card-reason",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/get-reissue-card-reason",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"get-reissue-card-reason"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config update-reissue-card-reason",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\":\"test reissue_card_reason 3\",\n\t\"code\": \"003\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/modify-reissue-card-reason",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"modify-reissue-card-reason"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config check-duplicate-reissue-card-reason",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgzMzE4fQ.5V5OMylqvpmSAdpHnd-2DrktfCe89n2SvFegS3MI0afjyvxzWKpule6OJMGaMXV7f7jRqZiP8i99NjBdVFnO2A"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/check-duplicate-reissue-card-reason?code=002",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"check-duplicate-reissue-card-reason"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config delete-reissue-card-reason",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\":\"test reissue_card_reason 1\",\n\t\"code\": \"003\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/delete-other-param-config?param=par1&code=code3",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"delete-other-param-config"
+					],
+					"query": [
+						{
+							"key": "param",
+							"value": "par1"
+						},
+						{
+							"key": "code",
+							"value": "code3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config update-other-param",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"param\":\"par1\",\n\t\"code\": \"code3\",\n\t\"value\": \"value13\",\n\t\"note\": \"note13\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/modify-other-param-config",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"modify-other-param-config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config get-other-param",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"param\":\"par1\",\n\t\"code\": \"code1\",\n\t\"value\": \"value1\",\n\t\"note\": \"note002\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/get-other-param-config",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"get-other-param-config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config check-duplicate-other-param",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"param\":\"par1\",\n\t\"code\": \"code1\",\n\t\"value\": \"value1\",\n\t\"note\": \"note002\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/check-duplicate-other-param-config?param=par1&code=code3",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"check-duplicate-other-param-config"
+					],
+					"query": [
+						{
+							"key": "param",
+							"value": "par1"
+						},
+						{
+							"key": "code",
+							"value": "code3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "par-config delete-other-param-config",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\":\"test reissue_card_reason 1\",\n\t\"code\": \"003\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/NCB-smart/par-config/delete-reissue-card-reason?code=003",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"NCB-smart",
+						"par-config",
+						"delete-reissue-card-reason"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "003"
 						}
 					]
 				}
