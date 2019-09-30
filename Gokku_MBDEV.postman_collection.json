@@ -2383,7 +2383,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5MzA1Mzk3fQ.-6nHE1hxk_l5EtpxKN09p-5htcwdDM51OYswTadmjyXA4VhTfvNvdd2lNsp7tk372TAgBe9ycl09R4VOOJaGlg"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODMxMDk2fQ.HDZuuYTFrLlWCXHcwuxhDB9oNfLYDoVICZ0SA0jsn6R761FhIdK48Y8kPFnfimeVlIGLo6-_a2p2iz44-gRCkg"
 					},
 					{
 						"key": "Content-Type",
@@ -3025,7 +3025,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODI1NTY0fQ.q96VT9a6jLFN62Ms4UlGXpKRQbFqVUGFA72I5_zNRDKFIczI9iUM2VOKhLE86LCezPLOZpMdc6XjhryVkWSr8g"
 					},
 					{
 						"key": "Content-Type",
@@ -3057,7 +3057,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODI1NTY0fQ.q96VT9a6jLFN62Ms4UlGXpKRQbFqVUGFA72I5_zNRDKFIczI9iUM2VOKhLE86LCezPLOZpMdc6XjhryVkWSr8g"
 					},
 					{
 						"key": "Content-Type",
@@ -3068,7 +3068,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"value\":\"test creditcardnumber 3\"\n}",
+					"raw": "{\n\t\"value\":\"test creditcardnumber 1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3098,7 +3098,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODI1NTY0fQ.q96VT9a6jLFN62Ms4UlGXpKRQbFqVUGFA72I5_zNRDKFIczI9iUM2VOKhLE86LCezPLOZpMdc6XjhryVkWSr8g"
 					},
 					{
 						"key": "Content-Type",
@@ -3108,7 +3108,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-config/check-duplicate-credit-card-number?value=test creditcardnumber 3",
+					"raw": "http://{{host}}/NCB-smart/par-config/check-duplicate-credit-card-number?value=1",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -3121,7 +3121,7 @@
 					"query": [
 						{
 							"key": "value",
-							"value": "test creditcardnumber 3"
+							"value": "1"
 						}
 					]
 				}
@@ -3136,7 +3136,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgxNDcyfQ.CZ9ckJWq_j_8ZDGvkFx34cVsWlAfMv5tQuA2wpfP1a8op3VngcyVC-mKzm8GBKjBq8vR_4ByzK5ITwiDw3-VYQ"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODMxMDk2fQ.HDZuuYTFrLlWCXHcwuxhDB9oNfLYDoVICZ0SA0jsn6R761FhIdK48Y8kPFnfimeVlIGLo6-_a2p2iz44-gRCkg"
 					},
 					{
 						"key": "Content-Type",
@@ -3146,7 +3146,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-config/update-credit-card-number?oldValue=test creditcardnumber 3&newValue=test creditcardnumber 4",
+					"raw": "http://{{host}}/NCB-smart/par-config/update-credit-card-number?oldValue=LIMIT&newValue=2",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -3159,11 +3159,11 @@
 					"query": [
 						{
 							"key": "oldValue",
-							"value": "test creditcardnumber 3"
+							"value": "LIMIT"
 						},
 						{
 							"key": "newValue",
-							"value": "test creditcardnumber 4"
+							"value": "2"
 						}
 					]
 				}
@@ -3216,7 +3216,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODMzMjgyfQ.ce8DfdYim25uSnnYV489ZnTosuaNmNtgRrLjoofBuqt_6hTNc3R3Xj1lRywC73Ff-Nz0wRyqvd-j_qRp5RLanQ"
 					},
 					{
 						"key": "Content-Type",
@@ -3248,7 +3248,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODMzMjgyfQ.ce8DfdYim25uSnnYV489ZnTosuaNmNtgRrLjoofBuqt_6hTNc3R3Xj1lRywC73Ff-Nz0wRyqvd-j_qRp5RLanQ"
 					},
 					{
 						"key": "Content-Type",
@@ -3259,7 +3259,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"value\":\"test reissue_card_reason 3\",\n\t\"code\": \"003\"\n}",
+					"raw": "{\n\t\"value\":\"test reissue_card_reason 333333\",\n\t\"code\": \"003\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3327,7 +3327,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5NTgyNjY1fQ.BzHXZHZIH0nCOQwmmt81PIUiAUFxUDPgIyqRRLW5BgjKRFlKh4nBSgGl2y4IqapiG6OxnSMzlqttj5FHKNF2Mw"
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY5ODMzMjgyfQ.ce8DfdYim25uSnnYV489ZnTosuaNmNtgRrLjoofBuqt_6hTNc3R3Xj1lRywC73Ff-Nz0wRyqvd-j_qRp5RLanQ"
 					},
 					{
 						"key": "Content-Type",
@@ -3346,7 +3346,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-config/delete-other-param-config?param=par1&code=code3",
+					"raw": "http://{{host}}/NCB-smart/par-config/delete-reissue-card-reason?code=code3",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -3354,13 +3354,9 @@
 					"path": [
 						"NCB-smart",
 						"par-config",
-						"delete-other-param-config"
+						"delete-reissue-card-reason"
 					],
 					"query": [
-						{
-							"key": "param",
-							"value": "par1"
-						},
 						{
 							"key": "code",
 							"value": "code3"
@@ -3536,7 +3532,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/NCB-smart/par-config/delete-reissue-card-reason?code=003",
+					"raw": "http://{{host}}/NCB-smart/par-config/delete-other-param-config?param=par001&code=003",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -3544,9 +3540,13 @@
 					"path": [
 						"NCB-smart",
 						"par-config",
-						"delete-reissue-card-reason"
+						"delete-other-param-config"
 					],
 					"query": [
+						{
+							"key": "param",
+							"value": "par001"
+						},
 						{
 							"key": "code",
 							"value": "003"
