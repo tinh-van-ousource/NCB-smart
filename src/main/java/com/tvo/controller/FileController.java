@@ -1,13 +1,26 @@
 package com.tvo.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tvo.common.AppConstant;
 import com.tvo.response.ResponeData;
 import com.tvo.response.UploadFileResponse;
 import com.tvo.service.FileService;
+
 import io.swagger.annotations.Api;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/img", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,6 +61,7 @@ public class FileController {
     @PostMapping(value = "banner/uploadFile")
     public ResponeData<UploadFileResponse> uploadBannerFile(@RequestParam("img") MultipartFile file) {
         UploadFileResponse uploadFileResponse = fileService.uploadBannerFile(file);
+        uploadFileViaFTP(file);
 
         if (uploadFileResponse != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, uploadFileResponse);
@@ -69,5 +83,43 @@ public class FileController {
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
+    public void uploadFileViaFTP(MultipartFile fileUpload) {
+    	String server = "10.1.62.33";
+		String user = "cmsuat";
+		String pass = "123@123aA";
+		String fileStorePath = "/CMSBanner/test.jpg";
+		FTPClient ftpClient = new FTPClient();
+		try {
+			ftpClient.connect(server);
+			ftpClient.login(user, pass);
+			ftpClient.enterLocalPassiveMode();
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			
+			if (ftpClient.changeWorkingDirectory(CMSBanner)) {
+				InputStream inputStream = fileUpload.getInputStream();
+			    System.out.println("Start uploading first file");
+			    boolean done = ftpClient.storeFile(fileStorePath, inputStream);
+			    inputStream.close();
+			    if (done) {
+				   System.out.println("The first file is uploaded successfully.");
+			    }
+			}else {
+			   System.out.println("CMSBanner derectory is not existed.");
+			}
+		
+		} catch (IOException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}}
+
 
 }
