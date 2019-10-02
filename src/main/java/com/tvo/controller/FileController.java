@@ -95,7 +95,7 @@ public class FileController {
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			
-			if (ftpClient.changeWorkingDirectory(CMSBanner)) {
+			if (ftpClient.changeWorkingDirectory("CMSBanner")) {
 				InputStream inputStream = fileUpload.getInputStream();
 			    System.out.println("Start uploading first file");
 			    boolean done = ftpClient.storeFile(fileStorePath, inputStream);
