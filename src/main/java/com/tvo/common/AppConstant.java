@@ -55,6 +55,11 @@ public class AppConstant {
 
     public static final String RESOURCE_IMG = "C:\\uploads\\";
     public static final String RESOURCE_BANNER_IMG = "C:\\uploads\\banner\\";
+    
+    public static final String fordelWorkingFTP = "CMSBanner";
+    public static final String passFTP ="123@123aA";
+    public static final String userFTP = "cmsuat";
+    public static final String hostFTP="10.1.62.33";
 
     public enum Status {
         ACTIVATED("A"), DEACTIVATED("D");

@@ -84,18 +84,15 @@ public class FileController {
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
     public void uploadFileViaFTP(MultipartFile fileUpload) {
-    	String server = "10.1.62.33";
-		String user = "cmsuat";
-		String pass = "123@123aA";
 		String fileStorePath = "/CMSBanner/test.jpg";
 		FTPClient ftpClient = new FTPClient();
 		try {
-			ftpClient.connect(server);
-			ftpClient.login(user, pass);
+			ftpClient.connect(AppConstant.hostFTP);
+			ftpClient.login(AppConstant.userFTP, AppConstant.passFTP);
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			
-			if (ftpClient.changeWorkingDirectory("CMSBanner")) {
+			if (ftpClient.changeWorkingDirectory(AppConstant.fordelWorkingFTP)) {
 				InputStream inputStream = fileUpload.getInputStream();
 			    System.out.println("Start uploading first file");
 			    boolean done = ftpClient.storeFile(fileStorePath, inputStream);
