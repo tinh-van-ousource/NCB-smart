@@ -103,7 +103,6 @@ public class FileController {
 			}else {
 			   System.out.println("CMSBanner derectory is not existed.");
 			}
-		
 		} catch (IOException ex) {
 			System.out.println("Error: " + ex.getMessage());
 			ex.printStackTrace();

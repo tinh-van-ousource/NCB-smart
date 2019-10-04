@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PromotionsDAO extends JpaRepository<Promotions, Long> {
-    Promotions findByid(Long id);
+    Promotions findByProId(Long proId);
 }
