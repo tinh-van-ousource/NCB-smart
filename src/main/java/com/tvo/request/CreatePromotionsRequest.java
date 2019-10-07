@@ -12,7 +12,7 @@ import javax.persistence.Column;
 @Getter
 public class CreatePromotionsRequest {
 
-	  	private Long proId;
+	  	private String proCode;
 
 	    private String proName;
 

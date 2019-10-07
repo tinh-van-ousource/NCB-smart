@@ -12,10 +12,10 @@ import java.util.Date;
 @Setter
 public class Promotions {
     @Id
-    @Column(name = "PRO_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
-    @SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
-    private String proId;
+    @Column(name = "PRO_CODE")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
+//    @SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
+    private String proCode;
 
     @Column(name = "PRO_NAME")
     private String proName;

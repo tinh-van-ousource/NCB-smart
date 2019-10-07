@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 public class SearchPromotion {
 	
-	private Long proId;
+	private String proCode;
 	
 	private String proName;
 

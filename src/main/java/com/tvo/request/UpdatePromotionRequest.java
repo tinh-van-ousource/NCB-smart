@@ -10,33 +10,23 @@ import java.util.Date;
 @Getter
 public class UpdatePromotionRequest {
 
-    private Long id;
+	private String proCode;
 
-    private String tranType;
-
-    private String typeId;
-
-    private String customerType;
-
-    private String promotion;
-
-    private String promotionName;
-
-    private String percentage;
-
-    @JsonFormat(pattern = "yyyy/M/d")
-    private Date fromDate;
-
-    @JsonFormat(pattern = "yyyy/M/d")
-    private Date toDate;
-
-    private String prdName;
+    private String proName;
 
     private String status;
 
-    private String createdBy;
-
-    @JsonFormat(pattern = "yyyy/M/d")
+    private String proDes;
+    
+	@JsonFormat(pattern = "yyyy/M/d")
+    private Date fromDate;
+	
+	@JsonFormat(pattern = "yyyy/M/d")
+    private Date toDate;
+	
+	@JsonFormat(pattern = "yyyy/M/d")
     private Date createdDate;
+
+    private String createdBy;
 
 }

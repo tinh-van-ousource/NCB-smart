@@ -1,7 +1,9 @@
 package com.tvo.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,14 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dao.PromotionsDAO;
 import com.tvo.dto.CreatePromotionsDto;
+import com.tvo.dto.FunctionDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.model.Function;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
+import com.tvo.request.UpdatePromotionRequest;
 
 @Service
 @Transactional
@@ -71,9 +74,9 @@ public class PromotionsServiceImpl implements PromotionsService {
         final Root<Function> rootPersist = query.from(Function.class);
         final List<Predicate> predicates = new ArrayList<>();
 
-        if (resource.getProId() != null && !StringUtils.isEmpty(resource.getProId().toString().trim())) {
+        if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proId")),
-					resource.getProId().toString().toUpperCase())));
+					resource.getProCode().toUpperCase())));
 		}
 
         if (StringUtils.isNotBlank(resource.getProName())) {
@@ -95,15 +98,14 @@ public class PromotionsServiceImpl implements PromotionsService {
 
     @Override
     public CreatePromotionsDto create(CreatePromotionsRequest request) {
-    	Promotions function = promotionsDao.findByProId(request.getProId());
-		if (function != null) {
+    	Promotions promotions = promotionsDao.findByProCode(request.getProCode());
+		if (promotions != null) {
 			return null;
 		}
-		function = ModelMapperUtils.map(request, Promotions.class);
-		function.setCreatedDate(DateTimeUtil.getNow());
+		promotions = ModelMapperUtils.map(request, Promotions.class);
+		promotions.setCreatedDate(DateTimeUtil.getNow());
 		
-		
-		Promotions save = promotionsDao.save(function);
+		Promotions save = promotionsDao.save(promotions);
 		return ModelMapperUtils.map(save, CreatePromotionsDto.class);
     }
 //    @Override
@@ -178,6 +180,32 @@ public class PromotionsServiceImpl implements PromotionsService {
 //        Optional<Promotions> promotionBase = promotionsDao.findById(id);
 //        return promotionBase.map(promotions -> ModelMapperUtils.map(promotions, PromotionsDto.class)).orElse(null);
 //    }
+
+	@Override
+	public PromotionsDto update(UpdatePromotionRequest request) {
+		Promotions opt = promotionsDao.findByProCode(request.getProCode());
+		Date createDateOld = opt.getCreatedDate();
+		if (opt != null) {
+			Promotions promotion = ModelMapperUtils.map(request,Promotions.class);
+			promotion.setCreatedDate(createDateOld);
+			Promotions save = promotionsDao.save(promotion);
+
+			return ModelMapperUtils.map(save, PromotionsDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	public PromotionsDto delete(String proCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PromotionsDto detail(String proCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
 	

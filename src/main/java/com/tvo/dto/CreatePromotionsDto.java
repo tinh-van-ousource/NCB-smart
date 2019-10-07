@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePromotionsDto {
-	private Long proId;
+	private String proCode;
 	
     private String proName;
     

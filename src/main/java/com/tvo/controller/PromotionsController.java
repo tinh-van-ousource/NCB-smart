@@ -30,7 +30,7 @@ public class PromotionsController {
         Page<PromotionsDto> PromotionsDtos = promotionsService.searchPromotion(searchPromotion, pageable);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, PromotionsDtos);
     }
-
+    
     @PostMapping(value = "/create")
     public ResponeData<CreatePromotionsDto> create(@RequestBody CreatePromotionsRequest request) {
     	CreatePromotionsDto dto = promotionsService.create(request);
