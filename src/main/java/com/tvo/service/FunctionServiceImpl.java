@@ -5,13 +5,18 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
+import com.tvo.dao.ProductFeeDAO;
 import com.tvo.dto.CityDto;
+import com.tvo.dto.FunctionAndProductFeeDto;
 import com.tvo.dto.FunctionDto;
+import com.tvo.dto.ProductFeeDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.City;
 import com.tvo.model.Function;
+import com.tvo.model.ProductFeeEntity;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.DeleteFunctionRequest;
+import com.tvo.request.UpdateFunctionAndProductFeeRq;
 import com.tvo.request.UpdateFunctionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,8 +44,12 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Autowired
 	private EntityManager entityManager;
+
 	@Autowired
 	FunctionDAO functionDao;
+
+	@Autowired
+	private ProductFeeDAO productFeeDAO;
 
 	@Override
 	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable) {
@@ -70,32 +79,24 @@ public class FunctionServiceImpl implements FunctionService {
 		final Root<Function> rootPersist = query.from(Function.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		
 		predicates.add(cb.and(rootPersist.get("prd").isNotNull()));
-
 
 		if (resource.getStatus() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
 		}
-
-		
 		if (resource.getPrd() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrd().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
 		}
-
 		if (resource.getTranType() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTranType().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
-		}	
-
+		}
 		if (resource.getTypeId() != null
 				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTypeId().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
 		}
-
-
 
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -111,8 +112,7 @@ public class FunctionServiceImpl implements FunctionService {
 		}
 		function = ModelMapperUtils.map(request, Function.class);
 		function.setCreatedDate(DateTimeUtil.getNow());
-		
-		
+
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, CreateFunctionDto.class);
 	}
@@ -124,9 +124,7 @@ public class FunctionServiceImpl implements FunctionService {
 		Optional<Function> opt = functionDao.findById(request.getId());
 		if (opt.isPresent()) {
 			Function function = ModelMapperUtils.map(request,Function.class);
-			
 			Function save = functionDao.save(function);
-
 			return ModelMapperUtils.map(save, FunctionDto.class);
 		}
 		return null;
@@ -157,5 +155,41 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	public List<String> getAllPrdName() {
 		return functionDao.getAllPrdName();
+	}
+
+	@Override
+	public FunctionAndProductFeeDto searchFunctionAndProductFree(SearchFunction searchFunction) {
+
+		Function function = functionDao.findByPrd(searchFunction.getPrd());
+		FunctionDto functionDto = null;
+		if (function != null) {
+			functionDto = ModelMapperUtils.map(function, FunctionDto.class);
+		}
+
+		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(searchFunction.getPrd());
+		ProductFeeDto productFeeDto = null;
+		if (productFeeEntity != null) {
+			productFeeDto = ModelMapperUtils.map(productFeeEntity, ProductFeeDto.class);
+		}
+		return new FunctionAndProductFeeDto(functionDto, productFeeDto);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public FunctionAndProductFeeDto updatePopup(UpdateFunctionAndProductFeeRq functionAndProductFeeRq) {
+		Optional<Function> optFunction = functionDao.findById(functionAndProductFeeRq.getFunction().getId());
+		Optional<ProductFeeEntity> optProductFee = productFeeDAO.findById(functionAndProductFeeRq.getProductFee().getId());
+		if (optFunction.isPresent() && optProductFee.isPresent()) {
+			Function function = ModelMapperUtils.map(functionAndProductFeeRq.getFunction(), Function.class);
+			Function saveFunction = functionDao.save(function);
+
+			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(functionAndProductFeeRq.getProductFee(), ProductFeeEntity.class);
+			ProductFeeEntity saveProductFeeEntity = productFeeDAO.save(productFeeEntity);
+
+			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
+			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFeeEntity, ProductFeeDto.class);
+			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
+		}
+		return null;
 	}
 }

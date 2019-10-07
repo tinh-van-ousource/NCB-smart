@@ -53,7 +53,6 @@ public class UpdateFunctionRequest {
 	private String createdBy;
 
 	@JsonFormat(pattern = "yyyy/M/d")
-
 	private Date createdDate;
 
 	private String prd;

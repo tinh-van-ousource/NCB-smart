@@ -2,6 +2,8 @@ package com.tvo.controller;
 
 import java.util.List;
 
+import com.tvo.dto.FunctionAndProductFeeDto;
+import com.tvo.request.UpdateFunctionAndProductFeeRq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,22 +32,24 @@ import com.tvo.service.FunctionServiceImpl;
 @RestController
 @RequestMapping(value = "/function")
 public class FunctionController {
+
 	@Autowired
-	FunctionServiceImpl functionService; 
+	FunctionServiceImpl functionService;
+
 	@GetMapping(value = "/search")
 	public ResponeData<Page<FunctionDto>> search(@ModelAttribute SearchFunction searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
-		 Page<FunctionDto> FunctionDtos = functionService.search(searchFunction, pageable);
+		Page<FunctionDto> FunctionDtos = functionService.search(searchFunction, pageable);
 		return new ResponeData<Page<FunctionDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, FunctionDtos) ;
 	}
+
 	@PostMapping(value="/create")
-		public ResponeData<CreateFunctionDto> create(@RequestBody CreateFunctionRequest request) {
+	public ResponeData<CreateFunctionDto> create(@RequestBody CreateFunctionRequest request) {
 		CreateFunctionDto dto = functionService.create(request);
 		if(dto == null) {
 			return new ResponeData<CreateFunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<CreateFunctionDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
-	
 
 	@PutMapping(value = "update")
 	public ResponeData<FunctionDto> update(@RequestBody UpdateFunctionRequest request) {
@@ -79,4 +83,21 @@ public class FunctionController {
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 
+	@GetMapping(value = "/getPopup")
+	public ResponeData<FunctionAndProductFeeDto> search(@ModelAttribute SearchFunction searchFunction) {
+		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.searchFunctionAndProductFree(searchFunction);
+		if (functionAndProductFeeDto == null) {
+			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto) ;
+	}
+
+	@PutMapping(value = "updatePopup")
+	public ResponeData<FunctionAndProductFeeDto> updatePopup(@RequestBody UpdateFunctionAndProductFeeRq request) {
+		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.updatePopup(request);
+		if (functionAndProductFeeDto == null) {
+			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto);
+	}
 }
