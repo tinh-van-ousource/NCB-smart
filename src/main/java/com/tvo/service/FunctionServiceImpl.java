@@ -158,15 +158,15 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionAndProductFeeDto searchFunctionAndProductFree(SearchFunction searchFunction) {
+	public FunctionAndProductFeeDto searchFunctionAndProductFree(String prd) {
 
-		Function function = functionDao.findByPrd(searchFunction.getPrd());
+		Function function = functionDao.findByPrd(prd);
 		FunctionDto functionDto = null;
 		if (function != null) {
 			functionDto = ModelMapperUtils.map(function, FunctionDto.class);
 		}
 
-		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(searchFunction.getPrd());
+		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(prd);
 		ProductFeeDto productFeeDto = null;
 		if (productFeeEntity != null) {
 			productFeeDto = ModelMapperUtils.map(productFeeEntity, ProductFeeDto.class);

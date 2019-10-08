@@ -25,7 +25,7 @@ public interface FunctionService {
 
 	List<String> getAllPrdName();
 
-	FunctionAndProductFeeDto searchFunctionAndProductFree(SearchFunction searchFunction);
+	FunctionAndProductFeeDto searchFunctionAndProductFree(String prd);
 
 	FunctionAndProductFeeDto updatePopup(UpdateFunctionAndProductFeeRq functionAndProductFeeRq);
 }

@@ -84,12 +84,12 @@ public class FunctionController {
 	}
 
 	@GetMapping(value = "/getPopup")
-	public ResponeData<FunctionAndProductFeeDto> search(@ModelAttribute SearchFunction searchFunction) {
-		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.searchFunctionAndProductFree(searchFunction);
+	public ResponeData<FunctionAndProductFeeDto> search(@RequestParam String prd) {
+		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.searchFunctionAndProductFree(prd);
 		if (functionAndProductFeeDto == null) {
 			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto) ;
+		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto);
 	}
 
 	@PutMapping(value = "updatePopup")
