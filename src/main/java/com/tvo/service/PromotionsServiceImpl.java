@@ -3,7 +3,6 @@ package com.tvo.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,9 +27,11 @@ import com.tvo.dao.PromotionsDAO;
 import com.tvo.dto.CreatePromotionsDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.dto.PromotionsDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
+import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 
 @Service
@@ -151,35 +152,6 @@ public class PromotionsServiceImpl implements PromotionsService {
 //
 //        return ModelMapperUtils.mapAll(promotionsDao.saveAll(promotionsList), PromotionsDto.class);
 //    }
-//
-//    @Override
-//    @Transactional
-//    public PromotionsDto update(UpdatePromotionRequest request) {
-//        Optional<Promotions> promotionBase = promotionsDao.findById(request.getId());
-//        if (promotionBase.isPresent()) {
-//            Promotions promotions = ModelMapperUtils.map(request, Promotions.class);
-//            return ModelMapperUtils.map(promotionsDao.save(promotions), PromotionsDto.class);
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Boolean delete(Long id) {
-//        Optional<Promotions> promotionBase = promotionsDao.findById(id);
-//        if (promotionBase.isPresent()) {
-//            Promotions promotions = promotionBase.get();
-//            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public PromotionsDto detail(Long id) {
-//        Optional<Promotions> promotionBase = promotionsDao.findById(id);
-//        return promotionBase.map(promotions -> ModelMapperUtils.map(promotions, PromotionsDto.class)).orElse(null);
-//    }
 
 	@Override
 	public PromotionsDto update(UpdatePromotionRequest request) {
@@ -196,15 +168,24 @@ public class PromotionsServiceImpl implements PromotionsService {
 	}
 
 	@Override
-	public PromotionsDto delete(String proCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public PromotionsDto delete(DeletePromotionsRequest deletePromotionsRequest) {
+		Promotions promotions = promotionsDao.findByProCode(deletePromotionsRequest.getProCode());
+		if (promotions == null) {
+			return null;
+		}
+		promotions = ModelMapperUtils.map(deletePromotionsRequest, Promotions.class);
+		promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+		Promotions save = promotionsDao.save(promotions);
+		return ModelMapperUtils.map(save, PromotionsDto.class);
 	}
 
 	@Override
 	public PromotionsDto detail(String proCode) {
-		// TODO Auto-generated method stub
-		return null;
+		Promotions promotions = promotionsDao.findByProCode(proCode);
+        if (promotions == null) {
+            return null;
+        }
+        return ModelMapperUtils.map(promotions, PromotionsDto.class);
 	}
 
 }
