@@ -52,6 +52,5 @@ public class DeleteFunctionRequest {
 
 	private String createdBy;
 
-
 	private String prd;
 }

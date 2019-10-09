@@ -14,10 +14,7 @@ import com.tvo.enums.StatusActivate;
 import com.tvo.model.City;
 import com.tvo.model.Function;
 import com.tvo.model.ProductFeeEntity;
-import com.tvo.request.CreateFunctionRequest;
-import com.tvo.request.DeleteFunctionRequest;
-import com.tvo.request.UpdateFunctionAndProductFeeRq;
-import com.tvo.request.UpdateFunctionRequest;
+import com.tvo.request.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -117,7 +114,6 @@ public class FunctionServiceImpl implements FunctionService {
 		return ModelMapperUtils.map(save, CreateFunctionDto.class);
 	}
 
-
 	@Override
 	@Transactional(readOnly = false)
 	public FunctionDto update(UpdateFunctionRequest request) {
@@ -137,7 +133,7 @@ public class FunctionServiceImpl implements FunctionService {
 		if (function == null) {
 			return null;
 		}
-		function = ModelMapperUtils.map(deleteFunctionRequest, Function.class);
+
 		function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
@@ -159,7 +155,6 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	public FunctionAndProductFeeDto searchFunctionAndProductFree(String prd) {
-
 		Function function = functionDao.findByPrd(prd);
 		FunctionDto functionDto = null;
 		if (function != null) {
@@ -188,6 +183,26 @@ public class FunctionServiceImpl implements FunctionService {
 
 			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
 			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFeeEntity, ProductFeeDto.class);
+			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	public FunctionAndProductFeeDto createFunction(CreateFunctionAndProductFeeRequest request) {
+		Function function = functionDao.findByPrd(request.getFunction().getPrd());
+		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(request.getProductFee().getGrprdId());
+		if (function == null && productFeeEntity == null) {
+			function = ModelMapperUtils.map(request.getFunction(), Function.class);
+			function.setCreatedDate(DateTimeUtil.getNow());
+			Function saveFunction = functionDao.save(function);
+			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
+
+			productFeeEntity = ModelMapperUtils.map(request.getProductFee(), ProductFeeEntity.class);
+			productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
+			ProductFeeEntity saveProductFee = productFeeDAO.save(productFeeEntity);
+			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFee, ProductFeeDto.class);
+
 			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
 		}
 		return null;

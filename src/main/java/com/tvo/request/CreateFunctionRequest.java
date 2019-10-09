@@ -53,6 +53,5 @@ public class CreateFunctionRequest {
 
 	private String createdBy;
 
-
 	private String prd;
 }

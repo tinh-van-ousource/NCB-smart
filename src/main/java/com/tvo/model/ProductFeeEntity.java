@@ -16,9 +16,9 @@ public class ProductFeeEntity implements Serializable {
     private static final long serialVersionUID = 687991492884005033L;
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_PRODUCT_FREE_SQ")
     @SequenceGenerator(sequenceName = "AI_CMS_PRODUCT_FREE_SQ", allocationSize = 1, name = "AI_CMS_PRODUCT_FREE_SQ")
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "GRPRD_ID")
