@@ -69,11 +69,9 @@ public class FileServiceImpl implements FileService {
 		String user = "cmsuat";
 		String pass = "123@123aA";
 		String sharedFolder = "CMSBanner";
-//		String sharedFolder = "Banner";
 		SMBClient client = new SMBClient();
 
 		try (Connection connection = client.connect("10.1.62.33")) {
-//		try (Connection connection = client.connect("10.52.20.10")) {
 			AuthenticationContext ac = new AuthenticationContext(null, null, "");
 			Session session = connection.authenticate(ac);
 			System.out.println("connect ok");
@@ -110,17 +108,49 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public UploadFileResponse uploadBannerFile(MultipartFile file) {
-		try {
-			String fileName = storeFile(this.fileBannerStorageLocation, file);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String fileName = sdf.format(new Date()) +  file.getOriginalFilename() ;
+ 
+		String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
+				.toUriString();
+		String user = "cmsuat";
+		String pass = "123@123aA";
+		String sharedFolder = "CMSBanner";
+		SMBClient client = new SMBClient();
 
-			String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
-					.toUriString();
+		try (Connection connection = client.connect("10.1.62.33")) {
+			AuthenticationContext ac = new AuthenticationContext(null, null, "");
+			Session session = connection.authenticate(ac);
+			System.out.println("connect ok");
+			// Connect to Share
+			OutputStream out = null;
+			try {
+				DiskShare share = (DiskShare) session.connectShare(sharedFolder);
+				Set<FileAttributes> fileAttributes = new HashSet<>();
+	            fileAttributes.add(FileAttributes.FILE_ATTRIBUTE_NORMAL);
+	            Set<SMB2CreateOptions> createOptions = new HashSet<>();
+	            createOptions.add(SMB2CreateOptions.FILE_RANDOM_ACCESS);
+	           com.hierynomus.smbj.share.File openFile = share.openFile("NewSmart/" + fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions);
+	            
+				out= openFile.getOutputStream();
+				out.write(file.getBytes());
+				out.flush();
 
-			return new UploadFileResponse(fileName, fileUploadUri);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(out != null) {
+					out.close();
+				}
+				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+
+		} finally {
+			client.close();
 		}
+		return new UploadFileResponse(fileName, fileUploadUri);
 	}
 
 	private String storeFile(Path path, MultipartFile file) {
