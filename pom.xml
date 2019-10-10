@@ -133,7 +133,11 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.6</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.hierynomus</groupId>
+			<artifactId>smbj</artifactId>
+			<version>0.9.1</version>
+		</dependency> 
 	</dependencies>
 
 	<build>
