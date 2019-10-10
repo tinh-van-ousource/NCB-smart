@@ -39,30 +39,30 @@ public class PromotionsController {
 		}
 		return new ResponeData<CreatePromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
-//    @PutMapping(value = "/update")
-//    public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
-//        PromotionsDto promotionDto = promotionsService.update(request);
-//        if (promotionDto != null) {
-//            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
-//        }
-//        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-//    }
-//
-//    @DeleteMapping(value = "/delete")
-//    public ResponeData<Boolean> delete(@RequestParam Long id) {
-//        boolean deleteFlag = promotionsService.delete(id);
-//        if (deleteFlag) {
-//            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
-//        }
-//        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
-//    }
-//
-//    @GetMapping(value = "/detail")
-//    public ResponeData<PromotionsDto> detail(@RequestParam Long id) {
-//        PromotionsDto dto = promotionsService.detail(id);
-//        if (dto == null) {
-//            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-//        }
-//        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
-//    }
+    @PutMapping(value = "/update")
+    public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
+        PromotionsDto promotionDto = promotionsService.update(request);
+        if (promotionDto != null) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponeData<Boolean> delete(@RequestParam Long id) {
+        boolean deleteFlag = promotionsService.delete(id);
+        if (deleteFlag) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+    }
+
+    @GetMapping(value = "/detail")
+    public ResponeData<PromotionsDto> detail(@RequestParam Long id) {
+        PromotionsDto dto = promotionsService.detail(id);
+        if (dto == null) {
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+    }
 }
