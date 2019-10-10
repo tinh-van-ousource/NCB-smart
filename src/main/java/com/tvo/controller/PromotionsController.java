@@ -4,9 +4,11 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.CreatePromotionsDto;
+import com.tvo.dto.FunctionDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.CreatePromotionsRequest;
+import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.PromotionsServiceImpl;
@@ -49,17 +51,17 @@ public class PromotionsController {
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponeData<Boolean> delete(@RequestParam Long id) {
-        boolean deleteFlag = promotionsService.delete(id);
-        if (deleteFlag) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
-        }
-        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+    public ResponeData<PromotionsDto> delete(@RequestBody DeletePromotionsRequest deletePromotionsRequest) {
+    	PromotionsDto promotionDto = promotionsService.delete(deletePromotionsRequest);
+		if (promotionDto == null) {
+			return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+		return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
     }
 
     @GetMapping(value = "/detail")
-    public ResponeData<PromotionsDto> detail(@RequestParam Long id) {
-        PromotionsDto dto = promotionsService.detail(id);
+    public ResponeData<PromotionsDto> detail(@RequestParam String proCode) {
+        PromotionsDto dto = promotionsService.detail(proCode);
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
