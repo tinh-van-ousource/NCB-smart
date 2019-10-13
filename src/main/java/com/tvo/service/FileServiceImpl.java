@@ -50,7 +50,7 @@ public class FileServiceImpl implements FileService {
 		this.fileBannerStorageLocation = Paths.get(fileBannerStorageProperties.getUploadDir()).toAbsolutePath()
 				.normalize();
 
-		try {
+		try {	
 			Files.createDirectories(this.fileStorageLocation);
 			Files.createDirectories(this.fileBannerStorageLocation);
 		} catch (Exception ex) {
@@ -64,15 +64,14 @@ public class FileServiceImpl implements FileService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String fileName = sdf.format(new Date()) +  file.getOriginalFilename() ;
  
-		String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
-				.toUriString();
+		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString();
 		String user = "cmsuat";
 		String pass = "123@123aA";
 		String sharedFolder = "CMSBanner";
 		SMBClient client = new SMBClient();
 
 		try (Connection connection = client.connect("10.1.62.33")) {
-			AuthenticationContext ac = new AuthenticationContext(null, null, "");
+			AuthenticationContext ac = new AuthenticationContext(user,pass.toCharArray(), "");
 			Session session = connection.authenticate(ac);
 			System.out.println("connect ok");
 			// Connect to Share
@@ -111,15 +110,14 @@ public class FileServiceImpl implements FileService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String fileName = sdf.format(new Date()) +  file.getOriginalFilename() ;
  
-		String fileUploadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
-				.toUriString();
+		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString();
 		String user = "cmsuat";
 		String pass = "123@123aA";
 		String sharedFolder = "CMSBanner";
 		SMBClient client = new SMBClient();
 
 		try (Connection connection = client.connect("10.1.62.33")) {
-			AuthenticationContext ac = new AuthenticationContext(null, null, "");
+			AuthenticationContext ac = new AuthenticationContext(user,pass.toCharArray(), "");
 			Session session = connection.authenticate(ac);
 			System.out.println("connect ok");
 			// Connect to Share
