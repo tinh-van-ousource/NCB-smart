@@ -102,14 +102,17 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     }
 
     @Override
-    public ParCardProductResDto update(ParCardProductUpdateReqDto parCardProductUpdateReqDto) {
-        ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(parCardProductUpdateReqDto.getPrdcode());
-        if (!ObjectUtils.isEmpty(parCardProductEntity)) {
-            ParCardProductEntity entity = parCardProductDao.save(
-                    ModelMapperUtils.map(parCardProductUpdateReqDto, ParCardProductEntity.class));
-            return ModelMapperUtils.map(entity, ParCardProductResDto.class);
+    public ParCardProductResDto update(ParCardProductCreateReqDto request) {
+    	ParCardProductEntity findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
+        if (!ObjectUtils.isEmpty(findByPrdcode)) {
+            fileService.deleteImage(AppConstant.RESOURCE_IMG, request.getFileName());
+            return null;
         }
-        return null;
+
+        ParCardProductEntity data = ModelMapperUtils.map(request, ParCardProductEntity.class);
+        ParCardProductEntity save = parCardProductDao.save(data);
+
+        return ModelMapperUtils.map(save, ParCardProductResDto.class);
     }
 
     @Override

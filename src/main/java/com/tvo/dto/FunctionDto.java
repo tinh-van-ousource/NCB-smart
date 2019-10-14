@@ -50,7 +50,6 @@ public class FunctionDto {
 
 	private String createdBy;
 
-
 	private Date createdDate;
 
 	private String prd;

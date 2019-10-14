@@ -1,10 +1,5 @@
 package com.tvo.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +56,6 @@ public class FileController {
     @PostMapping(value = "banner/uploadFile")
     public ResponeData<UploadFileResponse> uploadBannerFile(@RequestParam("img") MultipartFile file) {
         UploadFileResponse uploadFileResponse = fileService.uploadBannerFile(file);
-        uploadFileViaFTP(file);
 
         if (uploadFileResponse != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, uploadFileResponse);
@@ -78,44 +72,10 @@ public class FileController {
     @DeleteMapping(value = "banner/deleteFile")
     public ResponeData<Boolean> deleteBannerFile(String fileName) {
         boolean result = fileService.deleteImage(AppConstant.RESOURCE_BANNER_IMG, fileName);
-        if (result) {
+        if (result) {	
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
-    public void uploadFileViaFTP(MultipartFile fileUpload) {
-		String fileStorePath = "/CMSBanner/test.jpg";
-		FTPClient ftpClient = new FTPClient();
-		try {
-			ftpClient.connect(AppConstant.hostFTP);
-			ftpClient.login(AppConstant.userFTP, AppConstant.passFTP);
-			ftpClient.enterLocalPassiveMode();
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			
-			if (ftpClient.changeWorkingDirectory(AppConstant.fordelWorkingFTP)) {
-				InputStream inputStream = fileUpload.getInputStream();
-			    System.out.println("Start uploading first file");
-			    boolean done = ftpClient.storeFile(fileStorePath, inputStream);
-			    inputStream.close();
-			    if (done) {
-				   System.out.println("The first file is uploaded successfully.");
-			    }
-			}else {
-			   System.out.println("CMSBanner derectory is not existed.");
-			}
-		} catch (IOException ex) {
-			System.out.println("Error: " + ex.getMessage());
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (ftpClient.isConnected()) {
-					ftpClient.logout();
-					ftpClient.disconnect();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}}
-
 
 }
