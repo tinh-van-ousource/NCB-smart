@@ -1,7 +1,8 @@
 package com.tvo.service;
 
-import com.tvo.response.UploadFileResponse;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.tvo.response.UploadFileResponse;
 
 public interface FileService {
     String getImagePath(String directory, String imageName);
