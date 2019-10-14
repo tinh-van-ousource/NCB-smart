@@ -108,7 +108,7 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public UploadFileResponse uploadBannerFile(MultipartFile file) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		String fileName = sdf.format(new Date()) +  file.getOriginalFilename() ;
+		String fileName = sdf.format(new Date()) +  file.getOriginalFilename();
  
 		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString();
 		String user = "cmsuat";

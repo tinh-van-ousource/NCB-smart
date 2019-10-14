@@ -47,7 +47,7 @@ public class ParCardProductController {
     }
 
     @PutMapping(value = "update")
-    public ResponeData<ParCardProductResDto> update(@RequestBody ParCardProductUpdateReqDto parCardProductUpdateReqDto) {
+    public ResponeData<ParCardProductResDto> update(@RequestBody ParCardProductCreateReqDto parCardProductUpdateReqDto) {
         ParCardProductResDto parCardProduct = parCardProductService.update(parCardProductUpdateReqDto);
         if (parCardProduct != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);

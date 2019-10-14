@@ -72,7 +72,7 @@ public class FileController {
     @DeleteMapping(value = "banner/deleteFile")
     public ResponeData<Boolean> deleteBannerFile(String fileName) {
         boolean result = fileService.deleteImage(AppConstant.RESOURCE_BANNER_IMG, fileName);
-        if (result) {
+        if (result) {	
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);

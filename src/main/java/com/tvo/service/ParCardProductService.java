@@ -16,5 +16,5 @@ public interface ParCardProductService {
 
     ParCardProductResDto create(ParCardProductCreateReqDto parCardProductCreateReqDto);
 
-    ParCardProductResDto update(ParCardProductUpdateReqDto parCardProductUpdateReqDto);
+    ParCardProductResDto update(ParCardProductCreateReqDto parCardProductUpdateReqDto);
 }
