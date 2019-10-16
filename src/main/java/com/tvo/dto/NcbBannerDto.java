@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author Thanglt
@@ -36,5 +37,13 @@ public class NcbBannerDto {
     private LocalDateTime createdDate;
 
     private String actionScreen;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date scheduleStart;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date scheduleEnd;
+    
+    private Boolean oneTimeShow;
 
 }
