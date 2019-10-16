@@ -29,7 +29,4 @@ public class UpdateProductFeeRequest {
     private String feeType;
 
     private String createdUser;
-
-    @JsonFormat(pattern = "yyyy/M/d HH:mm:ss.SSS")
-    private Date createdTime;
 }
