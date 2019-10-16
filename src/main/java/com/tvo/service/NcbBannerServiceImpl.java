@@ -108,7 +108,7 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         ncbBanner.setCreatedDate(LocalDateTime.now());
         ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         return ModelMapperUtils.map(ncbBanner, NcbBannerDto.class);
-        return ModelMapperUtils.map(parCardProductEntity, ParCardProductResDto.class);
+        
     }
 
     @Override
