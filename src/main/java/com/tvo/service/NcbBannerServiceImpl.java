@@ -5,6 +5,7 @@ import com.tvo.controllerDto.SearchNcbBannerModel;
 import com.tvo.controllerDto.UpdateNcbBannerRequest;
 import com.tvo.dao.NcbBannerDao;
 import com.tvo.dto.NcbBannerDto;
+import com.tvo.dto.ParCardProductResDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.NcbBanner;
 import com.tvo.request.CreateNcbBannerRequest;
@@ -106,7 +107,8 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
         ncbBanner.setCreatedDate(LocalDateTime.now());
         ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
+        return ModelMapperUtils.map(ncbBanner, NcbBannerDto.class);
+        return ModelMapperUtils.map(parCardProductEntity, ParCardProductResDto.class);
     }
 
     @Override
