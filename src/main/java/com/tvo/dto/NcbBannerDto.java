@@ -1,13 +1,14 @@
 package com.tvo.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author Thanglt
@@ -27,7 +28,6 @@ public class NcbBannerDto {
 
     private String linkImg;
 
-    private String linkUrlVn;
 
     private String linkUrlEn;
 

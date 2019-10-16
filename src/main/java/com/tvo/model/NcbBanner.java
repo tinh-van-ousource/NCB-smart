@@ -45,8 +45,6 @@ public class NcbBanner implements Serializable {
     @Column(name = "LINK_IMG")
     private String linkImg;
 
-    @Column(name = "LINK_URL_VN")
-    private String linkUrlVn;
 
     @Column(name = "LINK_URL_EN")
     private String linkUrlEn;
