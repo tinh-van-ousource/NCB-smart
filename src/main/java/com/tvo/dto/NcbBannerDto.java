@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 public class NcbBannerDto {
     private String id;
 
@@ -30,11 +31,11 @@ public class NcbBannerDto {
 
 
     private String linkUrlEn;
-
-    private String status;
-
-    @JsonFormat(pattern = "yyyy/M/d")
-    private LocalDateTime createdDate;
+//
+//    private String status;
+//
+//    @JsonFormat(pattern = "yyyy/M/d")
+//    private LocalDateTime createdDate;
 
     private String actionScreen;
     
@@ -44,6 +45,6 @@ public class NcbBannerDto {
     @JsonFormat(pattern = "yyyy/M/d")
     private Date scheduleEnd;
     
-    private Boolean oneTimeShow;
+    private Character oneTimeShow;
 
 }

@@ -65,6 +65,6 @@ public class NcbBanner implements Serializable {
     private Date scheduleEnd;
     
     @Column(name = "ONE_TIME_SHOW")
-    private Boolean oneTimeShow;
+    private Character oneTimeShow;
 
 }

@@ -1,5 +1,6 @@
 package com.tvo.controllerDto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +17,6 @@ import lombok.Setter;
 @Setter
 public class UpdateNcbBannerRequest {
     private Long id;
-
     private String bannerCode;
 
     private String bannerName;
@@ -26,9 +26,12 @@ public class UpdateNcbBannerRequest {
 
     private String linkUrlEn;
 
-    private String status;
-
     private String actionScreen;
+    
+    private String status;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private LocalDateTime createdDate;
     
     @JsonFormat(pattern = "yyyy/M/d")
     private Date scheduleStart;
@@ -36,6 +39,6 @@ public class UpdateNcbBannerRequest {
     @JsonFormat(pattern = "yyyy/M/d")
     private Date scheduleEnd;
     
-    private Boolean oneTimeShow;
+    private Character oneTimeShow;
 
 }

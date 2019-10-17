@@ -1,5 +1,6 @@
 package com.tvo.request;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -27,12 +28,17 @@ public class CreateNcbBannerRequest {
 
     private String actionScreen;
     
+    private String status;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private LocalDateTime createdDate;
+    
     @JsonFormat(pattern = "yyyy/M/d")
     private Date scheduleStart;
     
     @JsonFormat(pattern = "yyyy/M/d")
     private Date scheduleEnd;
     
-    private Boolean oneTimeShow;
+    private Character oneTimeShow;
 
 }

@@ -35,7 +35,10 @@ public class NcbBannerController {
     @GetMapping(value = "search")
     public ResponeData<Page<NcbBannerDto>> searchNcbBanner(@ModelAttribute SearchNcbBannerModel searchModel,@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<NcbBannerDto> dts = ncbBannerService.searchNcbBanner(searchModel, pageable);
-        return new ResponeData<Page<NcbBannerDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+        if (dts.getTotalElements() == 0) {
+        	return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
     @GetMapping(value = "detail")
