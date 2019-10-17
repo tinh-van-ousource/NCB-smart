@@ -126,12 +126,11 @@ public class CityServiceImpl implements CityService{
 		return null;	
 	}
 	@Override
-	public CityDto delete(DeleteCityRequest deleterequest) {
-		City city = cityDao.findByCityCode(deleterequest.getCityCode());
+	public CityDto delete(Long cityId) {
+		City city = cityDao.findByCityId(cityId);
 		if (city == null) {
 			return null;
 		}
-		city = ModelMapperUtils.map(deleterequest, City.class);
 		city.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 		City save = cityDao.save(city);
 		return ModelMapperUtils.map(save, CityDto.class);
