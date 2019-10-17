@@ -16,4 +16,6 @@ public interface FunctionDAO extends JpaRepository<Function, Long>{
 
 	@Query("SELECT DISTINCT f.prdName FROM Function f WHERE f.prd IS NOT NULL ORDER BY f.prdName ASC")
 	List<String> getAllPrdName();
+
+	List<Function> findListByPrd(String prd);
 }

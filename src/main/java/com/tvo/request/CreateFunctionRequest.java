@@ -47,11 +47,11 @@ public class CreateFunctionRequest {
 
 	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
-	
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
 
 	private String createdBy;
+
+	@JsonFormat(pattern = "yyyy/M/d")
+	private Date createdDate;
 
 	private String prd;
 }

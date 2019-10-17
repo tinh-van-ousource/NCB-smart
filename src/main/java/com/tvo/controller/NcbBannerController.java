@@ -3,6 +3,7 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.SearchNcbBannerModel;
 import com.tvo.controllerDto.UpdateNcbBannerRequest;
+import com.tvo.dto.FunctionDto;
 import com.tvo.dto.NcbBannerDto;
 import com.tvo.request.CreateNcbBannerRequest;
 import com.tvo.response.ResponeData;
@@ -32,9 +33,11 @@ public class NcbBannerController {
     }
 
     @GetMapping(value = "search")
-    public ResponeData<Page<NcbBannerDto>> searchNcbBanner(@ModelAttribute SearchNcbBannerModel searchModel,
-                                                           @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+    public ResponeData<Page<NcbBannerDto>> searchNcbBanner(@ModelAttribute SearchNcbBannerModel searchModel,@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<NcbBannerDto> dts = ncbBannerService.searchNcbBanner(searchModel, pageable);
+        if (dts.getTotalElements() == 0) {
+        	return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
