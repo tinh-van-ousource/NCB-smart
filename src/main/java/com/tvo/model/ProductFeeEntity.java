@@ -47,4 +47,10 @@ public class ProductFeeEntity implements Serializable {
 
     @Column(name = "CREATED_TIME")
     private Date createdTime;
+
+    @Column(name = "CODE_FEE")
+    private String codeFee;
+
+    @Column(name = "TAX_PERCENT")
+    private String taxPercent;
 }
