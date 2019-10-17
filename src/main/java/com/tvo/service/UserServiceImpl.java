@@ -152,9 +152,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean deleteUser(String username) {
+    public Boolean deleteUser(Long userId) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        User user = userRepo.findByUserName(username);
+        User user = userRepo.findByUserId(userId);
         if (user != null) {
             user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
             user.setUpdatedBy(currentUserName);

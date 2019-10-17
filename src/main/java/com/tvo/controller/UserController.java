@@ -48,9 +48,9 @@ public class UserController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
     }
 
-    @DeleteMapping(value = "/{username}/delete")
-    public ResponeData<Boolean> deleteUser(@PathVariable("username") String username) {
-        Boolean result = userService.deleteUser(username);
+    @DeleteMapping(value = "/{userId}/delete")
+    public ResponeData<Boolean> deleteUser(@PathVariable("userId") Long userId) {
+        Boolean result = userService.deleteUser(userId);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }

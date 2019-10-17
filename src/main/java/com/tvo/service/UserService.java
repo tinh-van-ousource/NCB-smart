@@ -17,7 +17,7 @@ public interface UserService {
 
     ContentResDto getUserDetail(String username);
 
-    Boolean deleteUser(String username);
+    Boolean deleteUser(Long userId);
 
     ContentResDto update(UserUpdateReqDto userDto);
 
