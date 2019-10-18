@@ -6,6 +6,7 @@ import com.tvo.controllerDto.UpdateNcbBannerRequest;
 import com.tvo.dao.NcbBannerDao;
 import com.tvo.dto.NcbBannerDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.model.Function;
 import com.tvo.model.NcbBanner;
 import com.tvo.request.CreateNcbBannerRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,8 +38,10 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 
     @Autowired
     private NcbBannerDao ncbBannerDao;
-
-    private final EntityManager entityManager;
+    @Autowired
+	private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    private EntityManager entityManager;
 
     public NcbBannerServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -50,10 +54,11 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 
     }
 
-    private Object[] createNcbBannerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
+
+    public Object[] createNcbBannerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
                                                 SearchNcbBannerModel searchModel) {
         final Root<NcbBanner> rootPersist = query.from(NcbBanner.class);
-        final List<Predicate> predicates = new ArrayList<Predicate>();
+        final List<Predicate> predicates = new ArrayList<Predicate>(6);
 
         if (searchModel.getBannerCode() != null && !StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
             predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("bannerCode")),
@@ -66,6 +71,19 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));
         }
+//        if (searchModel.getStatus() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getStatus().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), searchModel.getStatus().toUpperCase())));
+//		}
+//		if (searchModel.getBannerCode() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), searchModel.getBannerCode().toUpperCase())));
+//		}
+//		if (searchModel.getBannerName() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getBannerName().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), searchModel.getBannerName().toUpperCase())));
+//		}
+		
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -74,9 +92,9 @@ public class NcbBannerServiceImpl implements NcbBannerService {
 
     @Override
     public Page<NcbBannerDto> searchNcbBanner(SearchNcbBannerModel searchModel, Pageable pageable) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<NcbBanner> query = cb.createQuery(NcbBanner.class);
-        Object[] queryObjs = createNcbBannerRootPersist(cb, query, searchModel);
+        Object[] queryObjs = this.createNcbBannerRootPersist(cb, query, searchModel);
         Root<NcbBanner> root = (Root<NcbBanner>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
@@ -88,7 +106,7 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         List<NcbBanner> objects = typedQuery.getResultList();
 
         List<NcbBannerDto> ncbBannerDtos = ModelMapperUtils.mapAll(objects, NcbBannerDto.class);
-        CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
+        CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(NcbBanner.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
@@ -106,8 +124,10 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
         ncbBanner.setCreatedDate(LocalDateTime.now());
         ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        return ModelMapperUtils.map(ncbBannerDao.save(ncbBanner), NcbBannerDto.class);
+        NcbBanner save = ncbBannerDao.save(ncbBanner);
+        return ModelMapperUtils.map(save, NcbBannerDto.class);
     }
+
 
     @Override
     public NcbBannerDto update(UpdateNcbBannerRequest request) {

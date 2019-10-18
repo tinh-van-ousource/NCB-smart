@@ -1,12 +1,15 @@
 package com.tvo.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 /**
  * @author Thanglt
@@ -16,7 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 public class NcbBannerDto {
     private String id;
 
@@ -26,7 +29,6 @@ public class NcbBannerDto {
 
     private String linkImg;
 
-    private String linkUrlVn;
 
     private String linkUrlEn;
 
@@ -36,5 +38,13 @@ public class NcbBannerDto {
     private LocalDateTime createdDate;
 
     private String actionScreen;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date scheduleStart;
+    
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date scheduleEnd;
+    
+    private Character oneTimeShow;
 
 }
