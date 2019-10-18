@@ -191,14 +191,14 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	public FunctionAndProductFeeDto createFunction(CreateFunctionAndProductFeeRequest request) {
 		List<Function> functions = functionDao.findListByPrd(request.getFunction().getPrd());
-		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(request.getProductFee().getGrprdId());
-		if (functions.isEmpty() && productFeeEntity == null) {
+		List<ProductFeeEntity> productFeeEntities = productFeeDAO.findListByGrprdId(request.getProductFee().getGrprdId());
+		if (functions.isEmpty() && productFeeEntities.isEmpty()) {
 			Function function = ModelMapperUtils.map(request.getFunction(), Function.class);
 			function.setCreatedDate(DateTimeUtil.getNow());
 			Function saveFunction = functionDao.save(function);
 			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
 
-			productFeeEntity = ModelMapperUtils.map(request.getProductFee(), ProductFeeEntity.class);
+			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(request.getProductFee(), ProductFeeEntity.class);
 			productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
 			ProductFeeEntity saveProductFee = productFeeDAO.save(productFeeEntity);
 			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFee, ProductFeeDto.class);
