@@ -10,12 +10,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteCityRequest {
+	private String proId;
 
-	private String cityCode;
-
-	private String cityName;
+	private String shrtName;
 
 	private String status;
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
 }

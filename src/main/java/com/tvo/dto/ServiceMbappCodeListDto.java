@@ -6,11 +6,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCityDto {
-
-	private String proId;
-
-	private String shrtName;
-
-	private String status;
+public class ServiceMbappCodeListDto {
+	private String serviceCode;
+	
+	private String serviceName;
 }

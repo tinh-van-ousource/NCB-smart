@@ -32,6 +32,10 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getIdCard())) {
             queryString.append(" AND sr.idCard = :idCard ");
         }
+        
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getIdCard())) {
+            queryString.append(" AND sr.type = :type ");
+        }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             queryString.append(" AND sr.service = :service ");
@@ -47,6 +51,10 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getToDate())) {
             queryString.append(" AND sr.requestDate <= :toDate ");
+        }
+        
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getType().toString())) {
+            queryString.append(" AND sr.type <= :type ");
         }
 
         queryString.append(" ORDER BY sr.requestDate DESC ");
@@ -76,7 +84,9 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getToDate())) {
             query.setParameter("toDate", serviceRegisterSearchReqDto.getToDate());
         }
-
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getType())) {
+            query.setParameter("type", serviceRegisterSearchReqDto.getType());
+        }
         query.setFirstResult(AppConstant.getOffset(serviceRegisterSearchReqDto.getPage(), serviceRegisterSearchReqDto.getSize()))
                 .setMaxResults(serviceRegisterSearchReqDto.getSize());
 
@@ -101,6 +111,10 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             queryString.append(" AND sr.service = :service ");
+        }
+        
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
+            queryString.append(" AND sr.type = :type ");
         }
 
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {

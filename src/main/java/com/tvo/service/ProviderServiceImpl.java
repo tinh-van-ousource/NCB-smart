@@ -1,18 +1,8 @@
 package com.tvo.service;
 
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchProviderReqDto;
-import com.tvo.dao.ProviderDAO;
-import com.tvo.dto.ProviderResDto;
-import com.tvo.enums.StatusActivate;
-import com.tvo.model.ProviderEntity;
-import com.tvo.request.ProviderCreateReqDto;
-import com.tvo.request.ProviderUpdateReqDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,11 +11,28 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchProviderReqDto;
+import com.tvo.dao.ProviderDAO;
+import com.tvo.dto.CompDroplistBranchDto;
+import com.tvo.dto.ProviderResDto;
+import com.tvo.dto.ServiceMbappCodeListDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.ProviderEntity;
+import com.tvo.request.ProviderCreateReqDto;
+import com.tvo.request.ProviderUpdateReqDto;
+
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
@@ -127,5 +134,18 @@ public class ProviderServiceImpl implements ProviderService {
         }
         return null;
     }
+
+	@Override
+	public List<ServiceMbappCodeListDto> getServiceCodeList() {
+		List<ServiceMbappCodeListDto> serviceCodeDtoList =new ArrayList<>();
+		List<Object> listComp = providerDao.getListServiceCode();
+        for (Object depart : listComp) {
+            Object[] departs = (Object[]) depart;
+            serviceCodeDtoList.add(
+                    new ServiceMbappCodeListDto(departs[0].toString(), departs[1].toString()));
+        }
+
+        return serviceCodeDtoList;
+	}
 
 }

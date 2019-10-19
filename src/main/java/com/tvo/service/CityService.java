@@ -26,7 +26,7 @@ public interface CityService {
 	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable);
 	public CityDto update(UpdateCityRequest request);
 	
-	public CityDto delete(DeleteCityRequest request);
+	public Boolean delete(String proId);
 	
-	public CityDto detail(Long cityId);
+	public CityDto detail(String proId);
 }
