@@ -3,6 +3,7 @@ package com.tvo.service;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dao.NcbBranchDao;
+import com.tvo.dto.CompDroplistBranchDto;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
 import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
@@ -178,5 +179,18 @@ public class NcbBranchServiceImpl implements NcbBranchService {
 
         return ncbActiveDepartOnlyResDtoList;
     }
+
+	@Override
+	public List<CompDroplistBranchDto> getCompDroplist() {
+		List<CompDroplistBranchDto> compDroplistBranchDtoList =new ArrayList<>();
+		List<Object> listComp = ncbBranchDao.getListCompCode();
+        for (Object depart : listComp) {
+            Object[] departs = (Object[]) depart;
+            compDroplistBranchDtoList.add(
+                    new CompDroplistBranchDto(departs[0].toString(), departs[1].toString()));
+        }
+
+        return compDroplistBranchDtoList;
+	}
 
 }
