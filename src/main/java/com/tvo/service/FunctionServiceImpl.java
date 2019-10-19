@@ -6,12 +6,10 @@ import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dao.ProductFeeDAO;
-import com.tvo.dto.CityDto;
 import com.tvo.dto.FunctionAndProductFeeDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.dto.ProductFeeDto;
 import com.tvo.enums.StatusActivate;
-import com.tvo.model.City;
 import com.tvo.model.Function;
 import com.tvo.model.ProductFeeEntity;
 import com.tvo.request.*;
@@ -115,7 +113,7 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 	@Override
 	@Transactional(readOnly = false)
-	public FunctionDto update(UpdateFunctionRequest request) {
+	public FunctionDto update(FunctionRequest request) {
 		Optional<Function> opt = functionDao.findById(request.getId());
 		if (opt.isPresent()) {
 			Function function = ModelMapperUtils.map(request,Function.class);
@@ -153,24 +151,24 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionAndProductFeeDto searchFunctionAndProductFree(String prd) {
-		Function function = functionDao.findByPrd(prd);
+	public FunctionAndProductFeeDto searchFunctionAndProductFree(Long functionId, Long productFeeId) {
+		Optional<Function> function = functionDao.findById(functionId);
 		FunctionDto functionDto = null;
-		if (function != null) {
-			functionDto = ModelMapperUtils.map(function, FunctionDto.class);
+		if (function.isPresent()) {
+			functionDto = ModelMapperUtils.map(function.get(), FunctionDto.class);
 		}
 
-		ProductFeeEntity productFeeEntity = productFeeDAO.findByGrprdId(prd);
+		Optional<ProductFeeEntity> productFeeEntity = productFeeDAO.findById(productFeeId);
 		ProductFeeDto productFeeDto = null;
-		if (productFeeEntity != null) {
-			productFeeDto = ModelMapperUtils.map(productFeeEntity, ProductFeeDto.class);
+		if (productFeeEntity.isPresent()) {
+			productFeeDto = ModelMapperUtils.map(productFeeEntity.get(), ProductFeeDto.class);
 		}
 		return new FunctionAndProductFeeDto(functionDto, productFeeDto);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public FunctionAndProductFeeDto updatePopup(UpdateFunctionAndProductFeeRq functionAndProductFeeRq) {
+	public FunctionAndProductFeeDto updateFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq) {
 		Optional<Function> optFunction = functionDao.findById(functionAndProductFeeRq.getFunction().getId());
 		Optional<ProductFeeEntity> optProductFee = productFeeDAO.findById(functionAndProductFeeRq.getProductFee().getId());
 		if (optFunction.isPresent() && optProductFee.isPresent()) {
@@ -188,10 +186,28 @@ public class FunctionServiceImpl implements FunctionService {
 	}
 
 	@Override
-	public FunctionAndProductFeeDto createFunction(CreateFunctionAndProductFeeRequest request) {
-		List<Function> functions = functionDao.findListByPrd(request.getFunction().getPrd());
-		List<ProductFeeEntity> productFeeEntities = productFeeDAO.findListByGrprdId(request.getProductFee().getGrprdId());
-		if (functions.isEmpty() && productFeeEntities.isEmpty()) {
+	public FunctionAndProductFeeDto deleteFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq) {
+		Optional<Function> optFunction = functionDao.findById(functionAndProductFeeRq.getFunction().getId());
+		Optional<ProductFeeEntity> optProductFee = productFeeDAO.findById(functionAndProductFeeRq.getProductFee().getId());
+		if (optFunction.isPresent() && optProductFee.isPresent()) {
+			Function function = ModelMapperUtils.map(functionAndProductFeeRq.getFunction(), Function.class);
+			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+			Function saveFunction = functionDao.save(function);
+
+			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(functionAndProductFeeRq.getProductFee(), ProductFeeEntity.class);
+			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
+			ProductFeeDto productFeeDto = ModelMapperUtils.map(productFeeEntity, ProductFeeDto.class);
+
+			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	public FunctionAndProductFeeDto createFunctionAndProductFee(CreateFunctionAndProductFeeRequest request) {
+		//List<Function> functions = functionDao.findListByPrd(request.getFunction().getPrd());
+		//List<ProductFeeEntity> productFeeEntities = productFeeDAO.findListByGrprdId(request.getProductFee().getGrprdId());
+		//if (functions.isEmpty() && productFeeEntities.isEmpty()) {
 			Function function = ModelMapperUtils.map(request.getFunction(), Function.class);
 			function.setCreatedDate(DateTimeUtil.getNow());
 			Function saveFunction = functionDao.save(function);
@@ -203,7 +219,7 @@ public class FunctionServiceImpl implements FunctionService {
 			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFee, ProductFeeDto.class);
 
 			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
-		}
-		return null;
+		//}
+		//return null;
 	}
 }

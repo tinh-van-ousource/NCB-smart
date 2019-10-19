@@ -39,7 +39,7 @@ public class FunctionController {
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<FunctionDto> update(@RequestBody UpdateFunctionRequest request) {
+	public ResponeData<FunctionDto> update(@RequestBody FunctionRequest request) {
 		FunctionDto functionDto = functionService.update(request);
 		if (functionDto == null) {
 			return new ResponeData<FunctionDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -72,26 +72,35 @@ public class FunctionController {
 	}
 
 	@GetMapping(value = "/getPopup")
-	public ResponeData<FunctionAndProductFeeDto> search(@RequestParam String prd) {
-		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.searchFunctionAndProductFree(prd);
+	public ResponeData<FunctionAndProductFeeDto> search(@RequestParam Long functionId, @RequestParam Long productFeeId) {
+		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.searchFunctionAndProductFree(functionId, productFeeId);
 		if (functionAndProductFeeDto == null) {
 			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto);
 	}
 
-	@PutMapping(value = "updatePopup")
-	public ResponeData<FunctionAndProductFeeDto> updatePopup(@RequestBody UpdateFunctionAndProductFeeRq request) {
-		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.updatePopup(request);
+	@PutMapping(value = "/updatePopup")
+	public ResponeData<FunctionAndProductFeeDto> updateFunctionAndProductFee(@RequestBody FunctionAndProductFeeRq request) {
+		FunctionAndProductFeeDto functionAndProductFeeDto = functionService.updateFunctionAndProductFee(request);
 		if (functionAndProductFeeDto == null) {
 			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto);
 	}
+
+    @DeleteMapping(value = "/deleteFunction")
+    public ResponeData<FunctionAndProductFeeDto> deleteFunctionAndProductFee(@RequestBody FunctionAndProductFeeRq request) {
+        FunctionAndProductFeeDto functionAndProductFeeDto = functionService.deleteFunctionAndProductFee(request);
+        if (functionAndProductFeeDto == null) {
+            return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+        }
+        return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionAndProductFeeDto);
+    }
 
 	@PostMapping(value="/createFunction")
-	public ResponeData<FunctionAndProductFeeDto> createFunction(@RequestBody CreateFunctionAndProductFeeRequest request) {
-		FunctionAndProductFeeDto dto = functionService.createFunction(request);
+	public ResponeData<FunctionAndProductFeeDto> createFunctionAndProductFee(@RequestBody CreateFunctionAndProductFeeRequest request) {
+		FunctionAndProductFeeDto dto = functionService.createFunctionAndProductFee(request);
 		if(dto == null) {
 			return new ResponeData<FunctionAndProductFeeDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
