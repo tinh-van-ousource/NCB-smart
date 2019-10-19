@@ -1,31 +1,26 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.CreatePromotionsDto;
-import com.tvo.dto.FunctionDto;
 import com.tvo.dto.PromotionsDto;
-import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.CreatePromotionsRequest;
 import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 import com.tvo.response.ResponeData;
-import com.tvo.service.PromotionsServiceImpl;
+import com.tvo.service.PromotionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/promotions")
 public class PromotionsController {
 
     @Autowired
-    PromotionsServiceImpl promotionsService;
+    private PromotionsService promotionsService;
 
     @GetMapping(value = "/search")
     public ResponeData<Page<PromotionsDto>> search(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
@@ -41,6 +36,7 @@ public class PromotionsController {
 		}
 		return new ResponeData<CreatePromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
+
     @PutMapping(value = "/update")
     public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
         PromotionsDto promotionDto = promotionsService.update(request);

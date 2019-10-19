@@ -11,10 +11,11 @@ import java.util.Date;
 @Getter
 @Setter
 public class Promotions {
+
     @Id
     @Column(name = "PRO_CODE")
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
-//    @SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_FUNCTION_SQ")
+    @SequenceGenerator(sequenceName = "AI_CMS_FUNCTION_SQ", allocationSize = 1, name = "AI_CMS_FUNCTION_SQ")
     private String proCode;
 
     @Column(name = "PRO_NAME")
@@ -37,6 +38,4 @@ public class Promotions {
 
     @Column(name = "CREATED_BY")
     private String createdBy;
-
-
 }
