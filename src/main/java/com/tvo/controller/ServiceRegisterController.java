@@ -4,6 +4,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
+import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
 import org.springframework.http.MediaType;
@@ -52,6 +53,11 @@ public class ServiceRegisterController {
         } else {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, serviceRegisterGetDetailResDto);
         }
+    }
+    @GetMapping(value = "depart/type-list")
+    public ResponeData<List<String>> getAllActivatedDepart() {
+        List<String> serviceList = serviceRegisterService.getListTypeServiceMbapp();
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceList);
     }
 
 }

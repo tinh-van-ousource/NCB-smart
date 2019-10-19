@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServiceRegisterServiceImpl implements ServiceRegisterService {
-
+	
     private ServiceRegisterRepo serviceRegisterRepo;
     private ServiceRegisterLogRepo serviceRegisterLogRepo;
 
@@ -52,14 +52,14 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
 
             convertStringToDateForServiceRegisterList(serviceRegisterEntityList);
 
-            if (serviceRegisterSearchReqDto.getType() != null
-                    && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
+//            if (serviceRegisterSearchReqDto.getType() != null
+//                    && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
                 serviceRegisterSearchResDtoList =
                         ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
-            } else {
-                serviceRegisterSearchResDtoList =
-                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
-            }
+//            } else {
+//                serviceRegisterSearchResDtoList =
+//                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
+//            }
 
             contentResDto.setContent(serviceRegisterSearchResDtoList);
             contentResDto.setTotal(totalServiceRegister);
@@ -223,5 +223,12 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
             }
         });
     }
+
+	@Override
+	public List<String> getListTypeServiceMbapp() {
+		return serviceRegisterRepo.getListTypeService();
+	}
+
+	
 
 }

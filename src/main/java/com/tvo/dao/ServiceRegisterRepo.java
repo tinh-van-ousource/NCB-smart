@@ -1,13 +1,15 @@
 package com.tvo.dao;
 
-import com.tvo.model.ServiceRegisterEntity;
-import com.tvo.model.ServiceRegisterLogEntity;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.tvo.dto.ListTypeServiceRegisterDto;
+import com.tvo.model.ServiceRegisterEntity;
+import com.tvo.model.ServiceRegisterLogEntity;
 
 @Repository
 public interface ServiceRegisterRepo extends JpaRepository<ServiceRegisterEntity, Long>, ServiceRegisterRepoCustom {
@@ -17,4 +19,7 @@ public interface ServiceRegisterRepo extends JpaRepository<ServiceRegisterEntity
 
     @Query("SELECT DISTINCT sr.service FROM ServiceRegisterEntity sr ORDER BY sr.service ASC")
     List<String> retrieveAllService();
+    
+    @Query("SELECT DISTINCT sr.type FROM ServiceRegisterEntity sr")
+    List<String> getListTypeService();
 }
