@@ -12,21 +12,24 @@ import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dto.FunctionDto;
 
 public interface FunctionService {
-//	public List<FunctionDto> findAll();
-	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable);
-	public CreateFunctionDto create(CreateFunctionRequest request);
-	public FunctionDto update(UpdateFunctionRequest request);
 
-	public FunctionDto delete(DeleteFunctionRequest deleteFunctionRequest);
-	public FunctionDto detail(String prd);
+	//	public List<FunctionDto> findAll();
+	Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable);
+	CreateFunctionDto create(CreateFunctionRequest request);
+	FunctionDto update(FunctionRequest request);
+
+	FunctionDto delete(DeleteFunctionRequest deleteFunctionRequest);
+	FunctionDto detail(String prd);
 
 	List<String> getAllPrdName();
 
-	FunctionAndProductFeeDto searchFunctionAndProductFree(String prd);
+	FunctionAndProductFeeDto searchFunctionAndProductFree(Long functionId, Long productFeeId);
 
-	FunctionAndProductFeeDto updatePopup(UpdateFunctionAndProductFeeRq functionAndProductFeeRq);
+	FunctionAndProductFeeDto updateFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq);
 
-	FunctionAndProductFeeDto createFunction(CreateFunctionAndProductFeeRequest request);
+	FunctionAndProductFeeDto deleteFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq);
+
+	FunctionAndProductFeeDto createFunctionAndProductFee(CreateFunctionAndProductFeeRequest request);
 }
 
 

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProductFeeRequest {
+public class ProductFeeRequest {
 
     private Long id;
 

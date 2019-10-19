@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateFunctionAndProductFeeRq {
+public class FunctionAndProductFeeRq {
 
-    private UpdateFunctionRequest function;
+    private FunctionRequest function;
 
-    private UpdateProductFeeRequest productFee;
+    private ProductFeeRequest productFee;
 }

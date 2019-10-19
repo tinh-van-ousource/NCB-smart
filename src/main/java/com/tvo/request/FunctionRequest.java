@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateFunctionRequest {
+public class FunctionRequest {
 
 	private Long id;
 
