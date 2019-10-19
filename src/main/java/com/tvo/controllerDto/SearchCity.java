@@ -1,14 +1,16 @@
 package com.tvo.controllerDto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchCity {
-	private String cityCode;
+	private String proId;
 
-	private String cityName;
-	
-	private String status;
+	private String shrtName;
 }

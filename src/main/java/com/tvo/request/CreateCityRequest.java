@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCityRequest {
-	private Long cityId;
-	
-	private String cityCode;
 
-	private String cityName;
+	private String proId;
 
-	private String status;
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
-	
+	private String shrtName;
+
 }

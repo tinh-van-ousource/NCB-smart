@@ -50,8 +50,8 @@ public class CityController {
 		return new ResponeData<CityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, cityDto);
 	}
 	@GetMapping(value = "/detail")
-	    public ResponeData<CityDto> detail(@RequestParam Long cityId) {
-		CityDto dto = cityService.detail(cityId);
+	    public ResponeData<CityDto> detail(@RequestParam String proId) {
+		CityDto dto = cityService.detail(proId);
 	        if (dto == null) {
 	            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 	        }
@@ -60,12 +60,12 @@ public class CityController {
 
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<CityDto> delete(@RequestBody DeleteCityRequest deleterequest) {
-		CityDto cityDto = cityService.delete(deleterequest);
-		if (cityDto == null) {
-			return new ResponeData<CityDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-		}
-		return new ResponeData<CityDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, cityDto);
-	}
+	public ResponeData<Boolean> delete(@RequestParam String proId) {
+		boolean deleteFlag = cityService.delete(proId);
+        if (deleteFlag) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        }
+        return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+    }
 }
  	
