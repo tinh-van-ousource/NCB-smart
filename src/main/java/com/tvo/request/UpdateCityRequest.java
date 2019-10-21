@@ -6,17 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCityRequest {
-private Long cityId;
-	
-	private String cityCode;
+	private String proId;
 
-	private String cityName;
+	private String shrtName;
 
 	private String status;
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
 }

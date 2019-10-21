@@ -1,16 +1,14 @@
-package com.tvo.controllerDto;
+package com.tvo.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchCity {
-	private String proId;
-
-	private String shrtName;
+public class ListTypeServiceRegisterDto {
+	 private String type;
 }

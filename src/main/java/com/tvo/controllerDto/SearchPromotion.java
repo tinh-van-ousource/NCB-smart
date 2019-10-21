@@ -1,4 +1,4 @@
-package com.tvo.controllerDto;
+package com.tvo.controllerDto;	
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,9 @@ import lombok.Setter;
 @Getter
 public class SearchPromotion {
 	
-	private String promotionName;
+	private String proCode;
+	
+	private String proName;
 
 	private String status;
 

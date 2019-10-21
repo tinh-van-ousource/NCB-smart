@@ -1,20 +1,16 @@
-package com.tvo.dto;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package com.tvo.request;
 
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Getter;
+import lombok.Setter;
 @Setter
 @Getter
-public class PromotionsDto {
+public class DeletePromotionsRequest {
 
-  	private String proCode;
+	private String proCode;
 
     private String proName;
 

@@ -20,13 +20,10 @@ package com.tvo.dto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CityDto {
-		private Long cityId;
-	
-		private String cityCode;
-	
-		private String cityName;
-	
-		private String status;
-		@JsonFormat(pattern = "yyyy/M/d")
-		private Date createdDate;
+
+	private String proId;
+
+	private String shrtName;
+
+	private String status;
 }

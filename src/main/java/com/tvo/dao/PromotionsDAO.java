@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PromotionsDAO extends JpaRepository<Promotions, Long> {
-    Promotions findByid(Long id);
+public interface PromotionsDAO extends JpaRepository<Promotions, String> {
+	public Promotions findByProCode(String proCode);
 }

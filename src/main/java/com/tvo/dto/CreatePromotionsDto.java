@@ -1,25 +1,23 @@
 package com.tvo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Date;
 
-@AllArgsConstructor
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-public class PromotionsDto {
-
-  	private String proCode;
-
+@AllArgsConstructor
+public class CreatePromotionsDto {
+	private String proCode;
+	
     private String proName;
-
+    
     private String status;
-
+    
     private String proDes;
     
 	@JsonFormat(pattern = "yyyy/M/d")
@@ -28,9 +26,5 @@ public class PromotionsDto {
 	@JsonFormat(pattern = "yyyy/M/d")
     private Date toDate;
 	
-	@JsonFormat(pattern = "yyyy/M/d")
-    private Date createdDate;
-
     private String createdBy;
-
 }

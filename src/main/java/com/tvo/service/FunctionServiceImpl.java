@@ -111,7 +111,6 @@ public class FunctionServiceImpl implements FunctionService {
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, CreateFunctionDto.class);
 	}
-
 	@Override
 	@Transactional(readOnly = false)
 	public FunctionDto update(FunctionRequest request) {
