@@ -12,7 +12,7 @@ public interface ProductFeeService {
 
 	ProductFeeDto update(ProductFeeRequest productFeeRequest);
 
-	Boolean delete(ProductFeeRequest productFeeRequest);
+	Boolean delete(Long productFeeRequest);
 }
 
 

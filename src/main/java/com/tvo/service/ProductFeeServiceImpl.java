@@ -49,6 +49,7 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         Optional<ProductFeeMbApp> optProductFee = productFeeDAO.findById(productFeeRequest.getId());
         if (optProductFee.isPresent()) {
             ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
+            productFeeEntity.setCreatedTime(optProductFee.get().getCreatedTime());
             ProductFeeMbApp saveProductFeeEntity = productFeeDAO.save(productFeeEntity);
             ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFeeEntity, ProductFeeDto.class);
             return ModelMapperUtils.map(productFeeDto, ProductFeeDto.class);
@@ -57,11 +58,10 @@ public class ProductFeeServiceImpl implements ProductFeeService {
     }
 
     @Override
-    public Boolean delete(ProductFeeRequest productFeeRequest) {
-        Optional<ProductFeeMbApp> productFeeMbApp = productFeeDAO.findById(productFeeRequest.getId());
+    public Boolean delete(Long productFeeId) {
+        Optional<ProductFeeMbApp> productFeeMbApp = productFeeDAO.findById(productFeeId);
         if (productFeeMbApp.isPresent()) {
-            ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
-            productFeeDAO.delete(productFeeEntity);
+            productFeeDAO.deleteById(productFeeId);
             return true;
         }
         return false;

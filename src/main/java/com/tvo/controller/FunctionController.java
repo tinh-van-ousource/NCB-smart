@@ -29,8 +29,8 @@ public class FunctionController {
 
 	@GetMapping(value = "/search")
 	public ResponeData<Page<FunctionDto>> search(@ModelAttribute SearchFunction searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
-		Page<FunctionDto> FunctionDtos = functionService.search(searchFunction, pageable);
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, FunctionDtos);
+		Page<FunctionDto> functionDtos = functionService.search(searchFunction, pageable);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDtos);
 	}
 
 	@PostMapping(value="/create")
@@ -88,8 +88,8 @@ public class FunctionController {
 	}
 
 	@DeleteMapping(value = "/fee/delete")
-	public ResponeData<Boolean> deleteFunctionFee(@RequestBody ProductFeeRequest request) {
-		Boolean isDelete = productFeeService.delete(request);
+	public ResponeData<Boolean> deleteFunctionFee(@RequestParam Long functionFeeId) {
+		Boolean isDelete = productFeeService.delete(functionFeeId);
 		if (isDelete == false) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 		}
