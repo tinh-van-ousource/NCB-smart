@@ -5,14 +5,12 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
-import com.tvo.dao.ProductFeeDAO;
-import com.tvo.dto.FunctionAndProductFeeDto;
 import com.tvo.dto.FunctionDto;
-import com.tvo.dto.ProductFeeDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
-import com.tvo.model.ProductFeeEntity;
-import com.tvo.request.*;
+import com.tvo.request.CreateFunctionRequest;
+import com.tvo.request.DeleteFunctionRequest;
+import com.tvo.request.FunctionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,6 +32,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class FunctionServiceImpl implements FunctionService {
+
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 
@@ -41,10 +40,7 @@ public class FunctionServiceImpl implements FunctionService {
 	private EntityManager entityManager;
 
 	@Autowired
-	FunctionDAO functionDao;
-
-	@Autowired
-	private ProductFeeDAO productFeeDAO;
+	private FunctionDAO functionDao;
 
 	@Override
 	public Page<FunctionDto> search(SearchFunction searchFunction, Pageable pageable) {
@@ -111,6 +107,7 @@ public class FunctionServiceImpl implements FunctionService {
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, CreateFunctionDto.class);
 	}
+
 	@Override
 	@Transactional(readOnly = false)
 	public FunctionDto update(FunctionRequest request) {
@@ -130,7 +127,6 @@ public class FunctionServiceImpl implements FunctionService {
 		if (function == null) {
 			return null;
 		}
-
 		function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
 		Function save = functionDao.save(function);
 		return ModelMapperUtils.map(save, FunctionDto.class);
@@ -150,76 +146,4 @@ public class FunctionServiceImpl implements FunctionService {
 		return functionDao.getAllPrdName();
 	}
 
-	@Override
-	public FunctionAndProductFeeDto searchFunctionAndProductFree(Long functionId, Long productFeeId) {
-		Optional<Function> function = functionDao.findById(functionId);
-		FunctionDto functionDto = null;
-		if (function.isPresent()) {
-			functionDto = ModelMapperUtils.map(function.get(), FunctionDto.class);
-		}
-
-		Optional<ProductFeeEntity> productFeeEntity = productFeeDAO.findById(productFeeId);
-		ProductFeeDto productFeeDto = null;
-		if (productFeeEntity.isPresent()) {
-			productFeeDto = ModelMapperUtils.map(productFeeEntity.get(), ProductFeeDto.class);
-		}
-		return new FunctionAndProductFeeDto(functionDto, productFeeDto);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public FunctionAndProductFeeDto updateFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq) {
-		Optional<Function> optFunction = functionDao.findById(functionAndProductFeeRq.getFunction().getId());
-		Optional<ProductFeeEntity> optProductFee = productFeeDAO.findById(functionAndProductFeeRq.getProductFee().getId());
-		if (optFunction.isPresent() && optProductFee.isPresent()) {
-			Function function = ModelMapperUtils.map(functionAndProductFeeRq.getFunction(), Function.class);
-			Function saveFunction = functionDao.save(function);
-
-			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(functionAndProductFeeRq.getProductFee(), ProductFeeEntity.class);
-			ProductFeeEntity saveProductFeeEntity = productFeeDAO.save(productFeeEntity);
-
-			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
-			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFeeEntity, ProductFeeDto.class);
-			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
-		}
-		return null;
-	}
-
-	@Override
-	public FunctionAndProductFeeDto deleteFunctionAndProductFee(FunctionAndProductFeeRq functionAndProductFeeRq) {
-		Optional<Function> optFunction = functionDao.findById(functionAndProductFeeRq.getFunction().getId());
-		Optional<ProductFeeEntity> optProductFee = productFeeDAO.findById(functionAndProductFeeRq.getProductFee().getId());
-		if (optFunction.isPresent() && optProductFee.isPresent()) {
-			Function function = ModelMapperUtils.map(functionAndProductFeeRq.getFunction(), Function.class);
-			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-			Function saveFunction = functionDao.save(function);
-
-			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(functionAndProductFeeRq.getProductFee(), ProductFeeEntity.class);
-			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
-			ProductFeeDto productFeeDto = ModelMapperUtils.map(productFeeEntity, ProductFeeDto.class);
-
-			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
-		}
-		return null;
-	}
-
-	@Override
-	public FunctionAndProductFeeDto createFunctionAndProductFee(CreateFunctionAndProductFeeRequest request) {
-		//List<Function> functions = functionDao.findListByPrd(request.getFunction().getPrd());
-		//List<ProductFeeEntity> productFeeEntities = productFeeDAO.findListByGrprdId(request.getProductFee().getGrprdId());
-		//if (functions.isEmpty() && productFeeEntities.isEmpty()) {
-			Function function = ModelMapperUtils.map(request.getFunction(), Function.class);
-			function.setCreatedDate(DateTimeUtil.getNow());
-			Function saveFunction = functionDao.save(function);
-			FunctionDto functionDto = ModelMapperUtils.map(saveFunction, FunctionDto.class);
-
-			ProductFeeEntity productFeeEntity = ModelMapperUtils.map(request.getProductFee(), ProductFeeEntity.class);
-			productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
-			ProductFeeEntity saveProductFee = productFeeDAO.save(productFeeEntity);
-			ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFee, ProductFeeDto.class);
-
-			return ModelMapperUtils.map(new FunctionAndProductFeeDto(functionDto, productFeeDto), FunctionAndProductFeeDto.class);
-		//}
-		//return null;
-	}
 }

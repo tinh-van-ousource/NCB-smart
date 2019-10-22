@@ -1,6 +1,6 @@
 package com.tvo.dao;
 
-import com.tvo.model.ProductFeeEntity;
+import com.tvo.model.ProductFeeMbApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductFeeDAO extends JpaRepository<ProductFeeEntity, Long> {
+public interface ProductFeeDAO extends JpaRepository<ProductFeeMbApp, Long> {
 
-    ProductFeeEntity findByGrprdId(String grprdId);
+    ProductFeeMbApp findByGrprdId(String grprdId);
 
-    @Query("SELECT pfe FROM ProductFeeEntity pfe WHERE pfe.grprdId = :grprdId")
-    List<ProductFeeEntity> findListByGrprdId(String grprdId);
+    @Query("SELECT pfe FROM ProductFeeMbApp pfe WHERE pfe.grprdId = :grprdId")
+    List<ProductFeeMbApp> findListByGrprdId(String grprdId);
 }

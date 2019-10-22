@@ -23,6 +23,8 @@ public class ProductFeeDto {
 
     private int feeMax;
 
+    private String ccy;
+
     private String prdCode;
 
     private String feeType;

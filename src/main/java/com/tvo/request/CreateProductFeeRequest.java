@@ -26,12 +26,10 @@ public class CreateProductFeeRequest {
 
     private String feeType;
 
+    private String ccy;
+
     private String createdUser;
 
     @JsonFormat(pattern = "yyyy/M/d HH:mm:ss.SSS")
     private Date createdTime;
-
-    private String codeFee;
-
-    private String taxPercent;
 }

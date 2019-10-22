@@ -21,13 +21,11 @@ public class ProductFeeRequest {
 
     private int feeMax;
 
+    private String ccy;
+
     private String prdCode;
 
     private String feeType;
 
     private String createdUser;
-
-    private String codeFee;
-
-    private String taxPercent;
 }
