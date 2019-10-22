@@ -115,17 +115,19 @@ public class NcbBannerServiceImpl implements NcbBannerService {
     }
 
     @Override
-    public NcbBannerDto create(CreateNcbBannerRequest request) {
-        NcbBanner ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
-        if(ncbBanner != null) {
-            return null;
+    public NcbBanner create(CreateNcbBannerRequest request) {
+        NcbBanner ncbBanner = new NcbBanner();
+        if (StringUtils.equals(request.getBannerCode(), "HOME_BANNER")) {
+            ncbBanner = createNcbBanner(request);
+        } else {
+            ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
+            if(ncbBanner != null ) {
+                return null;
+            } else {    
+                ncbBanner = createNcbBanner(request);
+            }
         }
-
-        ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
-        ncbBanner.setCreatedDate(LocalDateTime.now());
-        ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        NcbBanner save = ncbBannerDao.save(ncbBanner);
-        return ModelMapperUtils.map(save, NcbBannerDto.class);
+        return ncbBanner;
     }
 
 
@@ -155,4 +157,10 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         return false;
     }
 
+    private NcbBanner createNcbBanner(CreateNcbBannerRequest request) {
+        NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
+        ncbBanner.setCreatedDate(LocalDateTime.now());
+        ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        return ncbBannerDao.save(ncbBanner);
+    }
 }
