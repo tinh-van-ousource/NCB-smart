@@ -27,5 +27,9 @@ public class ProductFeeRequest {
 
     private String feeType;
 
+    private String codeFee;
+
+    private String taxPercent;
+
     private String createdUser;
 }

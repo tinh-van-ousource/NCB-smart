@@ -43,6 +43,12 @@ public class ProductFeeMbApp implements Serializable {
   @Column(name = "CCY")
   private String ccy;
 
+  @Column(name = "CODE_FEE")
+  private String codeFee;
+
+  @Column(name = "TAX_PERCENT")
+  private String taxPercent;
+
   @Column(name = "CREATED_USER")
   private String createdUser;
 

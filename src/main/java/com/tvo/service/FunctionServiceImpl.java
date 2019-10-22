@@ -9,7 +9,6 @@ import com.tvo.dto.FunctionDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
 import com.tvo.request.CreateFunctionRequest;
-import com.tvo.request.DeleteFunctionRequest;
 import com.tvo.request.FunctionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -122,23 +121,24 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public FunctionDto delete(DeleteFunctionRequest deleteFunctionRequest) {
-		Function function = functionDao.findByPrd(deleteFunctionRequest.getPrd());
-		if (function == null) {
-			return null;
+	public FunctionDto delete(Long functionId) {
+		Optional<Function> opt = functionDao.findById(functionId);
+		if (opt.isPresent()) {
+			Function function = opt.get();
+			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+			Function save = functionDao.save(function);
+			return ModelMapperUtils.map(save, FunctionDto.class);
 		}
-		function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-		Function save = functionDao.save(function);
-		return ModelMapperUtils.map(save, FunctionDto.class);
+		return null;
 	}
 
 	@Override
-	public FunctionDto detail(String prd) {
-		Function function = functionDao.findByPrd(prd);
-        if (function == null) {
-            return null;
+	public FunctionDto detail(Long functionId) {
+		Optional<Function> optFunction = functionDao.findById(functionId);
+        if (optFunction.isPresent()) {
+			return ModelMapperUtils.map(optFunction, FunctionDto.class);
         }
-        return ModelMapperUtils.map(function, FunctionDto.class);
+		return null;
 	}
 
 	@Override

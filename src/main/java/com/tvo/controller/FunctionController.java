@@ -3,6 +3,7 @@ package com.tvo.controller;
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
+import com.tvo.controllerDto.SearchProductFee;
 import com.tvo.dto.FunctionDto;
 import com.tvo.dto.ProductFeeDto;
 import com.tvo.request.*;
@@ -52,8 +53,8 @@ public class FunctionController {
 	}
 
 	@DeleteMapping(value = "/delete")
-	public ResponeData<FunctionDto> delete(@RequestBody DeleteFunctionRequest deleteRequest) {
-		FunctionDto functionDto = functionService.delete(deleteRequest);
+	public ResponeData<FunctionDto> delete(@RequestParam Long functionId) {
+		FunctionDto functionDto = functionService.delete(functionId);
 		if (functionDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
@@ -61,8 +62,8 @@ public class FunctionController {
 	}
 
 	@GetMapping(value = "/detail")
-	public ResponeData<FunctionDto> detail(@RequestParam String prd) {
-		FunctionDto dto = functionService.detail(prd);
+	public ResponeData<FunctionDto> detail(@RequestParam Long functionId) {
+		FunctionDto dto = functionService.detail(functionId);
 		if (dto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
@@ -103,6 +104,12 @@ public class FunctionController {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDto);
+	}
+
+	@GetMapping(value = "/fee/search")
+	public ResponeData<Page<ProductFeeDto>> searchFunctionFee(@ModelAttribute SearchProductFee searchProductFee, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+		Page<ProductFeeDto> productFeeDtos = productFeeService.search(searchProductFee, pageable);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDtos);
 	}
 
 	@GetMapping("getAllPrdName")

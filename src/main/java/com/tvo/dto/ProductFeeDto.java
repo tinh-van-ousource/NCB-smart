@@ -17,17 +17,22 @@ public class ProductFeeDto {
 
     private String prdName;
 
-    private int feeAmount;
+    private String feeAmount;
 
-    private int feeMin;
+    private String feeMin;
 
-    private int feeMax;
-
-    private String ccy;
+    private String feeMax;
 
     private String prdCode;
 
     private String feeType;
 
+    private String ccy;
+
+    private String codeFee;
+
+    private String taxPercent;
+
     private String createdUser;
+
 }
