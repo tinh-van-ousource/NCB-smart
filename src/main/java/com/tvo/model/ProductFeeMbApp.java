@@ -47,7 +47,7 @@ public class ProductFeeMbApp implements Serializable {
   private String codeFee;
 
   @Column(name = "TAX_PERCENT")
-  private String taxPercent;
+  private Integer taxPercent;
 
   @Column(name = "CREATED_USER")
   private String createdUser;

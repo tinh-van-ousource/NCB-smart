@@ -42,12 +42,11 @@ public class ProductFeeServiceImpl implements ProductFeeService {
 
     @Override
     public ProductFeeDto detail(Long productFeeId) {
-        Optional<ProductFeeMbApp> productFeeEntity = productFeeDAO.findById(productFeeId);
-        ProductFeeDto productFeeDto = null;
-        if (productFeeEntity.isPresent()) {
-            productFeeDto = ModelMapperUtils.map(productFeeEntity.get(), ProductFeeDto.class);
+        Optional<ProductFeeMbApp> optProductFee = productFeeDAO.findById(productFeeId);
+        if (optProductFee.isPresent()) {
+            return ModelMapperUtils.map(optProductFee.get(), ProductFeeDto.class);
         }
-        return productFeeDto;
+        return null;
     }
 
     @Override
@@ -90,14 +89,14 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<ProductFeeMbApp> objects = typedQuery.getResultList();
-        List<ProductFeeDto> FunctionDtos = ModelMapperUtils.mapAll(objects, ProductFeeDto.class);
+        List<ProductFeeDto> functionDtos = ModelMapperUtils.mapAll(objects, ProductFeeDto.class);
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(ProductFeeMbApp.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
-        return new PageImpl<>(FunctionDtos, pageable, total);
+        return new PageImpl<>(functionDtos, pageable, total);
     }
 
     @Override
