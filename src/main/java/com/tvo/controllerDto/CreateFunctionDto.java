@@ -11,6 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreateFunctionDto {
 
+	private Long id;
+
 	private String prdName;
 
 	private String tranType;
