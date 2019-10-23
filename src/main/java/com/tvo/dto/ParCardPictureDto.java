@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParCardPictureDto {
-	private Long id; 
     
 	private String fileName;
 

@@ -16,5 +16,4 @@ public class CreateParCardPictureRequest {
 
 	private String note;
 
-	private String status;
 }

@@ -20,16 +20,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-@IdClass(ParConfigCompositeKey.class)
 public class ParCardPiture implements Serializable{
-	private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_PICTURE")
-    @SequenceGenerator(sequenceName = "AI_PAR_CARD_SQ", allocationSize = 1, name = "ID_PICTURE")
-    @Column(name = "ID")
-    private Long id;
-    
     @Column(name = "FILE_NAME")
 	private String fileName;
 
