@@ -94,7 +94,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             queryString.append(" AND sr.service = :service ");
         }
-        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
+        if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getType())) {
             queryString.append(" AND sr.type = :type ");
         }
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getStatus())) {
