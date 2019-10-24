@@ -104,7 +104,7 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     @Override
     public ParCardProductResDto update(ParCardProductCreateReqDto request) {
     	ParCardProductEntity findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
-        if (!ObjectUtils.isEmpty(findByPrdcode)) {
+        if (ObjectUtils.isEmpty(findByPrdcode)) {
             fileService.deleteImage(AppConstant.RESOURCE_IMG, request.getFileName());
             return null;
         }
