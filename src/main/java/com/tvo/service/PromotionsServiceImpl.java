@@ -25,13 +25,11 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dao.PromotionsDAO;
 import com.tvo.dto.CreatePromotionsDto;
-import com.tvo.dto.FunctionDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
 import com.tvo.model.Promotions;
 import com.tvo.request.CreatePromotionsRequest;
-import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 
 @Service
@@ -76,18 +74,13 @@ public class PromotionsServiceImpl implements PromotionsService {
         final List<Predicate> predicates = new ArrayList<>();
 
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proId")),
-					resource.getProCode().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proId")), resource.getProCode().toUpperCase())));
 		}
-
         if (StringUtils.isNotBlank(resource.getProName())) {
-            predicates.add(cb.and(cb.equal(rootPersist.get("proName"),
-                    resource.getProName())));
+            predicates.add(cb.and(cb.equal(rootPersist.get("proName"), resource.getProName())));
         }
-        
         if (StringUtils.isNotBlank(resource.getStatus())) {
-            predicates.add(cb.and(cb.equal(rootPersist.get("status"),
-                    resource.getStatus())));
+            predicates.add(cb.and(cb.equal(rootPersist.get("status"), resource.getStatus())));
         }
 //        predicates.add(cb.and(rootPersist.get("prd").isNull()));
 
@@ -109,49 +102,6 @@ public class PromotionsServiceImpl implements PromotionsService {
 		Promotions save = promotionsDao.save(promotions);
 		return ModelMapperUtils.map(save, CreatePromotionsDto.class);
     }
-//    @Override
-//    public List<PromotionsDto> create(CreatePromotionsRequest request) {
-//        Date now = DateTimeUtil.getNow();
-//        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-//        List<Promotions> promotionsList = new ArrayList<>();
-//        Promotions promotionBase = ModelMapperUtils.map(request, Promotions.class);
-//        promotionBase.setCreatedDate(now);
-//        promotionBase.setCreatedBy(currentUserName);
-//        promotionBase.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-//
-//        Promotions promotions1 = ModelMapperUtils.map(promotionBase, new Promotions());
-//        promotions1.setTypeId("QLTK");
-//        promotions1.setPercentage(request.getPercentage1());
-//        promotions1.setFromDate(request.getFromDate1());
-//        promotions1.setToDate(request.getToDate1());
-//        promotionsList.add(promotions1);
-//
-//        Promotions promotions2 = ModelMapperUtils.map(promotionBase, new Promotions());
-//        promotions2.setTypeId("CK");
-//        promotions2.setTranType("URT");
-//        promotions2.setPercentage(request.getPercentage2());
-//        promotions2.setFromDate(request.getFromDate2());
-//        promotions2.setToDate(request.getToDate2());
-//        promotionsList.add(promotions2);
-//
-//        Promotions promotions3 = ModelMapperUtils.map(promotionBase, new Promotions());
-//        promotions3.setTypeId("CK");
-//        promotions3.setTranType("ISL");
-//        promotions3.setPercentage(request.getPercentage3());
-//        promotions3.setFromDate(request.getFromDate3());
-//        promotions3.setToDate(request.getToDate3());
-//        promotionsList.add(promotions3);
-//
-//        Promotions promotions4 = ModelMapperUtils.map(promotionBase, new Promotions());
-//        promotions4.setTypeId("CK");
-//        promotions4.setTranType("IBT");
-//        promotions4.setPercentage(request.getPercentage4());
-//        promotions4.setFromDate(request.getFromDate4());
-//        promotions4.setToDate(request.getToDate4());
-//        promotionsList.add(promotions4);
-//
-//        return ModelMapperUtils.mapAll(promotionsDao.saveAll(promotionsList), PromotionsDto.class);
-//    }
 
 	@Override
 	public PromotionsDto update(UpdatePromotionRequest request) {
@@ -168,15 +118,14 @@ public class PromotionsServiceImpl implements PromotionsService {
 	}
 
 	@Override
-	public PromotionsDto delete(DeletePromotionsRequest deletePromotionsRequest) {
-		Promotions promotions = promotionsDao.findByProCode(deletePromotionsRequest.getProCode());
-		if (promotions == null) {
-			return null;
+	public Boolean delete(String proCode) {
+		Promotions promotions = promotionsDao.findByProCode(proCode);
+		if (promotions != null) {
+            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            promotionsDao.save(promotions);
+            return true;
 		}
-		promotions = ModelMapperUtils.map(deletePromotionsRequest, Promotions.class);
-		promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-		Promotions save = promotionsDao.save(promotions);
-		return ModelMapperUtils.map(save, PromotionsDto.class);
+        return false;
 	}
 
 	@Override

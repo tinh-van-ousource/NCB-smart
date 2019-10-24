@@ -23,9 +23,6 @@ public class UpdatePromotionRequest {
 	
 	@JsonFormat(pattern = "yyyy/M/d")
     private Date toDate;
-	
-	@JsonFormat(pattern = "yyyy/M/d")
-    private Date createdDate;
 
     private String createdBy;
 

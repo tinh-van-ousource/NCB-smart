@@ -5,7 +5,6 @@ import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.CreatePromotionsDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.request.CreatePromotionsRequest;
-import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.PromotionsService;
@@ -32,9 +31,9 @@ public class PromotionsController {
     public ResponeData<CreatePromotionsDto> create(@RequestBody CreatePromotionsRequest request) {
     	CreatePromotionsDto dto = promotionsService.create(request);
 		if(dto == null) {
-			return new ResponeData<CreatePromotionsDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		return new ResponeData<CreatePromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @PutMapping(value = "/update")
@@ -47,12 +46,12 @@ public class PromotionsController {
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponeData<PromotionsDto> delete(@RequestBody DeletePromotionsRequest deletePromotionsRequest) {
-    	PromotionsDto promotionDto = promotionsService.delete(deletePromotionsRequest);
-		if (promotionDto == null) {
-			return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+    public ResponeData<Boolean> delete(@RequestParam String proCode) {
+        Boolean isDetele = promotionsService.delete(proCode);
+		if (isDetele == false) {
+			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 		}
-		return new ResponeData<PromotionsDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
     @GetMapping(value = "/detail")

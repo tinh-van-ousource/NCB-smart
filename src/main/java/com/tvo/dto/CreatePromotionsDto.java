@@ -25,6 +25,8 @@ public class CreatePromotionsDto {
 	
 	@JsonFormat(pattern = "yyyy/M/d")
     private Date toDate;
-	
+
+    private Date createdDate;
+
     private String createdBy;
 }

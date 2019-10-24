@@ -7,7 +7,6 @@ import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.CreatePromotionsDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.request.CreatePromotionsRequest;
-import com.tvo.request.DeletePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 
 public interface PromotionsService {
@@ -16,10 +15,10 @@ public interface PromotionsService {
 
 	CreatePromotionsDto create(CreatePromotionsRequest request);
 
-	public PromotionsDto update(UpdatePromotionRequest request);
+	PromotionsDto update(UpdatePromotionRequest request);
 
-	public PromotionsDto delete(DeletePromotionsRequest deletePromotionRequest);
+	Boolean delete(String proCode);
 
-	public PromotionsDto detail(String proCode);
+	PromotionsDto detail(String proCode);
 
 }

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PromotionsDAO extends JpaRepository<Promotions, String> {
-	public Promotions findByProCode(String proCode);
+
+	Promotions findByProCode(String proCode);
 }
