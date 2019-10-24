@@ -63,7 +63,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         List<PromotionsDto> PromotionsDtos = ModelMapperUtils.mapAll(objects, PromotionsDto.class);
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-        countQuery.select(cbTotal.count(countQuery.from(Function.class)));
+        countQuery.select(cbTotal.count(countQuery.from(Promotions.class)));
         countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
         return new PageImpl<>(PromotionsDtos, pageable, total);
