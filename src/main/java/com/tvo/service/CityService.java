@@ -7,7 +7,6 @@ import com.tvo.controllerDto.SearchCity;
 import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
 import com.tvo.request.CreateCityRequest;
-import com.tvo.request.DeleteCityRequest;
 import com.tvo.request.UpdateCityRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +24,8 @@ public interface CityService {
 	public CreateCityDto createCity(CreateCityRequest request) ;
 	public Page<CityDto> searchCity(SearchCity searchCity, Pageable pageable);
 	public CityDto update(UpdateCityRequest request);
+
+	public CityDto delete(String cityId);
 	
-	public CityDto delete(Long cityId);
-	
-	public CityDto detail(Long cityId);
+	public CityDto detail(String proId);
 }

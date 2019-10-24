@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProductFeeRequest {
+public class ProductFeeRequest {
 
     private Long id;
 
@@ -21,13 +21,15 @@ public class UpdateProductFeeRequest {
 
     private int feeMax;
 
+    private String ccy;
+
     private String prdCode;
 
     private String feeType;
 
-    private String createdUser;
-
     private String codeFee;
 
     private String taxPercent;
+
+    private String createdUser;
 }

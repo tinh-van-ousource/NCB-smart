@@ -13,33 +13,24 @@ import java.util.Date;
 @Setter
 @Getter
 public class PromotionsDto {
-    private Long id;
 
-    private String tranType;
+  	private String proCode;
 
-    private String typeId;
+    private String proName;
 
-    private String customerType;
+    private String status;
 
-    private String promotionName;
-
-    private String promotion;
-
-    private String percentage;
-
-    @JsonFormat(pattern = "yyyy-M-d")
+    private String proDes;
+    
+	@JsonFormat(pattern = "yyyy/M/d")
     private Date fromDate;
-
-    @JsonFormat(pattern = "yyyy-M-d")
+	
+	@JsonFormat(pattern = "yyyy/M/d")
     private Date toDate;
+	
+	@JsonFormat(pattern = "yyyy/M/d")
+    private Date createdDate;
 
-	private String prdName;
-
-	private String status;
-
-	private String createdBy;
-
-    @JsonFormat(pattern = "yyyy-M-d")
-	private Date createdDate;
+    private String createdBy;
 
 }

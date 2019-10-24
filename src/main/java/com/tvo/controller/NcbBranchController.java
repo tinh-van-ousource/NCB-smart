@@ -1,8 +1,25 @@
 package com.tvo.controller;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBranchModel;
+import com.tvo.dto.CompDroplistBranchDto;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
 import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.dto.NcbBranchDto;
@@ -11,14 +28,6 @@ import com.tvo.request.CreateNcbBranchRequest;
 import com.tvo.request.UpdateNcbBranchRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbBranchService;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author Thanglt
@@ -41,6 +50,12 @@ public class NcbBranchController {
     @GetMapping(value = "branch/activated-list")
     public ResponeData<List<NcbActiveBranchOnlyResDto>> getAllActivatedBranch() {
 		List<NcbActiveBranchOnlyResDto> res = ncbBranchService.getAllActivatedBranch();
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
+    }
+    
+    @GetMapping(value = "branch/list-comp-codename")
+    public ResponeData<List<CompDroplistBranchDto>> getDroplistCodeName() {
+		List<CompDroplistBranchDto> res = ncbBranchService.getCompDroplist();
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
     @GetMapping(value = "depart/activated-list")

@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCityDto {
-	
-	private String cityCode;
 
-	private String cityName;
+	private String proId;
+
+	private String shrtName;
 
 	private String status;
 }

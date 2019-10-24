@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface FunctionDAO extends JpaRepository<Function, Long>{
-	public Function findByTypeId(String typeId);
-	public Function findByPrdName(String prdName);
-	public Function findByPrd(String prd);
-	public Function findByid(Long id);
+
+	Function findByTypeId(String typeId);
+	Function findByPrdName(String prdName);
+	Function findByPrd(String prd);
 
 	@Query("SELECT DISTINCT f.prdName FROM Function f WHERE f.prd IS NOT NULL ORDER BY f.prdName ASC")
 	List<String> getAllPrdName();

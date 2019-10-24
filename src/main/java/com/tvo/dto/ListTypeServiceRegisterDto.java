@@ -5,13 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class FunctionAndProductFeeDto {
-
-    private FunctionDto function;
-
-    private ProductFeeDto productFee;
+@AllArgsConstructor
+public class ListTypeServiceRegisterDto {
+	 private String type;
 }

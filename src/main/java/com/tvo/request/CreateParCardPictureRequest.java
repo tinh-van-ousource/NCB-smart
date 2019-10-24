@@ -1,5 +1,7 @@
 package com.tvo.request;
 
+import com.tvo.dto.ParCardPictureDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateFunctionAndProductFeeRq {
+public class CreateParCardPictureRequest {
+	private String fileName;
 
-    private UpdateFunctionRequest function;
+	private String linkUrl;
 
-    private UpdateProductFeeRequest productFee;
+	private String note;
+
 }

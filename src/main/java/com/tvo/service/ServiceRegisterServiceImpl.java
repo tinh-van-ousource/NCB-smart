@@ -11,6 +11,7 @@ import com.tvo.dto.*;
 import com.tvo.enums.ServiceRegisterSearchType;
 import com.tvo.model.ServiceRegisterEntity;
 import com.tvo.model.ServiceRegisterLogEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,25 +26,19 @@ import java.util.stream.Collectors;
 @Service
 public class ServiceRegisterServiceImpl implements ServiceRegisterService {
 
+    @Autowired
     private ServiceRegisterRepo serviceRegisterRepo;
-    private ServiceRegisterLogRepo serviceRegisterLogRepo;
 
-    public ServiceRegisterServiceImpl(ServiceRegisterRepo serviceRegisterRepo,
-                                      ServiceRegisterLogRepo serviceRegisterLogRepo) {
-        this.serviceRegisterRepo = serviceRegisterRepo;
-        this.serviceRegisterLogRepo = serviceRegisterLogRepo;
-    }
+    @Autowired
+    private ServiceRegisterLogRepo serviceRegisterLogRepo;
 
     @Override
     public ContentResDto getServiceRegisterList(ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
         serviceRegisterSearchReqDto.setFromDate(serviceRegisterSearchReqDto.getFromDate().replace("/", ""));
         serviceRegisterSearchReqDto.setToDate(serviceRegisterSearchReqDto.getToDate().replace("/", ""));
 
-        List<ServiceRegisterEntity> serviceRegisterEntityList =
-                serviceRegisterRepo.retrieveListServiceRegister(serviceRegisterSearchReqDto);
-
-        Long totalServiceRegister =
-                serviceRegisterRepo.retrieveListServiceRegisterCount(serviceRegisterSearchReqDto);
+        List<ServiceRegisterEntity> serviceRegisterEntityList = serviceRegisterRepo.retrieveListServiceRegister(serviceRegisterSearchReqDto);
+        Long totalServiceRegister = serviceRegisterRepo.retrieveListServiceRegisterCount(serviceRegisterSearchReqDto);
 
         ContentResDto contentResDto = new ContentResDto(Collections.EMPTY_LIST, 0L);
 
@@ -52,45 +47,36 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
 
             convertStringToDateForServiceRegisterList(serviceRegisterEntityList);
 
-            if (serviceRegisterSearchReqDto.getType() != null
-                    && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
+//            if (serviceRegisterSearchReqDto.getType() != null
+//                    && serviceRegisterSearchReqDto.getType().equals(ServiceRegisterSearchType.ACCOUNT.getType())) {
                 serviceRegisterSearchResDtoList =
                         ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchCardResDto.class);
-            } else {
-                serviceRegisterSearchResDtoList =
-                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
-            }
+//            } else {
+//                serviceRegisterSearchResDtoList =
+//                        ModelMapperUtils.mapAll(serviceRegisterEntityList, ServiceRegisterSearchAllResDto.class);
+//            }
 
             contentResDto.setContent(serviceRegisterSearchResDtoList);
             contentResDto.setTotal(totalServiceRegister);
-            return contentResDto;
         }
-
         return contentResDto;
     }
 
     @Override
     public ContentResDto getServiceRegisterDetailById(Long id) {
         ServiceRegisterGetDetailResDto serviceRegisterGetDetailResDto = new ServiceRegisterGetDetailResDto();
-
         Optional<ServiceRegisterEntity> serviceRegisterEntity = serviceRegisterRepo.findById(id);
-
         ContentResDto contentResDto = new ContentResDto();
 
         if (serviceRegisterEntity.isPresent()) {
             serviceRegisterGetDetailResDto = ModelMapperUtils.map(serviceRegisterEntity.get(), ServiceRegisterGetDetailResDto.class);
-
-            List<ServiceRegisterLogEntity> serviceRegisterLogEntityList =
-                    serviceRegisterRepo.retrieveServiceRegisterLogByServiceRegisterId(id);
-
+            List<ServiceRegisterLogEntity> serviceRegisterLogEntityList = serviceRegisterRepo.retrieveServiceRegisterLogByServiceRegisterId(id);
             serviceRegisterGetDetailResDto.setServiceRegisterLogResDtoList(serviceRegisterLogEntityList
                     .stream()
                     .map(s -> ModelMapperUtils.map(s, ServiceRegisterLogResDto.class))
                     .collect(Collectors.toList()));
-
             contentResDto.setContent(serviceRegisterGetDetailResDto);
         }
-
         return contentResDto;
     }
 
@@ -98,17 +84,13 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ContentResDto updateServiceRegisterDetail(Long id, ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
-
         Optional<ServiceRegisterEntity> serviceRegisterEntityOptional = serviceRegisterRepo.findById(id);
-
         ContentResDto contentResDto = new ContentResDto();
 
         if (serviceRegisterEntityOptional.isPresent()) {
             ServiceRegisterEntity serviceRegisterEntityOld = serviceRegisterEntityOptional.get();
-
             List<ServiceRegisterLogEntity> serviceRegisterLogEntityList = new ArrayList<>();
-            ServiceRegisterEntity serviceRegisterEntityNew =
-                    ModelMapperUtils.map(serviceRegisterEntityOld, new ServiceRegisterEntity());
+            ServiceRegisterEntity serviceRegisterEntityNew = ModelMapperUtils.map(serviceRegisterEntityOld, new ServiceRegisterEntity());
 
             if (serviceRegisterUpdateReqDto.getCompCode() != null &&
                     !serviceRegisterUpdateReqDto.getCompCode().equals(serviceRegisterEntityOld.getCompCode())) {
@@ -121,7 +103,6 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                         serviceRegisterEntityNew.getCompCode(),
                         serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
                 );
-
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
@@ -135,34 +116,28 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                         serviceRegisterEntityNew.getCompName(),
                         serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
                 );
-
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
-            if (serviceRegisterUpdateReqDto.getStatus() != null &&
-                    !serviceRegisterUpdateReqDto.getStatus().equals(serviceRegisterEntityOld.getStatus())) {
+            if (serviceRegisterUpdateReqDto.getStatus() != null && !serviceRegisterUpdateReqDto.getStatus().equals(serviceRegisterEntityOld.getStatus())) {
                 serviceRegisterEntityNew.setStatus(serviceRegisterUpdateReqDto.getStatus());
-
                 ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
                         null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.STATUS,
                         serviceRegisterEntityOld.getStatus(),
                         serviceRegisterEntityNew.getStatus(),
                         serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
                 );
-
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
             if (serviceRegisterUpdateReqDto.getComment() != null) {
                 serviceRegisterEntityNew.setStatus(serviceRegisterUpdateReqDto.getStatus());
-
                 ServiceRegisterLogEntity serviceRegisterLogEntity = new ServiceRegisterLogEntity(
                         null, id, TableName.SERVICE_REGISTER_MBAPP, ColumnName.COMMENT,
                         null,
                         serviceRegisterUpdateReqDto.getComment(),
                         serviceRegisterUpdateReqDto.getUserId(), currentLocalDateTime
                 );
-
                 serviceRegisterLogEntityList.add(serviceRegisterLogEntity);
             }
 
@@ -177,7 +152,6 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
                 contentResDto.setContent(getRegisterServiceDetail(serviceRegisterEntityOld));
             }
         }
-
         return contentResDto;
     }
 
@@ -223,5 +197,10 @@ public class ServiceRegisterServiceImpl implements ServiceRegisterService {
             }
         });
     }
+
+	@Override
+	public List<String> getListTypeServiceMbapp() {
+		return serviceRegisterRepo.getListTypeService();
+	}
 
 }

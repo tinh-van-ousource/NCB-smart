@@ -11,6 +11,8 @@ import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.City;
+import com.tvo.model.NcbBanner;
+import com.tvo.model.Promotions;
 import com.tvo.request.CreateCityRequest;
 import com.tvo.request.DeleteCityRequest;
 import com.tvo.request.UpdateCityRequest;
@@ -56,17 +58,13 @@ public class CityServiceImpl implements CityService{
 		final List<Predicate> predicates = new ArrayList<Predicate>(6);
 		
 		
-		if (resource.getCityCode() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityCode().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityCode")), "%" +resource.getCityCode().toUpperCase() + "%")));
+		if (resource.getProId() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProId().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("proId")), "%" +resource.getProId().toUpperCase() + "%")));
 		}
-		if (resource.getCityName() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCityName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cityName")), "%" + resource.getCityName().toUpperCase()+ "%")));
-		}
-		if (resource.getStatus() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+		if (resource.getShrtName() != null
+				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getShrtName().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("shrtName")), "%" + resource.getShrtName().toUpperCase()+ "%")));
 		}
 
 		Object[] results = new Object[2];
@@ -76,13 +74,13 @@ public class CityServiceImpl implements CityService{
 	}
 	@Override
 	public CreateCityDto createCity(CreateCityRequest request) {
-		City city = cityDao.findByCityCode(request.getCityCode());
+		City city = cityDao.findByProId(request.getProId());
 		if (city != null) {
 			return null;
 		}
 		
 		city = ModelMapperUtils.map(request, City.class);
-		city.setCreatedDate(DateTimeUtil.getNow());
+		city.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
 		City save = cityDao.save(city);
 		return ModelMapperUtils.map(save, CreateCityDto.class);
 	}
@@ -96,7 +94,7 @@ public class CityServiceImpl implements CityService{
         query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
 
-		query.orderBy(cb.desc(root.get("cityId")));
+		query.orderBy(cb.desc(root.get("proId")));
 		TypedQuery<City> typedQuery = this.entityManager.createQuery(query);
 		
 		typedQuery.setFirstResult((int)pageable.getOffset());
@@ -115,8 +113,8 @@ public class CityServiceImpl implements CityService{
 	}
 	@Override
 	public CityDto update(UpdateCityRequest request) {
-		Optional<City> opt = cityDao.findById(request.getCityId());
-		if (opt.isPresent()) {
+		City opt = cityDao.findByProId(request.getProId());
+		if (opt != null) {
 			City city = ModelMapperUtils.map(request,City.class);
 			
 			City save = cityDao.save(city);
@@ -125,9 +123,10 @@ public class CityServiceImpl implements CityService{
 		}
 		return null;	
 	}
+
 	@Override
-	public CityDto delete(Long cityId) {
-		City city = cityDao.findByCityId(cityId);
+	public CityDto delete(String cityId) {
+		City city = cityDao.findByProId(cityId);
 		if (city == null) {
 			return null;
 		}
@@ -135,16 +134,14 @@ public class CityServiceImpl implements CityService{
 		City save = cityDao.save(city);
 		return ModelMapperUtils.map(save, CityDto.class);
 	}
+
 	@Override
-	public CityDto detail(Long cityId) {
-		City city = cityDao.findByCityId(cityId);
+	public CityDto detail(String proId) {
+		City city = cityDao.findByProId(proId);
 	        if (city == null) {
 	            return null;
 	        }
 	        return ModelMapperUtils.map(city, CityDto.class);
 	}
-	
-	
-	
 
 }

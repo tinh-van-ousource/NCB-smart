@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "user-profile")
 @Api(tags = "DatUserProfile")
 public class DatUserProfileController {
+
 	@Autowired
 	private DatUserProfileService datUserProfileService;
 

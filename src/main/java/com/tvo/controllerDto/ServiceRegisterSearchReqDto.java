@@ -15,7 +15,7 @@ public class ServiceRegisterSearchReqDto {
 
     private String idCard; // cmnd - ho chieu
 
-    private Integer type; // phan he
+    private String type; // phan he
 
     private String service; // dich vu
 

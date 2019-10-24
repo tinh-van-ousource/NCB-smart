@@ -71,6 +71,19 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));
         }
+//        if (searchModel.getStatus() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getStatus().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), searchModel.getStatus().toUpperCase())));
+//		}
+//		if (searchModel.getBannerCode() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), searchModel.getBannerCode().toUpperCase())));
+//		}
+//		if (searchModel.getBannerName() != null
+//				&& !org.apache.commons.lang3.StringUtils.isEmpty(searchModel.getBannerName().trim())) {
+//			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), searchModel.getBannerName().toUpperCase())));
+//		}
+		
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -102,17 +115,19 @@ public class NcbBannerServiceImpl implements NcbBannerService {
     }
 
     @Override
-    public NcbBannerDto create(CreateNcbBannerRequest request) {
-        NcbBanner ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
-        if(ncbBanner != null) {
-            return null;
+    public NcbBanner create(CreateNcbBannerRequest request) {
+        NcbBanner ncbBanner = new NcbBanner();
+        if (StringUtils.equals(request.getBannerCode(), "HOME_BANNER")) {
+            ncbBanner = createNcbBanner(request);
+        } else {
+            ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
+            if(ncbBanner != null ) {
+                return null;
+            } else {    
+                ncbBanner = createNcbBanner(request);
+            }
         }
-
-        ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
-        ncbBanner.setCreatedDate(LocalDateTime.now());
-        ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        NcbBanner save = ncbBannerDao.save(ncbBanner);
-        return ModelMapperUtils.map(save, NcbBannerDto.class);
+        return ncbBanner;
     }
 
 
@@ -142,4 +157,10 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         return false;
     }
 
+    private NcbBanner createNcbBanner(CreateNcbBannerRequest request) {
+        NcbBanner ncbBanner = ModelMapperUtils.map(request, NcbBanner.class);
+        ncbBanner.setCreatedDate(LocalDateTime.now());
+        ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        return ncbBannerDao.save(ncbBanner);
+    }
 }

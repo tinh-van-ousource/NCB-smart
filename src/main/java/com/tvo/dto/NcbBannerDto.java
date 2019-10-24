@@ -31,11 +31,11 @@ public class NcbBannerDto {
 
 
     private String linkUrlEn;
-//
-//    private String status;
-//
-//    @JsonFormat(pattern = "yyyy/M/d")
-//    private LocalDateTime createdDate;
+
+    private String status;
+
+    @JsonFormat(pattern = "yyyy/M/d")
+    private LocalDateTime createdDate;
 
     private String actionScreen;
     

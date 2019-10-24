@@ -13,7 +13,7 @@ import java.util.Date;
 public class  CreateNotifyRequest {
 private String provider;
 	
-	private String type;
+	private String type; 
 	
 	private String error;
 	

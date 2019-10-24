@@ -1,16 +1,19 @@
 package com.tvo.request;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteFunctionRequest {
+public class FunctionRequest {
+
+	private Long id;
+
 	private String prdName;
 
 	private String tranType;
@@ -46,11 +49,11 @@ public class DeleteFunctionRequest {
 
 	@JsonFormat(pattern = "yyyy/M/d")
 	private Date toDate;
-	
-	@JsonFormat(pattern = "yyyy/M/d")
-	private Date createDate;
 
 	private String createdBy;
+
+	@JsonFormat(pattern = "yyyy/M/d")
+	private Date createdDate;
 
 	private String prd;
 }
