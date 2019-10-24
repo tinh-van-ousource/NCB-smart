@@ -14,6 +14,7 @@ public class SearchNotify {
 	private String msgCode;
 	
 	private String error;
+	private String type;
 	
 	
 }

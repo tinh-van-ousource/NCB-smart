@@ -86,6 +86,11 @@ public class NotifyServiceImpl implements NotifyService{
 					searchNotify.getError().toUpperCase())));
 		}
 		
+		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
+					searchNotify.getType().toUpperCase())));
+		}
+		
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);
