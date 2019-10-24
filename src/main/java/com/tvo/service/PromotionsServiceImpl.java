@@ -53,7 +53,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         Root<Promotions> root = (Root<Promotions>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("id")));
+        query.orderBy(cb.desc(root.get("proCode")));
 
         TypedQuery<Promotions> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
@@ -70,11 +70,11 @@ public class PromotionsServiceImpl implements PromotionsService {
     }
 
     private Object[] createFunctionRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchPromotion resource) {
-        final Root<Function> rootPersist = query.from(Function.class);
+        final Root<Promotions> rootPersist = query.from(Promotions.class);
         final List<Predicate> predicates = new ArrayList<>();
 
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proId")), resource.getProCode().toUpperCase())));
+			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proCode")), resource.getProCode().toUpperCase())));
 		}
         if (StringUtils.isNotBlank(resource.getProName())) {
             predicates.add(cb.and(cb.equal(rootPersist.get("proName"), resource.getProName())));
@@ -82,7 +82,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         if (StringUtils.isNotBlank(resource.getStatus())) {
             predicates.add(cb.and(cb.equal(rootPersist.get("status"), resource.getStatus())));
         }
-//        predicates.add(cb.and(rootPersist.get("prd").isNull()));
+        // predicates.add(cb.and(rootPersist.get("prd").isNull()));
 
         Object[] results = new Object[2];
         results[0] = rootPersist;
@@ -98,7 +98,6 @@ public class PromotionsServiceImpl implements PromotionsService {
 		}
 		promotions = ModelMapperUtils.map(request, Promotions.class);
 		promotions.setCreatedDate(DateTimeUtil.getNow());
-		
 		Promotions save = promotionsDao.save(promotions);
 		return ModelMapperUtils.map(save, CreatePromotionsDto.class);
     }
@@ -111,7 +110,6 @@ public class PromotionsServiceImpl implements PromotionsService {
 			Promotions promotion = ModelMapperUtils.map(request,Promotions.class);
 			promotion.setCreatedDate(createDateOld);
 			Promotions save = promotionsDao.save(promotion);
-
 			return ModelMapperUtils.map(save, PromotionsDto.class);
 		}
 		return null;
