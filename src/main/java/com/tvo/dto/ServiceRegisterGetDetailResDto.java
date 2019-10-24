@@ -23,6 +23,8 @@ public class ServiceRegisterGetDetailResDto {
     private String compName;
 
     private String status;
+    
+    private String compCode;
 
     private List<ServiceRegisterLogResDto> serviceRegisterLogResDtoList;
 
