@@ -1,12 +1,23 @@
 package com.tvo.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "DAT_USERPROFILE")
@@ -217,7 +228,8 @@ public class DatUserProfile implements Serializable {
     @JoinColumns({@JoinColumn(name = "LM4RM", referencedColumnName = "ID")})
     private Function function;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumns({@JoinColumn(name = "CIFGRP", referencedColumnName = "CIFNO")})
     private DatCfmast datCfmast;
 }
