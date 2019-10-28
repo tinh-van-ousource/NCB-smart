@@ -17,7 +17,7 @@ public interface PromotionsService {
 
 	PromotionsDto update(UpdatePromotionRequest request);
 
-	Boolean delete(String proCode);
+	Boolean delete(String prdPromotionId);
 
 	PromotionsDto detail(String proCode);
 

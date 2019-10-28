@@ -127,13 +127,13 @@ public class PromotionsServiceImpl implements PromotionsService {
 	}
 
 	@Override
-	public PromotionsDto detail(String proCode) {
-		Promotions promotions = promotionsDao.findByProCode(proCode);
+    public PromotionsDto detail(String proCode) {
+        Promotions promotions = promotionsDao.findByProCode(proCode);
         if (promotions == null) {
             return null;
         }
         return ModelMapperUtils.map(promotions, PromotionsDto.class);
-	}
+    }
 
 }
 	

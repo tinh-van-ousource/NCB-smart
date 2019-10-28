@@ -21,7 +21,7 @@ public class PrdPromotionMbApp implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_CMS_PRD_PROMOTION_SQ")
     @SequenceGenerator(sequenceName = "AI_CMS_PRD_PROMOTION_SQ", allocationSize = 1, name = "AI_CMS_PRD_PROMOTION_SQ")
     @Column(name = "ID")
-    private String id;
+    private Long id;
 
     @Column(name = "PRD")
     private String prd;
@@ -42,12 +42,12 @@ public class PrdPromotionMbApp implements Serializable {
     private String ccy;
 
     @Column(name = "PERCENTAGE")
-    private String percentage;
+    private Integer percentage;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
 
     @Column(name = "CREATED_DATE")
-    private Date CREATED_DATE;
+    private Date createdDate;
 
 }

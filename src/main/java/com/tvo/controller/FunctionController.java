@@ -5,6 +5,7 @@ import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.controllerDto.SearchProductFee;
 import com.tvo.dto.FunctionDto;
+import com.tvo.dto.ProductDropListDto;
 import com.tvo.dto.ProductFeeDto;
 import com.tvo.request.*;
 import com.tvo.response.ResponeData;
@@ -116,6 +117,12 @@ public class FunctionController {
 	public ResponeData<List<String>> getAllPrdName() {
 		List<String> dto = functionService.getAllPrdName();
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+	}
+
+	@GetMapping(value = "/getAllPrdAndPrdName")
+	public ResponeData<List<ProductDropListDto>> getProductDropList() {
+		List<ProductDropListDto> res = functionService.getProductDropList();
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
 	}
 	
 }

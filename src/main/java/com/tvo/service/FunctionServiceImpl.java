@@ -6,6 +6,7 @@ import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dao.FunctionDAO;
 import com.tvo.dto.FunctionDto;
+import com.tvo.dto.ProductDropListDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.Function;
 import com.tvo.request.CreateFunctionRequest;
@@ -139,6 +140,18 @@ public class FunctionServiceImpl implements FunctionService {
 	@Override
 	public List<String> getAllPrdName() {
 		return functionDao.getAllPrdName();
+	}
+
+	@Override
+	public List<ProductDropListDto> getProductDropList() {
+		List<ProductDropListDto> productDropListDtos = new ArrayList<>();
+		List<Object> listComp = functionDao.getAllPrdAndPrdName();
+		for (Object depart : listComp) {
+			Object[] departs = (Object[]) depart;
+			productDropListDtos.add(
+					new ProductDropListDto(departs[0].toString(), departs[1].toString()));
+		}
+		return productDropListDtos;
 	}
 
 }

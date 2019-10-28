@@ -3,6 +3,7 @@ package com.tvo.service;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.dto.FunctionDto;
+import com.tvo.dto.ProductDropListDto;
 import com.tvo.request.CreateFunctionRequest;
 import com.tvo.request.FunctionRequest;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public interface FunctionService {
 	FunctionDto detail(Long functionId);
 
 	List<String> getAllPrdName();
+
+	List<ProductDropListDto> getProductDropList();
 }
 
 
