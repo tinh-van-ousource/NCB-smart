@@ -127,12 +127,13 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderResDto update(ProviderUpdateReqDto request) {
-        Optional<ProviderEntity> existedProvider = providerDao.findById(request.getId());
-        if (existedProvider.isPresent()) {
-            ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
-            return ModelMapperUtils.map(entity, ProviderResDto.class);
+        ProviderEntity existedProvider = providerDao.findByProviderCode(request.getProviderCode());
+        if (existedProvider != null ) {
+        	return null;
+            
         }
-        return null;
+        ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
+        return ModelMapperUtils.map(entity, ProviderResDto.class);
     }
 
 	@Override
