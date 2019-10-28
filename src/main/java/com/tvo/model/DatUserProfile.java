@@ -224,7 +224,8 @@ public class DatUserProfile implements Serializable {
     @Column(name = "TMRCHANGEPASS")
     private Date tmrchangepass;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumns({@JoinColumn(name = "LM4RM", referencedColumnName = "ID")})
     private Function function;
 
