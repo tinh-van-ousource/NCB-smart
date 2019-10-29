@@ -69,13 +69,13 @@ public class PromotionsController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-    @GetMapping(value = "/add-function/search")
+    @GetMapping(value = "/fee/search")
     public ResponeData<Page<PrdPromotionDto>> searchFee(@ModelAttribute SearchPrdPromotion searchPrdPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<PrdPromotionDto> prdPromotionDtos = prdPromotionService.search(searchPrdPromotion, pageable);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, prdPromotionDtos);
     }
 
-    @PostMapping(value = "/add-function/create")
+    @PostMapping(value = "/fee/create")
     public ResponeData<PrdPromotionDto> createFee(@RequestBody CreatePrdPromotionRqDto request) {
         PrdPromotionDto dto = prdPromotionService.create(request);
         if(dto == null) {
@@ -84,7 +84,7 @@ public class PromotionsController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-    @PutMapping(value = "/add-function/update")
+    @PutMapping(value = "/fee/update")
     public ResponeData<PrdPromotionDto> updateFee(@RequestBody PrdPromotionRq request) {
         PrdPromotionDto promotionDto = prdPromotionService.update(request);
         if (promotionDto != null) {
@@ -93,7 +93,7 @@ public class PromotionsController {
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
 
-    @DeleteMapping(value = "/add-function/delete")
+    @DeleteMapping(value = "/fee/delete")
     public ResponeData<Boolean> deleteFee(@RequestParam Long prdPromotionId) {
         Boolean isDetele = prdPromotionService.delete(prdPromotionId);
         if (isDetele == false) {
@@ -102,7 +102,7 @@ public class PromotionsController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
-    @GetMapping(value = "/add-function/detail")
+    @GetMapping(value = "/fee/detail")
     public ResponeData<PrdPromotionDto> detailFee(@RequestParam Long prdPromotionId) {
         PrdPromotionDto dto = prdPromotionService.detail(prdPromotionId);
         if (dto == null) {
