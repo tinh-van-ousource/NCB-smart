@@ -17,15 +17,17 @@ import java.util.List;
  * @date Aug 8, 2019
  */
 public interface ParamManagerService {
-	public List<ParamManagerDto> findAll();
+	List<ParamManagerDto> findAll();
 
-	public ParamManager findByParamNo(String paramNo);
+	ParamManager findByParamNo(String paramNo);
 
-	public Page<ParamManagerDto> searchParamManager(SearchParamManagerModel searchModel, Pageable pageable);
+	Page<ParamManagerDto> searchParamManager(SearchParamManagerModel searchModel, Pageable pageable);
 
-	public ParamManager update(UpdateParamManagerRequest request);
+	ParamManager update(UpdateParamManagerRequest request);
 
-	public ParamManager create(CreateParamManagerRequest request);
+	ParamManager create(CreateParamManagerRequest request);
 
-	public Boolean delete(String paramNo);
+	Boolean delete(String paramNo);
+
+	List<ParamManager> saveAll(List<ParamManagerDto> paramManagerDtos);
 }

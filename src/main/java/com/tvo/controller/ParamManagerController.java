@@ -4,21 +4,31 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dto.ParamManagerDto;
+import com.tvo.enums.StatusActivate;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
 import com.tvo.request.UpdateParamManagerRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParamManagerService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "param-manager")
 public class ParamManagerController {
+
 	@Autowired
 	private ParamManagerService paramManagerService;
 
@@ -46,7 +56,6 @@ public class ParamManagerController {
 			return new ResponeData<>(AppConstant.PARAM_MANAGER_EXISTED_CODE, AppConstant.PARAM_MANAGER_EXISTED_MESSAGE, null);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManager);
-
 	}
 
 	@PutMapping(value = "update")
@@ -56,7 +65,6 @@ public class ParamManagerController {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManager);
-
 	}
 
 	@DeleteMapping(value = "delete")
@@ -67,4 +75,43 @@ public class ParamManagerController {
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
+
+	@PostMapping(value = "/create/uploadFile")
+	public ResponeData<List<ParamManager>> submit(@RequestParam("file") MultipartFile file) {
+		System.out.println("file : " + file);
+		try {
+			FileInputStream excelFile = new FileInputStream(convert(file));
+			Workbook workbook = new XSSFWorkbook(excelFile);
+			Sheet datatypeSheet = workbook.getSheetAt(0);
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			Row firstRow = iterator.next();
+			Cell firstCell = firstRow.getCell(0);
+			System.out.println(firstCell.getStringCellValue());
+			List<ParamManagerDto> paramManagerDtoList = new ArrayList<>();
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				ParamManagerDto paramManagerDto = new ParamManagerDto();
+				paramManagerDto.setParamNo(currentRow.getCell(0).getStringCellValue());
+				paramManagerDto.setParamName(currentRow.getCell(1).getStringCellValue());
+				paramManagerDto.setParamValue(currentRow.getCell(2).getStringCellValue());
+				paramManagerDto.setNote(currentRow.getCell(3).getStringCellValue());
+				paramManagerDto.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+				paramManagerDtoList.add(paramManagerDto);
+			}
+			List<ParamManager> paramManagers = paramManagerService.saveAll(paramManagerDtoList);
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManagers);
+		} catch (IOException e) {
+			return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+	}
+
+	private static File convert(MultipartFile file) throws IOException {
+		File convFile = new File(file.getOriginalFilename());
+		convFile.createNewFile();
+		FileOutputStream fos = new FileOutputStream(convFile);
+		fos.write(file.getBytes());
+		fos.close();
+		return convFile;
+	}
+
 }

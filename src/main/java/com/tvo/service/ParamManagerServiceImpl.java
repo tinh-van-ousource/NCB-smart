@@ -133,4 +133,11 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		return false;
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public List<ParamManager> saveAll(List<ParamManagerDto> paramManagerDtos) {
+		List<ParamManager> paramManagers = ModelMapperUtils.mapAll(paramManagerDtos, ParamManager.class);
+		return paramManagerDao.saveAll(paramManagers);
+	}
+
 }
