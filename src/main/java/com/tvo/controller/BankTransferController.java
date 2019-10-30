@@ -53,13 +53,18 @@ public class BankTransferController {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "/deActice")
     public ResponeData<BankTransferDto> delete(@RequestParam String bankCode) {
         BankTransferDto dto = bankService.delete(bankCode);
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+    }
+    @DeleteMapping(value = "/delete")
+    public ResponeData<Boolean> deActive(@RequestParam String bankCode) {
+        Boolean resDto = bankService.deActice(bankCode);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
     }
 
 }

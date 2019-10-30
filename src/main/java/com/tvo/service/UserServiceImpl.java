@@ -54,28 +54,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RoleRepo roleRepo;
 
-    public UserResDto createUser(CreateUserRequest request) {
-        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        User user = userRepo.findByUserName(request.getUserName());
-        if (user != null) {
-            return null;
-        }
-
-        user = ModelMapperUtils.map(request, User.class);
-
-        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
-        user.setRole(role);
-
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
-        user.setPassChange(UserChangePasswordStatus.NOT_YET.getType());
-        user.setCountLoginFail(0);
-        user.setUpdatedBy(currentUserName);
-
-        User save = userRepo.save(user);
-        return ModelMapperUtils.map(save, UserResDto.class);
-    }
-
+   
     @Override
     public Page<UserResDto> searchUser(UserSearchModel searchModel, Pageable pageable) {
         final CriteriaBuilder criteriaBuilder = this.entityManagerFactory.getCriteriaBuilder();
@@ -191,6 +170,28 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    public UserResDto createUser(CreateUserRequest request) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User user = userRepo.findByUserName(request.getUserName());
+        if (user != null) {
+            return null;
+        }
+
+        user = ModelMapperUtils.map(request, User.class);
+
+        Role role = roleRepo.findById(request.getRoleId()).orElse(null);
+        user.setRole(role);
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+        user.setPassChange(UserChangePasswordStatus.NOT_YET.getType());
+        user.setCountLoginFail(0);
+        user.setUpdatedBy(currentUserName);
+
+        User save = userRepo.save(user);
+        return ModelMapperUtils.map(save, UserResDto.class);
+    }
+
     @Override
     public ContentResDto update(UserUpdateReqDto userDto) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
@@ -198,6 +199,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepo.findByUserName(userDto.getUsername());
         // edited user must exist
         if (user != null) {
+        	 Role role = roleRepo.findById(userDto.getRoleId()).orElse(null);
+             user.setRole(role);
+
             user.setBranchCode(userDto.getBranchCode());
             user.setTransactionCode(userDto.getTransactionCode());
             user.setFullName(userDto.getFullName());
@@ -211,6 +215,8 @@ public class UserServiceImpl implements UserService {
             contentResDto.setContent(null);
             return contentResDto;
         }
+        
+
     }
 
     @Override

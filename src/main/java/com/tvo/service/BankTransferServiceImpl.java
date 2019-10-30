@@ -127,4 +127,14 @@ public class BankTransferServiceImpl implements BankTransferService {
         return ModelMapperUtils.map(bankDao.save(bankTransfer), BankTransferDto.class);
     }
 
+	@Override
+	public Boolean deActice(String bankCode) {
+		try {
+			bankDao.deleteById(bankCode);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+	}
+
 }
