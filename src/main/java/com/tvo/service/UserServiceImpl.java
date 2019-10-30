@@ -125,17 +125,17 @@ public class UserServiceImpl implements UserService {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("userName"), resource.getUserName())));
         }
 
-        if (resource.getFromDate() != null) {
-            // createdDate >= fromDate
-            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
-                    resource.getFromDate()));
-        }
-
-        if (resource.getToDate() != null) {
-            // createdDate <= toDate
-            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
-                    resource.getToDate()));
-        }
+//        if (resource.getFromDate() != null) {
+//            // createdDate >= fromDate
+//            predicates.add(cb.greaterThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+//                    resource.getFromDate()));
+//        }
+//
+//        if (resource.getToDate() != null) {
+//            // createdDate <= toDate
+//            predicates.add(cb.lessThanOrEqualTo(cb.function("TRUNC", Date.class, rootPersist.get("createdDate")),
+//                    resource.getToDate()));
+//        }
 
         Object[] results = new Object[2];
         results[0] = rootPersist;
