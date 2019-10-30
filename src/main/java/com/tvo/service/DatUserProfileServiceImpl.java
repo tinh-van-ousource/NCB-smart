@@ -56,6 +56,7 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
     public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,SearchDatUserProfileModel resource) {
         final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
         final List<Predicate> predicates = new ArrayList<Predicate>();
+        rootPersist.join(DatUserProfile_.datCfmast);
        
         if (resource.getUsrid() != null
 		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrid().trim())) {
@@ -67,10 +68,10 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifgrp")), resource.getCifgrp().toUpperCase())));
 }
         
-        if (resource.getIdno() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getIdno().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("idno")), resource.getIdno().toUpperCase())));
-}
+        if (resource.getIdno() != null && !StringUtils.isEmpty(resource.getIdno().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(
+                    rootPersist.<DatCfmast>get("datCfmast").get("idno")), resource.getIdno().toUpperCase())));
+        }
         
        
         Object[] results = new Object[2];
