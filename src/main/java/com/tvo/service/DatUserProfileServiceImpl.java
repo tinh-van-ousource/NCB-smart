@@ -57,30 +57,22 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
         final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
         final List<Predicate> predicates = new ArrayList<Predicate>();
        
-        if (resource.getBrncode() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBrncode().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("brncode")), resource.getBrncode().toUpperCase())));
+        if (resource.getUsrid() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrid().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrid")), resource.getUsrid().toUpperCase())));
 }
         
-        if (resource.getOfficecode() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getOfficecode().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("officecode")), resource.getOfficecode().toUpperCase())));
+        if (resource.getCifgrp() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifgrp().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifgrp")), resource.getCifgrp().toUpperCase())));
 }
         
-        if (resource.getUsrfname() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrfname().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), resource.getUsrfname().toUpperCase())));
+        if (resource.getIdno() != null
+		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getIdno().trim())) {
+	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("idno")), resource.getIdno().toUpperCase())));
 }
         
-        if (resource.getCifname() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifname().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")), resource.getCifname().toUpperCase())));
-}
-        
-        if (resource.getUsrstatus() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrstatus().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrstatus")), resource.getUsrstatus().toUpperCase())));
-}
+       
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
