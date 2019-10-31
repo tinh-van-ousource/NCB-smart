@@ -5,14 +5,8 @@ import lombok.Data;
 @Data
 public class SearchDatUserProfileModel {
 	
-	private String brncode;
-	
-	private String officecode;
-	
-	private String usrfname;
-
-	private String cifname;
-	
-	private String usrstatus;
+	private String usrid;
+	private String cifgrp;
+	private String idno;
 	
 }
