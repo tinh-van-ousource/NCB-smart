@@ -2,8 +2,13 @@ package com.tvo.model;
 
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
-import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+@Data
+@NoArgsConstructor
 @StaticMetamodel(DatUserProfile.class)
 public class DatUserProfile_ {
 	public static volatile SingularAttribute<DatUserProfile, String> bnkid;

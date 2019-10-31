@@ -37,10 +37,8 @@ public class DatUserProfileController {
 	}
 
 	@GetMapping(value = "searchConsumer")
-	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@ModelAttribute SearchConsumerModel searchModel,
-			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@ModelAttribute SearchConsumerModel searchModel,@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<DatUserProfileDto> dts = datUserProfileService.searchConsumer(searchModel, pageable);
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE,
-				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE,AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 }
