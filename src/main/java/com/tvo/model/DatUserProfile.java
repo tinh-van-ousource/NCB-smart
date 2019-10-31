@@ -229,8 +229,9 @@ public class DatUserProfile implements Serializable {
     @JoinColumns({@JoinColumn(name = "LM4RM", referencedColumnName = "ID")})
     private Function function;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne
+//    (fetch = FetchType.LAZY)
+//    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumns({@JoinColumn(name = "CIFGRP", referencedColumnName = "CIFNO")})
     private DatCfmast datCfmast;
 }
