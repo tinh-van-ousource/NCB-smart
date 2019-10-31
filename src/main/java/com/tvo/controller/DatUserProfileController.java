@@ -1,20 +1,33 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.DateTimeUtil;
 import com.tvo.controllerDto.SearchConsumerModel;
 import com.tvo.controllerDto.SearchDatUserProfileModel;
 import com.tvo.dto.DatUserProfileDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.DatUserProfileService;
 import io.swagger.annotations.Api;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Thanglt
@@ -32,15 +45,15 @@ public class DatUserProfileController {
 
 	@GetMapping(value = "searchUser")
 	public ResponeData<Page<DatUserProfileDto>> search(@ModelAttribute SearchDatUserProfileModel searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
-		 Page<DatUserProfileDto> FunctionDtos = datUserProfileService.searchDatUserProfile(searchFunction, pageable);
-		return new ResponeData<Page<DatUserProfileDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, FunctionDtos) ;
+		Page<DatUserProfileDto> datUserProfileDtos = datUserProfileService.searchDatUserProfile(searchFunction, pageable);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, datUserProfileDtos) ;
 	}
 
 	@GetMapping(value = "searchConsumer")
 	public ResponeData<Page<DatUserProfileDto>> searchConsumer(@ModelAttribute SearchConsumerModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<DatUserProfileDto> dts = datUserProfileService.searchConsumer(searchModel, pageable);
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE,
-				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
+
 }

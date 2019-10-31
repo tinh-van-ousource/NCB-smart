@@ -58,29 +58,25 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
         final List<Predicate> predicates = new ArrayList<Predicate>();
        
         if (resource.getBrncode() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBrncode().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("brncode")), resource.getBrncode().toUpperCase())));
-}
-        
+		    && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBrncode().trim())) {
+	        predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("brncode")), resource.getBrncode().toUpperCase())));
+        }
         if (resource.getOfficecode() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getOfficecode().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("officecode")), resource.getOfficecode().toUpperCase())));
-}
-        
+		    && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getOfficecode().trim())) {
+	        predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("officecode")), resource.getOfficecode().toUpperCase())));
+        }
         if (resource.getUsrfname() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrfname().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), resource.getUsrfname().toUpperCase())));
-}
-        
+		    && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrfname().trim())) {
+	        predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrfname")), resource.getUsrfname().toUpperCase())));
+        }
         if (resource.getCifname() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifname().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")), resource.getCifname().toUpperCase())));
-}
-        
+		    && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifname().trim())) {
+	        predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifname")), resource.getCifname().toUpperCase())));
+        }
         if (resource.getUsrstatus() != null
-		&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrstatus().trim())) {
-	predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrstatus")), resource.getUsrstatus().toUpperCase())));
-}
+		    && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrstatus().trim())) {
+	        predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrstatus")), resource.getUsrstatus().toUpperCase())));
+        }
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -88,7 +84,7 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
     }
 
     @Override
-    public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel,Pageable pageable) {
+    public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, Pageable pageable) {
         CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
         Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
