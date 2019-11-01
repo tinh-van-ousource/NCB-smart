@@ -4,6 +4,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ConfigCronjobRqDto;
 import com.tvo.job.ConfigMbAppJob;
 import com.tvo.job.ConfigMbAppJobListener;
+import com.tvo.job.ConfigMbAppTempJob;
 import com.tvo.model.ConfigCronjob;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ConfigCronjobService;
@@ -28,6 +29,8 @@ public class ConfigCronjobController {
     private static final String JOB_KEY_END_TRIGGER_GROUP = "JOB_KEY_END_TRIGGER_GROUP";
     private static final JobKey jobKeyStart = new JobKey(JOB_KEY_START_NAME, JOB_KEY_START_GROUP);
     private static final JobKey jobKeyEnd = new JobKey(JOB_KEY_END_NAME, JOB_KEY_END_GROUP);
+    final JobDetail jobDetailStart = JobBuilder.newJob(ConfigMbAppJob.class).withIdentity(jobKeyStart).build();
+    final JobDetail jobDetailEnd = JobBuilder.newJob(ConfigMbAppTempJob.class).withIdentity(jobKeyEnd).build();
 
     @Autowired
     private ConfigCronjobService configCronjobService;
@@ -41,11 +44,11 @@ public class ConfigCronjobController {
     @GetMapping("/cronJob")
     public void configMbAppCronTrigger(@RequestParam String start, @RequestParam String end) throws SchedulerException {
         cronTriggerStart(start);
+        cronTriggerEnd(end);
     }
 
     private void cronTriggerStart(String start) throws SchedulerException {
-        JobDetail jobDetailStart = JobBuilder.newJob(ConfigMbAppJob.class).withIdentity(jobKeyStart).build();
-        Trigger triggerStart = TriggerBuilder.newTrigger().withIdentity(JOB_KEY_START_TRIGGER_NAME, JOB_KEY_START_TRIGGER_GROUP)
+        final Trigger triggerStart = TriggerBuilder.newTrigger().withIdentity(JOB_KEY_START_TRIGGER_NAME, JOB_KEY_START_TRIGGER_GROUP)
                 .withSchedule(CronScheduleBuilder.cronSchedule(start))
                 .build();
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -56,4 +59,15 @@ public class ConfigCronjobController {
         scheduler.scheduleJob(jobDetailStart, triggerStart);
     }
 
+    private void cronTriggerEnd(String start) throws SchedulerException {
+        final Trigger triggerEnd = TriggerBuilder.newTrigger().withIdentity(JOB_KEY_END_TRIGGER_NAME, JOB_KEY_END_TRIGGER_GROUP)
+                .withSchedule(CronScheduleBuilder.cronSchedule(start))
+                .build();
+        Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+
+        // Listener attached to jobKey
+        scheduler.getListenerManager().addJobListener(new ConfigMbAppJobListener(), KeyMatcher.keyEquals(jobKeyEnd));
+        scheduler.start();
+        scheduler.scheduleJob(jobDetailEnd, triggerEnd);
+    }
 }
