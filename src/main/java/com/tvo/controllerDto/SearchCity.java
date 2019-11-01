@@ -13,4 +13,5 @@ public class SearchCity {
 	private String proId;
 
 	private String shrtName;
+	private String status;
 }
