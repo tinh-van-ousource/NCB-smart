@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -83,6 +84,15 @@ public class ParamManagerController {
 			FileInputStream excelFile = new FileInputStream(convert(file));
 			Workbook workbook = new XSSFWorkbook(excelFile);
 			Sheet datatypeSheet = workbook.getSheetAt(0);
+
+			// Remove rows null
+			int lastIndex = datatypeSheet.getLastRowNum();
+			for (int i = 0; i <= lastIndex; i++) {
+				if (datatypeSheet.getRow(i) == null || datatypeSheet.getRow(i).getCell(0) == null || datatypeSheet.getRow(i).getCell(0).toString().equals("")){
+					datatypeSheet.removeRow(datatypeSheet.getRow(i));
+				}
+			}
+
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			Row firstRow = iterator.next();
 			Cell firstCell = firstRow.getCell(0);
