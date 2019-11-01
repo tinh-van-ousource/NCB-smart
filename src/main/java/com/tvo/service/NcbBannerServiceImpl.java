@@ -117,16 +117,21 @@ public class NcbBannerServiceImpl implements NcbBannerService {
     @Override
     public NcbBanner create(CreateNcbBannerRequest request) {
         NcbBanner ncbBanner = new NcbBanner();
-        if (StringUtils.equals(request.getBannerCode(), "HOME_BANNER")) {
+       
+//        List<NcbBanner> listBanner = new ArrayList<NcbBanner>();
+        
+//        if (StringUtils.equals(request.getBannerCode(), "HOME_BANNER")) {
             ncbBanner = createNcbBanner(request);
-        } else {
-            ncbBanner = ncbBannerDao.getByBannerCode(request.getBannerCode());
-            if(ncbBanner != null ) {
-                return null;
-            } else {    
-                ncbBanner = createNcbBanner(request);
-            }
-        }
+//        } 
+//        
+//        else {
+//        	listBanner = ncbBannerDao.getAllActiveBanner(request.getBannerCode());
+//            if(!listBanner.isEmpty()) {
+//                return null;
+//            } else {    
+//                ncbBanner = createNcbBanner(request);
+//            }
+//        }
         return ncbBanner;
     }
 
