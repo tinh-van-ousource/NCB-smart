@@ -117,7 +117,7 @@ public class BankTransferServiceImpl implements BankTransferService {
     }
 
     @Override
-    public BankTransferDto delete(String bankCode) {
+    public BankTransferDto deActive(String bankCode) {
         BankTransfer bankTransfer = bankDao.findByBankCode(bankCode);
         if (bankTransfer == null) {
             return null;
@@ -128,7 +128,7 @@ public class BankTransferServiceImpl implements BankTransferService {
     }
 
 	@Override
-	public Boolean deActice(String bankCode) {
+	public Boolean delete(String bankCode) {
 		try {
 			bankDao.deleteById(bankCode);
             return true;
