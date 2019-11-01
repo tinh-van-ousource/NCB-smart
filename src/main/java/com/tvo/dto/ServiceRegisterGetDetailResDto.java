@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceRegisterGetDetailResDto {
     private Long id;
 
@@ -27,5 +27,11 @@ public class ServiceRegisterGetDetailResDto {
     private String compCode;
 
     private List<ServiceRegisterLogResDto> serviceRegisterLogResDtoList;
+    
+    private String userId;
+    
+    private String requestDate;
+    
+    private String cif;
 
 }
