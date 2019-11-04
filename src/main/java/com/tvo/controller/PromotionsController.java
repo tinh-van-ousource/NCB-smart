@@ -113,7 +113,7 @@ public class PromotionsController {
 
     @GetMapping(value = "/add-function/getAllProCode")
     public ResponeData<List<String>> getProCode() {
-        List<String> proCodes = prdPromotionService.getAllProCode();
+        List<String> proCodes = promotionsService.getDistinctByProCode() ;
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, proCodes);
     }
 }

@@ -112,11 +112,6 @@ public class PrdPromotionServiceImpl implements PrdPromotionService {
         return null;
     }
 
-    @Override
-    public List<String> getAllProCode() {
-        return prdPromotionMbAppDAO.getAllProCode();
-    }
-
     private Object[] createPrdPromotionMbAppRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchPrdPromotion resource) {
         final Root<PrdPromotionMbApp> rootPersist = query.from(PrdPromotionMbApp.class);
         final List<Predicate> predicates = new ArrayList<>();

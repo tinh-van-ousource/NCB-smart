@@ -135,5 +135,10 @@ public class PromotionsServiceImpl implements PromotionsService {
         return ModelMapperUtils.map(promotions, PromotionsDto.class);
     }
 
+    @Override
+    public List<String> getDistinctByProCode() {
+        return promotionsDao.getDistinctByProCode();
+    }
+
 }
 	
