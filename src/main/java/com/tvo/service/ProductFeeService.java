@@ -8,13 +8,15 @@ import com.tvo.request.ProductFeeRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ProductFeeService {
 
 	Page<ProductFeeDto> search(SearchProductFee searchProductFee, Pageable pageable);
 
 	ProductFeeDto detail(Long productFeeId);
 
-	ProductFeeDto create(CreateProductFeeRequest request);
+	List<ProductFeeDto> create(CreateProductFeeRequest request);
 
 	ProductFeeDto update(ProductFeeRequest productFeeRequest);
 

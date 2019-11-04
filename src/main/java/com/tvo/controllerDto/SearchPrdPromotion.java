@@ -13,4 +13,6 @@ public class SearchPrdPromotion {
 	private String prd;
 
 	private String proCode;
+
+	private String status;
 }

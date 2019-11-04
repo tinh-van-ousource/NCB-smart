@@ -21,6 +21,4 @@ public interface PrdPromotionService {
 
     Boolean delete(Long prdPromotionId);
 
-    List<String> getAllProCode();
-
 }

@@ -17,7 +17,7 @@ public interface BankTransferService {
 
     BankTransferDto detail(String bankCode);
 
-    BankTransferDto delete(String bankCode);
+    BankTransferDto deActive(String bankCode);
     
-    Boolean deActice(String bankCode);
+    Boolean delete(String bankCode);
 }

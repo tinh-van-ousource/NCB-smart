@@ -84,12 +84,12 @@ public class FunctionController {
 	}
 
 	@PostMapping(value="/fee/create")
-	public ResponeData<ProductFeeDto> createProductFee(@RequestBody CreateProductFeeRequest request) {
-		ProductFeeDto productFeeDto = productFeeService.create(request);
-		if(productFeeDto == null) {
+	public ResponeData<List<ProductFeeDto>> createProductFee(@RequestBody CreateProductFeeRequest request) {
+		List<ProductFeeDto> productFeeDtos = productFeeService.create(request);
+		if(productFeeDtos.isEmpty()) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDto);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDtos);
 	}
 
 	@PutMapping(value = "/fee/update")

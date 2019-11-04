@@ -9,6 +9,8 @@ import com.tvo.dto.PromotionsDto;
 import com.tvo.request.CreatePromotionsRequest;
 import com.tvo.request.UpdatePromotionRequest;
 
+import java.util.List;
+
 public interface PromotionsService {
 
 	Page<PromotionsDto> searchPromotion(SearchPromotion searchPromotion, Pageable pageable);
@@ -20,5 +22,7 @@ public interface PromotionsService {
 	Boolean delete(String prdPromotionId);
 
 	PromotionsDto detail(String proCode);
+
+	List<String> getDistinctByProCode();
 
 }
