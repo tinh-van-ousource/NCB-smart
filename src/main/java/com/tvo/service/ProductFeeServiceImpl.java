@@ -24,6 +24,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +51,23 @@ public class ProductFeeServiceImpl implements ProductFeeService {
     }
 
     @Override
-    public ProductFeeDto create(CreateProductFeeRequest productFeeRequest) {
-        List<ProductFeeMbApp> productFeeEntities = productFeeDAO.findListByGrprdId(productFeeRequest.getGrprdId());
-        if (productFeeEntities.isEmpty()) {
-            ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
-            productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
-            ProductFeeMbApp saveProductFee = productFeeDAO.save(productFeeEntity);
-            ProductFeeDto productFeeDto = ModelMapperUtils.map(saveProductFee, ProductFeeDto.class);
-            return ModelMapperUtils.map(productFeeDto, ProductFeeDto.class);
+    public List<ProductFeeDto> create(CreateProductFeeRequest productFeeRequest) {
+        List<String> listGrprdId = Arrays.asList(productFeeRequest.getGrprdId().split("\\s*,\\s*"));
+        if (!listGrprdId.isEmpty()) {
+            List<ProductFeeMbApp> productFeeMbApps = new ArrayList<>();
+            for (String grprdId : listGrprdId) {
+                ProductFeeMbApp productFeeMbAppDB = productFeeDAO.findByGrprdId(grprdId);
+                ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
+                productFeeEntity.setGrprdId(grprdId);
+                if (productFeeMbAppDB != null) {
+                    productFeeEntity.setId(productFeeMbAppDB.getId());
+                } else {
+                    productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
+                }
+                productFeeMbApps.add(productFeeEntity);
+            }
+            List<ProductFeeMbApp> saveProductFeeMbApps = productFeeDAO.saveAll(productFeeMbApps);
+            return ModelMapperUtils.mapAll(saveProductFeeMbApps, ProductFeeDto.class);
         }
         return null;
     }
