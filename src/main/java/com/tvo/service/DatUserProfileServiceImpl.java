@@ -85,8 +85,8 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 
 	@Override
 	public Page<DatUserProfileDto> searchDatUserProfile(SearchDatUserProfileModel searchModel, Pageable pageable) {
-		CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-		CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
+		final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+		final CriteriaQuery<DatUserProfile> query = cb.createQuery(DatUserProfile.class);
 		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
 		Root<DatUserProfile> root = (Root<DatUserProfile>) queryObjs[0];
 		query.select(root);
