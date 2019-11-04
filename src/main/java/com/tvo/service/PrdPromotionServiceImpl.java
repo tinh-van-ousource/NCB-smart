@@ -128,6 +128,9 @@ public class PrdPromotionServiceImpl implements PrdPromotionService {
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
             predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proCode")), resource.getProCode().toUpperCase())));
         }
+        if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getStatus().trim())) {
+            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+        }
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
