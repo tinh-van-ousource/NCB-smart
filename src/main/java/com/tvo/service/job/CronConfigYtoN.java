@@ -15,7 +15,7 @@ public class CronConfigYtoN extends QuartzJobBean implements InterruptableJob {
 
     private static final Logger logger = LoggerFactory.getLogger(CronConfigYtoN.class);
 
-    private static final String VALUE_Y = "Y";
+    private static final String VALUE_N = "N";
 
     @Autowired
     private ConfigCronjobService configCronjobService;
@@ -25,7 +25,7 @@ public class CronConfigYtoN extends QuartzJobBean implements InterruptableJob {
         JobKey key = jobExecutionContext.getJobDetail().getKey();
         logger.info("Cron Job started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName() + " ,Time now :" + new Date());
 
-        configCronjobService.saveOrUpdateConfigValue(VALUE_Y);
+        configCronjobService.saveOrUpdateConfigValue(VALUE_N);
     }
 
     @Override

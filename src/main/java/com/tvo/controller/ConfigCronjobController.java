@@ -31,8 +31,8 @@ public class ConfigCronjobController {
     public ResponeData<ConfigCronjob> findTypesByCode(@RequestBody ConfigCronjobRqDto configCronjobRqDto) {
         ConfigCronjob configCronjob = configCronjobService.saveOrUpdate(configCronjobRqDto);
         if (configCronjob != null) {
-            cronTrigger(CronConfigYtoN.class, JOB_KEY_NAME_START, configCronjob.getTimeStart());
-            cronTrigger(CronConfigNtoY.class, JOB_KEY_NAME_END, configCronjob.getTimeEnd());
+            cronTrigger(CronConfigNtoY.class, JOB_KEY_NAME_START, configCronjob.getTimeStart());
+            cronTrigger(CronConfigYtoN.class, JOB_KEY_NAME_END, configCronjob.getTimeEnd());
         }
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, configCronjob);
     }
