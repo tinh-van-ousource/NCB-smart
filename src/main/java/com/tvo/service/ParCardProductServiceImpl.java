@@ -130,7 +130,8 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     @Override
     public ParCardProductResDto create(ParCardProductCreateReqDto request) {
         ParCardProductEntity findByPrdcode = parCardProductDao.findByPrdcode(request.getPrdcode());
-        if (!ObjectUtils.isEmpty(findByPrdcode)) {
+        if (findByPrdcode.getCardtype() == request.getCardtype() && findByPrdcode.getClass_() == request.getClass_()
+        		&& findByPrdcode.getPrdcode() == request.getPrdcode() && findByPrdcode.getStatus() == request.getStatus()) {
             fileService.deleteImage(AppConstant.RESOURCE_IMG, request.getFileName());
             return null;
         }
