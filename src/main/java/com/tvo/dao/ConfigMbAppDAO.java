@@ -19,4 +19,6 @@ public interface ConfigMbAppDAO extends JpaRepository<ConfigMbApp, Long> {
 
     @Query("SELECT c.value, c.name FROM ConfigMbApp c WHERE c.code = :code")
     List<Object> findByCode(String code);
+
+    ConfigMbApp findConfigMbAppByCodeAndType(String code, String type);
 }

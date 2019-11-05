@@ -1,10 +1,10 @@
-package com.tvo.job;
+package com.tvo.service.quartz;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
-public class ConfigMbAppJobListener implements JobListener {
+public class ConfigQuartzListener implements JobListener {
 
     @Override
     public String getName() {
