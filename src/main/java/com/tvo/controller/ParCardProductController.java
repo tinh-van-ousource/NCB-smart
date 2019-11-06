@@ -2,6 +2,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ParCardSearchReqDto;
+import com.tvo.dto.CompanyResDto;
 import com.tvo.dto.ParCardProductResDto;
 import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.ParCardProductUpdateReqDto;
@@ -57,16 +58,22 @@ public class ParCardProductController {
 
     @PostMapping(value = "create")
     public ResponeData<ParCardProductResDto> create(@RequestBody ParCardProductCreateReqDto parCardProductCreateReqDto) {
-        try {
-            ParCardProductResDto parCardProduct = parCardProductService.create(parCardProductCreateReqDto);
-            if (parCardProduct != null) {
-                return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
-            }
-            return new ResponeData<>(AppConstant.PAR_CARD_EXISTED_CODE, AppConstant.PAR_CARD_EXISTED_MESSAGE, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-        }
+    	ParCardProductResDto resDto = parCardProductService.create(parCardProductCreateReqDto);
+          if (resDto == null) {
+              return new ResponeData<>(AppConstant.COMPANY_EXISTED_CODE, AppConstant.COMPANY_EXISTED_MESSAGE, null);
+          }
+          return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
+//      
+//        try {
+//            ParCardProductResDto parCardProduct = parCardProductService.create(parCardProductCreateReqDto);
+//            if (parCardProduct != null) {
+//                return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
+//            }
+//            return new ResponeData<>(AppConstant.PAR_CARD_EXISTED_CODE, AppConstant.PAR_CARD_EXISTED_MESSAGE, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+//        }
     }
 
 }

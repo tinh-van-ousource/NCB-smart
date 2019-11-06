@@ -46,7 +46,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyEntity = ModelMapperUtils.map(companyCreateReqDto, CompanyEntity.class);
         return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
     }
-
+    
     @Override
     public CompanyResDto update(CompanyUpdateReqDto companyUpdateReqDto) {
         CompanyEntity companyEntity = companyRepo.findByCompCode(companyUpdateReqDto.getCompCode());
