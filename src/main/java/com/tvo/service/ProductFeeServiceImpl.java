@@ -1,20 +1,9 @@
 package com.tvo.service;
 
-import com.tvo.common.DateTimeUtil;
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchProductFee;
-import com.tvo.dao.ProductFeeDAO;
-import com.tvo.dto.ProductFeeDto;
-import com.tvo.model.ProductFeeMbApp;
-import com.tvo.request.CreateProductFeeRequest;
-import com.tvo.request.ProductFeeRequest;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,10 +12,23 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tvo.common.DateTimeUtil;
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchProductFee;
+import com.tvo.dao.ProductFeeDAO;
+import com.tvo.dto.ProductFeeDto;
+import com.tvo.model.ProductFeeMbApp;
+import com.tvo.request.CreateProductFeeRequest;
+import com.tvo.request.ProductFeeRequest;
 
 @Service
 @Transactional
@@ -61,6 +63,7 @@ public class ProductFeeServiceImpl implements ProductFeeService {
                 productFeeEntity.setGrprdId(grprdId);
                 if (productFeeMbAppDB != null) {
                     productFeeEntity.setId(productFeeMbAppDB.getId());
+                    productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
                 } else {
                     productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
                 }
