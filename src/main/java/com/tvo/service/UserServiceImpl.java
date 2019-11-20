@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
     
 
 	@Override
-	public Boolean ressetPass(String username,String newPassword) {
+	public Boolean resetPass(String username,String newPassword) {
 		String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(username);
         if (user != null) {
@@ -190,6 +190,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepo.findByUserName(request.getUserName());
         if (user != null) {
             return null;
+        }
+        if (user.getUserName().equalsIgnoreCase(request.getUserName().toString())) {
+        	return null;
         }
 
         user = ModelMapperUtils.map(request, User.class);

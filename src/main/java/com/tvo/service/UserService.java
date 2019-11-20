@@ -21,7 +21,7 @@ public interface UserService {
     Boolean deleteUser(String username);
 
     ContentResDto update(UserUpdateReqDto userDto);
-    Boolean ressetPass(String username,String newPassword);
+    Boolean resetPass(String username,String newPassword);
 
     boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto);
 

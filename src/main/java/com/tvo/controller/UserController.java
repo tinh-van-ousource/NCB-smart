@@ -58,7 +58,7 @@ public class UserController {
     }
     @PutMapping(value = "/{username}/resetPass")
     public ResponeData<Boolean> resetPass(@PathVariable("username") String username,@RequestParam String password) {
-        Boolean result = userService.ressetPass(username, password);
+        Boolean result = userService.resetPass(username, password);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
