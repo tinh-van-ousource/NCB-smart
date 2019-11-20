@@ -191,9 +191,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return null;
         }
-        if (user.getUserName().equalsIgnoreCase(request.getUserName().toString())) {
-        	return null;
-        }
+        
 
         user = ModelMapperUtils.map(request, User.class);
 
