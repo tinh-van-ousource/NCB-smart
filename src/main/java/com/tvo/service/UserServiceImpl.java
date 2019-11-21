@@ -192,7 +192,6 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         
-
         user = ModelMapperUtils.map(request, User.class);
 
         Role role = roleRepo.findById(request.getRoleId()).orElse(null);
