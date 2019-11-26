@@ -38,7 +38,7 @@ public class NcbBanner implements Serializable {
 
     @Column(name = "BANNER_CODE")
     private String bannerCode;
-
+    
     @Column(name = "BANNER_NAME")
     private String bannerName;
 
