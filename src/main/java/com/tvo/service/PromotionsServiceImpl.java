@@ -119,8 +119,8 @@ public class PromotionsServiceImpl implements PromotionsService {
 	public Boolean delete(String proCode) {
 		Promotions promotions = promotionsDao.findByProCode(proCode);
 		if (promotions != null) {
-            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            promotionsDao.save(promotions);
+//            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            promotionsDao.delete(promotions);
             return true;
 		}
         return false;

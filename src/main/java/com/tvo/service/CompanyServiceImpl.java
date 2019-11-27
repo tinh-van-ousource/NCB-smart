@@ -39,23 +39,40 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyResDto create(CompanyCreateReqDto companyCreateReqDto) {
         CompanyEntity companyEntity = companyRepo.findByCompCode(companyCreateReqDto.getCompCode());
-        if (companyEntity != null) {
-            return null;
+        if (companyEntity == null) {
+        	 CompanyEntity companyEntity1 = companyRepo.findByCompName(companyCreateReqDto.getCompName());
+        	 if(companyEntity1 == null) {
+        		 CompanyEntity companyEntity2 = companyRepo.findByDao(companyCreateReqDto.getDao());
+        		 if(companyEntity2 == null) {
+        			 companyEntity = ModelMapperUtils.map(companyCreateReqDto, CompanyEntity.class);
+        		        return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class); 
+        		 }
+        	 }
         }
-
-        companyEntity = ModelMapperUtils.map(companyCreateReqDto, CompanyEntity.class);
-        return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
+        return null;
     }
     
     @Override
     public CompanyResDto update(CompanyUpdateReqDto companyUpdateReqDto) {
-        CompanyEntity companyEntity = companyRepo.findByCompCode(companyUpdateReqDto.getCompCode());
+//        CompanyEntity companyEntity = companyRepo.findByCompCode(companyUpdateReqDto.getCompCode());
+//        if (companyEntity == null) {
+//            return null;
+//        }
+//
+//        companyEntity = ModelMapperUtils.map(companyUpdateReqDto, CompanyEntity.class);
+//        return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
+    	CompanyEntity companyEntity = companyRepo.findByCompCode(companyUpdateReqDto.getCompCode());
         if (companyEntity == null) {
-            return null;
+        	 CompanyEntity companyEntity1 = companyRepo.findByCompName(companyUpdateReqDto.getCompName());
+        	 if(companyEntity1 == null) {
+        		 CompanyEntity companyEntity2 = companyRepo.findByDao(companyUpdateReqDto.getDao());
+        		 if(companyEntity2 == null) {
+        			 companyEntity = ModelMapperUtils.map(companyUpdateReqDto, CompanyEntity.class);
+        		        return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class); 
+        		 }
+        	 }
         }
-
-        companyEntity = ModelMapperUtils.map(companyUpdateReqDto, CompanyEntity.class);
-        return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
+        return null;
     }
 
     @Override
