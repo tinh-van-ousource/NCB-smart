@@ -23,7 +23,7 @@ public class MbProvision implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_PROVISION")
-    @SequenceGenerator(sequenceName = "AI_CMS_PROVISION_SQ", allocationSize = 1, name = "ID_PROVISION")
+    @SequenceGenerator(sequenceName = "MB_PROVISION_SEQ", allocationSize = 1, name = "ID_PROVISION")
     @Column(name = "ID")
     private Long id;
 

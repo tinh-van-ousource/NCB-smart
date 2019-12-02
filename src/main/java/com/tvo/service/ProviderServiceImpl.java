@@ -22,9 +22,12 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchProviderReqDto;
 import com.tvo.dao.ProviderDAO;
 import com.tvo.dto.CompDroplistBranchDto;
+import com.tvo.dto.PromotionsDto;
 import com.tvo.dto.ProviderResDto;
+import com.tvo.dto.RoleResDto;
 import com.tvo.dto.ServiceMbappCodeListDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.model.Promotions;
 import com.tvo.model.ProviderEntity;
 import com.tvo.request.ProviderCreateReqDto;
 import com.tvo.request.ProviderUpdateReqDto;
@@ -128,12 +131,19 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public ProviderResDto update(ProviderUpdateReqDto request) {
         ProviderEntity existedProvider = providerDao.findByProviderCode(request.getProviderCode());
-        if (existedProvider != null ) {
+        if (existedProvider == null ) {
         	return null;
             
         }
-        ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
-        return ModelMapperUtils.map(entity, ProviderResDto.class);
+        existedProvider.setProviderName(request.getProviderName());
+        existedProvider.setServiceCode(request.getServiceCode());
+        existedProvider.setPartner(request.getPartner());
+        existedProvider.setStatus(request.getStatus());
+        return ModelMapperUtils.map(providerDao.save(existedProvider), ProviderResDto.class);
+        
+        
+//        ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
+//        return ModelMapperUtils.map(entity, ProviderResDto.class);
     }
 
 	@Override

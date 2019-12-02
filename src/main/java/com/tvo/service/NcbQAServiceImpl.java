@@ -61,11 +61,11 @@ public class NcbQAServiceImpl implements NcbQAService {
 
 		if (searchModel.getProductCode() != null && !StringUtils.isEmpty(searchModel.getProductCode().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("productCode")),
-					searchModel.getProductCode().toUpperCase())));
+					 "%" +searchModel.getProductCode().toUpperCase()+ "%")));
 		}
 		if (searchModel.getProductName() != null && !StringUtils.isEmpty(searchModel.getProductName().trim())) {
 			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("productName")),
-					searchModel.getProductName().toUpperCase())));
+					 "%" +searchModel.getProductName().toUpperCase()+ "%")));
 		}
 		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));

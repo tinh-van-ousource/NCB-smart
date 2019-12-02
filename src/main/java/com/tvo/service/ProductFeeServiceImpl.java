@@ -128,10 +128,10 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         predicates.add(cb.and(rootPersist.get("grprdId").isNotNull()));
 
         if (resource.getGrprdId() != null && !StringUtils.isEmpty(resource.getGrprdId().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("grprdId")), resource.getGrprdId().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("grprdId")),"%" + resource.getGrprdId().toUpperCase()+ "%")));
         }
         if (resource.getPrdName() != null && !StringUtils.isEmpty(resource.getPrdName().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prdName")), resource.getPrdName().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdName")),"%" + resource.getPrdName().toUpperCase()+ "%")));
         }
         Object[] results = new Object[2];
         results[0] = rootPersist;

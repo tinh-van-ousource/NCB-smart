@@ -73,8 +73,8 @@ public class NcbBranchServiceImpl implements NcbBranchService {
                     "%" + searchModel.getBranchName().toUpperCase() + "%")));
         }
         if (searchModel.getDepartCode() != null && !StringUtils.isEmpty(searchModel.getDepartCode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("departCode")),
-                    searchModel.getDepartCode().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departCode")),
+            		"%" +searchModel.getDepartCode().toUpperCase()+ "%")));
         }
         if (searchModel.getDepartName() != null && !StringUtils.isEmpty(searchModel.getDepartName().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departName")),

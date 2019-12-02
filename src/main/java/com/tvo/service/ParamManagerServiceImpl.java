@@ -59,14 +59,14 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 		if (searchModel.getParamNo() != null && !StringUtils.isEmpty(searchModel.getParamNo().trim())) {
 			predicates.add(cb.and(
-					cb.equal(cb.upper(rootPersist.<String>get("paramNo")), searchModel.getParamNo().toUpperCase())));
+					cb.like(cb.upper(rootPersist.<String>get("paramNo")), "%" +searchModel.getParamNo().toUpperCase() + "%")));
 		}
 		if (searchModel.getParamName() != null && !StringUtils.isEmpty(searchModel.getParamName().trim())) {
 			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("paramName")),"%" + searchModel.getParamName().toUpperCase() + "%")));
 		}
 		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
 			predicates.add(cb
-					.and(cb.equal(cb.upper(rootPersist.<String>get("status")), searchModel.getStatus().toUpperCase())));
+					.and(cb.like(cb.upper(rootPersist.<String>get("status")),"%" + searchModel.getStatus().toUpperCase() + "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;

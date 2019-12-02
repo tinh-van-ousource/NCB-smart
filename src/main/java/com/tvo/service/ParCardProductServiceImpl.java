@@ -72,17 +72,17 @@ public class ParCardProductServiceImpl implements ParCardProductService {
 
         if (resource.getPrdcode() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPrdcode().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("prdcode"), resource.getPrdcode())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prdcode")),"%" + resource.getPrdcode()+"%")));
         }
 
         if (resource.getProduct() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProduct().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("product"), resource.getProduct())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("product")),"%" + resource.getProduct()+"%")));
         }
 
         if (resource.getStatus() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")), "%" +resource.getStatus()+"%")));
         }
 
         Object[] results = new Object[2];

@@ -73,16 +73,16 @@ public class FunctionServiceImpl implements FunctionService {
 		predicates.add(cb.and(rootPersist.get("prd").isNotNull()));
 
 		if (resource.getStatus() != null && !StringUtils.isEmpty(resource.getStatus().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")),"%"+ resource.getStatus().toUpperCase()+ "%")));
 		}
 		if (resource.getPrd() != null && !StringUtils.isEmpty(resource.getPrd().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prd")), "%" +resource.getPrd().toUpperCase()+ "%")));
 		}
 		if (resource.getTranType() != null && !StringUtils.isEmpty(resource.getTranType().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("tranType")), "%" +resource.getTranType().toUpperCase()+ "%")));
 		}
 		if (resource.getTypeId() != null && !StringUtils.isEmpty(resource.getTypeId().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("typeId")), resource.getTypeId().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("typeId")),"%" + resource.getTypeId().toUpperCase()+ "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
