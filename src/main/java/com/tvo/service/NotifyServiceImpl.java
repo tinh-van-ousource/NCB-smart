@@ -73,16 +73,16 @@ public class NotifyServiceImpl implements NotifyService{
 			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("provider")), "%" + searchNotify.getProvider().toUpperCase() + "%")));
 		}
 		if (searchNotify.getMsgCode() != null && !StringUtils.isEmpty(searchNotify.getMsgCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msgCode")),
-					searchNotify.getMsgCode().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("msgCode")),
+					"%" +searchNotify.getMsgCode().toUpperCase()+ "%")));
 		}
 		if (searchNotify.getError() != null && !StringUtils.isEmpty(searchNotify.getError().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("error")),
-					searchNotify.getError().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("error")),
+					"%" +searchNotify.getError().toUpperCase()+ "%")));
 		}
 		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
-					searchNotify.getType().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("type")),
+					"%" +searchNotify.getType().toUpperCase()+ "%")));
 		}
 		
 		Object[] results = new Object[2];

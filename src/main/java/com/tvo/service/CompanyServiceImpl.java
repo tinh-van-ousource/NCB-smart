@@ -119,5 +119,4 @@ public class CompanyServiceImpl implements CompanyService {
             return false;
         }
     }
-
 }

@@ -14,6 +14,7 @@ import com.tvo.enums.UserChangePasswordStatus;
 import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.request.CreateUserRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -90,8 +91,7 @@ public class UserServiceImpl implements UserService {
 
         if (resource.getFullName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFullName().trim())) {
-            predicates.add(cb.and(cb.like(cb.lower(rootPersist.get("fullName")),
-                    "%" + resource.getFullName().toLowerCase() + "%")));
+            predicates.add(cb.and(cb.like(cb.lower(rootPersist.get("fullName")),"%" + resource.getFullName().toLowerCase() + "%")));
         }
 
         if (resource.getTransactionCode() != null
@@ -135,13 +135,27 @@ public class UserServiceImpl implements UserService {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         User user = userRepo.findByUserName(username);
         if (user != null) {
-            user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            user.setUpdatedBy(currentUserName);
-            userRepo.save(user);
+//            user.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//            user.setUpdatedBy(currentUserName);
+            userRepo.delete(user);
             return true;
         }
         return false;
     }
+    
+
+	@Override
+	public Boolean resetPass(String username,String newPassword) {
+		String currentUserName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User user = userRepo.findByUserName(username);
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+            userRepo.save(user);
+            return true;
+        }
+        return false;
+	}
 
     @Override
     public boolean changeUserPassword(UserChangePasswordReqDto userChangePasswordReqDto) {
@@ -176,7 +190,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return null;
         }
-
+        
         user = ModelMapperUtils.map(request, User.class);
 
         Role role = roleRepo.findById(request.getRoleId()).orElse(null);
@@ -237,5 +251,6 @@ public class UserServiceImpl implements UserService {
         contentResDto.setContent(null);
         return contentResDto;
     }
+
 
 }

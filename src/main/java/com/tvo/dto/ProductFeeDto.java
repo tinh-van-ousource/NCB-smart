@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -36,7 +38,7 @@ public class ProductFeeDto {
     private Integer taxPercent;
 
     private String createdUser;
-
+    @JsonFormat(pattern = "yyyy/M/d")
     private Date createdTime;
 
 }

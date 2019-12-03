@@ -118,13 +118,13 @@ public class PrdPromotionServiceImpl implements PrdPromotionService {
         predicates.add(cb.and(rootPersist.get("prd").isNotNull()));
 
         if (resource.getPrd() != null && !StringUtils.isEmpty(resource.getPrd().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prd")), "%" +resource.getPrd().toUpperCase()+ "%")));
         }
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proCode")), resource.getProCode().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("proCode")),"%" + resource.getProCode().toUpperCase()+ "%")));
         }
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getStatus().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")),"%" + resource.getStatus().toUpperCase()+ "%")));
         }
         Object[] results = new Object[2];
         results[0] = rootPersist;

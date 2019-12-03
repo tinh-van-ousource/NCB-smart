@@ -80,18 +80,14 @@ public class ParCardPictureServiceImpl implements ParCardPictureService {
 	 private Object[] createRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, ParCardPictureSearchDto resource) {
 	        final Root<ParCardPiture> rootPersist = query.from(ParCardPiture.class);
 	        final List<Predicate> predicates = new ArrayList<Predicate>(3);
-
 	        if (resource.getFileName() != null
 	                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFileName().trim())) {
 	            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("fileName")), "%" + resource.getFileName().toUpperCase() + "%")));
 	        }
-
 	        if (resource.getStatus() != null
 	                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-	            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+	            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")),"%" + resource.getStatus()+ "%")));
 	        }
-
-
 	        Object[] results = new Object[2];
 	        results[0] = rootPersist;
 	        results[1] = predicates.toArray(new Predicate[predicates.size()]);

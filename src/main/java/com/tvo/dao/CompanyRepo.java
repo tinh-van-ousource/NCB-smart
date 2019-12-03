@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CompanyRepo extends JpaRepository<CompanyEntity, String>, CompanyRepoCustom {
 
     CompanyEntity findByCompCode(String compCode);
+    CompanyEntity findByCompName(String compName);
+    CompanyEntity findByDao(String dao);
 }

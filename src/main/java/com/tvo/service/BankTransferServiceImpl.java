@@ -68,10 +68,11 @@ public class BankTransferServiceImpl implements BankTransferService {
         if (resource.getBankCode() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getBankCode().trim())) {
             predicates.add(cb.and(cb.like(cb.lower(rootPersist.<String>get("bankCode")), "%" + resource.getBankCode().toLowerCase() + "%")));
+
         }
         if (resource.getStatus() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("status")), "%" +resource.getStatus()+ "%")));
         }
 
         Object[] results = new Object[2];

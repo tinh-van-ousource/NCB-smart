@@ -63,14 +63,23 @@ public class FileServiceImpl implements FileService {
 	public UploadFileResponse uploadFile(MultipartFile file) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String fileName = sdf.format(new Date()) +  file.getOriginalFilename() ;
- 
-		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString();
-		String user = "cmsuat";
-		String pass = "123@123aA";
+
+//		link public UAT
+//		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString(); 
+		String fileUploadUri = "https://www.ncb-bank.vn/banner_mobile/NewSmart/" + fileName.toString();
+		
+//		 user/pass UAT
+//		String user = "cmsuat";
+//		String pass = "123@123aA";
+		
+		String user = "ncbizismart";
+		String pass = "Ncbmobileapp@789";
 		String sharedFolder = "CMSBanner";
 		SMBClient client = new SMBClient();
-
-		try (Connection connection = client.connect("10.1.62.33")) {
+		
+//		link noi bo UAT
+//		try (Connection connection = client.connect("10.1.62.33")) { 
+		try (Connection connection = client.connect("10.1.65.80")) {
 			AuthenticationContext ac = new AuthenticationContext(user,pass.toCharArray(), "");
 			Session session = connection.authenticate(ac);
 			System.out.println("connect ok");
@@ -82,8 +91,9 @@ public class FileServiceImpl implements FileService {
 	            fileAttributes.add(FileAttributes.FILE_ATTRIBUTE_NORMAL);
 	            Set<SMB2CreateOptions> createOptions = new HashSet<>();
 	            createOptions.add(SMB2CreateOptions.FILE_RANDOM_ACCESS);
-	           com.hierynomus.smbj.share.File openFile = share.openFile("NewSmart/" + fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions);
-	            
+	          //address UAT
+//	           com.hierynomus.smbj.share.File openFile = share.openFile("NewSmart/" + fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions); 
+	            com.hierynomus.smbj.share.File openFile = share.openFile( fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions);
 				out= openFile.getOutputStream();
 				out.write(file.getBytes());
 				out.flush();
@@ -110,13 +120,22 @@ public class FileServiceImpl implements FileService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String fileName = sdf.format(new Date()) +  file.getOriginalFilename();
  
-		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString();
-		String user = "cmsuat";
-		String pass = "123@123aA";
+//		link public UAT
+//		String fileUploadUri = "http://115.146.124.153:8080/banner_mobile/NewSmart/" + fileName.toString(); 
+		String fileUploadUri = "https://www.ncb-bank.vn/banner_mobile/NewSmart/" + fileName.toString();
+		
+//		 user/pass UAT
+//		String user = "cmsuat";
+//		String pass = "123@123aA";
+		
+		String user = "ncbizismart";
+		String pass = "Ncbmobileapp@789";
 		String sharedFolder = "CMSBanner";
 		SMBClient client = new SMBClient();
-
-		try (Connection connection = client.connect("10.1.62.33")) {
+		
+//		link noi bo UAT
+//		try (Connection connection = client.connect("10.1.62.33")) { 
+		try (Connection connection = client.connect("10.1.65.80")) {
 			AuthenticationContext ac = new AuthenticationContext(user,pass.toCharArray(), "");
 			Session session = connection.authenticate(ac);
 			System.out.println("connect ok");
@@ -128,8 +147,9 @@ public class FileServiceImpl implements FileService {
 	            fileAttributes.add(FileAttributes.FILE_ATTRIBUTE_NORMAL);
 	            Set<SMB2CreateOptions> createOptions = new HashSet<>();
 	            createOptions.add(SMB2CreateOptions.FILE_RANDOM_ACCESS);
-	           com.hierynomus.smbj.share.File openFile = share.openFile("NewSmart/" + fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions);
-	            
+	          //address UAT
+//	           com.hierynomus.smbj.share.File openFile = share.openFile("NewSmart/" + fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions); 
+	            com.hierynomus.smbj.share.File openFile = share.openFile( fileName, new HashSet(Arrays.asList(new AccessMask[]{AccessMask.GENERIC_ALL})), fileAttributes, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OVERWRITE_IF, createOptions);
 				out= openFile.getOutputStream();
 				out.write(file.getBytes());
 				out.flush();

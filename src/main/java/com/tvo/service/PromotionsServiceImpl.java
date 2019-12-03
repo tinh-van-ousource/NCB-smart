@@ -80,7 +80,7 @@ public class PromotionsServiceImpl implements PromotionsService {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("proName")), "%" + resource.getProName().toUpperCase() + "%")));
         }
         if (StringUtils.isNotBlank(resource.getStatus())) {
-            predicates.add(cb.and(cb.equal(rootPersist.get("status"), resource.getStatus())));
+            predicates.add(cb.and(cb.like(rootPersist.get("status"),"%" + resource.getStatus()+ "%")));
         }
         // predicates.add(cb.and(rootPersist.get("prd").isNull()));
 
@@ -119,8 +119,8 @@ public class PromotionsServiceImpl implements PromotionsService {
 	public Boolean delete(String proCode) {
 		Promotions promotions = promotionsDao.findByProCode(proCode);
 		if (promotions != null) {
-            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            promotionsDao.save(promotions);
+//            promotions.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            promotionsDao.delete(promotions);
             return true;
 		}
         return false;
