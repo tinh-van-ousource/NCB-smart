@@ -66,15 +66,15 @@ public class NcbBranchServiceImpl implements NcbBranchService {
         final List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (searchModel.getBrnCode() != null && !StringUtils.isEmpty(searchModel.getBrnCode().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("brnCode"), searchModel.getBrnCode())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("brnCode")), "%" + searchModel.getBrnCode().toUpperCase() + "%")));
         }
         if (searchModel.getBranchName() != null && !StringUtils.isEmpty(searchModel.getBranchName().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("branchName")),
                     "%" + searchModel.getBranchName().toUpperCase() + "%")));
         }
         if (searchModel.getDepartCode() != null && !StringUtils.isEmpty(searchModel.getDepartCode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("departCode")),
-                    searchModel.getDepartCode().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departCode")),
+                    "%" + searchModel.getDepartCode().toUpperCase() + "%")));
         }
         if (searchModel.getDepartName() != null && !StringUtils.isEmpty(searchModel.getDepartName().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("departName")),

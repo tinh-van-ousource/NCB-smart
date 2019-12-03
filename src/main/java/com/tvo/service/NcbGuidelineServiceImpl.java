@@ -60,8 +60,8 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
 		if (searchModel.getServiceId() != null && !StringUtils.isEmpty(searchModel.getServiceId().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("serviceId")),
-					searchModel.getServiceId().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("serviceId")),
+					"%" + searchModel.getServiceId().toUpperCase() + "%")));
 		}
 		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
 			predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), searchModel.getStatus())));

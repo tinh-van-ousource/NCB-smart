@@ -3,7 +3,6 @@
  */
 package com.tvo.service;
 
-import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchCity;
 import com.tvo.dao.CityDao;
@@ -11,10 +10,7 @@ import com.tvo.dto.CityDto;
 import com.tvo.dto.CreateCityDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.City;
-import com.tvo.model.NcbBanner;
-import com.tvo.model.Promotions;
 import com.tvo.request.CreateCityRequest;
-import com.tvo.request.DeleteCityRequest;
 import com.tvo.request.UpdateCityRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,7 +27,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Ace

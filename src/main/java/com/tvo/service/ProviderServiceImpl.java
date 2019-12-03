@@ -74,7 +74,7 @@ public class ProviderServiceImpl implements ProviderService {
 
         if (resource.getProviderCode() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getProviderCode().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("providerCode"), resource.getProviderCode())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("providerCode")), "%" + resource.getProviderCode().toUpperCase() + "%")));
         }
 
         if (resource.getProviderName() != null

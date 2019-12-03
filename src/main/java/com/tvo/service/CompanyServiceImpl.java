@@ -87,7 +87,7 @@ public class CompanyServiceImpl implements CompanyService {
         final List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (StringUtils.isNotEmpty(resource.getCompCode().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("compCode"), resource.getCompCode())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("compCode")), "%" + resource.getCompCode().toUpperCase() + "%")));
         }
 
         if (StringUtils.isNotEmpty(resource.getCompName().trim())) {

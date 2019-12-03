@@ -28,7 +28,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class NotifyServiceImpl implements NotifyService{
@@ -69,23 +69,17 @@ public class NotifyServiceImpl implements NotifyService{
 		final Root<Notify> rootPersist = query.from(Notify.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		
-		
 		if (searchNotify.getProvider() != null && !StringUtils.isEmpty(searchNotify.getProvider().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("provider")),
-					searchNotify.getProvider().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("provider")), "%" + searchNotify.getProvider().toUpperCase() + "%")));
 		}
 		if (searchNotify.getMsgCode() != null && !StringUtils.isEmpty(searchNotify.getMsgCode().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("msgCode")),
 					searchNotify.getMsgCode().toUpperCase())));
 		}
-		 
-		
 		if (searchNotify.getError() != null && !StringUtils.isEmpty(searchNotify.getError().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("error")),
 					searchNotify.getError().toUpperCase())));
 		}
-		
 		if (searchNotify.getType() != null && !StringUtils.isEmpty(searchNotify.getType().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("type")),
 					searchNotify.getType().toUpperCase())));

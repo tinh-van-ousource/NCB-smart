@@ -29,7 +29,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             queryString.append(" AND sr.compCode = :compCode ");
         }
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getIdCard())) {
-            queryString.append(" AND sr.idCard = :idCard ");
+            queryString.append(" AND sr.idCard LIKE :idCard ");
         }
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getType())) {
             queryString.append(" AND sr.type = :type ");
@@ -54,7 +54,7 @@ public class ServiceRegisterRepoImpl implements ServiceRegisterRepoCustom {
             query.setParameter("compCode", serviceRegisterSearchReqDto.getCompCode());
         }
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getIdCard())) {
-            query.setParameter("idCard", serviceRegisterSearchReqDto.getIdCard());
+            query.setParameter("idCard", "%" + serviceRegisterSearchReqDto.getIdCard() + "%");
         }
         if (StringUtils.isNotBlank(serviceRegisterSearchReqDto.getService())) {
             query.setParameter("service", serviceRegisterSearchReqDto.getService());

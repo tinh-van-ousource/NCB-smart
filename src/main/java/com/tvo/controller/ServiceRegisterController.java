@@ -4,7 +4,6 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
-import com.tvo.dto.NcbActiveDepartOnlyResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;

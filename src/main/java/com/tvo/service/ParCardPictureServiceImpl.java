@@ -83,7 +83,7 @@ public class ParCardPictureServiceImpl implements ParCardPictureService {
 
 	        if (resource.getFileName() != null
 	                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getFileName().trim())) {
-	            predicates.add(cb.and(cb.equal(rootPersist.<String>get("fileName"), resource.getFileName())));
+	            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("fileName")), "%" + resource.getFileName().toUpperCase() + "%")));
 	        }
 
 	        if (resource.getStatus() != null

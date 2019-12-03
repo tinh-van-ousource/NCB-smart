@@ -57,26 +57,20 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		return listResult;
 	}
 
-	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchDatUserProfileModel resource) {
+	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchDatUserProfileModel resource) {
 		final Root<DatUserProfile> rootPersist = query.from(DatUserProfile.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 		rootPersist.join(DatUserProfile_.datCfmast);
 
 		if (resource.getUsrid() != null && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUsrid().trim())) {
-			predicates.add(
-					cb.and(cb.like(cb.upper(rootPersist.<String>get("usrid")), resource.getUsrid().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("usrid")), "%" + resource.getUsrid().toUpperCase() + "%")));
 		}
-
-		if (resource.getCifgrp() != null
-				&& !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifgrp().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifgrp")), resource.getCifgrp().toUpperCase())));
+		if (resource.getCifgrp() != null && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getCifgrp().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("cifgrp")), "%" + resource.getCifgrp().toUpperCase() + "%")));
 		}
-
-			if (resource.getIdno() != null && !StringUtils.isEmpty(resource.getIdno().trim())) {
-				predicates.add(cb.and(cb.like(cb.upper(rootPersist.<DatCfmast>get("datCfmast").get("idno")), resource.getIdno().toUpperCase())));
-			}
-
+		if (resource.getIdno() != null && !StringUtils.isEmpty(resource.getIdno().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<DatCfmast>get("datCfmast").get("idno")), "%" + resource.getIdno().toUpperCase() + "%")));
+		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);

@@ -26,7 +26,7 @@ public class RoleRepoImpl implements RoleRepoCustom {
         queryString.append(" 1 = 1 ");
 
         if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
-            queryString.append(" AND r.roleName = :roleName ");
+            queryString.append(" AND r.roleName LIKE :roleName ");
         }
 
         if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {
@@ -38,7 +38,7 @@ public class RoleRepoImpl implements RoleRepoCustom {
         TypedQuery<Role> query = em.createQuery(queryString.toString(), Role.class);
 
         if (roleSearchReqDto.getRoleName() != null && !roleSearchReqDto.getRoleName().trim().equals(StringUtils.EMPTY)) {
-            query.setParameter("roleName", roleSearchReqDto.getRoleName());
+            query.setParameter("roleName", "%" + roleSearchReqDto.getRoleName() + "%");
         }
 
         if (roleSearchReqDto.getStatus() != null && !roleSearchReqDto.getStatus().trim().equals(StringUtils.EMPTY)) {

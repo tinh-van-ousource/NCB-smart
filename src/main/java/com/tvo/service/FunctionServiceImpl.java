@@ -76,7 +76,7 @@ public class FunctionServiceImpl implements FunctionService {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("status")), resource.getStatus().toUpperCase())));
 		}
 		if (resource.getPrd() != null && !StringUtils.isEmpty(resource.getPrd().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("prd")), resource.getPrd().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("prd")), "%" + resource.getPrd().toUpperCase() + "%")));
 		}
 		if (resource.getTranType() != null && !StringUtils.isEmpty(resource.getTranType().trim())) {
 			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("tranType")), resource.getTranType().toUpperCase())));

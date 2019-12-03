@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
         if (resource.getUserName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUserName().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("userName"), resource.getUserName())));
+            predicates.add(cb.and(cb.like(cb.lower(rootPersist.<String>get("userName")), "%" + resource.getUserName().toLowerCase() + "%")));
         }
 
 //        if (resource.getFromDate() != null) {

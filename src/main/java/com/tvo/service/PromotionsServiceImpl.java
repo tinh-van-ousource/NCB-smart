@@ -74,10 +74,10 @@ public class PromotionsServiceImpl implements PromotionsService {
         final List<Predicate> predicates = new ArrayList<>();
 
         if (resource.getProCode() != null && !StringUtils.isEmpty(resource.getProCode().trim())) {
-			predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("proCode")), resource.getProCode().toUpperCase())));
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("proCode")), "%" + resource.getProCode().toUpperCase() + "%")));
 		}
         if (StringUtils.isNotBlank(resource.getProName())) {
-            predicates.add(cb.and(cb.equal(rootPersist.get("proName"), resource.getProName())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("proName")), "%" + resource.getProName().toUpperCase() + "%")));
         }
         if (StringUtils.isNotBlank(resource.getStatus())) {
             predicates.add(cb.and(cb.equal(rootPersist.get("status"), resource.getStatus())));

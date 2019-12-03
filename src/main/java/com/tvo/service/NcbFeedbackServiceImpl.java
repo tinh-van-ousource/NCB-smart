@@ -61,8 +61,8 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
         final List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (searchModel.getProductCode() != null && !StringUtils.isEmpty(searchModel.getProductCode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("productCode")),
-                    searchModel.getProductCode().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("productCode")),
+                    "%" + searchModel.getProductCode().toUpperCase() + "%")));
         }
 
         if (searchModel.getProductName() != null && !StringUtils.isEmpty(searchModel.getProductName().trim())) {

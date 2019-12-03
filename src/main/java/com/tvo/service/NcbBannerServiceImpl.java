@@ -61,8 +61,8 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         final List<Predicate> predicates = new ArrayList<Predicate>(6);
 
         if (searchModel.getBannerCode() != null && !StringUtils.isEmpty(searchModel.getBannerCode().trim())) {
-            predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("bannerCode")),
-                    searchModel.getBannerCode().toUpperCase())));
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("bannerCode")),
+                    "%" + searchModel.getBannerCode().toUpperCase() + "%")));
         }
         if (searchModel.getBannerName() != null && !StringUtils.isEmpty(searchModel.getBannerName().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("bannerName")),
