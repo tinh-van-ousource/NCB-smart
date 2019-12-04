@@ -15,6 +15,7 @@ import com.tvo.model.Role;
 import com.tvo.model.User;
 import com.tvo.request.CreateUserRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -102,6 +103,10 @@ public class UserServiceImpl implements UserService {
         if (resource.getUserName() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getUserName().trim())) {
             predicates.add(cb.and(cb.like(cb.lower(rootPersist.<String>get("userName")), "%" + resource.getUserName().toLowerCase() + "%")));
+        }
+
+        if (resource.getRoleName() != null && !StringUtils.isEmpty(resource.getRoleName().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("role").get("roleName")), "%" + resource.getRoleName().toUpperCase() + "%")));
         }
 
 //        if (resource.getFromDate() != null) {

@@ -12,6 +12,7 @@ public class UserSearchModel {
 	private String branchCode;
 	private String transactionCode;
 	private String userName;
+	private String roleName;
 	private Date fromDate;
 	private Date toDate;
 }
