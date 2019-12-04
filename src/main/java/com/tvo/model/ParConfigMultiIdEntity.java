@@ -1,34 +1,37 @@
 package com.tvo.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "PAR_CONFIG")
 @NoArgsConstructor
-@Setter
 @Getter
-@IdClass(ParConfigCompositeKey.class)
-public class ParConfigMultiIdEntity implements Serializable { // Su dung cho param co nhieu hon 1 id
+@Setter
+public class ParConfigMultiIdEntity implements Serializable {
+	private static final long serialVersionUID = 6985682121897152087L;
+	@EmbeddedId
+	private ParConfigCompositeKey key;
 
-    private static final long serialVersionUID = 7003030148868469074L;
+	@Column(name = "ID")
+	private Long id;
 
-    @Id
-    @Column(name = "PARAM")
-    private String param;
+	@Column(name = "VALUE")
+	private String value;
 
-    @Id
-    @Column(name = "CODE")
-    private String code;
-
-    @Column(name = "VALUE")
-    private String value;
-
-    @Column(name = "NOTE")
-    private String note;
+	@Column(name = "NOTE")
+	private String note;
 
 }
