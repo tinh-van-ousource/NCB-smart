@@ -25,8 +25,8 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Override
     public ParConfigResDto createCreditCardNumber(ParConfigUpdateCreditCardNumberReqDto req) {
         ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.setParam("creditcardnumber");
-        entityNew.setCode(req.getValue());
+        entityNew.getKey().setParam("creditcardnumber");
+        entityNew.getKey().setCode(req.getValue());
         entityNew.setValue(req.getValue());
         entityNew.setNote("Số lượng thẻ tối đa 1 KH được mở");
 
@@ -52,7 +52,7 @@ public class ParConfigServiceImpl implements ParConfigService {
         if (oldEntity != null) {
             ParConfigMultiIdEntity newEntity = ModelMapperUtils.map(oldEntity, new ParConfigMultiIdEntity());
             newEntity.setValue(newValue);
-            newEntity.setCode(newValue);
+            newEntity.getKey().setCode(newValue);
             parConfigMultiIdRepo.delete(oldEntity);
             return ModelMapperUtils.map(parConfigMultiIdRepo.save(newEntity), ParConfigResDto.class);
         }
@@ -74,8 +74,8 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Override
     public ParConfigResDto updateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req) {
         ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.setParam("reissue_card_reason");
-        entityNew.setCode(req.getCode());
+        entityNew.getKey().setParam("reissue_card_reason");
+        entityNew.getKey().setCode(req.getCode());
         entityNew.setValue(req.getValue());
         entityNew.setNote("Lý do phát hành lại thẻ");
 
@@ -109,8 +109,8 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Override
     public ParConfigResDto updateOtherParam(ParConfigUpdateOtherParamReqDto req) {
         ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.setParam(req.getParam());
-        entityNew.setCode(req.getCode());
+        entityNew.getKey().setParam(req.getParam());
+        entityNew.getKey().setCode(req.getCode());
         entityNew.setValue(req.getValue());
         entityNew.setNote(req.getNote());
 
