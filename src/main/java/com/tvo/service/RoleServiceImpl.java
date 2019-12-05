@@ -8,6 +8,8 @@ import com.tvo.dao.RoleRepo;
 import com.tvo.dto.ContentResDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.model.Notify;
+import com.tvo.model.ProviderEntity;
 import com.tvo.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,5 +81,17 @@ public class RoleServiceImpl implements RoleService {
 
         return ModelMapperUtils.map(roleRepo.save(role), RoleResDto.class);
     }
+
+	@Override
+	public Boolean delete(String roleName) {
+		Role notify = roleRepo.findByRoleName(roleName);
+		if (notify != null) {
+			roleRepo.delete(notify);
+			return true;
+		}
+		return false;
+	}
+
+	
 
 }

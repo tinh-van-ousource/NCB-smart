@@ -16,6 +16,8 @@ public interface RoleService {
     RoleResDto createRole(RoleCreateReqDto roleReqDto);
 
     RoleResDto getRoleById(Long id);
+    
+    public Boolean delete(String roleName);
 }
 
 
