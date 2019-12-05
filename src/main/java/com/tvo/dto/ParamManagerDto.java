@@ -10,13 +10,12 @@ import lombok.Data;
  */
 @Data
 public class ParamManagerDto {
-	private String paramNo;
+	private String code;
 
-	private String paramName;
+	private String name;
 
-	private String paramValue;
+	private String value;
 
-	private String note;
-
-	private String status;
+	private String description;
+	
 }

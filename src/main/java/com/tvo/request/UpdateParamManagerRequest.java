@@ -9,14 +9,12 @@ import lombok.Setter;
 public class UpdateParamManagerRequest {
 
 	@NonNull
-	private String paramNo;
+	private String code;
 
-	private String paramName;
+	private String name;
 
-	private String paramValue;
+	private String value;
 
-	private String note;
-
-	private String status;
+	private String description;
 
 }

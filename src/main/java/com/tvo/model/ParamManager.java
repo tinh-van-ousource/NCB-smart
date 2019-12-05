@@ -17,28 +17,27 @@ import java.io.Serializable;
  * @date Aug 7, 2019
  */
 @Entity
-@Table(name = "PARAM_MANAGER")
+@Table(name = "CONFIG_MBAPP")
 @Getter
 @Setter
 @NoArgsConstructor
 public class ParamManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@Column(name = "PARAM_NO")
-	private String paramNo;
+	@Column(name= "ID")
+	private String id;
+	
+	@Column(name = "CODE")
+	private String code;
 
-	@Column(name = "PARAM_NAME")
-	private String paramName;
+	@Column(name = "NAME")
+	private String name;
 
-	@Column(name = "PARAM_VALUE")
-	private String paramValue;
+	@Column(name = "VALUE")
+	private String value;
 
-	@Column(name = "NOTE")
-	private String note;
-
-	@Column(name = "STATUS")
-	private String status;
+	@Column(name = "DESCRIPTION")
+	private String description;
 
 }

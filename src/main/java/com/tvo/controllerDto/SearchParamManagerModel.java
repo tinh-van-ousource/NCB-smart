@@ -4,9 +4,11 @@ import lombok.Data;
 
 @Data
 public class SearchParamManagerModel {
-	private String paramNo;
 
-	private String paramName;
+	private String code;
 
-	private String status;
+	private String name;
+
+	private String value;
+
 }

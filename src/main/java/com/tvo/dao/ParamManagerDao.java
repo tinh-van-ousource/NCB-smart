@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParamManagerDao extends JpaRepository<ParamManager, String>, JpaSpecificationExecutor<ParamManager> {
 
-	public ParamManager findByParamNo(String paramNo);
-
+	public ParamManager findByCode(String code);
+	public ParamManager findByName(String name);
 }

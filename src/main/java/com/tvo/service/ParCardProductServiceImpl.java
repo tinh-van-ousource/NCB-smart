@@ -119,8 +119,8 @@ public class ParCardProductServiceImpl implements ParCardProductService {
     public boolean delete(String prdCode) {
         ParCardProductEntity parCardProductEntity = parCardProductDao.findByPrdcode(prdCode);
         if (parCardProductEntity != null) {
-            parCardProductEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            parCardProductDao.save(parCardProductEntity);
+//            parCardProductEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            parCardProductDao.delete(parCardProductEntity);
             return true;
         }
         return false;
