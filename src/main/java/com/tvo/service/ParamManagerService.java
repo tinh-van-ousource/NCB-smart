@@ -2,6 +2,7 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dto.ParamManagerDto;
+import com.tvo.model.ConfigMbApp;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
 import com.tvo.request.UpdateParamManagerRequest;
@@ -19,15 +20,15 @@ import java.util.List;
 public interface ParamManagerService {
 	List<ParamManagerDto> findAll();
 
-	ParamManager findByCode(String code);
+	ConfigMbApp findByIdAndCode(Long id);
 
 	Page<ParamManagerDto> searchParamManager(SearchParamManagerModel searchModel, Pageable pageable);
 
-	ParamManager update(UpdateParamManagerRequest request);
+	ConfigMbApp update(UpdateParamManagerRequest request);
 
-	ParamManager create(CreateParamManagerRequest request);
+	ConfigMbApp create(CreateParamManagerRequest request);
 
-	Boolean delete(String code);
+	Boolean delete(Long id);
 
-	List<ParamManager> saveAll(List<ParamManagerDto> paramManagerDtos);
+	List<ConfigMbApp> saveAll(List<ParamManagerDto> paramManagerDtos);
 }

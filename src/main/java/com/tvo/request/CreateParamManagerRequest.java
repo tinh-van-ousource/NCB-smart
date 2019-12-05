@@ -8,9 +8,6 @@ import lombok.Setter;
 @Setter
 public class CreateParamManagerRequest {
 
-//	@NonNull
-//	private String code;
-
 	private String name;
 
 	private String value;

@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class UpdateParamManagerRequest {
 
-	@NonNull
-	private String code;
+	private Long id;
 
 	private String name;
 

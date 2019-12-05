@@ -17,24 +17,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
-import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.ParCardSearchReqDto;
 import com.tvo.dao.ParCardPictureDAO;
-import com.tvo.dao.ParCardProductDao;
-import com.tvo.dao.ParamManagerDao;
-import com.tvo.dto.CityDto;
 import com.tvo.dto.ParCardPictureDto;
-import com.tvo.dto.ParCardProductResDto;
 import com.tvo.enums.StatusActivate;
-import com.tvo.model.City;
 import com.tvo.model.ParCardPiture;
-import com.tvo.model.ParCardProductEntity;
 import com.tvo.request.CreateParCardPictureRequest;
 import com.tvo.request.ParCardPictureSearchDto;
-import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.UpdateParCardPictureRequest;
 
 import lombok.AllArgsConstructor;

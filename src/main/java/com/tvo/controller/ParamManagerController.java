@@ -4,14 +4,17 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dto.ParamManagerDto;
-import com.tvo.enums.StatusActivate;
+import com.tvo.model.ConfigMbApp;
 import com.tvo.model.ParamManager;
 import com.tvo.request.CreateParamManagerRequest;
 import com.tvo.request.UpdateParamManagerRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParamManagerService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +23,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,36 +46,38 @@ public class ParamManagerController {
 	}
 
 	@GetMapping(value = "detail")
-	public ResponeData<ParamManagerDto> detail(@RequestParam String code) {
-		if (StringUtils.isEmpty(code.trim())) {
-			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+	public ResponeData<ParamManagerDto> detail(@RequestParam Long id) {
+		ConfigMbApp configMbApp = paramManagerService.findByIdAndCode(id);
+		if (configMbApp != null) {
+			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
-		ParamManager paramManager = paramManagerService.findByCode(code);
-		ParamManagerDto result = ModelMapperUtils.map(paramManager, ParamManagerDto.class);
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
+		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 	}
 
 	@PostMapping(value = "create")
-	public ResponeData<ParamManager> create(@RequestBody CreateParamManagerRequest request) {
-		ParamManager paramManager = paramManagerService.create(request);
-		if (paramManager == null) {
-			return new ResponeData<>(AppConstant.PARAM_MANAGER_EXISTED_CODE, AppConstant.PARAM_MANAGER_EXISTED_MESSAGE, null);
+	public ResponeData<ParamManagerDto> create(@RequestBody CreateParamManagerRequest request) {
+		ConfigMbApp configMbApp = paramManagerService.create(request);
+		if (configMbApp != null) {
+			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManager);
+		return new ResponeData<>(AppConstant.PARAM_MANAGER_EXISTED_CODE, AppConstant.PARAM_MANAGER_EXISTED_MESSAGE, null);
 	}
 
 	@PutMapping(value = "update")
-	public ResponeData<ParamManager> update(@RequestBody UpdateParamManagerRequest request) {
-		ParamManager paramManager = paramManagerService.update(request);
-		if (paramManager == null) {
-			return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+	public ResponeData<ParamManagerDto> update(@RequestBody UpdateParamManagerRequest request) {
+		ConfigMbApp configMbApp = paramManagerService.update(request);
+		if (configMbApp != null) {
+			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManager);
+		return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 	}
 
 	@DeleteMapping(value = "delete")
-	public ResponeData<Boolean> delete(@RequestParam String paramNo) {
-		boolean deleteFlag = paramManagerService.delete(paramNo);
+	public ResponeData<Boolean> delete(@RequestParam Long id) {
+		boolean deleteFlag = paramManagerService.delete(id);
 		if (deleteFlag) {
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
@@ -78,7 +85,7 @@ public class ParamManagerController {
 	}
 
 	@PostMapping(value = "/create/uploadFile")
-	public ResponeData<List<ParamManager>> submit(@RequestParam("file") MultipartFile file) {
+	public ResponeData<List<ParamManagerDto>> submit(@RequestParam("file") MultipartFile file) {
 		System.out.println("file : " + file);
 		try {
 			FileInputStream excelFile = new FileInputStream(convert(file));
@@ -107,8 +114,9 @@ public class ParamManagerController {
 				paramManagerDto.setDescription(currentRow.getCell(3).getStringCellValue());
 				paramManagerDtoList.add(paramManagerDto);
 			}
-			List<ParamManager> paramManagers = paramManagerService.saveAll(paramManagerDtoList);
-			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, paramManagers);
+			List<ConfigMbApp> paramManagers = paramManagerService.saveAll(paramManagerDtoList);
+			List<ParamManagerDto> result = ModelMapperUtils.mapAll(paramManagers, ParamManagerDto.class);
+			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		} catch (IOException e) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}

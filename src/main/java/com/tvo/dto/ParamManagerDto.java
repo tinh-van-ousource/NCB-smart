@@ -10,6 +10,9 @@ import lombok.Data;
  */
 @Data
 public class ParamManagerDto {
+
+	private Long id;
+
 	private String code;
 
 	private String name;

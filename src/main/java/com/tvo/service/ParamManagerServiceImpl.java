@@ -2,10 +2,9 @@ package com.tvo.service;
 
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
-import com.tvo.dao.ParamManagerDao;
+import com.tvo.dao.ConfigMbAppDAO;
 import com.tvo.dto.ParamManagerDto;
-import com.tvo.enums.StatusActivate;
-import com.tvo.model.ParamManager;
+import com.tvo.model.ConfigMbApp;
 import com.tvo.request.CreateParamManagerRequest;
 import com.tvo.request.UpdateParamManagerRequest;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -26,41 +24,37 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ParamManagerServiceImpl implements ParamManagerService {
 
+	private static final String HOT_LINE = "HOTLINE";
+
 	@Autowired
-	private ParamManagerDao paramManagerDao;
+	private ConfigMbAppDAO configMbAppDAO;
 
 	@Autowired
 	private EntityManager entityManager;
 
 	@Override
 	public List<ParamManagerDto> findAll() {
-		List<ParamManagerDto> listResult = ModelMapperUtils.mapAll(paramManagerDao.findAll(), ParamManagerDto.class);
+		List<ParamManagerDto> listResult = ModelMapperUtils.mapAll(configMbAppDAO.findAll(), ParamManagerDto.class);
 		return listResult;
 	}
 
 	@Override
-	public ParamManager findByCode(String code) {
-		ParamManager paramManager = paramManagerDao.findByCode(code);
-		if (paramManager == null) {
-			return new ParamManager();
-		}
-		return paramManager;
+	public ConfigMbApp findByIdAndCode(Long id) {
+		return configMbAppDAO.findByIdAndCode(id, HOT_LINE);
 	}
 
-	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
-			SearchParamManagerModel searchModel) {
-		final Root<ParamManager> rootPersist = query.from(ParamManager.class);
+	public Object[] createUserRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchParamManagerModel searchModel) {
+		final Root<ConfigMbApp> rootPersist = query.from(ConfigMbApp.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
-//		if (searchModel.getCode()!= null && !StringUtils.isEmpty(searchModel.getCode().trim())) {
-			predicates.add(cb.and(
-					cb.equal(cb.upper(rootPersist.<String>get("code")),   "HOTLINE" )));
-//		}
+		predicates.add(cb.and(cb.equal(cb.upper(rootPersist.<String>get("code")), HOT_LINE)));
+
 		if (searchModel.getName() != null && !StringUtils.isEmpty(searchModel.getName().trim())) {
 			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("name")),"%" + searchModel.getName().toUpperCase() + "%")));
 		}
@@ -77,22 +71,22 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	public Page<ParamManagerDto> searchParamManager(SearchParamManagerModel searchModel, Pageable pageable) {
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<ParamManager> query = cb.createQuery(ParamManager.class);
+		CriteriaQuery<ConfigMbApp> query = cb.createQuery(ConfigMbApp.class);
 		Object[] queryObjs = this.createUserRootPersist(cb, query, searchModel);
-		Root<ParamManager> root = (Root<ParamManager>) queryObjs[0];
+		Root<ConfigMbApp> root = (Root<ConfigMbApp>) queryObjs[0];
 		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
 		query.orderBy(cb.desc(root.get("code")));
 
-		TypedQuery<ParamManager> typedQuery = this.entityManager.createQuery(query);
+		TypedQuery<ConfigMbApp> typedQuery = this.entityManager.createQuery(query);
 		typedQuery.setFirstResult((int) pageable.getOffset());
 		typedQuery.setMaxResults(pageable.getPageSize());
-		List<ParamManager> objects = typedQuery.getResultList();
+		List<ConfigMbApp> objects = typedQuery.getResultList();
 		List<ParamManagerDto> paramManagerDtos = ModelMapperUtils.mapAll(objects, ParamManagerDto.class);
 
 		CriteriaBuilder cbTotal = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		countQuery.select(cbTotal.count(countQuery.from(ParamManager.class)));
+		countQuery.select(cbTotal.count(countQuery.from(ConfigMbApp.class)));
 		countQuery.where((Predicate[]) queryObjs[1]);
 		Long total = entityManager.createQuery(countQuery).getSingleResult();
 		return new PageImpl<>(paramManagerDtos, pageable, total);
@@ -100,34 +94,38 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public ParamManager update(UpdateParamManagerRequest request) {
-		ParamManager paramManager = paramManagerDao.findByCode(request.getCode());
-		if (!ObjectUtils.isEmpty(paramManager)) {
-			ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
-			return ModelMapperUtils.map(save, ParamManager.class);
+	public ConfigMbApp update(UpdateParamManagerRequest request) {
+		Optional<ConfigMbApp> configMbAppDB = configMbAppDAO.findById(request.getId());
+		if (configMbAppDB.isPresent()) {
+			ConfigMbApp configMbApp = configMbAppDB.get();
+			configMbApp.setName(request.getName());
+			configMbApp.setValue(request.getValue());
+			configMbApp.setDescription(request.getDescription());
+			ConfigMbApp save = configMbAppDAO.save(configMbApp);
+			return ModelMapperUtils.map(save, ConfigMbApp.class);
 		}
 		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public ParamManager create(CreateParamManagerRequest request) {
-		ParamManager findByParamNo = paramManagerDao.findByName(request.getName());
-		if (!ObjectUtils.isEmpty(findByParamNo)) {
+	public ConfigMbApp create(CreateParamManagerRequest request) {
+		ConfigMbApp configMbAppDB = configMbAppDAO.findByName(request.getName());
+		if (configMbAppDB != null) {
 			return null;
 		}
-		ParamManager paramManager = ModelMapperUtils.map(request, ParamManager.class);
-		paramManager.setCode("HOTLINE");
-		return ModelMapperUtils.map(paramManagerDao.save(paramManager), ParamManager.class);
+		ConfigMbApp configMbApp = ModelMapperUtils.map(request, ConfigMbApp.class);
+		configMbApp.setSort(String.valueOf(1));
+		configMbApp.setCode(HOT_LINE);
+		return ModelMapperUtils.map(configMbAppDAO.save(configMbApp), ConfigMbApp.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String code) {
-		if (!code.isEmpty()) {
-			ParamManager paramManager = paramManagerDao.findByCode(code);
-//			paramManager.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-			paramManagerDao.delete(paramManager);
+	public Boolean delete(Long id) {
+		Optional<ConfigMbApp> configMbApp = configMbAppDAO.findById(id);
+		if (configMbApp.isPresent()) {
+			configMbAppDAO.deleteById(id);
 			return true;
 		}
 		return false;
@@ -135,9 +133,9 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public List<ParamManager> saveAll(List<ParamManagerDto> paramManagerDtos) {
-		List<ParamManager> paramManagers = ModelMapperUtils.mapAll(paramManagerDtos, ParamManager.class);
-		return paramManagerDao.saveAll(paramManagers);
+	public List<ConfigMbApp> saveAll(List<ParamManagerDto> paramManagerDtos) {
+		List<ConfigMbApp> paramManagers = ModelMapperUtils.mapAll(paramManagerDtos, ConfigMbApp.class);
+		return configMbAppDAO.saveAll(paramManagers);
 	}
 
 }
