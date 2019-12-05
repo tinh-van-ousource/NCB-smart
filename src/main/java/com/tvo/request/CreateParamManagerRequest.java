@@ -8,13 +8,12 @@ import lombok.Setter;
 @Setter
 public class CreateParamManagerRequest {
 
-	@NonNull
-	private String paramNo;
+//	@NonNull
+//	private String code;
 
-	private String paramName;
+	private String name;
 
-	private String paramValue;
+	private String value;
 
-	private String note;
-
+	private String description;
 }

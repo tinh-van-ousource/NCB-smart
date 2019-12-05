@@ -44,8 +44,8 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	}
 
 	@Override
-	public ParamManager findByParamNo(String paramNo) {
-		ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
+	public ParamManager findByCode(String code) {
+		ParamManager paramManager = paramManagerDao.findByCode(code);
 		if (paramManager == null) {
 			return new ParamManager();
 		}
@@ -57,16 +57,16 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		final Root<ParamManager> rootPersist = query.from(ParamManager.class);
 		final List<Predicate> predicates = new ArrayList<Predicate>();
 
-		if (searchModel.getParamNo() != null && !StringUtils.isEmpty(searchModel.getParamNo().trim())) {
+//		if (searchModel.getCode()!= null && !StringUtils.isEmpty(searchModel.getCode().trim())) {
 			predicates.add(cb.and(
-					cb.like(cb.upper(rootPersist.<String>get("paramNo")), "%" +searchModel.getParamNo().toUpperCase() + "%")));
+					cb.equal(cb.upper(rootPersist.<String>get("code")),   "HOTLINE" )));
+//		}
+		if (searchModel.getName() != null && !StringUtils.isEmpty(searchModel.getName().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("name")),"%" + searchModel.getName().toUpperCase() + "%")));
 		}
-		if (searchModel.getParamName() != null && !StringUtils.isEmpty(searchModel.getParamName().trim())) {
-			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("paramName")),"%" + searchModel.getParamName().toUpperCase() + "%")));
-		}
-		if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
+		if (searchModel.getValue() != null && !StringUtils.isEmpty(searchModel.getValue().trim())) {
 			predicates.add(cb
-					.and(cb.like(cb.upper(rootPersist.<String>get("status")),"%" + searchModel.getStatus().toUpperCase() + "%")));
+					.and(cb.like(cb.upper(rootPersist.<String>get("value")),"%" + searchModel.getValue().toUpperCase() + "%")));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
@@ -82,7 +82,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		Root<ParamManager> root = (Root<ParamManager>) queryObjs[0];
 		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("paramNo")));
+		query.orderBy(cb.desc(root.get("code")));
 
 		TypedQuery<ParamManager> typedQuery = this.entityManager.createQuery(query);
 		typedQuery.setFirstResult((int) pageable.getOffset());
@@ -101,7 +101,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public ParamManager update(UpdateParamManagerRequest request) {
-		ParamManager paramManager = paramManagerDao.findByParamNo(request.getParamNo());
+		ParamManager paramManager = paramManagerDao.findByCode(request.getCode());
 		if (!ObjectUtils.isEmpty(paramManager)) {
 			ParamManager save = paramManagerDao.save(ModelMapperUtils.map(request, ParamManager.class));
 			return ModelMapperUtils.map(save, ParamManager.class);
@@ -112,22 +112,22 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public ParamManager create(CreateParamManagerRequest request) {
-		ParamManager findByParamNo = paramManagerDao.findByParamNo(request.getParamNo());
+		ParamManager findByParamNo = paramManagerDao.findByName(request.getName());
 		if (!ObjectUtils.isEmpty(findByParamNo)) {
 			return null;
 		}
 		ParamManager paramManager = ModelMapperUtils.map(request, ParamManager.class);
-		paramManager.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+		paramManager.setCode("HOTLINE");
 		return ModelMapperUtils.map(paramManagerDao.save(paramManager), ParamManager.class);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean delete(String paramNo) {
-		if (!paramNo.isEmpty()) {
-			ParamManager paramManager = paramManagerDao.findByParamNo(paramNo);
-			paramManager.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-			paramManagerDao.save(paramManager);
+	public Boolean delete(String code) {
+		if (!code.isEmpty()) {
+			ParamManager paramManager = paramManagerDao.findByCode(code);
+//			paramManager.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+			paramManagerDao.delete(paramManager);
 			return true;
 		}
 		return false;

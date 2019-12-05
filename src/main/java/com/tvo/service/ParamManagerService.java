@@ -19,7 +19,7 @@ import java.util.List;
 public interface ParamManagerService {
 	List<ParamManagerDto> findAll();
 
-	ParamManager findByParamNo(String paramNo);
+	ParamManager findByCode(String code);
 
 	Page<ParamManagerDto> searchParamManager(SearchParamManagerModel searchModel, Pageable pageable);
 
@@ -27,7 +27,7 @@ public interface ParamManagerService {
 
 	ParamManager create(CreateParamManagerRequest request);
 
-	Boolean delete(String paramNo);
+	Boolean delete(String code);
 
 	List<ParamManager> saveAll(List<ParamManagerDto> paramManagerDtos);
 }

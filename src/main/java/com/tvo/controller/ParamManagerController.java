@@ -41,11 +41,11 @@ public class ParamManagerController {
 	}
 
 	@GetMapping(value = "detail")
-	public ResponeData<ParamManagerDto> detail(@RequestParam String paramNo) {
-		if (StringUtils.isEmpty(paramNo.trim())) {
+	public ResponeData<ParamManagerDto> detail(@RequestParam String code) {
+		if (StringUtils.isEmpty(code.trim())) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		ParamManager paramManager = paramManagerService.findByParamNo(paramNo);
+		ParamManager paramManager = paramManagerService.findByCode(code);
 		ParamManagerDto result = ModelMapperUtils.map(paramManager, ParamManagerDto.class);
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 	}
@@ -101,11 +101,10 @@ public class ParamManagerController {
 			while (iterator.hasNext()) {
 				Row currentRow = iterator.next();
 				ParamManagerDto paramManagerDto = new ParamManagerDto();
-				paramManagerDto.setParamNo(currentRow.getCell(0).getStringCellValue());
-				paramManagerDto.setParamName(currentRow.getCell(1).getStringCellValue());
-				paramManagerDto.setParamValue(currentRow.getCell(2).getStringCellValue());
-				paramManagerDto.setNote(currentRow.getCell(3).getStringCellValue());
-				paramManagerDto.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
+				paramManagerDto.setCode(currentRow.getCell(0).getStringCellValue());
+				paramManagerDto.setName(currentRow.getCell(1).getStringCellValue());
+				paramManagerDto.setValue(currentRow.getCell(2).getStringCellValue());
+				paramManagerDto.setDescription(currentRow.getCell(3).getStringCellValue());
 				paramManagerDtoList.add(paramManagerDto);
 			}
 			List<ParamManager> paramManagers = paramManagerService.saveAll(paramManagerDtoList);
