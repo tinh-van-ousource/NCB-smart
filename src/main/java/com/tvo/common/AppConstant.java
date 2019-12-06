@@ -50,9 +50,9 @@ public class AppConstant {
     public static final String CITY_CREATE_DUPLICATE_ERROR_CODE = "909";
     public static final String CITY_CREATE_DUPLICATE_ERROR_MESSAGE = "CityCode is duplicate";
 
-    public static final String SECRET = "Unknown";
+    public static final String SECRET =	 "Unknown";
     public static final String HEADER_STRING = "Authorization";
-    public static final long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 4; // 4 hours
+    public static final long EXPIRATION_TIME_MS = 1000 * 60 * 30; // 30 minutes
 
     public static final int LIMIT_PAGE = 15;
 
