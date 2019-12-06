@@ -66,7 +66,7 @@ public class CompanyServiceImpl implements CompanyService {
         Root<CompanyEntity> root = (Root<CompanyEntity>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("compCode")));
+        query.orderBy(cb.asc(root.get("compName")));
 
         TypedQuery<CompanyEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());

@@ -96,7 +96,7 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         Root<ProductFeeMbApp> root = (Root<ProductFeeMbApp>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("grprdId")));
+        query.orderBy(cb.asc(root.get("prdName")));
         TypedQuery<ProductFeeMbApp> typedQuery = this.entityManager.createQuery(query);
 
         typedQuery.setFirstResult((int) pageable.getOffset());

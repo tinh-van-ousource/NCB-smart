@@ -55,7 +55,10 @@ public class ProviderServiceImpl implements ProviderService {
         Root<ProviderEntity> root = (Root<ProviderEntity>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("id")));
+        query.orderBy(cb.asc(root.get("providerName")));
+        
+//        query.orderBy(cb.desc(root.get("providerName")),cb.desc(root.get("name")));
+
 
         TypedQuery<ProviderEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
@@ -90,6 +93,7 @@ public class ProviderServiceImpl implements ProviderService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
         }
+       
 
         Object[] results = new Object[2];
         results[0] = rootPersist;

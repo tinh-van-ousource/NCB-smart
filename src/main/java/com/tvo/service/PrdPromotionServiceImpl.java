@@ -49,7 +49,7 @@ public class PrdPromotionServiceImpl implements PrdPromotionService {
         Root<PrdPromotionMbApp> root = (Root<PrdPromotionMbApp>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("prd")));
+        query.orderBy(cb.asc(root.get("prd")));
         TypedQuery<PrdPromotionMbApp> typedQuery = this.entityManager.createQuery(query);
 
         typedQuery.setFirstResult((int) pageable.getOffset());

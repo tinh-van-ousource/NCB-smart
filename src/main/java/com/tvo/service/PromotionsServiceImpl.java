@@ -53,7 +53,7 @@ public class PromotionsServiceImpl implements PromotionsService {
         Root<Promotions> root = (Root<Promotions>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("proCode")));
+        query.orderBy(cb.asc(root.get("proName")));
 
         TypedQuery<Promotions> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());

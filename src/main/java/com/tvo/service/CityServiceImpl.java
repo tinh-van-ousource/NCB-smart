@@ -94,7 +94,7 @@ public class CityServiceImpl implements CityService{
         query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
 
-		query.orderBy(cb.desc(root.get("proId")));
+		query.orderBy(cb.asc(root.get("shrtName")));
 		TypedQuery<City> typedQuery = this.entityManager.createQuery(query);
 		
 		typedQuery.setFirstResult((int)pageable.getOffset());
@@ -128,8 +128,8 @@ public class CityServiceImpl implements CityService{
 	            City opt = cityDao.findByProId(proId);
 	            if (opt != null) {
 	            	
-	            	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-	                cityDao.save(opt);
+//	            	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+	                cityDao.delete(opt);
 	                return true;
 	            }
 	            return false;

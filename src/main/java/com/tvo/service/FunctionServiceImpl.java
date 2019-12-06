@@ -51,7 +51,7 @@ public class FunctionServiceImpl implements FunctionService {
 		Root<Function> root = (Root<Function>) queryObjs[0];
         query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("id")));
+		query.orderBy(cb.asc(root.get("prdName")));
 		TypedQuery<Function> typedQuery = this.entityManager.createQuery(query);
 
 		typedQuery.setFirstResult((int) pageable.getOffset());
