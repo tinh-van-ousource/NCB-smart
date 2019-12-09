@@ -116,8 +116,8 @@ public class ParCardPictureServiceImpl implements ParCardPictureService {
 		ParCardPiture opt = parCardPictureDAO.findByFileName(fileName);
         if (opt != null) {
         	
-        	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-        	parCardPictureDAO.save(opt);
+//        	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+        	parCardPictureDAO.delete(opt);
             return true;
         }
         return false;
