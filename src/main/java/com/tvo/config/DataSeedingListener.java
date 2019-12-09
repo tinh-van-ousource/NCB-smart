@@ -27,7 +27,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
         // Roles
-        if (roleRepository.findByRoleName("ROLE_ADMIN") == null) {
+        /*if (roleRepository.findByRoleName("ROLE_ADMIN") == null) {
         	Role role = new Role();
         	role.setRoleName("ROLE_ADMIN");
         	role.setDescription("admin");
@@ -52,10 +52,10 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             role.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
             role.setUpdatedBy("system");
             roleRepository.save(role);
-        }
+        }*/
 
         // admin account
-        if (userRepository.findByUserName("admin") == null) {
+        /*if (userRepository.findByUserName("admin") == null) {
             User admin = new User();
             admin.setEmail("admin@gmail.com");
             admin.setUserName("admin");
@@ -71,10 +71,10 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             admin.setUserCode("Ma Nhan Vien: Admin");
             admin.setUpdatedBy("system");
             userRepository.save(admin);
-        }
+        }*/
 
         // user account
-        if (userRepository.findByUserName("user") == null) {
+        /*if (userRepository.findByUserName("user") == null) {
             User user = new User();
             user.setEmail("USER@gmail.com");
             user.setUserName("user");
@@ -90,7 +90,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setUserCode("Ma Nhan Vien: User");
             user.setUpdatedBy("system");
             userRepository.save(user);
-        }
+        }*/
 
     }
 
