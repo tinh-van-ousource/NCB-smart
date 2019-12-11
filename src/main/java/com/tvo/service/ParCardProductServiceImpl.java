@@ -50,7 +50,7 @@ public class ParCardProductServiceImpl implements ParCardProductService {
         Root<ParCardProductEntity> root = (Root<ParCardProductEntity>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("prdcode")));
+        query.orderBy(cb.asc(root.get("prdcode")));
 
         TypedQuery<ParCardProductEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());

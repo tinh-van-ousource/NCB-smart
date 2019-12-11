@@ -85,7 +85,7 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		Root<DatUserProfile> root = (Root<DatUserProfile>) queryObjs[0];
 		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("brncode")));
+		query.orderBy(cb.asc(root.get("usrsname")));
 		TypedQuery<DatUserProfile> typedQuery = this.entityManager.createQuery(query);
 
 		typedQuery.setFirstResult((int) pageable.getOffset());

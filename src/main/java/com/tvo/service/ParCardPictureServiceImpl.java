@@ -52,7 +52,7 @@ public class ParCardPictureServiceImpl implements ParCardPictureService {
 		Root<ParCardPiture> root = (Root<ParCardPiture>) queryObjs[0];
 		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("fileName")));
+		query.orderBy(cb.asc(root.get("fileName")));
 
 		TypedQuery<ParCardPiture> typedQuery = this.entityManager.createQuery(query);
 		typedQuery.setFirstResult((int) pageable.getOffset());
@@ -116,8 +116,8 @@ public class ParCardPictureServiceImpl implements ParCardPictureService {
 		ParCardPiture opt = parCardPictureDAO.findByFileName(fileName);
         if (opt != null) {
         	
-        	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-        	parCardPictureDAO.save(opt);
+//        	opt.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+        	parCardPictureDAO.delete(opt);
             return true;
         }
         return false;

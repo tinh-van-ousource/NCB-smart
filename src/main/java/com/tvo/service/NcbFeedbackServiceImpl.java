@@ -94,7 +94,7 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
         Root<NcbFeedback> root = (Root<NcbFeedback>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("id")));
+		query.orderBy(cb.asc(root.get("productName")));
 
 		TypedQuery<NcbFeedback> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());

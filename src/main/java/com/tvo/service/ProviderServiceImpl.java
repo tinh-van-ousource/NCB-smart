@@ -22,11 +22,13 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchProviderReqDto;
 import com.tvo.dao.ProviderDAO;
 import com.tvo.dto.CompDroplistBranchDto;
+import com.tvo.dto.NcbBannerDto;
 import com.tvo.dto.PromotionsDto;
 import com.tvo.dto.ProviderResDto;
 import com.tvo.dto.RoleResDto;
 import com.tvo.dto.ServiceMbappCodeListDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbBanner;
 import com.tvo.model.Promotions;
 import com.tvo.model.ProviderEntity;
 import com.tvo.request.ProviderCreateReqDto;
@@ -55,7 +57,10 @@ public class ProviderServiceImpl implements ProviderService {
         Root<ProviderEntity> root = (Root<ProviderEntity>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("id")));
+        query.orderBy(cb.asc(root.get("providerName")));
+        
+//        query.orderBy(cb.desc(root.get("providerName")),cb.desc(root.get("name")));
+
 
         TypedQuery<ProviderEntity> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
@@ -90,6 +95,7 @@ public class ProviderServiceImpl implements ProviderService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
         }
+       
 
         Object[] results = new Object[2];
         results[0] = rootPersist;
@@ -108,8 +114,8 @@ public class ProviderServiceImpl implements ProviderService {
         Optional<ProviderEntity> existedProvider = providerDao.findById(id);
         if (existedProvider.isPresent()) {
             ProviderEntity providerEntity = existedProvider.get();
-            providerEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            providerDao.save(providerEntity);
+//            providerEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+            providerDao.delete(providerEntity);
             return true;
         }
         return false;
@@ -121,7 +127,6 @@ public class ProviderServiceImpl implements ProviderService {
         if (providerEntity != null) {
             return null;
         }
-
         providerEntity = ModelMapperUtils.map(request, ProviderEntity.class);
         providerEntity.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         ProviderEntity save = providerDao.save(providerEntity);
@@ -130,16 +135,14 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderResDto update(ProviderUpdateReqDto request) {
-        ProviderEntity existedProvider = providerDao.findByProviderCode(request.getProviderCode());
-        if (existedProvider == null ) {
-        	return null;
-            
+        Optional<ProviderEntity> existedProvider = providerDao.findById(request.getId());
+        if (existedProvider.isPresent()) {
+        	ProviderEntity ncbBanner = ModelMapperUtils.map(request, ProviderEntity.class);
+            ProviderEntity save = providerDao.save(ncbBanner);
+            return ModelMapperUtils.map(save, ProviderResDto.class);
+        	
         }
-        existedProvider.setProviderName(request.getProviderName());
-        existedProvider.setServiceCode(request.getServiceCode());
-        existedProvider.setPartner(request.getPartner());
-        existedProvider.setStatus(request.getStatus());
-        return ModelMapperUtils.map(providerDao.save(existedProvider), ProviderResDto.class);
+        return null;
         
         
 //        ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));

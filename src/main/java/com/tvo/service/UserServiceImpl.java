@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         Root<User> root = (Root<User>) queryObjs[0];
         criteriaQuery.select((root));
         criteriaQuery.where((Predicate[]) queryObjs[1]);
-        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("userId")));
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("userName")));
 
         TypedQuery<User> typedQuery = this.entityManager.createQuery(criteriaQuery);
         typedQuery.setFirstResult((int) pageable.getOffset());

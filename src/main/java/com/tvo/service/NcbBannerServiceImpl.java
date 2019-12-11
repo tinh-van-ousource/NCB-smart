@@ -98,7 +98,7 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         Root<NcbBanner> root = (Root<NcbBanner>) queryObjs[0];
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.desc(root.get("id")));
+        query.orderBy(cb.asc(root.get("bannerCode")));
 
         TypedQuery<NcbBanner> typedQuery = this.entityManager.createQuery(query);
         typedQuery.setFirstResult((int) pageable.getOffset());
@@ -154,8 +154,8 @@ public class NcbBannerServiceImpl implements NcbBannerService {
             Optional<NcbBanner> opt = ncbBannerDao.findById(id);
             if (opt.isPresent()) {
                 NcbBanner ncbBanner = opt.get();
-                ncbBanner.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-                ncbBannerDao.save(ncbBanner);
+//                ncbBanner.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+                ncbBannerDao.delete(ncbBanner);
                 return true;
             }
         }

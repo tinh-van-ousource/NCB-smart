@@ -76,7 +76,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 		Root<ConfigMbApp> root = (Root<ConfigMbApp>) queryObjs[0];
 		query.select(root);
 		query.where((Predicate[]) queryObjs[1]);
-		query.orderBy(cb.desc(root.get("code")));
+		query.orderBy(cb.asc(root.get("name")));
 
 		TypedQuery<ConfigMbApp> typedQuery = this.entityManager.createQuery(query);
 		typedQuery.setFirstResult((int) pageable.getOffset());
