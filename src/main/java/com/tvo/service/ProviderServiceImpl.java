@@ -41,7 +41,7 @@ import lombok.AllArgsConstructor;
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
-    ProviderDAO providerDao;
+    private ProviderDAO providerDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -104,18 +104,20 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderResDto detail(Long id) {
-        Optional<ProviderEntity> existedProvider = providerDao.findById(id);
-        return existedProvider.map(providerEntity -> ModelMapperUtils.map(providerEntity, ProviderResDto.class)).orElse(null);
+    public ProviderResDto detail(String providerCode) {
+        ProviderEntity existedProvider = providerDao.findByProviderCode(providerCode);
+        if (existedProvider != null) {
+            return ModelMapperUtils.map(existedProvider, ProviderResDto.class);
+        }
+        // return existedProvider.map(providerEntity -> ModelMapperUtils.map(providerEntity, ProviderResDto.class)).orElse(null);
+        return null;
     }
 
     @Override
-    public boolean delete(Long id) {
-        Optional<ProviderEntity> existedProvider = providerDao.findById(id);
-        if (existedProvider.isPresent()) {
-            ProviderEntity providerEntity = existedProvider.get();
-//            providerEntity.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            providerDao.delete(providerEntity);
+    public boolean delete(String providerCode) {
+        ProviderEntity existedProvider = providerDao.findByProviderCode(providerCode);
+        if (existedProvider != null) {
+            providerDao.delete(existedProvider);
             return true;
         }
         return false;
@@ -123,7 +125,7 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderResDto create(ProviderCreateReqDto request) {
-        ProviderEntity providerEntity = providerDao.findByProviderCode(request.getProviderCode());
+        ProviderEntity providerEntity = providerDao.findByProviderCodeAndServiceCodeAndPartner(request.getProviderCode(), request.getServiceCode(), request.getPartner());
         if (providerEntity != null) {
             return null;
         }
@@ -135,18 +137,13 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderResDto update(ProviderUpdateReqDto request) {
-        Optional<ProviderEntity> existedProvider = providerDao.findById(request.getId());
-        if (existedProvider.isPresent()) {
+        ProviderEntity providerEntity = providerDao.findByProviderCodeAndServiceCodeAndPartner(request.getProviderCode(), request.getServiceCode(), request.getPartner());
+        if (providerEntity != null) {
         	ProviderEntity ncbBanner = ModelMapperUtils.map(request, ProviderEntity.class);
             ProviderEntity save = providerDao.save(ncbBanner);
             return ModelMapperUtils.map(save, ProviderResDto.class);
-        	
         }
         return null;
-        
-        
-//        ProviderEntity entity = providerDao.save(ModelMapperUtils.map(request, ProviderEntity.class));
-//        return ModelMapperUtils.map(entity, ProviderResDto.class);
     }
 
 	@Override

@@ -18,9 +18,9 @@ public interface ProviderService {
 
     ProviderResDto update(ProviderUpdateReqDto request);
 
-    ProviderResDto detail(Long id);
+    ProviderResDto detail(String providerCode);
     
     List<ServiceMbappCodeListDto> getServiceCodeList();
 
-    boolean delete(Long id);
+    boolean delete(String providerCode);
 }

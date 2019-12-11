@@ -38,8 +38,8 @@ public class ProviderController {
     }
 
     @GetMapping(value = "/detail")
-    public ResponeData<ProviderResDto> detail(@RequestParam Long id) {
-        ProviderResDto ProviderDtos = providerServiceImpl.detail(id);
+    public ResponeData<ProviderResDto> detail(@RequestParam String providerCode) {
+        ProviderResDto ProviderDtos = providerServiceImpl.detail(providerCode);
         if (ProviderDtos == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
@@ -47,8 +47,8 @@ public class ProviderController {
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponeData<Boolean> delete(@RequestParam Long id) {
-        boolean result = providerServiceImpl.delete(id);
+    public ResponeData<Boolean> delete(@RequestParam String providerCode) {
+        boolean result = providerServiceImpl.delete(providerCode);
         if (result) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
