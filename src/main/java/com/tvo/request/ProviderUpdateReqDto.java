@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 public class ProviderUpdateReqDto {
-    @NotNull
+  
     private Long id;
 
     private String providerCode;
