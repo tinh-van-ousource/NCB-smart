@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class ProviderEntity {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROVIDER_ID_SQ_GENERATOR")
     @SequenceGenerator(sequenceName = "PROVIDER_MBAPP_SEQ", allocationSize = 1, name = "PROVIDER_ID_SQ_GENERATOR")
     @Column(name = "ID")
