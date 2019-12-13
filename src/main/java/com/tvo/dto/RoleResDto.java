@@ -15,7 +15,10 @@ public class RoleResDto {
 
     private String description;
 
+    private String briefDescription;
+    
     private String status;
 
     private String updatedBy;
+    
 }

@@ -48,6 +48,7 @@ public class RoleController {
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
+    
     @DeleteMapping(value = "delete")
 	public ResponeData<Boolean> delete(@RequestParam String roleName) {
 		boolean deleteFlag = roleService.delete(roleName);

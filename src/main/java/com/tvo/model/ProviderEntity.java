@@ -18,6 +18,7 @@ public class ProviderEntity {
     @Column(name = "ID")
     private Long id;
 
+    @Id
     @Column(name = "PROVIDER_CODE")
     private String providerCode;
 

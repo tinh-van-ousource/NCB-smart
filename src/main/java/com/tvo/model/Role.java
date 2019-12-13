@@ -27,6 +27,9 @@ public class Role implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "BRIEF_DESCRIPTION")
+    private String briefDescription;
+    
     @Column(name = "CREATED_DATE")
     private Date createdDate = DateTimeUtil.getNow();
 

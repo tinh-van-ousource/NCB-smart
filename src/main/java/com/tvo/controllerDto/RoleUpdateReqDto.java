@@ -10,5 +10,7 @@ public class RoleUpdateReqDto {
 
     private String description;
 
+    private String briefDescription;
+    
     private String status;
 }
