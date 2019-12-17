@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
         // edited user must exist
         if (user != null) {
             // edited username must equal current auditor
-            if (!currentUserName.equals(user.getUserName())) {
+            if (currentUserName.equals(user.getUserName())) {
                 return false;
             }
 
