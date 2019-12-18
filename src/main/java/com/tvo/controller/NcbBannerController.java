@@ -1,5 +1,7 @@
 package com.tvo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchNcbBannerModel;
 import com.tvo.controllerDto.UpdateNcbBannerRequest;
+import com.tvo.dto.ConfigMbAppRsDto;
 import com.tvo.dto.NcbBannerDto;
 import com.tvo.model.NcbBanner;
 import com.tvo.request.CreateNcbBannerRequest;
@@ -79,5 +82,14 @@ public class NcbBannerController {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+    }
+    
+    @GetMapping(value = "forwardingScreen")
+    public ResponeData<List<ConfigMbAppRsDto>> getListForwardingScreen() {
+    	List<ConfigMbAppRsDto> forwardingScreens = ncbBannerService.getListForwardingScreen();
+    	if (forwardingScreens.isEmpty()) {
+    		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
+    	return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, forwardingScreens);
     }
 }
