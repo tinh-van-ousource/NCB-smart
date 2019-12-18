@@ -1,20 +1,9 @@
 package com.tvo.service;
 
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.SearchNcbBannerModel;
-import com.tvo.controllerDto.UpdateNcbBannerRequest;
-import com.tvo.dao.NcbBannerDao;
-import com.tvo.dto.NcbBannerDto;
-import com.tvo.enums.StatusActivate;
-import com.tvo.model.Function;
-import com.tvo.model.NcbBanner;
-import com.tvo.request.CreateNcbBannerRequest;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,10 +12,24 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.SearchNcbBannerModel;
+import com.tvo.controllerDto.UpdateNcbBannerRequest;
+import com.tvo.dao.ConfigMbAppDAO;
+import com.tvo.dao.NcbBannerDao;
+import com.tvo.dto.ConfigMbAppRsDto;
+import com.tvo.dto.NcbBannerDto;
+import com.tvo.enums.StatusActivate;
+import com.tvo.model.NcbBanner;
+import com.tvo.request.CreateNcbBannerRequest;
 
 /**
  * @author Thanglt
@@ -36,12 +39,17 @@ import java.util.Optional;
 @Service
 public class NcbBannerServiceImpl implements NcbBannerService {
 
+	private static final String CODE_FORWARDING_SCREEN = "FUNCTION_TYPE";
+	
     @Autowired
     private NcbBannerDao ncbBannerDao;
     @Autowired
 	private EntityManagerFactory entityManagerFactory;
     @Autowired
     private EntityManager entityManager;
+    
+    @Autowired
+    private ConfigMbAppDAO configMbAppDAO;
 
     public NcbBannerServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -53,7 +61,6 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         return opt.map(banner -> ModelMapperUtils.map(banner, NcbBannerDto.class)).orElse(null);
 
     }
-
 
     public Object[] createNcbBannerRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
                                                 SearchNcbBannerModel searchModel) {
@@ -168,4 +175,17 @@ public class NcbBannerServiceImpl implements NcbBannerService {
         ncbBanner.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         return ncbBannerDao.save(ncbBanner);
     }
+
+	@Override
+	public List<ConfigMbAppRsDto> getListForwardingScreen() {
+		List<ConfigMbAppRsDto> configMbAppRsDtos = new ArrayList<>();
+		List<Object> listObj = configMbAppDAO.findByCode(CODE_FORWARDING_SCREEN);
+		
+		for (Object depart : listObj) {
+            Object[] departs = (Object[]) depart;
+            configMbAppRsDtos.add(
+                    new ConfigMbAppRsDto(departs[0].toString(), departs[1].toString()));
+        }
+        return configMbAppRsDtos;
+	}
 }
