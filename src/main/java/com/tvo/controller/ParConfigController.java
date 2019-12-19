@@ -43,9 +43,9 @@ public class ParConfigController {
     }
 
     @PatchMapping(value = "update-credit-card-number")
-    public ResponeData<ParConfigResDto> updateCreditCardNumber(@NotBlank @RequestParam("oldValue") String oldValue,
+    public ResponeData<ParConfigResDto> updateCreditCardNumber(@NotBlank @RequestParam("code") String code,
                                                                @NotBlank @RequestParam("newValue") String newValue) {
-        ParConfigResDto result = parConfigService.updateCreditCardNumber(oldValue, newValue);
+        ParConfigResDto result = parConfigService.updateCreditCardNumber(code, newValue);
         if (result != null) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
         }

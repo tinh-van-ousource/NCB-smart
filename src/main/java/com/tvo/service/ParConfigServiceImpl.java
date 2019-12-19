@@ -47,8 +47,8 @@ public class ParConfigServiceImpl implements ParConfigService {
 
     @Override
     @Transactional
-    public ParConfigResDto updateCreditCardNumber(String oldValue, String newValue) {
-        ParConfigMultiIdEntity oldEntity = parConfigMultiIdRepo.findByParamAndCode("creditcardnumber", oldValue);
+    public ParConfigResDto updateCreditCardNumber(String code, String newValue) {
+        ParConfigMultiIdEntity oldEntity = parConfigMultiIdRepo.findByParamAndCode("creditcardnumber", code);
         if (oldEntity == null) {
             return null;
         }
