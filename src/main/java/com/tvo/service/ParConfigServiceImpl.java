@@ -49,14 +49,14 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Transactional
     public ParConfigResDto updateCreditCardNumber(String oldValue, String newValue) {
         ParConfigMultiIdEntity oldEntity = parConfigMultiIdRepo.findByParamAndCode("creditcardnumber", oldValue);
-        if (oldEntity != null) {
-            ParConfigMultiIdEntity newEntity = ModelMapperUtils.map(oldEntity, new ParConfigMultiIdEntity());
-            newEntity.setValue(newValue);
-            newEntity.getKey().setCode(newValue);
-            parConfigMultiIdRepo.delete(oldEntity);
-            return ModelMapperUtils.map(parConfigMultiIdRepo.save(newEntity), ParConfigResDto.class);
+        if (oldEntity == null) {
+            return null;
         }
-        return null;
+//        ParConfigMultiIdEntity newEntity = ModelMapperUtils.map(oldEntity, new ParConfigMultiIdEntity());
+        oldEntity.setValue(newValue);
+//        oldEntity.getKey().setCode(newValue);
+//        parConfigMultiIdRepo.delete(oldEntity);
+        return ModelMapperUtils.map(parConfigMultiIdRepo.save(oldEntity), ParConfigResDto.class);
     }
 
     @Override
