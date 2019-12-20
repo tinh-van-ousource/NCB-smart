@@ -24,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchProductFee;
+import com.tvo.dao.ConfigMbAppDAO;
 import com.tvo.dao.ProductFeeDAO;
+import com.tvo.dto.ConfigMbAppRsDto;
 import com.tvo.dto.ProductFeeDto;
 import com.tvo.model.ProductFeeMbApp;
 import com.tvo.request.CreateProductFeeRequest;
@@ -42,6 +44,9 @@ public class ProductFeeServiceImpl implements ProductFeeService {
 
     @Autowired
     private ProductFeeDAO productFeeDAO;
+    
+    @Autowired
+    private ConfigMbAppDAO configMbAppDAO;
 
     @Override
     public ProductFeeDto detail(Long productFeeId) {
@@ -138,4 +143,17 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
         return results;
     }
+
+	@Override
+	public List<ConfigMbAppRsDto> getListFeeTypeByCode(String code) {
+		List<ConfigMbAppRsDto> configMbAppRsDtos = new ArrayList<>();
+		List<Object> listObj = configMbAppDAO.findByCode(code);
+		
+		for (Object depart : listObj) {
+            Object[] departs = (Object[]) depart;
+            configMbAppRsDtos.add(
+                    new ConfigMbAppRsDto(departs[0].toString(), departs[1].toString()));
+        }
+        return configMbAppRsDtos;
+	}
 }

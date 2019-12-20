@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.controllerDto.SearchProductFee;
+import com.tvo.dto.ConfigMbAppRsDto;
 import com.tvo.dto.ProductFeeDto;
 import com.tvo.request.CreateProductFeeRequest;
 import com.tvo.request.ProductFeeRequest;
@@ -21,6 +22,8 @@ public interface ProductFeeService {
 	ProductFeeDto update(ProductFeeRequest productFeeRequest);
 
 	Boolean delete(Long productFeeRequest);
+	
+	List<ConfigMbAppRsDto> getListFeeTypeByCode(String code);
 }
 
 

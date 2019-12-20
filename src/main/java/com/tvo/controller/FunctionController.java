@@ -20,6 +20,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CreateFunctionDto;
 import com.tvo.controllerDto.SearchFunction;
 import com.tvo.controllerDto.SearchProductFee;
+import com.tvo.dto.ConfigMbAppRsDto;
 import com.tvo.dto.FunctionDto;
 import com.tvo.dto.ProductDropListDto;
 import com.tvo.dto.ProductFeeDto;
@@ -134,6 +135,12 @@ public class FunctionController {
 	@GetMapping(value = "/getAllPrdAndPrdName")
 	public ResponeData<List<ProductDropListDto>> getProductDropList() {
 		List<ProductDropListDto> res = functionService.getProductDropList();
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
+	}
+	
+	@GetMapping(value = "/getFeeType")
+	public ResponeData<List<ConfigMbAppRsDto>> getListFeeType(@RequestParam String code) {
+		List<ConfigMbAppRsDto> res = productFeeService.getListFeeTypeByCode(code);
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
 	}
 	
