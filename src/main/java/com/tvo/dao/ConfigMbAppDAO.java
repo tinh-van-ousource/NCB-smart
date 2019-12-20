@@ -26,5 +26,5 @@ public interface ConfigMbAppDAO extends JpaRepository<ConfigMbApp, Long> {
 
     ConfigMbApp findByIdAndCode(Long id, String code);
 
-    ConfigMbApp findByName(String name);
+    ConfigMbApp findByNameAndCode(String name, String code);
 }

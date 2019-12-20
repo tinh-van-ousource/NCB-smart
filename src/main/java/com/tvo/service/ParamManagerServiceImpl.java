@@ -1,5 +1,7 @@
 package com.tvo.service;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dao.ConfigMbAppDAO;
@@ -23,6 +25,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,7 +113,7 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public ConfigMbApp create(CreateParamManagerRequest request) {
-		ConfigMbApp configMbAppDB = configMbAppDAO.findByName(request.getName());
+		ConfigMbApp configMbAppDB = configMbAppDAO.findByNameAndCode(request.getName(), HOT_LINE);
 		if (configMbAppDB != null) {
 			return null;
 		}
@@ -134,8 +137,23 @@ public class ParamManagerServiceImpl implements ParamManagerService {
 	@Override
 	@Transactional(readOnly = false)
 	public List<ConfigMbApp> saveAll(List<ParamManagerDto> paramManagerDtos) {
-		List<ConfigMbApp> paramManagers = ModelMapperUtils.mapAll(paramManagerDtos, ConfigMbApp.class);
-		return configMbAppDAO.saveAll(paramManagers);
+		List<ConfigMbApp> saveOrUpdate = new ArrayList<ConfigMbApp>();
+		for (ParamManagerDto paramManagerDto : paramManagerDtos) {
+			ConfigMbApp configMbAppDB = configMbAppDAO.findByNameAndCode(paramManagerDto.getName(), HOT_LINE);
+			if (configMbAppDB != null) {
+				configMbAppDB.setName(paramManagerDto.getName());
+				configMbAppDB.setValue(paramManagerDto.getValue());
+				configMbAppDB.setDescription(paramManagerDto.getDescription());
+				saveOrUpdate.add(configMbAppDB);
+			} else {
+				ConfigMbApp configMbApp = ModelMapperUtils.map(paramManagerDto, ConfigMbApp.class);
+				configMbApp.setSort(String.valueOf(1));
+				configMbApp.setCode(HOT_LINE);
+				saveOrUpdate.add(configMbApp);
+			}
+		}
+		List<ConfigMbApp> saveDB = configMbAppDAO.saveAll(saveOrUpdate);
+		return Lists.newArrayList(Sets.newHashSet(saveDB));
 	}
 
 }

@@ -34,6 +34,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "param-manager")
 public class ParamManagerController {
+	
+	private static final String HOT_LINE = "HOTLINE";
 
 	@Autowired
 	private ParamManagerService paramManagerService;
@@ -86,7 +88,6 @@ public class ParamManagerController {
 
 	@PostMapping(value = "/create/uploadFile")
 	public ResponeData<List<ParamManagerDto>> submit(@RequestParam("file") MultipartFile file) {
-		System.out.println("file : " + file);
 		try {
 			FileInputStream excelFile = new FileInputStream(convert(file));
 			Workbook workbook = new XSSFWorkbook(excelFile);
@@ -108,10 +109,11 @@ public class ParamManagerController {
 			while (iterator.hasNext()) {
 				Row currentRow = iterator.next();
 				ParamManagerDto paramManagerDto = new ParamManagerDto();
-				paramManagerDto.setCode(currentRow.getCell(0).getStringCellValue());
-				paramManagerDto.setName(currentRow.getCell(1).getStringCellValue());
-				paramManagerDto.setValue(currentRow.getCell(2).getStringCellValue());
-				paramManagerDto.setDescription(currentRow.getCell(3).getStringCellValue());
+				//paramManagerDto.setCode(currentRow.getCell(0).getStringCellValue());
+				paramManagerDto.setCode(HOT_LINE);
+				paramManagerDto.setName(currentRow.getCell(0).getStringCellValue());
+				paramManagerDto.setValue(currentRow.getCell(1).getStringCellValue());
+				paramManagerDto.setDescription(currentRow.getCell(2).getStringCellValue());
 				paramManagerDtoList.add(paramManagerDto);
 			}
 			List<ConfigMbApp> paramManagers = paramManagerService.saveAll(paramManagerDtoList);
