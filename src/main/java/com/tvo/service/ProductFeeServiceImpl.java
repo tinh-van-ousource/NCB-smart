@@ -63,16 +63,14 @@ public class ProductFeeServiceImpl implements ProductFeeService {
         if (!listGrprdId.isEmpty()) {
             List<ProductFeeMbApp> productFeeMbApps = new ArrayList<>();
             for (String grprdId : listGrprdId) {
-                ProductFeeMbApp productFeeMbAppDB = productFeeDAO.findByGrprdId(grprdId);
-                ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
-                productFeeEntity.setGrprdId(grprdId);
-                if (productFeeMbAppDB != null) {
-                    productFeeEntity.setId(productFeeMbAppDB.getId());
+                ProductFeeMbApp productFeeMbAppDB = productFeeDAO
+                		.findByGrprdIdAndPrdNameAndPrdCodeAndFeeType(grprdId, productFeeRequest.getPrdName(), productFeeRequest.getPrdCode(), productFeeRequest.getFeeType());
+                if (productFeeMbAppDB == null) {
+                	ProductFeeMbApp productFeeEntity = ModelMapperUtils.map(productFeeRequest, ProductFeeMbApp.class);
+                    productFeeEntity.setGrprdId(grprdId);
                     productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
-                } else {
-                    productFeeEntity.setCreatedTime(DateTimeUtil.getNow());
-                }
-                productFeeMbApps.add(productFeeEntity);
+                    productFeeMbApps.add(productFeeEntity);
+				}
             }
             List<ProductFeeMbApp> saveProductFeeMbApps = productFeeDAO.saveAll(productFeeMbApps);
             return ModelMapperUtils.mapAll(saveProductFeeMbApps, ProductFeeDto.class);
