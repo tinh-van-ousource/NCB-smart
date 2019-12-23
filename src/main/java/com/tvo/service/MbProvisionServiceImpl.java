@@ -4,8 +4,10 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dao.MbProvisionDao;
 import com.tvo.dto.MbProvisionResDto;
+import com.tvo.dto.ParCardPictureDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.MbProvision;
+import com.tvo.model.ParCardPiture;
 import com.tvo.request.CreateMbProvisionRequest;
 import com.tvo.request.UpdateMbProvisionRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -49,6 +51,10 @@ public class MbProvisionServiceImpl implements MbProvisionService {
         if (searchModel.getProvisionName() != null && !StringUtils.isEmpty(searchModel.getProvisionName().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("provisionName")),
                     "%" + searchModel.getProvisionName().toUpperCase() + "%")));
+        }
+        
+        if (searchModel.getProvisionCode() != null && !StringUtils.isEmpty(searchModel.getProvisionCode().trim())) {
+            predicates.add(cb.and(cb.like(rootPersist.<String>get("provisionCode"),"%" + searchModel.getProvisionCode() + "%")));
         }
 
         if (searchModel.getStatus() != null && !StringUtils.isEmpty(searchModel.getStatus().trim())) {
@@ -98,6 +104,11 @@ public class MbProvisionServiceImpl implements MbProvisionService {
 
     @Override
     public MbProvisionResDto create(CreateMbProvisionRequest request) {
+    	MbProvision mbProvisionCheck = mbProvisionDao.findByProvisionCode(request.getProvisionCode());
+		 if (mbProvisionCheck != null) {
+				return null;
+			}
+ 
         MbProvision mbProvision = ModelMapperUtils.map(request, MbProvision.class);
         mbProvision.setStatus(StatusActivate.STATUS_ACTIVATED.getStatus());
         return ModelMapperUtils.map(mbProvisionDao.save(mbProvision), MbProvisionResDto.class);
@@ -115,5 +126,7 @@ public class MbProvisionServiceImpl implements MbProvisionService {
         }
         return false;
     }
+
+	
 
 }

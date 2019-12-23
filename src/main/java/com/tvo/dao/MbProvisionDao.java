@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MbProvisionDao extends JpaRepository<MbProvision, Long> {
+	MbProvision findByProvisionCode(String provisionCode);
 }

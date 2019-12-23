@@ -11,6 +11,8 @@ public class MbProvisionResDto {
     private String provisionName;
 
     private String provisionLink;
+    
+    private String provisionCode;
 
     private String status;
 }

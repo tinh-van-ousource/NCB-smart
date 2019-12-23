@@ -2,6 +2,7 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.SearchMbProvisionModel;
 import com.tvo.dto.MbProvisionResDto;
+import com.tvo.dto.ParCardPictureDto;
 import com.tvo.request.CreateMbProvisionRequest;
 import com.tvo.request.UpdateMbProvisionRequest;
 import org.springframework.data.domain.Page;

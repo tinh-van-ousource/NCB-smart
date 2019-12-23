@@ -32,7 +32,12 @@ public class MbProvision implements Serializable {
 
     @Column(name = "PROVISION_LINK")
     private String provisionLink;
-
+    
+    @Column(name = "PROVISION_CODE")
+    private String provisionCode;
+    
     @Column(name = "STATUS")
     private String status;
+    
+    
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class SearchMbProvisionModel {
 	private String provisionName;
+	
+	private String provisionCode;
 
 	private String status;
 }
