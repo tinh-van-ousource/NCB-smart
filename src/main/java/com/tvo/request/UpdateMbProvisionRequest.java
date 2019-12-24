@@ -13,6 +13,8 @@ public class UpdateMbProvisionRequest {
 	private String provisionName;
 
 	private String provisionLink;
+	
+	private String provisionCode;
 
 	private String status;
 }
