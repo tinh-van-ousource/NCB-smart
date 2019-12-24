@@ -12,7 +12,6 @@ import com.tvo.controllerDto.ParConfigUpdateOtherParamReqDto;
 import com.tvo.controllerDto.ParConfigUpdateReissueCardReasonReqDto;
 import com.tvo.dao.ParConfigMultiIdRepo;
 import com.tvo.dto.ParConfigResDto;
-import com.tvo.model.ParConfigCompositeKey;
 import com.tvo.model.ParConfigMultiIdEntity;
 
 @Service
@@ -27,8 +26,8 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Override
     public ParConfigResDto createCreditCardNumber(ParConfigUpdateCreditCardNumberReqDto req) {
         ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.getKey().setParam("creditcardnumber");
-        entityNew.getKey().setCode(req.getValue());
+        entityNew.setParam("creditcardnumber");
+        entityNew.setCode(req.getValue());
         entityNew.setValue(req.getValue());
         entityNew.setNote("Số lượng thẻ tối đa 1 KH được mở");
 
@@ -77,14 +76,12 @@ public class ParConfigServiceImpl implements ParConfigService {
     public ParConfigResDto saveOrUpdateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req) {
     	ParConfigMultiIdEntity entity = parConfigMultiIdRepo.findByCode(req.getCode());
 		if (entity != null) {
-			entity.getKey().setCode(req.getCode());
+			entity.setCode(req.getCode());
 			entity.setValue(req.getValue());
 		} else {
 			entity = new ParConfigMultiIdEntity();
-			ParConfigCompositeKey key = new ParConfigCompositeKey();
-			key.setParam("reissue_card_reason");
-			key.setCode(req.getCode());
-			entity.setKey(key);
+			entity.setParam("reissue_card_reason");
+			entity.setCode(req.getCode());
 			entity.setValue(req.getValue());
 			entity.setNote("Lý do phát hành lại thẻ");
 		}
@@ -118,8 +115,8 @@ public class ParConfigServiceImpl implements ParConfigService {
     @Override
     public ParConfigResDto updateOtherParam(ParConfigUpdateOtherParamReqDto req) {
         ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.getKey().setParam(req.getParam());
-        entityNew.getKey().setCode(req.getCode());
+        entityNew.setParam(req.getParam());
+        entityNew.setCode(req.getCode());
         entityNew.setValue(req.getValue());
         entityNew.setNote(req.getNote());
 

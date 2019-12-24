@@ -28,8 +28,11 @@ public class ParConfigMultiIdEntity implements Serializable {
     @SequenceGenerator(sequenceName = "AI_PAR_CONFIG_SQ", allocationSize = 1, name = "AI_PAR_CONFIG_SQ_GENERATOR")
 	private Long id;
 
-	/* @EmbeddedId */
-	private ParConfigCompositeKey key;
+	@Column(name = "PARAM")
+	private String param;
+	
+	@Column(name = "CODE")
+    private String code;
 	
 	@Column(name = "VALUE")
 	private String value;
