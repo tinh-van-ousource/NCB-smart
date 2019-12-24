@@ -94,6 +94,16 @@ public class CompanyServiceImpl implements CompanyService {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("compName")),
                     "%" + resource.getCompName().toUpperCase() + "%")));
         }
+        
+        if (StringUtils.isNotEmpty(resource.getMcn().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("mcn")),
+                    "%" + resource.getMcn().toUpperCase() + "%")));
+        }
+        
+        if (StringUtils.isNotEmpty(resource.getMp().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("mp")),
+                    "%" + resource.getMp().toUpperCase() + "%")));
+        }
 
         Object[] results = new Object[2];
         results[0] = rootPersist;

@@ -13,5 +13,9 @@ public class CompanySearchReqDto {
     private String compCode;
 
     private String compName;
+    
+    private String mcn;
+    
+    private String mp;
 
 }
