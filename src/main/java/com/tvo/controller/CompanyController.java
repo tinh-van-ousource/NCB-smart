@@ -2,7 +2,6 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CompanyCreateReqDto;
-import com.tvo.controllerDto.CompanyDetailRequest;
 import com.tvo.controllerDto.CompanySearchReqDto;
 import com.tvo.controllerDto.CompanyUpdateReqDto;
 import com.tvo.dto.CompanyResDto;

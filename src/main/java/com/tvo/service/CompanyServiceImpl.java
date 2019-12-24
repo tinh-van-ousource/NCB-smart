@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.CompanyCreateReqDto;
-import com.tvo.controllerDto.CompanyDetailRequest;
 import com.tvo.controllerDto.CompanySearchReqDto;
 import com.tvo.controllerDto.CompanyUpdateReqDto;
 import com.tvo.dao.CompanyRepo;
