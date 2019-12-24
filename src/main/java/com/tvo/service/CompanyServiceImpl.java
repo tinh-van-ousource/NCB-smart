@@ -38,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyResDto create(CompanyCreateReqDto companyCreateReqDto) {
-        CompanyEntity companyEntity = companyRepo.findByCompCode(companyCreateReqDto.getCompCode());
+        CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(companyCreateReqDto.getCompCode(),companyCreateReqDto.getMcn(),companyCreateReqDto.getMp());
         if (companyEntity != null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyResDto update(CompanyUpdateReqDto companyUpdateReqDto) {
-        CompanyEntity companyEntity = companyRepo.findByCompCode(companyUpdateReqDto.getCompCode());
+    	CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(companyUpdateReqDto.getCompCode(),companyUpdateReqDto.getMcn(),companyUpdateReqDto.getMp());
         if (companyEntity == null) {
             return null;
         }

@@ -18,7 +18,7 @@ public class CompanyUpdateReqDto {
 
     private String dao;
 
-//    private String mcn;
+    private String mcn;
 
     private String mp;
 }
