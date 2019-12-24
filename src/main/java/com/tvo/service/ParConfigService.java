@@ -19,8 +19,7 @@ public interface ParConfigService {
 
     Boolean deleteCreditCardNumber(String value);
 
-
-    ParConfigResDto updateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req);
+    ParConfigResDto saveOrUpdateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req);
 
     List<ParConfigResDto> getReissueCardReason();
 

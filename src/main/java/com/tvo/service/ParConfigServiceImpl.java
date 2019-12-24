@@ -1,17 +1,19 @@
 package com.tvo.service;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.controllerDto.ParConfigUpdateCreditCardNumberReqDto;
 import com.tvo.controllerDto.ParConfigUpdateOtherParamReqDto;
 import com.tvo.controllerDto.ParConfigUpdateReissueCardReasonReqDto;
 import com.tvo.dao.ParConfigMultiIdRepo;
 import com.tvo.dto.ParConfigResDto;
+import com.tvo.model.ParConfigCompositeKey;
 import com.tvo.model.ParConfigMultiIdEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class ParConfigServiceImpl implements ParConfigService {
@@ -72,14 +74,21 @@ public class ParConfigServiceImpl implements ParConfigService {
 
 
     @Override
-    public ParConfigResDto updateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req) {
-        ParConfigMultiIdEntity entityNew = new ParConfigMultiIdEntity();
-        entityNew.getKey().setParam("reissue_card_reason");
-        entityNew.getKey().setCode(req.getCode());
-        entityNew.setValue(req.getValue());
-        entityNew.setNote("Lý do phát hành lại thẻ");
-
-        return ModelMapperUtils.map(parConfigMultiIdRepo.save(entityNew), ParConfigResDto.class);
+    public ParConfigResDto saveOrUpdateReissueCardReason(ParConfigUpdateReissueCardReasonReqDto req) {
+    	ParConfigMultiIdEntity entity = parConfigMultiIdRepo.findByCode(req.getCode());
+		if (entity != null) {
+			entity.getKey().setCode(req.getCode());
+			entity.setValue(req.getValue());
+		} else {
+			entity = new ParConfigMultiIdEntity();
+			ParConfigCompositeKey key = new ParConfigCompositeKey();
+			key.setParam("reissue_card_reason");
+			key.setCode(req.getCode());
+			entity.setKey(key);
+			entity.setValue(req.getValue());
+			entity.setNote("Lý do phát hành lại thẻ");
+		}
+    	return ModelMapperUtils.map(parConfigMultiIdRepo.save(entity), ParConfigResDto.class);
     }
 
     @Override

@@ -21,4 +21,7 @@ public interface ParConfigMultiIdRepo extends JpaRepository<ParConfigMultiIdEnti
 
     @Query("SELECT pce FROM ParConfigMultiIdEntity pce WHERE pce.key.param NOT IN :param ORDER BY pce.value")
     List<ParConfigMultiIdEntity> findOtherParam(@Param("param") List<String> param);
+    
+    @Query("SELECT pce FROM ParConfigMultiIdEntity pce WHERE pce.key.code = :code")
+    ParConfigMultiIdEntity findByCode(@Param("code") String code);
 }

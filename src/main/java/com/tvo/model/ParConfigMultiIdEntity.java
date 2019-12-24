@@ -3,17 +3,16 @@ package com.tvo.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.IdClass;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "PAR_CONFIG")
@@ -22,12 +21,16 @@ import java.io.Serializable;
 @Setter
 public class ParConfigMultiIdEntity implements Serializable {
 	private static final long serialVersionUID = 6985682121897152087L;
-	@EmbeddedId
-	private ParConfigCompositeKey key;
 
+	@Id
 	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AI_PAR_CONFIG_SQ_GENERATOR")
+    @SequenceGenerator(sequenceName = "AI_PAR_CONFIG_SQ", allocationSize = 1, name = "AI_PAR_CONFIG_SQ_GENERATOR")
 	private Long id;
 
+	/* @EmbeddedId */
+	private ParConfigCompositeKey key;
+	
 	@Column(name = "VALUE")
 	private String value;
 

@@ -76,8 +76,11 @@ public class ParConfigController {
     }
 
     @PostMapping(value = "modify-reissue-card-reason")
-    public ResponeData<ParConfigResDto> updateReissueCardReason(@Valid @RequestBody ParConfigUpdateReissueCardReasonReqDto req) {
-        ParConfigResDto result = parConfigService.updateReissueCardReason(req);
+    public ResponeData<ParConfigResDto> saveOrUpdateReissueCardReason(@RequestBody ParConfigUpdateReissueCardReasonReqDto req) {
+        ParConfigResDto result = parConfigService.saveOrUpdateReissueCardReason(req);
+        if (result == null) {
+        	return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+		}
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
     }
 

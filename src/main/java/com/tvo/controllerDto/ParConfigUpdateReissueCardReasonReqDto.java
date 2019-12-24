@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Getter
 public class ParConfigUpdateReissueCardReasonReqDto {
-
+	
     private String value;
 
     @NotBlank
