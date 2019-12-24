@@ -2,6 +2,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.controllerDto.CompanyCreateReqDto;
+import com.tvo.controllerDto.CompanyDetailRequest;
 import com.tvo.controllerDto.CompanySearchReqDto;
 import com.tvo.controllerDto.CompanyUpdateReqDto;
 import com.tvo.dto.CompanyResDto;
@@ -33,8 +34,8 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/detail")
-    public ResponeData<CompanyResDto> detail(@RequestParam String compCode) {
-        CompanyResDto dts = companyService.detail(compCode);
+    public ResponeData<CompanyResDto> detail(@RequestParam String compCode, String mcn,String mp) {
+        CompanyResDto dts = companyService.detail(compCode,mcn,mp);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
