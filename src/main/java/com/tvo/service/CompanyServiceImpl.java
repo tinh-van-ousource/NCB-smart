@@ -40,46 +40,55 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyResDto create(CompanyCreateReqDto companyCreateReqDto) {
-        CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(companyCreateReqDto.getCompCode(),companyCreateReqDto.getMcn(),companyCreateReqDto.getMp());
+        CompanyEntity companyEntity = companyRepo
+        		.findByCompCodeAndMcnAndMp(companyCreateReqDto.getKey().getCompCode(), 
+        				companyCreateReqDto.getKey().getMcn(), companyCreateReqDto.getKey().getMp());
         if (companyEntity != null) {
             return null;
         }
-
         companyEntity = ModelMapperUtils.map(companyCreateReqDto, CompanyEntity.class);
         return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
     }
 
     @Override
     public CompanyResDto update(CompanyUpdateReqDto companyUpdateReqDto) {
-    	CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(companyUpdateReqDto.getCompCode(),companyUpdateReqDto.getMcn(),companyUpdateReqDto.getMp());
+    	CompanyEntity companyEntity = companyRepo
+    			.findByCompCodeAndMcnAndMp(companyUpdateReqDto.getKey().getCompCode(), 
+    					companyUpdateReqDto.getKey().getMcn(), companyUpdateReqDto.getKey().getMp());
         if (companyEntity == null) {
             return null;
         }
-
         companyEntity = ModelMapperUtils.map(companyUpdateReqDto, CompanyEntity.class);
         return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
     }
 
     @Override
     public Page<CompanyResDto> search(CompanySearchReqDto companySearchReqDto, Pageable pageable) {
-        final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
-        final CriteriaQuery<CompanyEntity> query = cb.createQuery(CompanyEntity.class);
-        Object[] queryObjs = this.createRootPersist(cb, query, companySearchReqDto);
-        Root<CompanyEntity> root = (Root<CompanyEntity>) queryObjs[0];
-        query.select(root);
-        query.where((Predicate[]) queryObjs[1]);
-        query.orderBy(cb.asc(root.get("compName")));
-
-        TypedQuery<CompanyEntity> typedQuery = this.entityManager.createQuery(query);
-        typedQuery.setFirstResult((int) pageable.getOffset());
-        typedQuery.setMaxResults(pageable.getPageSize());
-        final List<CompanyEntity> objects = typedQuery.getResultList();
-        List<CompanyResDto> objectDtos = ModelMapperUtils.mapAll(objects, CompanyResDto.class);
+    	final CriteriaBuilder cb = this.entityManagerFactory.getCriteriaBuilder();
+//        final CriteriaQuery<CompanyEntity> query = cb.createQuery(CompanyEntity.class);
+//        Object[] queryObjs = this.createRootPersist(cb, query, companySearchReqDto);
+//        Root<CompanyEntity> root = (Root<CompanyEntity>) queryObjs[0];
+//        query.select(root);
+//        query.distinct(true);
+//        query.where((Predicate[]) queryObjs[1]);
+//        query.orderBy(cb.asc(root.get("compName")));
+//
+//        TypedQuery<CompanyEntity> typedQuery = this.entityManager.createQuery(query);
+//        typedQuery.setFirstResult((int) pageable.getOffset());
+//        typedQuery.setMaxResults(pageable.getPageSize());
+//        final List<CompanyEntity> objects = typedQuery.getResultList();
+//        List<CompanyResDto> objectDtos = ModelMapperUtils.mapAll(objects, CompanyResDto.class);
+    	
+    	final List<CompanyEntity> objects = companyRepo
+    			.findCompanyEntities(
+    					companySearchReqDto.getCompCode(), companySearchReqDto.getCompName(), 
+    					companySearchReqDto.getMcn(), companySearchReqDto.getMp());
+    	List<CompanyResDto> objectDtos = ModelMapperUtils.mapAll(objects, CompanyResDto.class);
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         countQuery.select(cbTotal.count(countQuery.from(CompanyEntity.class)));
-        countQuery.where((Predicate[]) queryObjs[1]);
+        // countQuery.where((Predicate[]) queryObjs[1]);
         Long total = entityManager.createQuery(countQuery).getSingleResult();
         return new PageImpl<>(objectDtos, pageable, total);
     }
@@ -107,6 +116,7 @@ public class CompanyServiceImpl implements CompanyService {
                     "%" + resource.getMp().toUpperCase() + "%")));
         }
 
+       
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
@@ -123,12 +133,14 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Boolean delete(String compCode) {
+    public Boolean delete(String compCode, String mcn, String mp) {
         try {
-            companyRepo.deleteById(compCode);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+            CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(compCode, mcn, mp);
+            if (companyEntity != null) {
+            	companyRepo.delete(companyEntity);
+            	return true;
+            }
+        } catch (Exception e) {}
+        return false;
     }
 }

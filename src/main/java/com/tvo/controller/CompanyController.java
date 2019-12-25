@@ -33,8 +33,8 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/detail")
-    public ResponeData<CompanyResDto> detail(@RequestParam String compCode, String mcn,String mp) {
-        CompanyResDto dts = companyService.detail(compCode,mcn,mp);
+    public ResponeData<CompanyResDto> detail(@RequestParam String compCode, String mcn, String mp) {
+        CompanyResDto dts = companyService.detail(compCode, mcn, mp);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
@@ -57,8 +57,8 @@ public class CompanyController {
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponeData<Boolean> delete(@RequestParam String compCode) {
-        Boolean resDto = companyService.delete(compCode);
+    public ResponeData<Boolean> delete(@RequestParam String compCode, String mcn, String mp) {
+        Boolean resDto = companyService.delete(compCode, mcn, mp);
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
     }
 

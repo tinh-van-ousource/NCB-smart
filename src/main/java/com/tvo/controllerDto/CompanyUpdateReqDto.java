@@ -5,20 +5,17 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+import com.tvo.dto.CompanyKeyResDto;
+
 @Setter
 @Getter
 public class CompanyUpdateReqDto {
 
-    @NotNull
-    private String compCode;
-
+	private CompanyKeyResDto key;
+	
     private String compName;
 
-//    private String address;
+    private String address;
 
     private String dao;
-
-    private String mcn;
-
-    private String mp;
 }

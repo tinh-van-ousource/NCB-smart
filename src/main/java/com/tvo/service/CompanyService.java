@@ -16,7 +16,7 @@ public interface CompanyService {
 
     Page<CompanyResDto> search(CompanySearchReqDto companySearchReqDto, Pageable pageable);
 
-    CompanyResDto detail(String compCode, String mcn,String mp);
+    CompanyResDto detail(String compCode, String mcn, String mp);
 
-    Boolean delete(String compCode);
+    Boolean delete(String compCode, String mcn, String mp);
 }
