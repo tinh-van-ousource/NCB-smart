@@ -1,17 +1,7 @@
 package com.tvo.service;
 
-import com.tvo.common.ModelMapperUtils;
-import com.tvo.controllerDto.CompanyCreateReqDto;
-import com.tvo.controllerDto.CompanySearchReqDto;
-import com.tvo.controllerDto.CompanyUpdateReqDto;
-import com.tvo.dao.CompanyRepo;
-import com.tvo.dto.CompanyResDto;
-import com.tvo.model.CompanyEntity;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,8 +10,20 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tvo.common.ModelMapperUtils;
+import com.tvo.controllerDto.CompanyCreateReqDto;
+import com.tvo.controllerDto.CompanySearchReqDto;
+import com.tvo.controllerDto.CompanyUpdateReqDto;
+import com.tvo.dao.CompanyRepo;
+import com.tvo.dto.CompanyResDto;
+import com.tvo.model.CompanyEntity;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -112,8 +114,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public CompanyResDto detail(String compCode) {
-        CompanyEntity companyEntity = companyRepo.findByCompCode(compCode);
+    public CompanyResDto detail(String compCode, String mcn,String mp) {
+        CompanyEntity companyEntity = companyRepo.findByCompCodeAndMcnAndMp(compCode,mcn,mp);
         if (companyEntity != null) {
             return ModelMapperUtils.map(companyEntity, CompanyResDto.class);
         }
