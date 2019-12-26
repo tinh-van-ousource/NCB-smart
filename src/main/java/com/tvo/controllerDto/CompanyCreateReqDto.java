@@ -13,7 +13,7 @@ public class CompanyCreateReqDto {
 	
     private String compName;
 
-    private String address;
+    // private String address;
 
     private String dao;
 }
