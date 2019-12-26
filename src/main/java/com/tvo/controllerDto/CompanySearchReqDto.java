@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class CompanySearchReqDto {
 
-    @NotNull
     private String compCode;
 
     private String compName;
