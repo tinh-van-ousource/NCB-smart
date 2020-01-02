@@ -26,6 +26,7 @@ import com.tvo.dto.DatUserProfileDto;
 import com.tvo.model.DatCfmast;
 import com.tvo.model.DatUserProfile;
 import com.tvo.model.DatUserProfile_;
+import com.tvo.model.Function;
 
 @Service
 public class DatUserProfileServiceImpl implements DatUserProfileService {
@@ -70,6 +71,9 @@ public class DatUserProfileServiceImpl implements DatUserProfileService {
 		}
 		if (resource.getIdno() != null && !StringUtils.isEmpty(resource.getIdno().trim())) {
 			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<DatCfmast>get("datCfmast").get("idno")), "%" + resource.getIdno().toUpperCase() + "%")));
+		}
+		if (resource.getFromDate() != null && resource.getToDate() != null) {
+			predicates.add(cb.between(rootPersist.<Function>get("function").get("createdDate"), resource.getFromDate(), resource.getToDate()));
 		}
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
