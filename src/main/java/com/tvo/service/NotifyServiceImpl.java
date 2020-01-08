@@ -85,6 +85,11 @@ public class NotifyServiceImpl implements NotifyService{
 					"%" +searchNotify.getType().toUpperCase()+ "%")));
 		}
 		
+		if (searchNotify.getMes_Vn() != null && !StringUtils.isEmpty(searchNotify.getMes_Vn().trim())) {
+			predicates.add(cb.and(cb.like(cb.upper(rootPersist.<String>get("m")),
+					"%" +searchNotify.getMes_Vn().toUpperCase()+ "%")));
+		}
+		
 		Object[] results = new Object[2];
 		results[0] = rootPersist;
 		results[1] = predicates.toArray(new Predicate[predicates.size()]);

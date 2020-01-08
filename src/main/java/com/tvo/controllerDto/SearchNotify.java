@@ -16,6 +16,8 @@ public class SearchNotify {
 	private String error;
 	private String type;
 	
+	private String mes_Vn;
+	
 	
 }
 
