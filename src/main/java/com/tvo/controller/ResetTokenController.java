@@ -1,10 +1,12 @@
 package com.tvo.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -12,27 +14,15 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.TokenAuthenticationService;
 import com.tvo.dao.UserRepo;
+import com.tvo.dto.ResetTokenDto;
 import com.tvo.dto.UserResDto;
+import com.tvo.model.User;
 import com.tvo.response.ResponeData;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.tvo.model.User;
-import com.tvo.model.UserDetailsImpl;
 
 @RestController
 @RequestMapping(value = "/token")
@@ -48,13 +38,13 @@ public class ResetTokenController {
 	        userRepo = ctx.getBean(UserRepo.class);
 	    }
 
-	@GetMapping(value = "/reset")
-	public static UserResDto reset(@RequestParam String token) {
+	@PostMapping(value = "/reset")
+	public static UserResDto reset(@RequestBody ResetTokenDto resetTokenRequest) {
 //		String token = request.getHeader(AppConstant.HEADER_STRING);
-		if (token != null) {
+		if (resetTokenRequest.getToken() != null) {
 			// parse the token.
 			try {
-				String userName = Jwts.parser().setSigningKey(AppConstant.SECRET).parseClaimsJws(token).getBody()
+				String userName = Jwts.parser().setSigningKey(AppConstant.SECRET).parseClaimsJws(resetTokenRequest.getToken()).getBody()
 						.getSubject();
 
 				String JWT = Jwts.builder().setSubject(userName)
