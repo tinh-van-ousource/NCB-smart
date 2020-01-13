@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +36,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "param-manager")
 public class ParamManagerController {
-	
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String HOT_LINE = "HOTLINE";
 
 	@Autowired
@@ -44,6 +46,7 @@ public class ParamManagerController {
 	public ResponeData<Page<ParamManagerDto>> searchDatUserProfile(@ModelAttribute SearchParamManagerModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<ParamManagerDto> dts = paramManagerService.searchParamManager(searchModel, pageable);
+		logger.info("Tìm kiếm Số tổng đài");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 
@@ -52,6 +55,7 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.findByIdAndCode(id);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			logger.info("Chi tiết Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -62,6 +66,7 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.create(request);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			logger.info("Tạo mới Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.PARAM_MANAGER_EXISTED_CODE, AppConstant.PARAM_MANAGER_EXISTED_MESSAGE, null);
@@ -72,6 +77,7 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.update(request);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
+			logger.info("Cập nhật thông tin Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -81,6 +87,7 @@ public class ParamManagerController {
 	public ResponeData<Boolean> delete(@RequestParam Long id) {
 		boolean deleteFlag = paramManagerService.delete(id);
 		if (deleteFlag) {
+			logger.info("Xóa Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

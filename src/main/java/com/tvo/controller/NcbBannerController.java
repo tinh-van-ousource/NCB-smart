@@ -2,6 +2,8 @@ package com.tvo.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +35,7 @@ import io.swagger.annotations.Api;
 @RequestMapping(value = "ncb-banner")
 @Api(tags = "Ncb Banner")
 public class NcbBannerController {
-    
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private NcbBannerService ncbBannerService;
 
@@ -44,6 +46,7 @@ public class NcbBannerController {
             return new ResponeData<NcbBannerDto>(AppConstant.BANNER_EXISTED_CODE, AppConstant.BANNER_EXISTED_MESSAGE, null);
         }
         NcbBannerDto ncbBannerDto = ModelMapperUtils.map(ncbBanner, NcbBannerDto.class);
+        logger.info("Tạo mới Banner");
         return new ResponeData<NcbBannerDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbBannerDto);
     }
 
@@ -53,6 +56,7 @@ public class NcbBannerController {
         if (dts.getTotalElements() == 0) {
         	return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Tìm kiếm Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
@@ -62,6 +66,7 @@ public class NcbBannerController {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
         NcbBannerDto result = ncbBannerService.findById(id);
+        logger.info("Chi tiết Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
     }
 
@@ -71,6 +76,7 @@ public class NcbBannerController {
         if (ncbBanner == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Cập nhật thông tin Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
                 ncbBanner);
     }
@@ -81,6 +87,7 @@ public class NcbBannerController {
         if (deleteFlag) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
     

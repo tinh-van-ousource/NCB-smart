@@ -3,6 +3,8 @@ package com.tvo.controller;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,17 +41,21 @@ import com.tvo.service.NcbBranchService;
 public class NcbBranchController {
     @Autowired
     private NcbBranchService ncbBranchService;
-
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    
     @GetMapping(value = "search")
     public ResponeData<Page<NcbBranchDto>> searchBranch(SearchNcbBranchModel searchModel,
                                                         @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<NcbBranchDto> res = ncbBranchService.searchNcbBranch(searchModel, pageable);
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
 
     @GetMapping(value = "branch/activated-list")
     public ResponeData<List<NcbActiveBranchOnlyResDto>> getAllActivatedBranch() {
 		List<NcbActiveBranchOnlyResDto> res = ncbBranchService.getAllActivatedBranch();
+		logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
     

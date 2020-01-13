@@ -2,6 +2,8 @@ package com.tvo.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +37,7 @@ import com.tvo.service.ProductFeeService;
 @RestController
 @RequestMapping(value = "/function")
 public class FunctionController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private FunctionService functionService;
 
@@ -45,6 +47,7 @@ public class FunctionController {
 	@GetMapping(value = "/search")
 	public ResponeData<Page<FunctionDto>> search(@ModelAttribute SearchFunction searchFunction, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<FunctionDto> functionDtos = functionService.search(searchFunction, pageable);
+        logger.info("Tìm kiếm Gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDtos);
 	}
 
@@ -54,6 +57,7 @@ public class FunctionController {
 		if(createFunctionDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CREATE_FUNCTION_CODE, AppConstant.SYSTEM_ERROR_CREATE_FUNCTION_MESSAGE, null);
 		}
+        logger.info("Tạo mới Gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, createFunctionDto);
 	}
 
@@ -63,6 +67,7 @@ public class FunctionController {
 		if (functionDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Cập nhật thông tin Gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDto);
 	}
 
@@ -72,6 +77,7 @@ public class FunctionController {
 		if (functionDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Xóa Gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDto);
 	}
 
@@ -81,6 +87,7 @@ public class FunctionController {
 		if (dto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Chi tiết Gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 
@@ -90,6 +97,7 @@ public class FunctionController {
 		if(productFeeDtos.isEmpty()) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Tạo mới Cấu hình phí gói sản phẩm ");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDtos);
 	}
 
@@ -99,6 +107,7 @@ public class FunctionController {
 		if (productFeeDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Cập nhật Cấu hình phí gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDto);
 	}
 
@@ -108,6 +117,7 @@ public class FunctionController {
 		if (isDelete == false) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 		}
+        logger.info("Xóa Cấu hình phí gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 	}
 
@@ -117,12 +127,14 @@ public class FunctionController {
 		if (productFeeDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+        logger.info("Chi tiết Cấu hình phí gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDto);
 	}
 
 	@GetMapping(value = "/fee/search")
 	public ResponeData<Page<ProductFeeDto>> searchFunctionFee(@ModelAttribute SearchProductFee searchProductFee, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<ProductFeeDto> productFeeDtos = productFeeService.search(searchProductFee, pageable);
+        logger.info("Tìm kiếm Cấu hình phí gói sản phẩm");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, productFeeDtos);
 	}
 

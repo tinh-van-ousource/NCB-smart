@@ -9,6 +9,9 @@ import com.tvo.request.UpdateNotifyRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NotifyServiceImpl;
 import io.swagger.annotations.Api;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/notify")
 @Api(tags = "Notify")
 public class NotifyController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private NotifyServiceImpl notifyService;
 
@@ -27,6 +30,7 @@ public class NotifyController {
 	public ResponeData<Page<NotifyDto>> searchNcbQA(@ModelAttribute SearchNotify searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NotifyDto> dts = notifyService.search(searchModel, pageable);
+		logger.info("Tìm kiếm Notify(in App)");
 		return new ResponeData<Page<NotifyDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				dts);
 	}
@@ -39,6 +43,7 @@ public class NotifyController {
 			return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
+		logger.info("Tạo mới Notify(in App)");
 		return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				notifyDto);
 	}
@@ -49,6 +54,7 @@ public class NotifyController {
 		if (notifyDto == null) {
 			return new ResponeData<NotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+		logger.info("Cập nhật thông tin Notify(in App)");
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				notifyDto);
 	}
@@ -59,6 +65,7 @@ public class NotifyController {
 		if (dto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+		logger.info("Chi tiết Notify(in App)");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 
@@ -66,6 +73,7 @@ public class NotifyController {
 	public ResponeData<Boolean> delete(@RequestParam String msgCode) {
 		boolean deleteFlag = notifyService.delete(msgCode);
 		if (deleteFlag == true) {
+			logger.info("Xóa Notify(in App)");
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

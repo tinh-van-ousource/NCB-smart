@@ -8,6 +8,9 @@ import com.tvo.request.UpdateNcbFeedbackRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbFeedbackService;
 import io.swagger.annotations.Api;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "ncb-feedback")
 @Api(tags = "Ncb Feedback")
 public class NcbFeedbackController {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private NcbFeedbackService ncbFeedbackService;
 
@@ -27,6 +31,7 @@ public class NcbFeedbackController {
     public ResponeData<Page<NcbFeedbackDto>> searchNcbQA(@ModelAttribute SearchNcbFeedbackModel searchModel,
                                                          @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<NcbFeedbackDto> dts = ncbFeedbackService.searchNcbFeedback(searchModel, pageable);
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
@@ -36,12 +41,14 @@ public class NcbFeedbackController {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
         NcbFeedbackDto result = ncbFeedbackService.findById(id);
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
     }
 
     @PostMapping(value = "create")
     public ResponeData<NcbFeedbackDto> create(@Valid @RequestBody CreateNcbFeedbackRequest request) {
         NcbFeedbackDto ncbFeedbackDto = ncbFeedbackService.create(request);
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbFeedbackDto);
     }
 
@@ -51,6 +58,7 @@ public class NcbFeedbackController {
         if (ncbFeedbackDto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbFeedbackDto);
     }
 
@@ -60,6 +68,7 @@ public class NcbFeedbackController {
         if (deleteFlag == true) {
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
+        logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
 }

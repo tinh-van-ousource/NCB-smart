@@ -7,6 +7,9 @@ import com.tvo.request.ParCardPictureSearchDto;
 import com.tvo.request.UpdateParCardPictureRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParCardPictureServiceImpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/parcard-picture")
 public class ParCardPictureController {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	ParCardPictureServiceImpl parCardPictureServiceImpl;
 	@PostMapping(value="/create")
@@ -26,11 +30,13 @@ public class ParCardPictureController {
 		if(dto == null) {
 			return new ResponeData<ParCardPictureDto>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, null);
 		}
+		logger.info("Tạo mới Hình ảnh thẻ");
 		return new ResponeData<ParCardPictureDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 	@GetMapping(value = "/search")
 	public ResponeData<Page<ParCardPictureDto>> search(@ModelAttribute ParCardPictureSearchDto searchPicture, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
 		Page<ParCardPictureDto> CityDtos = parCardPictureServiceImpl.search(searchPicture, pageable);
+		logger.info("Tìm kiếm Hình ảnh thẻ");
 		return new ResponeData<Page<ParCardPictureDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, CityDtos);
 	}
 	@PutMapping(value = "update")
@@ -39,6 +45,7 @@ public class ParCardPictureController {
 		if (cityDto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
+		logger.info("Cập nhật thông tin Hình ảnh thẻ");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, cityDto);
 	}
 	@GetMapping(value = "/detail")
@@ -48,6 +55,7 @@ public class ParCardPictureController {
 	        if (dto == null) {
 	            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 	        }
+	        logger.info("Chi tiết Hình ảnh thẻ");
 	        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	    }
 
@@ -55,6 +63,7 @@ public class ParCardPictureController {
 	public ResponeData<Boolean> delete(@RequestParam String fileName) {
 		boolean deleteFlag = parCardPictureServiceImpl.delete(fileName);
         if (deleteFlag) {
+        	logger.info("Xóa Hình ảnh thẻ");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
@@ -62,6 +71,7 @@ public class ParCardPictureController {
 	 @GetMapping(value = "list-linkUrl")
 	    public ResponeData<List<String>> getAllLinkUrl() {
 	        List<String> serviceList = parCardPictureServiceImpl.getListLinkUrlMbApp();
+	        logger.info("Lấy danh sách LinkUrl");
 	        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceList);
 	    }
 }

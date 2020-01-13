@@ -9,6 +9,9 @@ import com.tvo.model.ConfigCronjob;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ConfigCronjobService;
 import com.tvo.service.quartz.JobUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/config-cronjob")
 public class ConfigCronjobController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     private static final String GROUP_KEY_CONFIG = "GROUP_KEY_CONFIG";
     private static final String JOB_KEY_NAME_START = "JOB_KEY_NAME_START";
     private static final String JOB_KEY_NAME_END = "JOB_KEY_NAME_END";

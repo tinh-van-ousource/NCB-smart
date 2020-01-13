@@ -15,6 +15,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.DisabledException;
@@ -37,7 +40,8 @@ import java.util.Date;
  */
 @Service
 public class TokenAuthenticationService {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	
     private static UserRepo userRepo;
 
     private static Gson gson;
@@ -80,6 +84,7 @@ public class TokenAuthenticationService {
 
             gson = new Gson();
             UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);
+            logger.info("Xóa Chi nhánh");
             userDto.setToken(JWT);
             ResponeData respLogin = new ResponeData(
                     AppConstant.SYSTEM_SUCCESS_CODE,

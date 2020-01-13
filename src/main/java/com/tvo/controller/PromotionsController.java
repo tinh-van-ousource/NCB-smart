@@ -9,6 +9,9 @@ import com.tvo.request.UpdatePromotionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.PrdPromotionService;
 import com.tvo.service.PromotionsService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/promotions")
 public class PromotionsController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private PromotionsService promotionsService;
 
@@ -30,6 +33,7 @@ public class PromotionsController {
     @GetMapping(value = "/search")
     public ResponeData<Page<PromotionsDto>> search(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<PromotionsDto> promotionsDtos = promotionsService.searchPromotion(searchPromotion, pageable);
+        logger.info("Tìm kiếm Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionsDtos);
     }
     
@@ -39,6 +43,7 @@ public class PromotionsController {
         if(dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Tạo mới Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
@@ -46,6 +51,7 @@ public class PromotionsController {
     public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
         PromotionsDto promotionDto = promotionsService.update(request);
         if (promotionDto != null) {
+        	logger.info("Cập nhật thông tin Khuyến mại/ ưu đãi");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -57,6 +63,7 @@ public class PromotionsController {
         if (isDetele == false) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
         }
+        logger.info("Xóa Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
@@ -66,12 +73,14 @@ public class PromotionsController {
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Chi tiết Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/fee/search")
     public ResponeData<Page<PrdPromotionDto>> searchFee(@ModelAttribute SearchPrdPromotion searchPrdPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<PrdPromotionDto> prdPromotionDtos = prdPromotionService.search(searchPrdPromotion, pageable);
+        logger.info("Tìm kiếm Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, prdPromotionDtos);
     }
 
@@ -81,6 +90,7 @@ public class PromotionsController {
         if(dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Tạo mới Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
@@ -88,6 +98,7 @@ public class PromotionsController {
     public ResponeData<PrdPromotionDto> updateFee(@RequestBody PrdPromotionRq request) {
         PrdPromotionDto promotionDto = prdPromotionService.update(request);
         if (promotionDto != null) {
+        	logger.info("Cập nhật thông tin Gán mã khuyến mãi gói sản phẩm");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -99,6 +110,7 @@ public class PromotionsController {
         if (isDetele == false) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
         }
+        logger.info("Xóa Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
@@ -108,12 +120,14 @@ public class PromotionsController {
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Chi tiết Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/add-function/getAllProCode")
     public ResponeData<List<String>> getProCode() {
         List<String> proCodes = promotionsService.getDistinctByProCode() ;
+        logger.info("Lấy danh sách toàn bộ ProCode");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, proCodes);
     }
 }

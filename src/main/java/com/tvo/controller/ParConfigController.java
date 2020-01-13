@@ -7,6 +7,9 @@ import com.tvo.controllerDto.ParConfigUpdateReissueCardReasonReqDto;
 import com.tvo.dto.ParConfigResDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParConfigService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "par-config")
 public class ParConfigController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final ParConfigService parConfigService;
 
     public ParConfigController(ParConfigService parConfigService) {

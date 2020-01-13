@@ -1,5 +1,7 @@
 package com.tvo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ import io.swagger.annotations.Api;
 @RequestMapping(value = "/img", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "img")
 public class FileController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final FileService fileService;
 
     public FileController(FileService fileService) {

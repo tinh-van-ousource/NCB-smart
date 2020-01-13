@@ -8,6 +8,9 @@ import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.ParCardProductUpdateReqDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParCardProductService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "par-card")
 public class ParCardProductController {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private ParCardProductService parCardProductService;
 
@@ -24,8 +28,8 @@ public class ParCardProductController {
     public ResponeData<Page<ParCardProductResDto>> search(@ModelAttribute ParCardSearchReqDto searchModel,
                                                           @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<ParCardProductResDto> dts = parCardProductService.search(searchModel, pageable);
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE,
-                AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+        logger.info("Tìm kiếm Phân quyền");
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
     @GetMapping(value = "detail")
@@ -35,6 +39,7 @@ public class ParCardProductController {
         if (parCardProductResDto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+        logger.info("Tìm kiếm Phân quyền");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProductResDto);
     }
 
@@ -42,6 +47,7 @@ public class ParCardProductController {
     public ResponeData<Boolean> delete(@RequestParam String prdCode) {
         boolean result = parCardProductService.delete(prdCode);
         if (result) {
+        	logger.info("Tìm kiếm Phân quyền");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
@@ -51,6 +57,7 @@ public class ParCardProductController {
     public ResponeData<ParCardProductResDto> update(@RequestBody ParCardProductCreateReqDto parCardProductUpdateReqDto) {
         ParCardProductResDto parCardProduct = parCardProductService.update(parCardProductUpdateReqDto);
         if (parCardProduct != null) {
+        	logger.info("Tìm kiếm Phân quyền");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -62,6 +69,7 @@ public class ParCardProductController {
           if (resDto == null) {
               return new ResponeData<>(AppConstant.COMPANY_EXISTED_CODE, AppConstant.COMPANY_EXISTED_MESSAGE, null);
           }
+          logger.info("Tìm kiếm Phân quyền");
           return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
 //      
 //        try {

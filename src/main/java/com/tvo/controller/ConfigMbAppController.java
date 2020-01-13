@@ -5,6 +5,9 @@ import com.tvo.dto.ConfigMbAppDto;
 import com.tvo.dto.ConfigMbAppRsDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ConfigMbAppService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/configMbApp")
 public class ConfigMbAppController {
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private ConfigMbAppService configMbAppService;
 

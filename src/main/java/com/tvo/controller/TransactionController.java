@@ -8,6 +8,9 @@ import com.tvo.dto.TransactionDto;
 import com.tvo.request.TransactionRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.TransactionService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/transaction")
 public class TransactionController {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired TransactionService transactionService;
 	
 	@GetMapping(value = "/getAll")

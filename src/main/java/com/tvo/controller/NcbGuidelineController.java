@@ -8,6 +8,9 @@ import com.tvo.request.UpdateNcbGuidelineRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbGuidelineService;
 import io.swagger.annotations.Api;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "ncb-guideline")
 @Api(tags = "Ncb Guideline")
 public class NcbGuidelineController {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private NcbGuidelineService ncbGuidelineService;
 
@@ -25,8 +29,8 @@ public class NcbGuidelineController {
 	public ResponeData<Page<NcbGuidelineDto>> searchNcbGuideline(@ModelAttribute SearchNcbGuidelineModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NcbGuidelineDto> dts = ncbGuidelineService.searchNcbGuideline(searchModel, pageable);
-		return new ResponeData<Page<NcbGuidelineDto>>(AppConstant.SYSTEM_SUCCESS_CODE,
-				AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
+		logger.info("Tìm kiếm Điều khoản sử dụng");
+		return new ResponeData<Page<NcbGuidelineDto>>(AppConstant.SYSTEM_SUCCESS_CODE,AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 
 	@GetMapping(value = "detail")
@@ -36,6 +40,7 @@ public class NcbGuidelineController {
 					null);
 		}
 		NcbGuidelineDto result = ncbGuidelineService.findById(id);
+		logger.info("Chi tiết Điều khoản sử dụng");
 		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				result);
 	}
@@ -47,6 +52,7 @@ public class NcbGuidelineController {
 			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
+		logger.info("Tạo mới Điều khoản sử dụng");
 		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbGuideline);
 	}
@@ -58,6 +64,7 @@ public class NcbGuidelineController {
 			return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
+		logger.info("Cập nhật thông tin Điều khoản sử dụng");
 		return new ResponeData<NcbGuidelineDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				ncbGuideline);
 	}
@@ -68,6 +75,7 @@ public class NcbGuidelineController {
 		if (deleteFlag == true) {
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
+		logger.info("Xóa Điều khoản sử dụng");
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
 	}
 }
