@@ -75,13 +75,15 @@ public class TokenAuthenticationService {
         String JWT = Jwts.builder().setSubject(userDetails.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + AppConstant.EXPIRATION_TIME_MS))
                 .signWith(SignatureAlgorithm.HS512, AppConstant.SECRET).compact();
-        Flag.JWT = JWT;
+        
         try {
             String userName = ((UserDetails) authResult.getPrincipal()).getUsername();
             User user = userRepo.findByUserName(userName);
             user.setCountLoginFail(0);
             user = userRepo.save(user);
-
+            
+            Flag.userFlag = user;
+            
             gson = new Gson();
             UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);
 //            logger.info("Xóa Chi nhánh");

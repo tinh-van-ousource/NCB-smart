@@ -1,5 +1,7 @@
 package com.tvo.config;
 
+import com.tvo.model.User;
+
 public class Flag {
-	public static String JWT = null;
+	public static User userFlag;
 }
