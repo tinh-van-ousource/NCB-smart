@@ -2,6 +2,7 @@ package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchParamManagerModel;
 import com.tvo.dto.ParamManagerDto;
 import com.tvo.model.ConfigMbApp;
@@ -29,6 +30,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +40,9 @@ import java.util.List;
 @RequestMapping(value = "param-manager")
 public class ParamManagerController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
 	private static final String HOT_LINE = "HOTLINE";
 
 	@Autowired
@@ -46,7 +52,19 @@ public class ParamManagerController {
 	public ResponeData<Page<ParamManagerDto>> searchDatUserProfile(@ModelAttribute SearchParamManagerModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<ParamManagerDto> dts = paramManagerService.searchParamManager(searchModel, pageable);
-		logger.info("Tìm kiếm Số tổng đài");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Số tổng đài");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
 	}
 
@@ -55,7 +73,19 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.findByIdAndCode(id);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
-			logger.info("Chi tiết Số tổng đài");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Chi tiết Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -66,7 +96,19 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.create(request);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
-			logger.info("Tạo mới Số tổng đài");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Tạo mới Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.PARAM_MANAGER_EXISTED_CODE, AppConstant.PARAM_MANAGER_EXISTED_MESSAGE, null);
@@ -77,7 +119,19 @@ public class ParamManagerController {
 		ConfigMbApp configMbApp = paramManagerService.update(request);
 		if (configMbApp != null) {
 			ParamManagerDto result = ModelMapperUtils.map(configMbApp, ParamManagerDto.class);
-			logger.info("Cập nhật thông tin Số tổng đài");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Cập nhật thông tin Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_MESSAGE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -87,7 +141,19 @@ public class ParamManagerController {
 	public ResponeData<Boolean> delete(@RequestParam Long id) {
 		boolean deleteFlag = paramManagerService.delete(id);
 		if (deleteFlag) {
-			logger.info("Xóa Số tổng đài");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Xóa Số tổng đài");
 			return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
 		return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

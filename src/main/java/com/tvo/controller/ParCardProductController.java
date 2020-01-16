@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.ParCardSearchReqDto;
 import com.tvo.dto.CompanyResDto;
 import com.tvo.dto.ParCardProductResDto;
@@ -8,6 +9,9 @@ import com.tvo.request.ParCardProductCreateReqDto;
 import com.tvo.request.ParCardProductUpdateReqDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ParCardProductService;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "par-card")
 public class ParCardProductController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
     @Autowired
     private ParCardProductService parCardProductService;
 
@@ -28,7 +35,19 @@ public class ParCardProductController {
     public ResponeData<Page<ParCardProductResDto>> search(@ModelAttribute ParCardSearchReqDto searchModel,
                                                           @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<ParCardProductResDto> dts = parCardProductService.search(searchModel, pageable);
-        logger.info("Tìm kiếm Phân quyền");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Sản phẩm thẻ");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dts);
     }
 
@@ -39,7 +58,19 @@ public class ParCardProductController {
         if (parCardProductResDto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        logger.info("Tìm kiếm Phân quyền");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Sản phẩm thẻ");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProductResDto);
     }
 
@@ -47,7 +78,19 @@ public class ParCardProductController {
     public ResponeData<Boolean> delete(@RequestParam String prdCode) {
         boolean result = parCardProductService.delete(prdCode);
         if (result) {
-        	logger.info("Tìm kiếm Phân quyền");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Xóa Sản phẩm thẻ");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
@@ -57,7 +100,19 @@ public class ParCardProductController {
     public ResponeData<ParCardProductResDto> update(@RequestBody ParCardProductCreateReqDto parCardProductUpdateReqDto) {
         ParCardProductResDto parCardProduct = parCardProductService.update(parCardProductUpdateReqDto);
         if (parCardProduct != null) {
-        	logger.info("Tìm kiếm Phân quyền");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Cập nhật thông tin Sản phẩm thẻ");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, parCardProduct);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -69,7 +124,19 @@ public class ParCardProductController {
           if (resDto == null) {
               return new ResponeData<>(AppConstant.COMPANY_EXISTED_CODE, AppConstant.COMPANY_EXISTED_MESSAGE, null);
           }
-          logger.info("Tìm kiếm Phân quyền");
+          try {
+  			ip = InetAddress.getLocalHost();
+  		} catch (UnknownHostException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+          hostname = ip.getHostName();
+          logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+          		"\n Account :"+Flag.userFlag.getUserName().toString()+
+          		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+          		" \n Địa chỉ IP đăng nhập : " + ip+
+          		" \n Hostname : " + hostname +
+          		" \n Tạo mới Sản phẩm thẻ");
           return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
 //      
 //        try {

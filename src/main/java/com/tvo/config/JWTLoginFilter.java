@@ -70,9 +70,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         logger.info(" \n Người dùng:" +userDetails.getUser().getFullName().toString()+ 
         		"\n Account :"+userDetails.getUsername().toString()+
         		"\n Role :"+userDetails.getUser().getRole().getRoleName().toString()+
-        		" \n Login thành công" +
         		" \n Địa chỉ IP đăng nhập : " + ip+
-        		" \n Hostname : " + hostname );
+        		" \n Hostname : " + hostname+
+        		" \n Login thành công" );
         
     }
 
@@ -80,7 +80,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) {
         TokenAuthenticationService.unsuccessfulAuthentication(request, response, failed);
-        logger.info("Logout");
+//        logger.info("Logout");
     }
 
 }

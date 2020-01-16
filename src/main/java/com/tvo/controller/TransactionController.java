@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
 import java.util.List;
 
 /**
@@ -23,7 +24,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/transaction")
 public class TransactionController {
+	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
 	@Autowired TransactionService transactionService;
 	
 	@GetMapping(value = "/getAll")

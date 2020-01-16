@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.CreateNotifyDto;
 import com.tvo.controllerDto.SearchNotify;
 import com.tvo.dto.NotifyDto;
@@ -9,6 +10,9 @@ import com.tvo.request.UpdateNotifyRequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NotifyServiceImpl;
 import io.swagger.annotations.Api;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Notify")
 public class NotifyController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
 	@Autowired
 	private NotifyServiceImpl notifyService;
 
@@ -30,7 +37,19 @@ public class NotifyController {
 	public ResponeData<Page<NotifyDto>> searchNcbQA(@ModelAttribute SearchNotify searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NotifyDto> dts = notifyService.search(searchModel, pageable);
-		logger.info("Tìm kiếm Notify(in App)");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Notify(in App)");
 		return new ResponeData<Page<NotifyDto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				dts);
 	}
@@ -43,7 +62,19 @@ public class NotifyController {
 			return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE,
 					null);
 		}
-		logger.info("Tạo mới Notify(in App)");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tạo mới Notify(in App)");
 		return new ResponeData<CreateNotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				notifyDto);
 	}
@@ -54,7 +85,19 @@ public class NotifyController {
 		if (notifyDto == null) {
 			return new ResponeData<NotifyDto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		logger.info("Cập nhật thông tin Notify(in App)");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Cập nhật thông tin Notify(in App)");
 		return new ResponeData<NotifyDto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				notifyDto);
 	}
@@ -65,7 +108,19 @@ public class NotifyController {
 		if (dto == null) {
 			return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		logger.info("Chi tiết Notify(in App)");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Notify(in App)");
 		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
 	}
 
@@ -73,7 +128,19 @@ public class NotifyController {
 	public ResponeData<Boolean> delete(@RequestParam String msgCode) {
 		boolean deleteFlag = notifyService.delete(msgCode);
 		if (deleteFlag == true) {
-			logger.info("Xóa Notify(in App)");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Xóa Notify(in App)");
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.UserChangePasswordReqDto;
 import com.tvo.controllerDto.UserSearchModel;
 import com.tvo.controllerDto.UserUpdateReqDto;
@@ -21,20 +22,39 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "user Controller")
 public class UserController {
+	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
     @Autowired
     UserServiceImpl userService;
 
     @GetMapping(value = "/searchUser")
     public ResponeData<Page<UserResDto>> searchUser(UserSearchModel searchModel, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<UserResDto> resDto = userService.searchUser(searchModel, pageable);
-        logger.info("Tìm kiếm Người dùng");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Thao tác Tìm kiếm Người dùng");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
     }
 
@@ -44,14 +64,38 @@ public class UserController {
         if (dto == null) {
             return new ResponeData<>(AppConstant.ACCOUNT_IS_ALREADY_EXISTS_CODE, AppConstant.ACCOUNT_IS_ALREADY_EXISTS_MESSAGE, null);
         }
-        logger.info("Tạo mới Người dùng");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Thao tác Tạo mới Người dùng");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/{username}/detail")
     public ResponeData<ContentResDto> getUserDetail(@PathVariable("username") String username) {
         ContentResDto contentResDto = userService.getUserDetail(username);
-        logger.info("Chi tiết Người dùng");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Thao tác Chi tiết Người dùng");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
     }
 
@@ -59,7 +103,19 @@ public class UserController {
     public ResponeData<Boolean> deleteUser(@PathVariable("username") String username) {
         Boolean result = userService.deleteUser(username);
         if (result) {
-        	logger.info("Xóa Người dùng");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Thao tác Xóa Người dùng");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         
@@ -69,7 +125,19 @@ public class UserController {
     public ResponeData<Boolean> resetPass(@PathVariable("username") String username,@RequestParam String password) {
         Boolean result = userService.resetPass(username, password);
         if (result) {
-        	logger.info("Đặt lại Password");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Thao tác Đặt lại Password");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         
@@ -90,7 +158,19 @@ public class UserController {
     public ResponeData<ContentResDto> updateUser(@RequestBody UserUpdateReqDto userDto) {
         ContentResDto contentResDto = userService.update(userDto);
         if (contentResDto.getContent() != null) {
-        	logger.info("Cập nhật thông tin Người dùng");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Thao tác Cập nhật thông tin Người dùng");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
         
@@ -101,7 +181,19 @@ public class UserController {
     public ResponeData<ContentResDto> updateUser(@Valid @RequestBody UserUpdateStatusReqDto userDto) {
         ContentResDto contentResDto = userService.updateStatus(userDto);
         if (contentResDto.getContent() != null) {
-        	logger.info("Cập nhật Trạng thái người dùng");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Thao tác Cập nhật Trạng thái người dùng");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, contentResDto);
         }
         

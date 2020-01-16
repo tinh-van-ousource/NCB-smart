@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
@@ -14,19 +15,38 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/service-register", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ServiceRegisterController {
+	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
     @Autowired
     private ServiceRegisterService serviceRegisterService;
 
     @GetMapping(value = "/search")
     public ResponeData<ContentResDto> search(@Valid ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
         ContentResDto serviceRegisterResDtoList = serviceRegisterService.getServiceRegisterList(serviceRegisterSearchReqDto);
-        logger.info("Tìm kiếm dịch vụ đã đăng ký");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Thao tác Tìm kiếm dịch vụ đã đăng ký");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterResDtoList);
     }
 
@@ -39,7 +59,19 @@ public class ServiceRegisterController {
     @GetMapping(value = "/{id}/detail")
     public ResponeData<ContentResDto> detail(@PathVariable("id") Long id) {
         ContentResDto serviceRegisterGetDetailResDto = serviceRegisterService.getServiceRegisterDetailById(id);
-        logger.info("Chi tiết dịch vụ đã đăng ký");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Thao tác Chi tiết dịch vụ đã đăng ký");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
     }
 
@@ -48,7 +80,19 @@ public class ServiceRegisterController {
             @RequestBody ServiceRegisterUpdateReqDto serviceRegisterUpdateReqDto) {
         ContentResDto serviceRegisterGetDetailResDto = serviceRegisterService.updateServiceRegisterDetail(id, serviceRegisterUpdateReqDto);
         if (serviceRegisterGetDetailResDto != null) {
-        	logger.info("Cập nhật dịch vụ đã đăng ký");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Cập nhật dịch vụ đã đăng ký");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterGetDetailResDto);
         }
         

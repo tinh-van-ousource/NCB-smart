@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchNcbQAModel;
 import com.tvo.dto.NcbQADto;
 import com.tvo.request.CreateNcbQARequest;
@@ -8,6 +9,9 @@ import com.tvo.request.UpdateNcbQARequest;
 import com.tvo.response.ResponeData;
 import com.tvo.service.NcbQAService;
 import io.swagger.annotations.Api;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +26,9 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Ncb QA")
 public class NcbQAController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
 	@Autowired
 	private NcbQAService ncbQAService;
 
@@ -29,7 +36,19 @@ public class NcbQAController {
 	public ResponeData<Page<NcbQADto>> searchNcbQA(@ModelAttribute SearchNcbQAModel searchModel,
 			@PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
 		Page<NcbQADto> dts = ncbQAService.searchNcbQA(searchModel, pageable);
-		logger.info("Tìm kiếm Thông tin Q&As");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Thông tin Q&As");
 		return new ResponeData<Page<NcbQADto>>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
 				dts);
 	}
@@ -40,7 +59,19 @@ public class NcbQAController {
 			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		NcbQADto result = ncbQAService.findById(id);
-		logger.info("Chi tiết Thông tin Q&As");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Thông tin Q&As");
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
 	}
 
@@ -51,6 +82,19 @@ public class NcbQAController {
 			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
 		logger.info("Tạo mới Thông tin Q&As");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tạo mới Thông tin Q&As");
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
 
@@ -60,7 +104,19 @@ public class NcbQAController {
 		if (ncbQADto == null) {
 			return new ResponeData<NcbQADto>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
 		}
-		logger.info("Cập nhật thông tin Thông tin Q&As");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Cập nhật thông tin Thông tin Q&As");
 		return new ResponeData<NcbQADto>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ncbQADto);
 	}
 
@@ -68,7 +124,19 @@ public class NcbQAController {
 	public ResponeData<Boolean> delete(@RequestParam Long id) {
 		boolean deleteFlag = ncbQAService.delete(id);
 		if (deleteFlag == true) {
-			logger.info("Xóa Thông tin Q&As");
+	        try {
+				ip = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        hostname = ip.getHostName();
+	        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+	        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+	        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+	        		" \n Địa chỉ IP đăng nhập : " + ip+
+	        		" \n Hostname : " + hostname +
+	        		" \n Xóa Thông tin Q&As");
 			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
 		}
 		return new ResponeData<Boolean>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

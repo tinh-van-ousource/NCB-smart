@@ -101,9 +101,9 @@ public class ResetTokenController {
         logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
         		"\n Account :"+Flag.userFlag.getUserName().toString()+
         		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
-        		" \n Logout successful" +
         		" \n Địa chỉ IP đăng nhập : " + ip+
-        		" \n Hostname : " + hostname );
+        		" \n Hostname : " + hostname +
+        		" \n Logout successful");
         
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }

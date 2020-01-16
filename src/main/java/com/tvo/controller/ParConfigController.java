@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+
+import java.net.InetAddress;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "par-config")
 public class ParConfigController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
     private final ParConfigService parConfigService;
 
     public ParConfigController(ParConfigService parConfigService) {

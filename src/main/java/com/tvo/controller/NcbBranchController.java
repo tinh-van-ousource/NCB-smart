@@ -1,5 +1,7 @@
 package com.tvo.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchNcbBranchModel;
 import com.tvo.dto.CompDroplistBranchDto;
 import com.tvo.dto.NcbActiveBranchOnlyResDto;
@@ -43,19 +46,33 @@ public class NcbBranchController {
     private NcbBranchService ncbBranchService;
     
     protected final Logger logger = LoggerFactory.getLogger(getClass());
+    InetAddress ip;
+    String hostname;
     
     @GetMapping(value = "search")
     public ResponeData<Page<NcbBranchDto>> searchBranch(SearchNcbBranchModel searchModel,
                                                         @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<NcbBranchDto> res = ncbBranchService.searchNcbBranch(searchModel, pageable);
-        logger.info("Xóa Banner");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Mạng lưới chi nhánh,PGD");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
 
     @GetMapping(value = "branch/activated-list")
     public ResponeData<List<NcbActiveBranchOnlyResDto>> getAllActivatedBranch() {
 		List<NcbActiveBranchOnlyResDto> res = ncbBranchService.getAllActivatedBranch();
-		logger.info("Xóa Banner");
+//		logger.info("Xóa Banner");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, res);
     }
     
@@ -77,6 +94,19 @@ public class NcbBranchController {
         }
         NcbBranch ncbBranch = ncbBranchService.findByDepartCode(departCode);
         NcbBranchDto result = ModelMapperUtils.map(ncbBranch, NcbBranchDto.class);
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Mạng lưới chi nhánh,PGD");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
                 result);
     }
@@ -87,6 +117,19 @@ public class NcbBranchController {
         if (ncbBranch == null) {
             return new ResponeData<>(AppConstant.BRANCH_EXISTED_CODE, AppConstant.BRANCH_EXISTED_MESSAGE, null);
         }
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tạo mới Mạng lưới chi nhánh,PGD");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
                 ncbBranch);
     }
@@ -97,6 +140,20 @@ public class NcbBranchController {
         if (ncbBranch == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
+
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Cập nhật thông tin Mạng lưới chi nhánh,PGD");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE,
                 ncbBranch);
     }
@@ -105,6 +162,19 @@ public class NcbBranchController {
     public ResponeData<Boolean> delete(@RequestParam String departCode) {
         Boolean deleteFlag = ncbBranchService.delete(departCode);
         if (deleteFlag) {
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Xóa Mạng lưới chi nhánh,PGD");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

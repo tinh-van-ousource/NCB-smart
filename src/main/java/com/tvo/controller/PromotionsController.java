@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchPrdPromotion;
 import com.tvo.controllerDto.SearchPromotion;
 import com.tvo.dto.*;
@@ -18,12 +19,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/promotions")
 public class PromotionsController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	InetAddress ip;
+    String hostname;
+    
     @Autowired
     private PromotionsService promotionsService;
 
@@ -33,7 +39,19 @@ public class PromotionsController {
     @GetMapping(value = "/search")
     public ResponeData<Page<PromotionsDto>> search(@ModelAttribute SearchPromotion searchPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<PromotionsDto> promotionsDtos = promotionsService.searchPromotion(searchPromotion, pageable);
-        logger.info("Tìm kiếm Khuyến mại/ ưu đãi");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionsDtos);
     }
     
@@ -43,7 +61,19 @@ public class PromotionsController {
         if(dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        logger.info("Tạo mới Khuyến mại/ ưu đãi");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tạo mới Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
@@ -51,7 +81,19 @@ public class PromotionsController {
     public ResponeData<PromotionsDto> update(@RequestBody UpdatePromotionRequest request) {
         PromotionsDto promotionDto = promotionsService.update(request);
         if (promotionDto != null) {
-        	logger.info("Cập nhật thông tin Khuyến mại/ ưu đãi");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Cập nhật thông tin Khuyến mại/ ưu đãi");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -63,7 +105,19 @@ public class PromotionsController {
         if (isDetele == false) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
         }
-        logger.info("Xóa Khuyến mại/ ưu đãi");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Xóa Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
@@ -73,14 +127,38 @@ public class PromotionsController {
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        logger.info("Chi tiết Khuyến mại/ ưu đãi");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Khuyến mại/ ưu đãi");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/fee/search")
     public ResponeData<Page<PrdPromotionDto>> searchFee(@ModelAttribute SearchPrdPromotion searchPrdPromotion, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         Page<PrdPromotionDto> prdPromotionDtos = prdPromotionService.search(searchPrdPromotion, pageable);
-        logger.info("Tìm kiếm Gán mã khuyến mãi gói sản phẩm");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tìm kiếm Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, prdPromotionDtos);
     }
 
@@ -90,7 +168,19 @@ public class PromotionsController {
         if(dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        logger.info("Tạo mới Gán mã khuyến mãi gói sản phẩm");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Tạo mới Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
@@ -98,7 +188,19 @@ public class PromotionsController {
     public ResponeData<PrdPromotionDto> updateFee(@RequestBody PrdPromotionRq request) {
         PrdPromotionDto promotionDto = prdPromotionService.update(request);
         if (promotionDto != null) {
-        	logger.info("Cập nhật thông tin Gán mã khuyến mãi gói sản phẩm");
+            try {
+    			ip = InetAddress.getLocalHost();
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+            		"\n Account :"+Flag.userFlag.getUserName().toString()+
+            		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+            		" \n Địa chỉ IP đăng nhập : " + ip+
+            		" \n Hostname : " + hostname +
+            		" \n Cập nhật thông tin Gán mã khuyến mãi gói sản phẩm");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, promotionDto);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -110,7 +212,19 @@ public class PromotionsController {
         if (isDetele == false) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
         }
-        logger.info("Xóa Gán mã khuyến mãi gói sản phẩm");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Xóa Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
@@ -120,14 +234,38 @@ public class PromotionsController {
         if (dto == null) {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        logger.info("Chi tiết Gán mã khuyến mãi gói sản phẩm");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Chi tiết Gán mã khuyến mãi gói sản phẩm");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
 
     @GetMapping(value = "/add-function/getAllProCode")
     public ResponeData<List<String>> getProCode() {
         List<String> proCodes = promotionsService.getDistinctByProCode() ;
-        logger.info("Lấy danh sách toàn bộ ProCode");
+        try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
+        		"\n Account :"+Flag.userFlag.getUserName().toString()+
+        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+        		" \n Địa chỉ IP đăng nhập : " + ip+
+        		" \n Hostname : " + hostname +
+        		" \n Lấy danh sách toàn bộ ProCode");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, proCodes);
     }
 }
