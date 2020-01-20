@@ -82,7 +82,7 @@ public class TokenAuthenticationService {
             user.setCountLoginFail(0);
             user = userRepo.save(user);
             
-            Flag.userFlag = user;
+//            Flag.userFlag = user;
             
             gson = new Gson();
             UserResDto userDto = ModelMapperUtils.map(user, UserResDto.class);

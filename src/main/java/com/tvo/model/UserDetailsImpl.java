@@ -3,12 +3,12 @@
  */
 package com.tvo.model;
 
-import com.tvo.enums.StatusActivate;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 
 
@@ -18,20 +18,35 @@ import java.util.List;
  */
 public class UserDetailsImpl implements UserDetails {
 	 private static final long serialVersionUID = -7206276226932033386L;
-	    private User user;
+	    private String userName;
 	    private List<GrantedAuthority> authorities;
+	    private Date creationDate;
+	    
+	    public String getUserName() {
+			return userName;
+		}
 
-	    public UserDetailsImpl(final User user, final List<GrantedAuthority> authorities) {
-	        this.user = user;
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+		public Date getCreationDate() {
+			return creationDate;
+		}
+
+		public void setCreationDate(Date creationDate) {
+			this.creationDate = creationDate;
+		}
+
+		public UserDetailsImpl(String userName, Date creationDate, List<GrantedAuthority> authorities) {
+	        this.userName = userName;
+	        this.creationDate = creationDate;
 	        this.authorities = authorities;
 	    }
 
-	    public User getUser() {
-	        return user;
-	    }
-
-	    public void setUser(final User user) {
-	        this.user = user;
+	    public UserDetailsImpl(final String userName, final List<GrantedAuthority> authorities) {
+	        this.userName = userName;
+	        this.authorities = authorities;
 	    }
 
 	    public void setAuthorities(final List<GrantedAuthority> authorities) {
@@ -58,20 +73,19 @@ public class UserDetailsImpl implements UserDetails {
 	        return true;
 	    }
 
-	    // check user status (Activate/Deactivate)
-	    @Override
-	    public boolean isEnabled() {
-	    	String userStatus = user.getStatus();
-			return userStatus.contentEquals(StatusActivate.STATUS_ACTIVATED.getStatus());
+		@Override
+		public String getPassword() {
+			return null;
 		}
 
-	    @Override
-	    public String getPassword() {
-	        return user.getPassword();
-	    }
+		@Override
+		public String getUsername() {
+			return userName;
+		}
 
-	    @Override
-	    public String getUsername() {
-	        return user.getUserName();
-	    }
+		@Override
+		public boolean isEnabled() {
+			return true;
+		}
+
 }

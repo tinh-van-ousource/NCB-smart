@@ -67,12 +67,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
-        logger.info(" \n Người dùng:" +userDetails.getUser().getFullName().toString()+ 
-        		"\n Account :"+userDetails.getUsername().toString()+
-        		"\n Role :"+userDetails.getUser().getRole().getRoleName().toString()+
-        		" \n Địa chỉ IP đăng nhập : " + ip+
-        		" \n Hostname : " + hostname+
-        		" \n Login thành công" );
+//        logger.info(" \n Người dùng:" +userDetails.getUser().getFullName().toString()+ 
+//        		"\n Account :"+userDetails.getUsername().toString()+
+//        		"\n Role :"+userDetails.getUser().getRole().getRoleName().toString()+
+//        		" \n Địa chỉ IP đăng nhập : " + ip  +
+//        		" \n Hostname : " + hostname+	
+//        		" \n Login thành công" );
         
     }
 
