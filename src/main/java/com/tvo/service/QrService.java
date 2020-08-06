@@ -1,11 +1,10 @@
 package com.tvo.service;
 
-import com.tvo.controllerDto.SearchProviderReqDto;
 import com.tvo.controllerDto.SearchQrServiceDto;
-import com.tvo.dto.ProviderResDto;
 import com.tvo.dto.QrServiceDto;
 import com.tvo.request.CreateQrService;
 import com.tvo.request.UpdateQrService;
+import com.tvo.response.ResponeData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +20,7 @@ public interface QrService {
      * @param pageable           pageable
      * @return Page<QrServiceDto>
      */
-    Page<QrServiceDto> search(SearchQrServiceDto searchQrServiceDto, Pageable pageable);
+    ResponeData<Page<QrServiceDto>> search(SearchQrServiceDto searchQrServiceDto, Pageable pageable) throws Exception;
 
     /**
      * Create QrService.
@@ -29,7 +28,7 @@ public interface QrService {
      * @param createQrService createQrService
      * @return QrServiceDto
      */
-    QrServiceDto create(CreateQrService createQrService);
+    ResponeData<QrServiceDto> create(CreateQrService createQrService) throws Exception;
 
     /**
      * Update QRService.
@@ -38,7 +37,7 @@ public interface QrService {
      * @param updateQrService updateQrService
      * @return QrServiceDto
      */
-    QrServiceDto update(Long id, UpdateQrService updateQrService);
+    ResponeData<QrServiceDto> update(Long id, UpdateQrService updateQrService) throws Exception;
 
     /**
      * Find QRService by id.
@@ -46,14 +45,14 @@ public interface QrService {
      * @param id id
      * @return QrServiceDto
      */
-    QrServiceDto detail(Long id);
+    ResponeData<QrServiceDto> detail(Long id) throws Exception;
 
     /**
      * Delete QrService.
      *
      * @param id id
-     * @return boolean
+     * @return Boolean
      */
-    boolean delete(Long id);
+    ResponeData<Boolean> delete(Long id) throws Exception;
 
 }

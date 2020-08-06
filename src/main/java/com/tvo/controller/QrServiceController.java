@@ -1,7 +1,6 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
-import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrServiceDto;
 import com.tvo.dto.QrServiceDto;
 import com.tvo.request.CreateQrService;
@@ -16,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.InetAddress;
-
 /**
  * @author thanglt on 8/5/2020
  * @version 1.0
@@ -26,25 +23,15 @@ import java.net.InetAddress;
 @RequestMapping(value = "/qr-services")
 public class QrServiceController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    InetAddress ip;
-    String hostname;
 
     @Autowired
     private QrService qrService;
 
     @GetMapping(value = "")
-    public ResponeData<Page<QrServiceDto>> search(SearchQrServiceDto searchQrServiceDto, @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
+    public ResponeData<Page<QrServiceDto>> search(SearchQrServiceDto searchQrServiceDto,
+                                                  @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         try {
-            Page<QrServiceDto> qrServiceDtos = qrService.search(searchQrServiceDto, pageable);
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Tìm kiếm Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, qrServiceDtos);
+            return qrService.search(searchQrServiceDto, pageable);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -54,19 +41,7 @@ public class QrServiceController {
     @PostMapping(value = "")
     public ResponeData<QrServiceDto> create(@RequestBody CreateQrService createQrService) {
         try {
-            QrServiceDto dto = qrService.create(createQrService);
-            if (dto == null) {
-                return new ResponeData<>(AppConstant.PROVIDER_EXISTED_CODE, AppConstant.PROVIDER_EXISTED_MESSAGE, null);
-            }
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Tạo mới Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+            return qrService.create(createQrService);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -77,19 +52,7 @@ public class QrServiceController {
     public ResponeData<QrServiceDto> update(@PathVariable Long id,
                                             @RequestBody UpdateQrService updateQrService) {
         try {
-            QrServiceDto dto = qrService.update(id, updateQrService);
-            if (dto == null) {
-                return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
-            }
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Cập nhật thông tin Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+            return qrService.update(id, updateQrService);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -99,20 +62,7 @@ public class QrServiceController {
     @GetMapping(value = "/{id}")
     public ResponeData<QrServiceDto> detail(@PathVariable Long id) {
         try {
-            QrServiceDto qrServiceDto = qrService.detail(id);
-            if (qrServiceDto == null) {
-                logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
-                return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
-            }
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Chi tiết Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, qrServiceDto);
+            return qrService.detail(id);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -122,21 +72,10 @@ public class QrServiceController {
     @DeleteMapping(value = "/{id}")
     public ResponeData<Boolean> delete(@PathVariable Long id) {
         try {
-            boolean result = qrService.delete(id);
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Xóa Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, result);
+            return qrService.delete(id);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
         }
-
-
     }
 }
