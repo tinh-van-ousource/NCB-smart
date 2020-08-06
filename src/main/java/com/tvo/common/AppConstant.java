@@ -8,6 +8,9 @@ public class AppConstant {
     public static final String ACCOUNT_IS_ALREADY_EXISTS_CODE = "404";
     public static final String ACCOUNT_IS_ALREADY_EXISTS_MESSAGE = "Account is already exists.";
 
+    public static final String FILE_NOT_FOUND_CODE = "404";
+    public static final String FILE_NOT_FOUND_MESSAGE = "File not found.";
+
     public static final String OLD_PASSWORD_IS_INCORRECT_CODE = "405";
     public static final String OLD_PASSWORD_IS_INCORRECT_MESSAGE = "Old password is incorrect.";
 
