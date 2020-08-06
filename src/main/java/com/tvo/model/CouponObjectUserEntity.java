@@ -22,9 +22,6 @@ public class CouponObjectUserEntity implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "USER_ID")
-    private Long userId;
-
     @Column(name = "QR_COUPON_ID")
     private Long qrCouponId;
 
@@ -36,5 +33,8 @@ public class CouponObjectUserEntity implements Serializable {
 
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
+
+    @Column(name = "CREATED_BY")
+    private String createdBy;
 
 }

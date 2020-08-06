@@ -19,6 +19,7 @@ public interface QrService {
      * @param searchQrServiceDto searchQrServiceDto
      * @param pageable           pageable
      * @return Page<QrServiceDto>
+     * @throws Exception
      */
     ResponeData<Page<QrServiceDto>> search(SearchQrServiceDto searchQrServiceDto, Pageable pageable) throws Exception;
 
@@ -27,6 +28,7 @@ public interface QrService {
      *
      * @param createQrService createQrService
      * @return QrServiceDto
+     * @throws Exception
      */
     ResponeData<QrServiceDto> create(CreateQrService createQrService) throws Exception;
 
@@ -36,6 +38,7 @@ public interface QrService {
      * @param id              id
      * @param updateQrService updateQrService
      * @return QrServiceDto
+     * @throws Exception
      */
     ResponeData<QrServiceDto> update(Long id, UpdateQrService updateQrService) throws Exception;
 
@@ -44,6 +47,7 @@ public interface QrService {
      *
      * @param id id
      * @return QrServiceDto
+     * @throws Exception
      */
     ResponeData<QrServiceDto> detail(Long id) throws Exception;
 
@@ -52,6 +56,7 @@ public interface QrService {
      *
      * @param id id
      * @return Boolean
+     * @throws Exception
      */
     ResponeData<Boolean> delete(Long id) throws Exception;
 

@@ -5,10 +5,8 @@ import com.tvo.controllerDto.SearchQrCouponDto;
 import com.tvo.controllerDto.SearchQrServiceDto;
 import com.tvo.dto.QrCouponDto;
 import com.tvo.dto.QrServiceDto;
-import com.tvo.request.CreateQrCouponRequest;
-import com.tvo.request.CreateQrService;
-import com.tvo.request.UpdateQrCouponRequest;
-import com.tvo.request.UpdateQrService;
+import com.tvo.model.CouponObjectUserEntity;
+import com.tvo.request.*;
 import com.tvo.response.ResponeData;
 import com.tvo.service.QrCouponService;
 import org.slf4j.Logger;
@@ -18,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author thanglt on 8/6/2020
@@ -81,6 +81,17 @@ public class QrCouponController {
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+        }
+    }
+
+    @PostMapping(value = "/{id}/coupon-object-user")
+    public ResponeData<List<CouponObjectUserEntity>> createCouponUser(@PathVariable Long id,
+                                                                      @RequestBody CreateUserCouponRequest createUserCouponRequest) {
+        try {
+            return qrCouponService.createUserCoupon(id, createUserCouponRequest);
+        } catch (Exception e) {
+            logger.error(e.toString());
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
     }
 }

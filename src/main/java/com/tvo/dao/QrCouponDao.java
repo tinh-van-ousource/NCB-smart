@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface QrCouponDao extends JpaRepository<QrCouponsEntity, Long> {
     @Query("SELECT qc FROM QrCouponsEntity qc WHERE qc.id = ?1 AND qc.deletedAt IS NULL")
     QrCouponsEntity findByIdNotDeleted(Long id);
+
+    @Query("SELECT qc FROM QrCouponsEntity qc WHERE qc.id = ?1 AND qc.deletedAt IS NULL AND qc.status = 'A' ")
+    QrCouponsEntity findByIdNotDeletedAndNotDeActive(Long id);
 }

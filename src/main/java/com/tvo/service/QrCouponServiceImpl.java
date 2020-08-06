@@ -4,12 +4,16 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrCouponDto;
+import com.tvo.dao.CouponObjectUserDao;
 import com.tvo.dao.QrCouponDao;
 import com.tvo.dto.QrCouponDto;
 import com.tvo.enums.StatusActivate;
+import com.tvo.model.CouponObjectUserEntity;
 import com.tvo.model.QrCouponsEntity;
 import com.tvo.request.CreateQrCouponRequest;
+import com.tvo.request.CreateUserCouponRequest;
 import com.tvo.request.UpdateQrCouponRequest;
+import com.tvo.request.UserCoupon;
 import com.tvo.response.ResponeData;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -48,6 +52,9 @@ public class QrCouponServiceImpl implements QrCouponService {
 
     @Autowired
     private QrCouponDao qrCouponDao;
+
+    @Autowired
+    private CouponObjectUserDao couponObjectUserDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -274,5 +281,41 @@ public class QrCouponServiceImpl implements QrCouponService {
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);
+    }
+
+    @Override
+    public ResponeData<List<CouponObjectUserEntity>> createUserCoupon(Long qrCouponId, CreateUserCouponRequest createUserCouponRequest) throws Exception {
+        QrCouponsEntity qrCouponsEntity = qrCouponDao.findByIdNotDeletedAndNotDeActive(qrCouponId);
+        if (qrCouponsEntity != null) {
+            List<CouponObjectUserEntity> couponObjectUserEntities = setCreate(qrCouponId, createUserCouponRequest);
+            couponObjectUserDao.saveAll(couponObjectUserEntities);
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
+                    "\n Account :" + Flag.userFlag.getUserName() +
+                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
+                    " \n Địa chỉ IP đăng nhập : " + ip +
+                    " \n Hostname : " + hostname +
+                    " \n Tạo danh sách người dùng được sử dụng phiếu giảm giá");
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, couponObjectUserEntities);
+        }
+        logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
+        return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
+    }
+
+    private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateUserCouponRequest createUserCouponRequest) {
+        List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
+        if (createUserCouponRequest != null) {
+            CouponObjectUserEntity couponObjectUserEntity;
+            for (UserCoupon userCoupon : createUserCouponRequest.getUserCouponList()) {
+                couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
+                couponObjectUserEntity.setQrCouponId(qrCouponId);
+                couponObjectUserEntity.setCreatedAt(LocalDateTime.now());
+                couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                couponObjectUserEntities.add(couponObjectUserEntity);
+            }
+            return couponObjectUserEntities;
+        }
+        return null;
     }
 }
