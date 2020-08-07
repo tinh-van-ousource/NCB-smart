@@ -11,7 +11,6 @@ import com.tvo.enums.StatusActivate;
 import com.tvo.model.CouponObjectUserEntity;
 import com.tvo.model.QrCouponsEntity;
 import com.tvo.request.CreateQrCouponRequest;
-import com.tvo.request.CreateUserCouponRequest;
 import com.tvo.request.UpdateQrCouponRequest;
 import com.tvo.request.UserCoupon;
 import com.tvo.response.ResponeData;
@@ -116,6 +115,14 @@ public class QrCouponServiceImpl implements QrCouponService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
         }
+        if (resource.getDiscountType() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getDiscountType().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("discountType"), resource.getDiscountType())));
+        }
+        if (resource.getServiceId() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getServiceId().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("serviceId"), resource.getServiceId())));
+        }
         if (resource.getApproveStatus() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getApproveStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("approveStatus"), resource.getApproveStatus())));
@@ -132,8 +139,9 @@ public class QrCouponServiceImpl implements QrCouponService {
     public ResponeData<QrCouponDto> create(CreateQrCouponRequest qrCouponRequest) throws Exception {
         QrCouponsEntity qrCouponsEntity = setCreate(qrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
-        if (save == null) {
-            return new ResponeData<>(AppConstant.PROVIDER_EXISTED_CODE, AppConstant.PROVIDER_EXISTED_MESSAGE, null);
+        if (save.getObjectUserType().equals("0")) {
+            List<CouponObjectUserEntity> couponObjectUserEntities = setCreate(save.getId(), qrCouponRequest);
+            couponObjectUserDao.saveAll(couponObjectUserEntities);
         }
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
@@ -169,6 +177,23 @@ public class QrCouponServiceImpl implements QrCouponService {
         return qrCouponsEntity;
     }
 
+    private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateQrCouponRequest createQrCouponRequest) {
+        List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
+        List<UserCoupon> userCoupons = createQrCouponRequest.getUserCoupons();
+        if (userCoupons != null) {
+            CouponObjectUserEntity couponObjectUserEntity;
+            for (UserCoupon userCoupon : userCoupons) {
+                couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
+                couponObjectUserEntity.setQrCouponId(qrCouponId);
+                couponObjectUserEntity.setCreatedAt(LocalDateTime.now());
+                couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                couponObjectUserEntities.add(couponObjectUserEntity);
+            }
+            return couponObjectUserEntities;
+        }
+        return null;
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponeData<QrCouponDto> update(Long id, UpdateQrCouponRequest updateQrCouponRequest) throws Exception {
@@ -177,7 +202,7 @@ public class QrCouponServiceImpl implements QrCouponService {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
-        qrCouponsEntity = setUpdate(qrCouponsEntity, updateQrCouponRequest);
+        setUpdate(qrCouponsEntity, updateQrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
@@ -190,7 +215,7 @@ public class QrCouponServiceImpl implements QrCouponService {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ModelMapperUtils.map(save, QrCouponDto.class));
     }
 
-    private QrCouponsEntity setUpdate(QrCouponsEntity qrCouponsEntity, UpdateQrCouponRequest updateQrCouponRequest) {
+    private void setUpdate(QrCouponsEntity qrCouponsEntity, UpdateQrCouponRequest updateQrCouponRequest) {
         if (!StringUtils.isEmpty(updateQrCouponRequest.getName())) {
             qrCouponsEntity.setName(updateQrCouponRequest.getName());
         }
@@ -241,7 +266,6 @@ public class QrCouponServiceImpl implements QrCouponService {
         }
         qrCouponsEntity.setUpdatedAt(LocalDateTime.now());
         qrCouponsEntity.setUpdatedBy(Flag.userFlag.getUserName());
-        return qrCouponsEntity;
     }
 
     @Override
@@ -283,39 +307,4 @@ public class QrCouponServiceImpl implements QrCouponService {
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);
     }
 
-    @Override
-    public ResponeData<List<CouponObjectUserEntity>> createUserCoupon(Long qrCouponId, CreateUserCouponRequest createUserCouponRequest) throws Exception {
-        QrCouponsEntity qrCouponsEntity = qrCouponDao.findByIdNotDeletedAndNotDeActive(qrCouponId);
-        if (qrCouponsEntity != null) {
-            List<CouponObjectUserEntity> couponObjectUserEntities = setCreate(qrCouponId, createUserCouponRequest);
-            couponObjectUserDao.saveAll(couponObjectUserEntities);
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
-                    "\n Account :" + Flag.userFlag.getUserName() +
-                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
-                    " \n Địa chỉ IP đăng nhập : " + ip +
-                    " \n Hostname : " + hostname +
-                    " \n Tạo danh sách người dùng được sử dụng phiếu giảm giá");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, couponObjectUserEntities);
-        }
-        logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
-        return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
-    }
-
-    private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateUserCouponRequest createUserCouponRequest) {
-        List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
-        if (createUserCouponRequest != null) {
-            CouponObjectUserEntity couponObjectUserEntity;
-            for (UserCoupon userCoupon : createUserCouponRequest.getUserCouponList()) {
-                couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
-                couponObjectUserEntity.setQrCouponId(qrCouponId);
-                couponObjectUserEntity.setCreatedAt(LocalDateTime.now());
-                couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
-                couponObjectUserEntities.add(couponObjectUserEntity);
-            }
-            return couponObjectUserEntities;
-        }
-        return null;
-    }
 }

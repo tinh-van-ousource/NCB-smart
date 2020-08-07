@@ -14,6 +14,10 @@ public class SearchQrCouponDto {
 
     private String description;
 
+    private String discountType;
+
+    private String serviceId;
+
     private Date startDate;
 
     private Date endDate;

@@ -2,15 +2,11 @@ package com.tvo.service;
 
 import com.tvo.controllerDto.SearchQrCouponDto;
 import com.tvo.dto.QrCouponDto;
-import com.tvo.model.CouponObjectUserEntity;
 import com.tvo.request.CreateQrCouponRequest;
-import com.tvo.request.CreateUserCouponRequest;
 import com.tvo.request.UpdateQrCouponRequest;
 import com.tvo.response.ResponeData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * @author thanglt on 8/6/2020
@@ -64,13 +60,4 @@ public interface QrCouponService {
      */
     ResponeData<Boolean> delete(Long id) throws Exception;
 
-    /**
-     * Create couponObjectUser by list user.
-     *
-     * @param qrCouponId              qrCouponId
-     * @param createUserCouponRequest createUserCouponRequest
-     * @return List<CouponObjectUserEntity>
-     * @throws Exception
-     */
-    ResponeData<List<CouponObjectUserEntity>>  createUserCoupon(Long qrCouponId, CreateUserCouponRequest createUserCouponRequest) throws Exception;
 }

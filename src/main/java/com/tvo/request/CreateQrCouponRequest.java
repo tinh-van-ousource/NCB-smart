@@ -3,6 +3,7 @@ package com.tvo.request;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author thanglt on 8/6/2020
@@ -41,5 +42,7 @@ public class CreateQrCouponRequest {
     private String status;
 
     private String approveStatus;
+
+    private List<UserCoupon> userCoupons;
 
 }
