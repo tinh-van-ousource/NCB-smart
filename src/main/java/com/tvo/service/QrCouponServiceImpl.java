@@ -139,7 +139,7 @@ public class QrCouponServiceImpl implements QrCouponService {
     public ResponeData<QrCouponDto> create(CreateQrCouponRequest qrCouponRequest) throws Exception {
         QrCouponsEntity qrCouponsEntity = setCreate(qrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
-        if (save.getObjectUserType().equals("0")) {
+        if (save.getObjectUserType().equals("0") && !qrCouponRequest.getUserCoupons().isEmpty()) {
             List<CouponObjectUserEntity> couponObjectUserEntities = setCreate(save.getId(), qrCouponRequest);
             couponObjectUserDao.saveAll(couponObjectUserEntities);
         }
@@ -180,7 +180,7 @@ public class QrCouponServiceImpl implements QrCouponService {
     private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateQrCouponRequest createQrCouponRequest) {
         List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
         List<UserCoupon> userCoupons = createQrCouponRequest.getUserCoupons();
-        if (userCoupons != null) {
+        if (userCoupons != null && !userCoupons.isEmpty()) {
             CouponObjectUserEntity couponObjectUserEntity;
             for (UserCoupon userCoupon : userCoupons) {
                 couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
