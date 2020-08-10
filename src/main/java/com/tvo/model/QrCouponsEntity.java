@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author thanglt on 8/5/2020
@@ -41,10 +42,10 @@ public class QrCouponsEntity implements Serializable {
     private String serviceId;
 
     @Column(name = "START_DATE")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "END_DATE")
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @Column(name = "AMOUNT")
     private Float amount;
@@ -71,16 +72,16 @@ public class QrCouponsEntity implements Serializable {
     private String approveStatus;
 
     @Column(name = "DELETED_AT")
-    private LocalDateTime deletedAt;
+    private Date deletedAt;
 
     @Column(name = "CREATED_AT")
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
 
     @Column(name = "UPDATED_AT")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @Column(name = "UPDATED_BY")
     private String updatedBy;

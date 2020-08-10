@@ -1,8 +1,9 @@
 package com.tvo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author thanglt on 8/6/2020
@@ -22,9 +23,11 @@ public class UpdateQrCouponRequest {
 
     private String serviceId;
 
-    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date startDate;
 
-    private LocalDateTime endDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date endDate;
 
     private Float amount;
 

@@ -1,8 +1,9 @@
 package com.tvo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,9 +24,11 @@ public class CreateQrCouponRequest {
 
     private String serviceId;
 
-    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date startDate;
 
-    private LocalDateTime endDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date endDate;
 
     private Float amount;
 

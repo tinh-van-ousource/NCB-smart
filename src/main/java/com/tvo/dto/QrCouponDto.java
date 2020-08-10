@@ -1,9 +1,9 @@
 package com.tvo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author thanglt on 8/6/2020
@@ -25,9 +25,9 @@ public class QrCouponDto {
 
     private String serviceId;
 
-    private LocalDateTime startDate;
+    private String startDate;
 
-    private LocalDateTime endDate;
+    private String endDate;
 
     private Float amount;
 
@@ -45,13 +45,13 @@ public class QrCouponDto {
 
     private String approveStatus;
 
-    private LocalDateTime deletedAt;
+    private String deletedAt;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     private String createdBy;
 
-    private LocalDateTime updatedAt;
+    private String updatedAt;
 
     private String updatedBy;
 }

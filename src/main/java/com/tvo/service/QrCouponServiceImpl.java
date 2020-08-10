@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrCouponDto;
@@ -34,6 +35,7 @@ import javax.persistence.criteria.Root;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,6 +106,11 @@ public class QrCouponServiceImpl implements QrCouponService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getDescription().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("description")), "%" + resource.getDescription().toUpperCase() + "%")));
         }
+        if (resource.getSearch() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getSearch().trim())) {
+            predicates.add(cb.and(cb.or(cb.like(cb.upper(rootPersist.get("name")), "%" + resource.getSearch().toUpperCase() + "%"),
+                    cb.like(cb.upper(rootPersist.get("description")), "%" + resource.getSearch().toUpperCase() + "%"))));
+        }
         if (resource.getStartDate() != null) {
             predicates.add(cb.and(cb.greaterThanOrEqualTo(rootPersist.get("startDate"), resource.getStartDate())));
         }
@@ -162,8 +169,8 @@ public class QrCouponServiceImpl implements QrCouponService {
         qrCouponsEntity.setObjectUserType(StringUtils.isEmpty(createQrCouponRequest.getObjectUserType()) ? null : createQrCouponRequest.getObjectUserType());
         qrCouponsEntity.setDiscountType(StringUtils.isEmpty(createQrCouponRequest.getDiscountType()) ? null : createQrCouponRequest.getDiscountType());
         qrCouponsEntity.setServiceId(StringUtils.isEmpty(createQrCouponRequest.getServiceId()) ? null : createQrCouponRequest.getServiceId());
-        qrCouponsEntity.setStartDate(StringUtils.isEmpty(createQrCouponRequest.getStartDate().toString()) ? null : createQrCouponRequest.getStartDate());
-        qrCouponsEntity.setEndDate(StringUtils.isEmpty(createQrCouponRequest.getEndDate().toString()) ? null : createQrCouponRequest.getEndDate());
+        qrCouponsEntity.setStartDate(StringUtils.isEmpty(createQrCouponRequest.getStartDate().toString()) ? null : DateTimeUtil.createStartTime(createQrCouponRequest.getStartDate()));
+        qrCouponsEntity.setEndDate(StringUtils.isEmpty(createQrCouponRequest.getEndDate().toString()) ? null : DateTimeUtil.createEndTime(createQrCouponRequest.getEndDate()));
         qrCouponsEntity.setAmount(StringUtils.isEmpty(createQrCouponRequest.getAmount().toString()) ? null : createQrCouponRequest.getAmount());
         qrCouponsEntity.setPaymentMin(StringUtils.isEmpty(createQrCouponRequest.getPaymentMin().toString()) ? null : createQrCouponRequest.getPaymentMin());
         qrCouponsEntity.setAmountMax(StringUtils.isEmpty(createQrCouponRequest.getAmountMax().toString()) ? null : createQrCouponRequest.getAmountMax());
@@ -172,7 +179,7 @@ public class QrCouponServiceImpl implements QrCouponService {
         qrCouponsEntity.setTotalNumberCoupon(StringUtils.isEmpty(createQrCouponRequest.getTotalNumberCoupon().toString()) ? null : createQrCouponRequest.getTotalNumberCoupon());
         qrCouponsEntity.setStatus(StringUtils.isEmpty(createQrCouponRequest.getStatus()) ? null : createQrCouponRequest.getStatus());
         qrCouponsEntity.setApproveStatus(StringUtils.isEmpty(createQrCouponRequest.getApproveStatus()) ? StatusActivate.STATUS_ACTIVATED.getStatus() : createQrCouponRequest.getApproveStatus());
-        qrCouponsEntity.setCreatedAt(LocalDateTime.now());
+        qrCouponsEntity.setCreatedAt(DateTimeUtil.getNow());
         qrCouponsEntity.setCreatedBy(Flag.userFlag.getUserName());
         return qrCouponsEntity;
     }
@@ -185,7 +192,7 @@ public class QrCouponServiceImpl implements QrCouponService {
             for (UserCoupon userCoupon : userCoupons) {
                 couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
                 couponObjectUserEntity.setQrCouponId(qrCouponId);
-                couponObjectUserEntity.setCreatedAt(LocalDateTime.now());
+                couponObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
                 couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
                 couponObjectUserEntities.add(couponObjectUserEntity);
             }
@@ -235,10 +242,10 @@ public class QrCouponServiceImpl implements QrCouponService {
             qrCouponsEntity.setServiceId(updateQrCouponRequest.getServiceId());
         }
         if (updateQrCouponRequest.getStartDate() != null) {
-            qrCouponsEntity.setStartDate(updateQrCouponRequest.getStartDate());
+            qrCouponsEntity.setStartDate(DateTimeUtil.createStartTime(updateQrCouponRequest.getStartDate()));
         }
         if (updateQrCouponRequest.getEndDate() != null) {
-            qrCouponsEntity.setEndDate(updateQrCouponRequest.getEndDate());
+            qrCouponsEntity.setEndDate(DateTimeUtil.createEndTime(updateQrCouponRequest.getEndDate()));
         }
         if (updateQrCouponRequest.getAmount() != null) {
             qrCouponsEntity.setAmount(updateQrCouponRequest.getAmount());
@@ -264,7 +271,7 @@ public class QrCouponServiceImpl implements QrCouponService {
         if (!StringUtils.isEmpty(updateQrCouponRequest.getApproveStatus())) {
             qrCouponsEntity.setApproveStatus(updateQrCouponRequest.getApproveStatus());
         }
-        qrCouponsEntity.setUpdatedAt(LocalDateTime.now());
+        qrCouponsEntity.setUpdatedAt(DateTimeUtil.getNow());
         qrCouponsEntity.setUpdatedBy(Flag.userFlag.getUserName());
     }
 
@@ -291,7 +298,7 @@ public class QrCouponServiceImpl implements QrCouponService {
     public ResponeData<Boolean> delete(Long id) throws Exception {
         QrCouponsEntity qrCouponsEntity = qrCouponDao.findByIdNotDeleted(id);
         if (qrCouponsEntity != null) {
-            qrCouponsEntity.setDeletedAt(LocalDateTime.now());
+            qrCouponsEntity.setDeletedAt(DateTimeUtil.getNow());
             qrCouponDao.save(qrCouponsEntity);
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();

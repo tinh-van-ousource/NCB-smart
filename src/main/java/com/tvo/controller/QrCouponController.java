@@ -29,7 +29,7 @@ public class QrCouponController {
     private QrCouponService qrCouponService;
 
     @GetMapping(value = "")
-    public ResponeData<Page<QrCouponDto>> search(SearchQrCouponDto searchQrCouponDto,
+    public ResponeData<Page<QrCouponDto>> search(@ModelAttribute SearchQrCouponDto searchQrCouponDto,
                                                  @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         try {
             return qrCouponService.search(searchQrCouponDto, pageable);

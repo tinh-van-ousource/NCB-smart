@@ -28,7 +28,7 @@ public class QrServiceController {
     private QrService qrService;
 
     @GetMapping(value = "")
-    public ResponeData<Page<QrServiceDto>> search(SearchQrServiceDto searchQrServiceDto,
+    public ResponeData<Page<QrServiceDto>> search(@ModelAttribute SearchQrServiceDto searchQrServiceDto,
                                                   @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable) {
         try {
             return qrService.search(searchQrServiceDto, pageable);
