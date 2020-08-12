@@ -2,8 +2,7 @@ package com.tvo.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author thanglt on 8/5/2020
@@ -19,13 +18,13 @@ public class QrServiceDto {
 
     private String status;
 
-    private LocalDateTime deletedAt;
+    private String deletedAt;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     private String createdBy;
 
-    private LocalDateTime updatedAt;
+    private String updatedAt;
 
     private String updatedBy;
 }

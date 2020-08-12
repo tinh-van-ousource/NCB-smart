@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrServiceDto;
@@ -130,7 +131,7 @@ public class QrServiceImpl implements QrService {
         qrServiceEntity.setTitle(StringUtils.isEmpty(createQrService.getTitle()) ? null : createQrService.getTitle());
         qrServiceEntity.setServiceType(StringUtils.isEmpty(createQrService.getServiceType()) ? null : createQrService.getServiceType());
         qrServiceEntity.setStatus(StringUtils.isEmpty(createQrService.getStatus()) ? StatusActivate.STATUS_ACTIVATED.getStatus() : createQrService.getStatus());
-        qrServiceEntity.setCreatedAt(LocalDateTime.now());
+        qrServiceEntity.setCreatedAt(DateTimeUtil.getNow());
         qrServiceEntity.setCreatedBy(Flag.userFlag.getUserName());
         return qrServiceEntity;
     }
@@ -166,7 +167,7 @@ public class QrServiceImpl implements QrService {
         if (!StringUtils.isEmpty(updateQrService.getStatus())) {
             qrServiceEntity.setStatus(updateQrService.getStatus());
         }
-        qrServiceEntity.setUpdatedAt(LocalDateTime.now());
+        qrServiceEntity.setUpdatedAt(DateTimeUtil.getNow());
         qrServiceEntity.setUpdatedBy(Flag.userFlag.getUserName());
         return qrServiceEntity;
     }
@@ -195,7 +196,7 @@ public class QrServiceImpl implements QrService {
     public ResponeData<Boolean> delete(Long id) throws Exception {
         QrServiceEntity qrServiceEntity = qrServiceDao.findByIdNotDeleted(id);
         if (qrServiceEntity != null) {
-            qrServiceEntity.setDeletedAt(LocalDateTime.now());
+            qrServiceEntity.setDeletedAt(DateTimeUtil.getNow());
             qrServiceDao.save(qrServiceEntity);
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();
