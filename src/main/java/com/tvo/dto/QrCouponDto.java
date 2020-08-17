@@ -1,9 +1,9 @@
 package com.tvo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tvo.request.UserCoupon;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author thanglt on 8/6/2020
@@ -44,6 +44,8 @@ public class QrCouponDto {
     private String status;
 
     private String approveStatus;
+
+    private List<UserCoupon> userCoupons;
 
     private String deletedAt;
 

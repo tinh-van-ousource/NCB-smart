@@ -35,7 +35,6 @@ import javax.persistence.criteria.Root;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -278,9 +277,15 @@ public class QrCouponServiceImpl implements QrCouponService {
     @Override
     public ResponeData<QrCouponDto> detail(Long id) throws Exception {
         QrCouponsEntity qrCouponsEntity = qrCouponDao.findByIdNotDeleted(id);
+        List<CouponObjectUserEntity> couponObjectUserEntities = couponObjectUserDao.findByQrCouponId(id);
         if (qrCouponsEntity == null) {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
+        }
+        QrCouponDto qrCouponDto = ModelMapperUtils.map(qrCouponsEntity, QrCouponDto.class);
+        if (qrCouponsEntity.getObjectUserType().equals("0")) {
+            List<UserCoupon> userCoupon = ModelMapperUtils.mapAll(couponObjectUserEntities, UserCoupon.class);
+            qrCouponDto.setUserCoupons(userCoupon);
         }
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
@@ -290,7 +295,7 @@ public class QrCouponServiceImpl implements QrCouponService {
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
                 " \n Chi tiết Phiếu giảm giá");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ModelMapperUtils.map(qrCouponsEntity, QrCouponDto.class));
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, qrCouponDto);
     }
 
     @Override
