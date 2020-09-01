@@ -83,7 +83,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                 "\n Role :" + Flag.userFlag.getRole().getRoleName() +
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
-                " \n Tìm kiếm Dịch vụ QR");
+                " \n Tìm kiếm nhà cung cấp QR");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(qrMerchantDtos, pageable, total));
     }
 
@@ -129,7 +129,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                 "\n Role :" + Flag.userFlag.getRole().getRoleName() +
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
-                " \n Tạo mới Dịch vụ QR");
+                " \n Tạo mới nhà cung cấp QR");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
     }
 
@@ -157,7 +157,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                 "\n Role :" + Flag.userFlag.getRole().getRoleName() +
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
-                " \n Cập nhật thông tin Phiếu giảm giá");
+                " \n Cập nhật thông tin nhà cung cấp QR");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, ModelMapperUtils.map(save, QrMerchantDto.class));
     }
 
@@ -185,7 +185,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                 "\n Role :" + Flag.userFlag.getRole().getRoleName() +
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
-                " \n Chi tiết Phiếu giảm giá");
+                " \n Chi tiết nhà cung cấp QR");
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, qrMerchantDto);
     }
 
@@ -202,7 +202,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                     "\n Role :" + Flag.userFlag.getRole().getRoleName() +
                     " \n Địa chỉ IP đăng nhập : " + ip +
                     " \n Hostname : " + hostname +
-                    " \n Xóa Phiếu giảm giá");
+                    " \n Xóa nhà cung cấp QR");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
