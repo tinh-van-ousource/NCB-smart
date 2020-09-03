@@ -62,6 +62,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
         final CriteriaQuery<QrMerchantEntity> query = cb.createQuery(QrMerchantEntity.class);
         Object[] queryObjs = this.createQrMerchantRootPersist(cb, query, search);
         Root<QrMerchantEntity> root = (Root<QrMerchantEntity>) queryObjs[0];
+        query.orderBy(cb.asc(root.get("name")));
         query.select(root);
         query.where((Predicate[]) queryObjs[1]);
 
