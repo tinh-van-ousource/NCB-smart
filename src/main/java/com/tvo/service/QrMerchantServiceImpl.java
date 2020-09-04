@@ -109,6 +109,11 @@ public class QrMerchantServiceImpl implements QrMerchantService {
         QrMerchantEntity qrMerchantEntity;
         List<QrMerchantEntity> qrMerchantEntities = new ArrayList<>();
         List<QrMerchantRequest> qrMerchantRequests = qrMerchantCreateRequest.getQrMerchants();
+        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByNameOrAddress(qrMerchantCreateRequest.getName(), qrMerchantCreateRequest.getAddress());
+        if (checkNameAndAddress != null) {
+            logger.warn("Name hoặc Address bị trùng \n" + "name: " + qrMerchantCreateRequest.getName() + "\n address: " + qrMerchantCreateRequest.getAddress());
+            return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
+        }
         if (qrMerchantCreateRequest != null && (qrMerchantCreateRequest.getQrMerchants() == null || qrMerchantCreateRequest.getQrMerchants().isEmpty())) {
             qrMerchantEntity = setCreate(qrMerchantCreateRequest);
             qrMerchantEntity.setCreatedAt(DateTimeUtil.getNow());
@@ -116,6 +121,11 @@ public class QrMerchantServiceImpl implements QrMerchantService {
             qrMerchantDao.save(qrMerchantEntity);
         } else {
             for (QrMerchantRequest qrMerchantRequest : qrMerchantRequests) {
+                QrMerchantEntity checkNameAndAddressExist = qrMerchantDao.findByNameOrAddress(qrMerchantRequest.getName(), qrMerchantRequest.getAddress());
+                if (checkNameAndAddressExist != null) {
+                    logger.warn("Name hoặc Address bị trùng \n" + "name: " + qrMerchantRequest.getName() + "\n address: " + qrMerchantRequest.getAddress());
+                    return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
+                }
                 qrMerchantEntity = ModelMapperUtils.map(qrMerchantRequest, QrMerchantEntity.class);
                 qrMerchantEntity.setCreatedAt(DateTimeUtil.getNow());
                 qrMerchantEntity.setCreatedBy(Flag.userFlag.getUserName());
@@ -148,6 +158,11 @@ public class QrMerchantServiceImpl implements QrMerchantService {
         if (qrMerchantEntity == null) {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
+        }
+        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByNameOrAddress(qrMerchantRequest.getName(), qrMerchantRequest.getAddress());
+        if (checkNameAndAddress != null) {
+            logger.warn("Name hoặc Address bị trùng \n" + "name: " + qrMerchantRequest.getName() + "\n address: " + qrMerchantRequest.getAddress());
+            return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, null);
         }
         setUpdate(qrMerchantEntity, qrMerchantRequest);
         QrMerchantEntity save = qrMerchantDao.save(qrMerchantEntity);

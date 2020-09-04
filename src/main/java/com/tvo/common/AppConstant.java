@@ -51,7 +51,7 @@ public class AppConstant {
     public static final String SYSTEM_ERROR_CREATE_FUNCTION_MESSAGE = "Create duplicate error";
     
     public static final String CITY_CREATE_DUPLICATE_ERROR_CODE = "909";
-    public static final String CITY_CREATE_DUPLICATE_ERROR_MESSAGE = "CityCode is duplicate";
+    public static final String CITY_CREATE_DUPLICATE_ERROR_MESSAGE = "Value is duplicate";
 
     public static final String SECRET =	 "Unknown";
     public static final String HEADER_STRING = "Authorization";

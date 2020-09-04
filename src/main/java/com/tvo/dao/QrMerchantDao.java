@@ -2,6 +2,7 @@ package com.tvo.dao;
 
 import com.tvo.model.QrMerchantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface QrMerchantDao extends JpaRepository<QrMerchantEntity, Long> {
+    @Query("SELECT q FROM QrMerchantEntity q WHERE q.name = ?1 OR q.address = ?2")
+    QrMerchantEntity findByNameOrAddress(String name, String address);
 }
