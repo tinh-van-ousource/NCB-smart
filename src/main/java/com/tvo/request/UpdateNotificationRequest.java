@@ -1,8 +1,9 @@
 package com.tvo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 public class UpdateNotificationRequest {
@@ -13,7 +14,8 @@ public class UpdateNotificationRequest {
 
     private String repeatType;
 
-    private String repeatValue;
+    @JsonFormat(pattern = "dd/MM/YY hh:mm:ss")
+    private Date repeatValue;
 
     private String receiverUserId;
 

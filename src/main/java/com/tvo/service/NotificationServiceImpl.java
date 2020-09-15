@@ -210,8 +210,8 @@ public class NotificationServiceImpl implements NotificationService {
         if (!StringUtils.isEmpty(updateNotificationRequest.getRepeatType())) {
             notificationsEntity.setRepeatType(updateNotificationRequest.getRepeatType());
         }
-        if (!StringUtils.isEmpty(updateNotificationRequest.getRepeatValue())) {
-            notificationsEntity.setRepeatValue(updateNotificationRequest.getRepeatValue());
+        if (!StringUtils.isEmpty(updateNotificationRequest.getRepeatValue().toString())) {
+            notificationsEntity.setRepeatValue(updateNotificationRequest.getRepeatValue().toString());
         }
         if (!StringUtils.isEmpty(updateNotificationRequest.getObjectUserType())) {
             notificationsEntity.setObjectUserType(updateNotificationRequest.getObjectUserType());

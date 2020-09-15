@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class NotificationsDto {
+
     private Long id;
 
     private String title;
