@@ -92,14 +92,6 @@ public class NotificationServiceImpl implements NotificationService {
         final Root<NotificationsEntity> rootPersist = query.from(NotificationsEntity.class);
         final List<Predicate> predicates = new ArrayList<>();
 
-        if (resource.getTitle() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTitle().trim())) {
-            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("title")), "%" + resource.getTitle().toUpperCase() + "%")));
-        }
-        if (resource.getContent() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getContent().trim())) {
-            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("content")), "%" + resource.getContent().toUpperCase() + "%")));
-        }
         if (resource.getSearch() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getSearch().trim())) {
             predicates.add(cb.and(cb.or(cb.like(cb.upper(rootPersist.get("title")), "%" + resource.getSearch().toUpperCase() + "%"),
@@ -131,6 +123,7 @@ public class NotificationServiceImpl implements NotificationService {
     public ResponeData<NotificationsDto> create(CreateNotificationRequest createNotificationRequest) throws Exception {
         NotificationsEntity notificationsEntity = setCreate(createNotificationRequest);
         NotificationsEntity save = notificationDAO.save(notificationsEntity);
+
         if(save.getObjectUserType().equals("1") && !createNotificationRequest.getUserNotifications().isEmpty()){
             List<NotificationObjectUserEntity> notificationObjectUserEntityList = setCreate(save.getId(),createNotificationRequest);
            notificationObjectUserDao.saveAll(notificationObjectUserEntityList);
@@ -169,7 +162,7 @@ public class NotificationServiceImpl implements NotificationService {
             NotificationObjectUserEntity notificationObjectUserEntity;
             for (UserNotifications userNotifications : userNotificationsList) {
                 notificationObjectUserEntity = ModelMapperUtils.map(userNotifications,NotificationObjectUserEntity.class);
-                notificationObjectUserEntity.setId(notificationId);
+                notificationObjectUserEntity.setNotificationId(notificationId);
                 notificationObjectUserEntity.setUserName(userNotifications.getUserName());
                 notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
                 notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());

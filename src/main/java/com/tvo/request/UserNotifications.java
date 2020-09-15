@@ -10,8 +10,6 @@ import lombok.Data;
 @Data
 public class UserNotifications {
 
-    private String notificationId;
-
     private String userName;
 
 }

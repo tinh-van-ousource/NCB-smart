@@ -9,10 +9,6 @@ import java.util.Date;
 @Data
 public class SearchNotificationDto {
 
-    private String title;
-
-    private String content;
-
     private String search;
 
     private String repeatType;
