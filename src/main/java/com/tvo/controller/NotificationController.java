@@ -25,7 +25,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("")
-    public ResponeData<Page<NotificationsDto>> seach(@RequestBody SearchNotificationDto searchNotificationDto,
+    public ResponeData<Page<NotificationsDto>> seach(@ModelAttribute SearchNotificationDto searchNotificationDto,
                                                      @PageableDefault(size = AppConstant.LIMIT_PAGE) Pageable pageable){
         try {
             return notificationService.search(searchNotificationDto,pageable);

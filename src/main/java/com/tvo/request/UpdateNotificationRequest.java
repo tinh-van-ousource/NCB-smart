@@ -2,6 +2,8 @@ package com.tvo.request;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class UpdateNotificationRequest {
 
@@ -20,5 +22,4 @@ public class UpdateNotificationRequest {
     private String type;
 
     private String status;
-
 }

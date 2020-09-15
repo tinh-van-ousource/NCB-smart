@@ -1,8 +1,10 @@
 package com.tvo.dto;
 
+import com.tvo.request.UserNotifications;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 public class NotificationsDto {
@@ -33,4 +35,6 @@ public class NotificationsDto {
     private Date updatedAt;
 
     private String updatedBy;
+
+    private List<UserNotifications> userNotifications;
 }
