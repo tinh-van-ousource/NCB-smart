@@ -101,6 +101,10 @@ public class NotificationServiceImpl implements NotificationService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())){
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("repeatType"),resource.getRepeatType())));
         }
+        if (resource.getObjectUserType() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())){
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("objectUserType"),resource.getObjectUserType())));
+        }
         if (resource.getStatus() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())){
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));

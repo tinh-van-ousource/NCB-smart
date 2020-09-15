@@ -13,6 +13,8 @@ public class SearchNotificationDto {
 
     private String repeatType;
 
+    private String objectUserType;
+
     private String status;
 
     @JsonFormat(pattern = "yyyy/M/d")
