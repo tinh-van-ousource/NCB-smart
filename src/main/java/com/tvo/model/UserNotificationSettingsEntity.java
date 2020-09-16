@@ -26,6 +26,9 @@ public class UserNotificationSettingsEntity implements Serializable {
     @Column(name = "USER_NAME")
     private String userName;
 
+    @Column(name = "DEVICE_ID")
+    private Long deviceId;
+
     @Column(name = "PUSH_NOTI_SETTING")
     private String pushNotiSetting;
 

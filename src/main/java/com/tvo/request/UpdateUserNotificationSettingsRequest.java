@@ -12,6 +12,8 @@ public class UpdateUserNotificationSettingsRequest {
 
     private String userName;
 
+    private Long deviceId;
+
     private String pushNotiSetting;
 
     private String smsNotiSetting;

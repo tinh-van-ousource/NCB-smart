@@ -139,6 +139,9 @@ public class UserNotificationSettingsServiceImpl implements UserNotificationSett
         if (!StringUtils.isEmpty(updateUserNotificationSettingsRequest.getSmsNotiSetting())) {
             userNotificationSettingsEntity.setSmsNotiSetting(updateUserNotificationSettingsRequest.getSmsNotiSetting());
         }
+        if (!StringUtils.isEmpty(updateUserNotificationSettingsRequest.getDeviceId().toString())) {
+            userNotificationSettingsEntity.setDeviceId(updateUserNotificationSettingsRequest.getDeviceId());
+        }
 
         userNotificationSettingsEntity.setUpdatedAt(DateTimeUtil.getNow());
         userNotificationSettingsEntity.setUpdatedBy(Flag.userFlag.getUserName());
