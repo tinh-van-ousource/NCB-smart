@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UpdateNotificationRequest {
@@ -24,4 +25,6 @@ public class UpdateNotificationRequest {
     private String type;
 
     private String status;
+
+    private List<UserNotifications> userNotifications;
 }

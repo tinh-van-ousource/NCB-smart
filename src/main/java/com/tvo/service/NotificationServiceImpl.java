@@ -10,6 +10,7 @@ import com.tvo.dao.NotificationObjectUserDao;
 import com.tvo.dto.NotificationsDto;
 import com.tvo.model.NotificationObjectUserEntity;
 import com.tvo.model.NotificationsEntity;
+import com.tvo.model.UserNotificationSettingsEntity;
 import com.tvo.request.CreateNotificationRequest;
 import com.tvo.request.UpdateNotificationRequest;
 import com.tvo.request.UserNotifications;
@@ -186,6 +187,13 @@ public class NotificationServiceImpl implements NotificationService {
         }
         notificationsEntity = setUpdate(notificationsEntity,updateNotificationRequest);
         NotificationsEntity save = notificationDAO.save(notificationsEntity);
+
+        List<NotificationObjectUserEntity> userEntityList = notificationObjectUserDao.findByNotificationId(notificationsEntity.getId());
+        if(updateNotificationRequest.getObjectUserType().equals("1") && !updateNotificationRequest.getUserNotifications().isEmpty() && userEntityList.isEmpty()){
+            List<NotificationObjectUserEntity> notificationObjectUserEntityList = setUpdate(save.getId(),updateNotificationRequest);
+            notificationObjectUserDao.saveAll(notificationObjectUserEntityList);
+        }
+
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
         logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -224,6 +232,24 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationsEntity;
     }
 
+    private List<NotificationObjectUserEntity> setUpdate(Long notificationId,UpdateNotificationRequest updateNotificationRequest){
+        List<NotificationObjectUserEntity> notificationObjectUserEntityList = new ArrayList<>();
+        List<UserNotifications> userNotificationsList = updateNotificationRequest.getUserNotifications();
+        if(userNotificationsList != null && !userNotificationsList.isEmpty()){
+            NotificationObjectUserEntity notificationObjectUserEntity;
+            for (UserNotifications userNotifications: userNotificationsList) {
+                notificationObjectUserEntity = ModelMapperUtils.map(userNotifications,NotificationObjectUserEntity.class);
+                notificationObjectUserEntity.setNotificationId(notificationId);
+                notificationObjectUserEntity.setUserName(userNotifications.getUserName());
+                notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
+                notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                notificationObjectUserEntityList.add(notificationObjectUserEntity);
+            }
+            return notificationObjectUserEntityList;
+        }
+        return null;
+    }
+
     @Override
     public ResponeData<NotificationsDto> details(Long id) throws Exception {
         NotificationsEntity notificationsEntity = notificationDAO.findByIdNotDeleted(id);
@@ -233,10 +259,6 @@ public class NotificationServiceImpl implements NotificationService {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
-//        if (notificationObjectUserEntityList == null) {
-//            logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
-//            return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
-//        }
 
         NotificationsDto notificationsDto = ModelMapperUtils.map(notificationsEntity,NotificationsDto.class);
         if(notificationsEntity.getObjectUserType().equals("1")){
