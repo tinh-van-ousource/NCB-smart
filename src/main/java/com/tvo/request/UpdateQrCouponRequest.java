@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author thanglt on 8/6/2020
@@ -44,4 +45,6 @@ public class UpdateQrCouponRequest {
     private String status;
 
     private String approveStatus;
+
+    private List<UserCoupon> userCoupons;
 }

@@ -5,9 +5,11 @@ import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchNotificationDto;
+import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dao.NotificationDAO;
 import com.tvo.dao.NotificationObjectUserDao;
 import com.tvo.dto.NotificationsDto;
+import com.tvo.model.DatUserProfile;
 import com.tvo.model.NotificationObjectUserEntity;
 import com.tvo.model.NotificationsEntity;
 import com.tvo.model.UserNotificationSettingsEntity;
@@ -15,6 +17,7 @@ import com.tvo.request.CreateNotificationRequest;
 import com.tvo.request.UpdateNotificationRequest;
 import com.tvo.request.UserNotifications;
 import com.tvo.response.ResponeData;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +39,7 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -51,6 +55,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private NotificationObjectUserDao notificationObjectUserDao;
+
+    @Autowired
+    private DatUserProfileDao datUserProfileDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -89,7 +96,7 @@ public class NotificationServiceImpl implements NotificationService {
         return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(notificationDtos, pageable, total));
     }
 
-    private Object[] createNotificationRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchNotificationDto resource){
+    private Object[] createNotificationRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchNotificationDto resource) {
         final Root<NotificationsEntity> rootPersist = query.from(NotificationsEntity.class);
         final List<Predicate> predicates = new ArrayList<>();
 
@@ -99,22 +106,22 @@ public class NotificationServiceImpl implements NotificationService {
                     cb.like(cb.upper(rootPersist.get("content")), "%" + resource.getSearch().toUpperCase() + "%"))));
         }
         if (resource.getRepeatType() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())){
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("repeatType"),resource.getRepeatType())));
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("repeatType"), resource.getRepeatType())));
         }
         if (resource.getObjectUserType() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())){
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("objectUserType"),resource.getObjectUserType())));
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getRepeatType().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("objectUserType"), resource.getObjectUserType())));
         }
         if (resource.getStatus() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())){
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
             predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
         }
-        if (resource.getFromDate() != null){
-            predicates.add(cb.and(cb.greaterThanOrEqualTo(rootPersist.get("createdAt"),resource.getFromDate())));
+        if (resource.getFromDate() != null) {
+            predicates.add(cb.and(cb.greaterThanOrEqualTo(rootPersist.get("createdAt"), resource.getFromDate())));
         }
-        if (resource.getFromDate() != null){
-            predicates.add(cb.and(cb.lessThanOrEqualTo(rootPersist.get("createdAt"),resource.getToDate())));
+        if (resource.getFromDate() != null) {
+            predicates.add(cb.and(cb.lessThanOrEqualTo(rootPersist.get("createdAt"), resource.getToDate())));
         }
         predicates.add(cb.and(cb.isNull(rootPersist.<LocalDateTime>get("deletedAt"))));
         Object[] results = new Object[2];
@@ -129,9 +136,9 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationsEntity notificationsEntity = setCreate(createNotificationRequest);
         NotificationsEntity save = notificationDAO.save(notificationsEntity);
 
-        if(save.getObjectUserType().equals("1") && !createNotificationRequest.getUserNotifications().isEmpty()){
-            List<NotificationObjectUserEntity> notificationObjectUserEntityList = setCreate(save.getId(),createNotificationRequest);
-           notificationObjectUserDao.saveAll(notificationObjectUserEntityList);
+        if (save.getObjectUserType().equals("1") && !createNotificationRequest.getUserNotifications().isEmpty()) {
+            List<NotificationObjectUserEntity> notificationObjectUserEntityList = setCreate(save.getId(), createNotificationRequest);
+            notificationObjectUserDao.saveAll(notificationObjectUserEntityList);
         }
 
         ip = InetAddress.getLocalHost();
@@ -160,18 +167,23 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationsEntity;
     }
 
-    private List<NotificationObjectUserEntity> setCreate(Long notificationId, CreateNotificationRequest createNotificationRequest){
+    private List<NotificationObjectUserEntity> setCreate(Long notificationId, CreateNotificationRequest createNotificationRequest) throws Exception {
+        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
         List<NotificationObjectUserEntity> notificationObjectUserEntityList = new ArrayList<>();
         List<UserNotifications> userNotificationsList = createNotificationRequest.getUserNotifications();
-        if(userNotificationsList != null && !userNotificationsList.isEmpty()){
+        if (userNotificationsList != null && !userNotificationsList.isEmpty()) {
             NotificationObjectUserEntity notificationObjectUserEntity;
             for (UserNotifications userNotifications : userNotificationsList) {
-                notificationObjectUserEntity = ModelMapperUtils.map(userNotifications,NotificationObjectUserEntity.class);
-                notificationObjectUserEntity.setNotificationId(notificationId);
-                notificationObjectUserEntity.setUserName(userNotifications.getUserName());
-                notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
-                notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
-                notificationObjectUserEntityList.add(notificationObjectUserEntity);
+                if (datUserProfileList.contains(userNotifications.getUserName().toUpperCase())) {
+                    notificationObjectUserEntity = ModelMapperUtils.map(userNotifications, NotificationObjectUserEntity.class);
+                    notificationObjectUserEntity.setNotificationId(notificationId);
+                    notificationObjectUserEntity.setUserName(userNotifications.getUserName());
+                    notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
+                    notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                    notificationObjectUserEntityList.add(notificationObjectUserEntity);
+                } else {
+                    throw new Exception("UserName : " + userNotifications.getUserName() + " does not exist in DatUserNameProfile table");
+                }
             }
             return notificationObjectUserEntityList;
         }
@@ -179,18 +191,21 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResponeData<NotificationsDto> update(Long id, UpdateNotificationRequest updateNotificationRequest) throws Exception {
         NotificationsEntity notificationsEntity = notificationDAO.findByIdNotDeleted(id);
-        if(notificationsEntity == null){
+        if (notificationsEntity == null) {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
-        notificationsEntity = setUpdate(notificationsEntity,updateNotificationRequest);
+        notificationsEntity = setUpdate(notificationsEntity, updateNotificationRequest);
         NotificationsEntity save = notificationDAO.save(notificationsEntity);
 
-        List<NotificationObjectUserEntity> userEntityList = notificationObjectUserDao.findByNotificationId(notificationsEntity.getId());
-        if(updateNotificationRequest.getObjectUserType().equals("1") && !updateNotificationRequest.getUserNotifications().isEmpty() && userEntityList.isEmpty()){
-            List<NotificationObjectUserEntity> notificationObjectUserEntityList = setUpdate(save.getId(),updateNotificationRequest);
+        List<NotificationObjectUserEntity> objectUserEntityList = notificationObjectUserDao.findByNotificationId(notificationsEntity.getId());
+        List<UserNotifications> userNotificationsList = ModelMapperUtils.mapAll(objectUserEntityList, UserNotifications.class);
+
+        if (updateNotificationRequest.getObjectUserType().equals("1") && !updateNotificationRequest.getUserNotifications().isEmpty()) {
+            List<NotificationObjectUserEntity> notificationObjectUserEntityList = setUpdate(save.getId(), updateNotificationRequest, userNotificationsList);
             notificationObjectUserDao.saveAll(notificationObjectUserEntityList);
         }
 
@@ -232,18 +247,26 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationsEntity;
     }
 
-    private List<NotificationObjectUserEntity> setUpdate(Long notificationId,UpdateNotificationRequest updateNotificationRequest){
+    private List<NotificationObjectUserEntity> setUpdate(Long notificationId, UpdateNotificationRequest updateNotificationRequest, List<UserNotifications> userNotificationsList) throws Exception {
+        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
         List<NotificationObjectUserEntity> notificationObjectUserEntityList = new ArrayList<>();
-        List<UserNotifications> userNotificationsList = updateNotificationRequest.getUserNotifications();
-        if(userNotificationsList != null && !userNotificationsList.isEmpty()){
+        List<UserNotifications> userNotificationsListRequest = updateNotificationRequest.getUserNotifications();
+
+        if (userNotificationsListRequest != null && !userNotificationsListRequest.isEmpty()) {
             NotificationObjectUserEntity notificationObjectUserEntity;
-            for (UserNotifications userNotifications: userNotificationsList) {
-                notificationObjectUserEntity = ModelMapperUtils.map(userNotifications,NotificationObjectUserEntity.class);
-                notificationObjectUserEntity.setNotificationId(notificationId);
-                notificationObjectUserEntity.setUserName(userNotifications.getUserName());
-                notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
-                notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
-                notificationObjectUserEntityList.add(notificationObjectUserEntity);
+            for (UserNotifications userNotifications : userNotificationsListRequest) {
+                if (datUserProfileList.contains(userNotifications.getUserName().toUpperCase())) {
+                    if (!userNotificationsList.contains(userNotifications)) {
+                        notificationObjectUserEntity = ModelMapperUtils.map(userNotifications, NotificationObjectUserEntity.class);
+                        notificationObjectUserEntity.setNotificationId(notificationId);
+                        notificationObjectUserEntity.setUserName(userNotifications.getUserName());
+                        notificationObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
+                        notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                        notificationObjectUserEntityList.add(notificationObjectUserEntity);
+                    }
+                } else {
+                    throw new Exception("UserName : " + userNotifications.getUserName() + " does not exist in DatUserNameProfile table");
+                }
             }
             return notificationObjectUserEntityList;
         }
@@ -260,9 +283,9 @@ public class NotificationServiceImpl implements NotificationService {
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
 
-        NotificationsDto notificationsDto = ModelMapperUtils.map(notificationsEntity,NotificationsDto.class);
-        if(notificationsEntity.getObjectUserType().equals("1")){
-            List<UserNotifications> userNotificationsList = ModelMapperUtils.mapAll(notificationObjectUserEntityList,UserNotifications.class);
+        NotificationsDto notificationsDto = ModelMapperUtils.map(notificationsEntity, NotificationsDto.class);
+        if (notificationsEntity.getObjectUserType().equals("1")) {
+            List<UserNotifications> userNotificationsList = ModelMapperUtils.mapAll(notificationObjectUserEntityList, UserNotifications.class);
             notificationsDto.setUserNotifications(userNotificationsList);
         }
 
@@ -275,7 +298,7 @@ public class NotificationServiceImpl implements NotificationService {
                 " \n Hostname : " + hostname +
                 " \n Chi tiết Dịch vụ Notifications");
 
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE,AppConstant.SYSTEM_SUCCESS_MESSAGE,notificationsDto);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, notificationsDto);
     }
 
     @Override

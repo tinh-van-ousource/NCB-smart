@@ -24,7 +24,7 @@ public interface QrCouponService {
     ResponeData<Page<QrCouponDto>> search(SearchQrCouponDto searchQrCouponDto, Pageable pageable) throws Exception;
 
     /**
-     * Create QrCoupon.
+     * Create QrCoupon QrCoupon with UpdateQrCouponRequest.userCoupons() exists in DatUserProfile.
      *
      * @param qrCouponRequest qrCouponRequest
      * @return QrCouponDto
@@ -33,7 +33,7 @@ public interface QrCouponService {
     ResponeData<QrCouponDto> create(CreateQrCouponRequest qrCouponRequest) throws Exception;
 
     /**
-     * Update QrCoupon.
+     * Update QrCoupon with UpdateQrCouponRequest.userCoupons() exists in DatUserProfile.
      *
      * @param id                    id
      * @param updateQrCouponRequest updateQrCouponRequest

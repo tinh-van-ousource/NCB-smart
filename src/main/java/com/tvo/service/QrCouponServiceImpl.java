@@ -6,14 +6,15 @@ import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrCouponDto;
 import com.tvo.dao.CouponObjectUserDao;
+import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dao.QrCouponDao;
 import com.tvo.dto.QrCouponDto;
 import com.tvo.enums.StatusActivate;
 import com.tvo.model.CouponObjectUserEntity;
+import com.tvo.model.DatUserProfile;
+import com.tvo.model.NotificationObjectUserEntity;
 import com.tvo.model.QrCouponsEntity;
-import com.tvo.request.CreateQrCouponRequest;
-import com.tvo.request.UpdateQrCouponRequest;
-import com.tvo.request.UserCoupon;
+import com.tvo.request.*;
 import com.tvo.response.ResponeData;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author thanglt on 8/6/2020
@@ -55,6 +57,9 @@ public class QrCouponServiceImpl implements QrCouponService {
 
     @Autowired
     private CouponObjectUserDao couponObjectUserDao;
+
+    @Autowired
+    private DatUserProfileDao datUserProfileDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -145,10 +150,12 @@ public class QrCouponServiceImpl implements QrCouponService {
     public ResponeData<QrCouponDto> create(CreateQrCouponRequest qrCouponRequest) throws Exception {
         QrCouponsEntity qrCouponsEntity = setCreate(qrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
+
         if (save.getObjectUserType().equals("0") && !qrCouponRequest.getUserCoupons().isEmpty()) {
             List<CouponObjectUserEntity> couponObjectUserEntities = setCreate(save.getId(), qrCouponRequest);
             couponObjectUserDao.saveAll(couponObjectUserEntities);
         }
+
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
         logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -183,17 +190,24 @@ public class QrCouponServiceImpl implements QrCouponService {
         return qrCouponsEntity;
     }
 
-    private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateQrCouponRequest createQrCouponRequest) {
+    private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateQrCouponRequest createQrCouponRequest)throws Exception {
+        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
         List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
         List<UserCoupon> userCoupons = createQrCouponRequest.getUserCoupons();
         if (userCoupons != null && !userCoupons.isEmpty()) {
             CouponObjectUserEntity couponObjectUserEntity;
             for (UserCoupon userCoupon : userCoupons) {
-                couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
-                couponObjectUserEntity.setQrCouponId(qrCouponId);
-                couponObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
-                couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
-                couponObjectUserEntities.add(couponObjectUserEntity);
+                if(datUserProfileList.contains(userCoupon.getUserName().toUpperCase())){
+                    couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
+                    couponObjectUserEntity.setQrCouponId(qrCouponId);
+                    couponObjectUserEntity.setUserName(userCoupon.getUserName());
+                    couponObjectUserEntity.setUserCif(userCoupon.getUserCif());
+                    couponObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
+                    couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                    couponObjectUserEntities.add(couponObjectUserEntity);
+                }else {
+                    throw new Exception("UserName : " + userCoupon.getUserName() + " does not exist in DatUserNameProfile table");
+                }
             }
             return couponObjectUserEntities;
         }
@@ -210,6 +224,14 @@ public class QrCouponServiceImpl implements QrCouponService {
         }
         setUpdate(qrCouponsEntity, updateQrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
+
+        List<CouponObjectUserEntity> ObjectUserEntityList = couponObjectUserDao.findByQrCouponId(save.getId());
+        List<UserCoupon> userCouponList = ModelMapperUtils.mapAll(ObjectUserEntityList, UserCoupon.class);
+        if (updateQrCouponRequest.getObjectUserType().equals("0") && !updateQrCouponRequest.getUserCoupons().isEmpty()) {
+            List<CouponObjectUserEntity> couponObjectUserEntityList = setUpdate(save.getId(), updateQrCouponRequest, userCouponList);
+            couponObjectUserDao.saveAll(couponObjectUserEntityList);
+        }
+
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
         logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -273,6 +295,34 @@ public class QrCouponServiceImpl implements QrCouponService {
         qrCouponsEntity.setUpdatedAt(DateTimeUtil.getNow());
         qrCouponsEntity.setUpdatedBy(Flag.userFlag.getUserName());
     }
+
+    private List<CouponObjectUserEntity> setUpdate(Long QrCouponId, UpdateQrCouponRequest updateQrCouponRequest, List<UserCoupon> userCouponList) throws Exception {
+        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
+        List<CouponObjectUserEntity> couponObjectUserEntityList = new ArrayList<>();
+        List<UserCoupon> userCouponsListRequest = updateQrCouponRequest.getUserCoupons();
+
+        if (userCouponsListRequest != null && !userCouponsListRequest.isEmpty()) {
+            CouponObjectUserEntity couponObjectUserEntity;
+            for (UserCoupon userCoupon : userCouponsListRequest) {
+                if (datUserProfileList.contains(userCoupon.getUserName().toUpperCase())) {
+                    if (!userCouponList.contains(userCoupon)) {
+                        couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
+                        couponObjectUserEntity.setQrCouponId(QrCouponId);
+                        couponObjectUserEntity.setUserName(userCoupon.getUserName());
+                        couponObjectUserEntity.setUserCif(userCoupon.getUserCif());
+                        couponObjectUserEntity.setCreatedAt(DateTimeUtil.getNow());
+                        couponObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
+                        couponObjectUserEntityList.add(couponObjectUserEntity);
+                    }
+                } else {
+                    throw new Exception("UserName : " + userCoupon.getUserName() + " does not exist in DatUserNameProfile table");
+                }
+            }
+            return couponObjectUserEntityList;
+        }
+        return null;
+    }
+
 
     @Override
     public ResponeData<QrCouponDto> detail(Long id) throws Exception {

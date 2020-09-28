@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public interface NotificationService {
 
     /**
-     * Search Notification by title, content, status
+     * Search Notifications by title, content, status
      *
      * @param searchNotificationDto searchNotificationDto
      * @param pageable              pageable
@@ -28,7 +28,7 @@ public interface NotificationService {
     ResponeData<Page<NotificationsDto>> search(SearchNotificationDto searchNotificationDto, Pageable pageable) throws Exception;
 
     /**
-     * Create Notifaciton
+     * Create Notificatons with CreateNotificationRequest.userNotification() exists in DatUserProfile
      *
      * @param createNotificationRequest createNotificationRequest
      * @return NotificationDto
@@ -37,7 +37,7 @@ public interface NotificationService {
     ResponeData<NotificationsDto> create(CreateNotificationRequest createNotificationRequest) throws Exception;
 
     /**
-     * Update Notification
+     * Update Notifications with CreateNotificationRequest.userNotification() exists in DatUserProfile
      *
      * @param id                        id
      * @param updateNotificationRequest updateNotificationRequest
@@ -47,7 +47,7 @@ public interface NotificationService {
     ResponeData<NotificationsDto> update(Long id, UpdateNotificationRequest updateNotificationRequest) throws Exception;
 
     /**
-     * Find Notification by id
+     * Find Notifications by id
      *
      * @param id id
      * @return NotificationDto
