@@ -15,8 +15,7 @@ public class UpdateNotificationRequest {
 
     private String repeatType;
 
-    @JsonFormat(pattern = "dd/MM/YY hh:mm:ss")
-    private Date repeatValue;
+    private String repeatValue;
 
     private String receiverUserId;
 
