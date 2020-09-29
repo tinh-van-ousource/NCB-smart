@@ -1,6 +1,7 @@
 package com.tvo.controller;
 
 import com.tvo.common.AppConstant;
+import com.tvo.common.UserStoreException;
 import com.tvo.controllerDto.SearchQrCouponDto;
 import com.tvo.dto.QrCouponDto;
 import com.tvo.request.CreateQrCouponRequest;
@@ -25,8 +26,12 @@ public class QrCouponController {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final QrCouponService qrCouponService;
+
     @Autowired
-    private QrCouponService qrCouponService;
+    public QrCouponController(QrCouponService qrCouponService) {
+        this.qrCouponService = qrCouponService;
+    }
 
     @GetMapping(value = "")
     public ResponeData<Page<QrCouponDto>> search(@ModelAttribute SearchQrCouponDto searchQrCouponDto,
@@ -43,6 +48,9 @@ public class QrCouponController {
     public ResponeData<QrCouponDto> create(@RequestBody CreateQrCouponRequest createQrCouponRequest) {
         try {
             return qrCouponService.create(createQrCouponRequest);
+        } catch (UserStoreException userStoreException) {
+            logger.warn("UserName : " + "'" + userStoreException.getMessage() + "'" + " does not exits!");
+            return new ResponeData<>(AppConstant.USER_NOT_EXITS_CODE, userStoreException.getMessage(), null);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
@@ -54,6 +62,9 @@ public class QrCouponController {
                                            @RequestBody UpdateQrCouponRequest updateQrCouponRequest) {
         try {
             return qrCouponService.update(id, updateQrCouponRequest);
+        } catch (UserStoreException userStoreException) {
+            logger.warn("UserName : " + "'" + userStoreException.getMessage() + "'" + " does not exits!");
+            return new ResponeData<>(AppConstant.USER_NOT_EXITS_CODE, userStoreException.getMessage(), null);
         } catch (Exception e) {
             logger.error(e.toString());
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);

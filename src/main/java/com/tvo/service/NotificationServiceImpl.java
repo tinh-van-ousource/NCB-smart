@@ -3,21 +3,19 @@ package com.tvo.service;
 import com.tvo.common.AppConstant;
 import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
+import com.tvo.common.UserStoreException;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchNotificationDto;
 import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dao.NotificationDAO;
 import com.tvo.dao.NotificationObjectUserDao;
 import com.tvo.dto.NotificationsDto;
-import com.tvo.model.DatUserProfile;
 import com.tvo.model.NotificationObjectUserEntity;
 import com.tvo.model.NotificationsEntity;
-import com.tvo.model.UserNotificationSettingsEntity;
 import com.tvo.request.CreateNotificationRequest;
 import com.tvo.request.UpdateNotificationRequest;
 import com.tvo.request.UserNotifications;
 import com.tvo.response.ResponeData;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,7 +180,7 @@ public class NotificationServiceImpl implements NotificationService {
                     notificationObjectUserEntity.setCreatedBy(Flag.userFlag.getUserName());
                     notificationObjectUserEntityList.add(notificationObjectUserEntity);
                 } else {
-                    throw new Exception("UserName : " + userNotifications.getUserName() + " does not exist in DatUserNameProfile table");
+                    throw new UserStoreException(userNotifications.getUserName());
                 }
             }
             return notificationObjectUserEntityList;
@@ -265,7 +263,7 @@ public class NotificationServiceImpl implements NotificationService {
                         notificationObjectUserEntityList.add(notificationObjectUserEntity);
                     }
                 } else {
-                    throw new Exception("UserName : " + userNotifications.getUserName() + " does not exist in DatUserNameProfile table");
+                    throw new UserStoreException(userNotifications.getUserName());
                 }
             }
             return notificationObjectUserEntityList;
