@@ -125,16 +125,17 @@ public class NcbQAServiceImpl implements NcbQAService {
 	@Override
 	@Transactional(readOnly = false)
 	public Boolean delete(Long id) {
-		NcbQA ncbQA = new NcbQA();
-		if (id != null) {
+//		NcbQA ncbQA = new NcbQA();
+//		if (id != null) {
 			Optional<NcbQA> opt = ncbQADao.findById(id);
 			if (opt.isPresent()) {
-				ncbQA = opt.get();
-				ncbQA.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-				ncbQADao.save(ncbQA);
+//				ncbQA = opt.get();
+//				ncbQA.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//				ncbQADao.save(ncbQA);
+				ncbQADao.deleteById(id);
 				return true;
 			}
-		}
+//		}
 		return false;
 	}
 

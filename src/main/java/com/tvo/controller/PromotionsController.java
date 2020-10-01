@@ -118,7 +118,7 @@ public class PromotionsController {
         		" \n Địa chỉ IP đăng nhập : " + ip+
         		" \n Hostname : " + hostname +
         		" \n Xóa Khuyến mại/ ưu đãi");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
     }
 
     @GetMapping(value = "/detail")
@@ -225,7 +225,7 @@ public class PromotionsController {
         		" \n Địa chỉ IP đăng nhập : " + ip+
         		" \n Hostname : " + hostname +
         		" \n Xóa Gán mã khuyến mãi gói sản phẩm");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
     }
 
     @GetMapping(value = "/fee/detail")

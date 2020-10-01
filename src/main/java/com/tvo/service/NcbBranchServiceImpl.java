@@ -143,8 +143,12 @@ public class NcbBranchServiceImpl implements NcbBranchService {
         if (!departCode.isEmpty()) {
             try {
                 NcbBranch ncbBranch = ncbBranchDao.findByDepartCode(departCode);
-                ncbBranch.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-                ncbBranchDao.save(ncbBranch);
+                if(ncbBranch==null){
+                    return false;
+                }
+//                ncbBranch.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//                ncbBranchDao.save(ncbBranch);
+                ncbBranchDao.delete(ncbBranch);
                 return true;
             } catch (Exception e) {
                 e.getStackTrace();

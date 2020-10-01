@@ -128,7 +128,7 @@ public class NcbGuidelineController {
 	public ResponeData<Boolean> delete(@RequestParam Long id) {
 		boolean deleteFlag = ncbGuidelineService.delete(id);
 		if (deleteFlag == true) {
-			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+			return new ResponeData<Boolean>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
 		}
         try {
 			ip = InetAddress.getLocalHost();

@@ -196,8 +196,11 @@ public class QrServiceImpl implements QrService {
     public ResponeData<Boolean> delete(Long id) throws Exception {
         QrServiceEntity qrServiceEntity = qrServiceDao.findByIdNotDeleted(id);
         if (qrServiceEntity != null) {
-            qrServiceEntity.setDeletedAt(DateTimeUtil.getNow());
-            qrServiceDao.save(qrServiceEntity);
+
+//            qrServiceEntity.setDeletedAt(DateTimeUtil.getNow());
+//            qrServiceDao.save(qrServiceEntity);
+            qrServiceDao.delete(qrServiceEntity);
+
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();
             logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -206,7 +209,7 @@ public class QrServiceImpl implements QrService {
                     " \n Địa chỉ IP đăng nhập : " + ip +
                     " \n Hostname : " + hostname +
                     " \n Xóa Dịch vụ QR");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);

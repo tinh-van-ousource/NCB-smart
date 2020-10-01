@@ -364,10 +364,13 @@ public class QrCouponServiceImpl implements QrCouponService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponeData<Boolean> delete(Long id) throws Exception {
-        QrCouponsEntity qrCouponsEntity = qrCouponDao.findByIdNotDeleted(id);
+        QrCouponsEntity qrCouponsEntity = qrCouponDao.findById(id).get();
         if (qrCouponsEntity != null) {
-            qrCouponsEntity.setDeletedAt(DateTimeUtil.getNow());
-            qrCouponDao.save(qrCouponsEntity);
+
+//            qrCouponsEntity.setDeletedAt(DateTimeUtil.getNow());
+//            qrCouponDao.save(qrCouponsEntity);
+            qrCouponDao.delete(qrCouponsEntity);
+
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();
             logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -376,7 +379,7 @@ public class QrCouponServiceImpl implements QrCouponService {
                     " \n Địa chỉ IP đăng nhập : " + ip +
                     " \n Hostname : " + hostname +
                     " \n Xóa Phiếu giảm giá");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);

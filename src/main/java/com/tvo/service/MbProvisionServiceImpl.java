@@ -119,9 +119,10 @@ public class MbProvisionServiceImpl implements MbProvisionService {
     public Boolean delete(Long id) {
         Optional<MbProvision> opt = mbProvisionDao.findById(id);
         if (opt.isPresent()) {
-            MbProvision mbProvision = opt.get();
-            mbProvision.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            mbProvisionDao.save(mbProvision);
+//            MbProvision mbProvision = opt.get();
+//            mbProvision.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//            mbProvisionDao.save(mbProvision);
+            mbProvisionDao.deleteById(id);
             return true;
         }
         return false;

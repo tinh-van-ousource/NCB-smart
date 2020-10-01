@@ -19,12 +19,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class City implements Serializable {
-
-	/**
-	 * 
-	 */
-
-	
 	@Id
 	@Column(name = "PRO_ID")
 	private String proId;

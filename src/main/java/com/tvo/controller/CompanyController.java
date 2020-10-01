@@ -134,7 +134,7 @@ public class CompanyController {
         		" \n Địa chỉ IP đăng nhập : " + ip+
         		" \n Hostname : " + hostname +
         		" \n Xóa Chi nhánh");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, resDto);
     }
 
 }

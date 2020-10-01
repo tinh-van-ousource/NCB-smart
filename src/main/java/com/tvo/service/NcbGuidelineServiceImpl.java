@@ -126,9 +126,10 @@ public class NcbGuidelineServiceImpl implements NcbGuidelineService {
 		if (id != null) {
 			Optional<NcbGuideline> opt = ncbGuidelineDao.findById(id);
 			if (opt.isPresent()) {
-				ncbGuideline = opt.get();
-				ncbGuideline.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-				ncbGuidelineDao.save(ncbGuideline);
+//				ncbGuideline = opt.get();
+//				ncbGuideline.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//				ncbGuidelineDao.save(ncbGuideline);
+				ncbGuidelineDao.deleteById(id);
 				return true;
 			}
 		}

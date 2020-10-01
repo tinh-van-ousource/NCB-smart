@@ -104,12 +104,13 @@ public class PrdPromotionServiceImpl implements PrdPromotionService {
     public Boolean delete(Long prdPromotionId) {
         Optional<PrdPromotionMbApp> opt = prdPromotionMbAppDAO.findById(prdPromotionId);
         if (opt.isPresent()) {
-            PrdPromotionMbApp prdPromotionMbApp = opt.get();
-            prdPromotionMbApp.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-            prdPromotionMbAppDAO.save(prdPromotionMbApp);
+//            PrdPromotionMbApp prdPromotionMbApp = opt.get();
+//            prdPromotionMbApp.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//            prdPromotionMbAppDAO.save(prdPromotionMbApp);
+            prdPromotionMbAppDAO.delete(opt.get());
             return true;
         }
-        return null;
+        return false;
     }
 
     private Object[] createPrdPromotionMbAppRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchPrdPromotion resource) {

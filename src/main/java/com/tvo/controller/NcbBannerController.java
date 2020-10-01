@@ -139,7 +139,7 @@ public class NcbBannerController {
     public ResponeData<Boolean> delete(@RequestParam Long id) {
         boolean deleteFlag = ncbBannerService.delete(id);
         if (deleteFlag) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         try {
 			ip = InetAddress.getLocalHost();

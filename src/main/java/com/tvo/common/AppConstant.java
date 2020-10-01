@@ -52,8 +52,12 @@ public class AppConstant {
     
     public static final String CITY_CREATE_DUPLICATE_ERROR_CODE = "909";
     public static final String CITY_CREATE_DUPLICATE_ERROR_MESSAGE = "Value is duplicate";
+
     // Custom User exception
     public static final String USER_NOT_EXITS_CODE = "1001";
+
+    // Custom Deleted Successfully
+    public static final String DELETED_SUCCESS_MESSAGE = "Deleted";
 
     public static final String SECRET =	 "Unknown";
     public static final String HEADER_STRING = "Authorization";
@@ -63,7 +67,7 @@ public class AppConstant {
 
     public static final String RESOURCE_IMG = "C:\\uploads\\";
     public static final String RESOURCE_BANNER_IMG = "C:\\uploads\\banner\\";
-    
+
     public static final String fordelWorkingFTP = "CMSBanner";
     public static final String passFTP ="123@123aA";
     public static final String userFTP = "cmsuat";

@@ -50,7 +50,7 @@ public class FileController {
     public ResponeData<Boolean> deleteFile(String fileName) {
         boolean result = fileService.deleteImage(AppConstant.RESOURCE_IMG, fileName);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }
@@ -75,7 +75,7 @@ public class FileController {
     public ResponeData<Boolean> deleteBannerFile(String fileName) {
         boolean result = fileService.deleteImage(AppConstant.RESOURCE_BANNER_IMG, fileName);
         if (result) {	
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
     }

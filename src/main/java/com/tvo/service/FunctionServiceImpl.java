@@ -120,10 +120,11 @@ public class FunctionServiceImpl implements FunctionService {
 	public FunctionDto delete(Long functionId) {
 		Optional<Function> opt = functionDao.findById(functionId);
 		if (opt.isPresent()) {
-			Function function = opt.get();
-			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-			Function save = functionDao.save(function);
-			return ModelMapperUtils.map(save, FunctionDto.class);
+//			Function function = opt.get();
+//			function.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//			Function save = functionDao.save(function);
+			functionDao.deleteById(functionId);
+			return ModelMapperUtils.map(new Function(), FunctionDto.class);
 		}
 		return null;
 	}

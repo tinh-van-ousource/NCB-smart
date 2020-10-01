@@ -136,7 +136,7 @@ public class FunctionController {
         		" \n Hostname : " + hostname +
         		" \n Tìm kiếm Chi nhánh");
         logger.info("Xóa Gói sản phẩm");
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, functionDto);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, null);
 	}
 
 	@GetMapping(value = "/detail")
@@ -228,7 +228,7 @@ public class FunctionController {
         		" \n Hostname : " + hostname +
         		" \n Tìm kiếm Chi nhánh");
         logger.info("Xóa Cấu hình phí gói sản phẩm");
-		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+		return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
 	}
 
 	@GetMapping(value = "/fee/detail")

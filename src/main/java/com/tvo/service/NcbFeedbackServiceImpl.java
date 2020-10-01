@@ -141,9 +141,10 @@ public class NcbFeedbackServiceImpl implements NcbFeedbackService {
         if (id != null) {
             Optional<NcbFeedback> opt = ncbFeedbackDao.findById(id);
             if (opt.isPresent()) {
-                ncbFeedback = opt.get();
-                ncbFeedback.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
-                ncbFeedbackDao.save(ncbFeedback);
+//                ncbFeedback = opt.get();
+//                ncbFeedback.setStatus(StatusActivate.STATUS_DEACTIVATED.getStatus());
+//                ncbFeedbackDao.save(ncbFeedback);
+                ncbFeedbackDao.deleteById(id);
                 return true;
             }
         }

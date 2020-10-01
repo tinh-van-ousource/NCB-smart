@@ -64,7 +64,7 @@ public class ParConfigController {
     public ResponeData<Boolean> deleteCreditCardNumber(@NotBlank @RequestParam("value") String value) {
         Boolean result = parConfigService.deleteCreditCardNumber(value);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
@@ -96,7 +96,7 @@ public class ParConfigController {
     public ResponeData<Boolean> deleteReissueCardReason(@NotBlank @RequestParam("code") String code) {
         Boolean result = parConfigService.deleteReissueCardReason(code);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
@@ -128,7 +128,7 @@ public class ParConfigController {
     public ResponeData<Boolean> deleteOtherParam(@NotBlank @RequestParam("param") String param, @NotBlank @RequestParam("code") String code) {
         Boolean result = parConfigService.deleteOtherParam(param, code);
         if (result) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }

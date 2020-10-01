@@ -120,11 +120,31 @@ public class BankTransferController {
 
     @DeleteMapping(value = "/deActive")
     public ResponeData<BankTransferDto> deActive(@RequestParam String bankCode) {
-        BankTransferDto dto = bankService.deActive(bankCode);
-        if (dto == null) {
+//        BankTransferDto dto = bankService.deActive(bankCode);
+//        if (dto == null) {
+//            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
+//        }
+//        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
+        Boolean resDto = bankService.delete(bankCode);
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        hostname = ip.getHostName();
+        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+
+                "\n Account :"+Flag.userFlag.getUserName().toString()+
+                "\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
+                " \n Địa chỉ IP đăng nhập : " + ip+
+                " \n Hostname : " + hostname +
+                " \n Thao tác Xóa ngân hàng chuyển khoản");
+
+        if(resDto==true){
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, null);
+        }else {
             return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, null);
         }
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, dto);
     }
     @DeleteMapping(value = "/delete")
     public ResponeData<Boolean> delete(@RequestParam String bankCode) {
@@ -143,7 +163,7 @@ public class BankTransferController {
         		" \n Hostname : " + hostname +
         		" \n Thao tác Xóa ngân hàng chuyển khoản");
         
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, resDto);
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, resDto);
     }
 
 }

@@ -120,9 +120,7 @@ public class NcbFeedbackController {
     @DeleteMapping(value = "delete")
     public ResponeData<Boolean> delete(@RequestParam Long id) {
         boolean deleteFlag = ncbFeedbackService.delete(id);
-        if (deleteFlag == true) {
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
-        }
+
         try {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
@@ -136,6 +134,10 @@ public class NcbFeedbackController {
         		" \n Địa chỉ IP đăng nhập : " + ip+
         		" \n Hostname : " + hostname +
         		" \n Xóa Góp ý/Lỗi");
+
+        if (deleteFlag == true) {
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
+        }
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
     }
 }

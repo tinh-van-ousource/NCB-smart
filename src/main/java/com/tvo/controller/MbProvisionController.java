@@ -134,7 +134,7 @@ public class MbProvisionController {
             		" \n Địa chỉ IP đăng nhập : " + ip+
             		" \n Hostname : " + hostname +
             		" \n Xóa Điều khoản sử dụng");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         
         return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);

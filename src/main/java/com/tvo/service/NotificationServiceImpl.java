@@ -302,10 +302,11 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponeData<Boolean> delete(Long id) throws Exception {
-        NotificationsEntity notificationsEntity = notificationDAO.findByIdNotDeleted(id);
+        NotificationsEntity notificationsEntity = notificationDAO.findById(id).get();
         if (notificationsEntity != null) {
-            notificationsEntity.setDeletedAt(DateTimeUtil.getNow().toString());
-            notificationDAO.save(notificationsEntity);
+//            notificationsEntity.setDeletedAt(DateTimeUtil.getNow().toString());
+//            notificationDAO.save(notificationsEntity);
+            notificationDAO.delete(notificationsEntity);
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();
             logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
@@ -314,7 +315,7 @@ public class NotificationServiceImpl implements NotificationService {
                     " \n Địa chỉ IP đăng nhập : " + ip +
                     " \n Hostname : " + hostname +
                     " \n Xóa Dịch vụ Notifications");
-            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, true);
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);
