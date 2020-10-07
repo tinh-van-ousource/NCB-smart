@@ -96,10 +96,7 @@ public class QrServiceImpl implements QrService {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("title")), "%" + resource.getTitle().toUpperCase() + "%")));
         }
         predicates.add(cb.and(cb.isNull(rootPersist.<LocalDateTime>get("deletedAt"))));
-        if (resource.getStatus() != null
-                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
-            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
-        }
+        predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), "1")));
 
         Object[] results = new Object[2];
         results[0] = rootPersist;

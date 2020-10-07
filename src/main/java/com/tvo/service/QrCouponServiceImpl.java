@@ -240,7 +240,7 @@ public class QrCouponServiceImpl implements QrCouponService {
 
         List<CouponObjectUserEntity> ObjectUserEntityList = couponObjectUserDao.findByQrCouponId(save.getId());
         List<UserCoupon> userCouponList = ModelMapperUtils.mapAll(ObjectUserEntityList, UserCoupon.class);
-        if (updateQrCouponRequest.getObjectUserType().equals("0") && !updateQrCouponRequest.getUserCoupons().isEmpty()) {
+        if (updateQrCouponRequest.getObjectUserType().equals("0") && (updateQrCouponRequest.getUserCoupons() != null && !updateQrCouponRequest.getUserCoupons().isEmpty()) )  {
             List<CouponObjectUserEntity> couponObjectUserEntityList = setUpdate(save.getId(), updateQrCouponRequest, userCouponList);
             couponObjectUserDao.saveAll(couponObjectUserEntityList);
         }
