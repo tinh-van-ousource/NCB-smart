@@ -24,4 +24,9 @@ public class ReferFriendRegistrationDto {
     private Date createdAt;
 
     private String createdBy;
+
+    private String promotionCode;
+
+    private String partnerCode;
+
 }
