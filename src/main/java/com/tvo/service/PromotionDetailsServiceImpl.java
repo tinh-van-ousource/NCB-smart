@@ -96,6 +96,10 @@ public class PromotionDetailsServiceImpl implements PromotionDetailsService {
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getPromotionCode().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("promotionCode")), "%" + resource.getPromotionCode().toUpperCase() + "%")));
         }
+        if (resource.getReferPartnerCode() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getReferPartnerCode().trim())) {
+            predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("referPartnerCode")), "%" + resource.getReferPartnerCode().toUpperCase() + "%")));
+        }
         if (resource.getFromDate() != null) {
             predicates.add(cb.and(cb.greaterThanOrEqualTo(rootPersist.get("createdAt"), resource.getFromDate())));
         }
