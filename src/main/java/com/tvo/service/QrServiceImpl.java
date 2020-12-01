@@ -90,14 +90,15 @@ public class QrServiceImpl implements QrService {
     private Object[] createQrServiceRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchQrServiceDto resource) {
         final Root<QrServiceEntity> rootPersist = query.from(QrServiceEntity.class);
         final List<Predicate> predicates = new ArrayList<>();
-
+        predicates.add(cb.and(cb.isNull(rootPersist.<LocalDateTime>get("deletedAt"))));
         if (resource.getTitle() != null
                 && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getTitle().trim())) {
             predicates.add(cb.and(cb.like(cb.upper(rootPersist.get("title")), "%" + resource.getTitle().toUpperCase() + "%")));
         }
-        predicates.add(cb.and(cb.isNull(rootPersist.<LocalDateTime>get("deletedAt"))));
-        predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), "1")));
-
+        if (resource.getStatus() != null
+                && !org.apache.commons.lang3.StringUtils.isEmpty(resource.getStatus().trim())) {
+            predicates.add(cb.and(cb.equal(rootPersist.<String>get("status"), resource.getStatus())));
+        }
         Object[] results = new Object[2];
         results[0] = rootPersist;
         results[1] = predicates.toArray(new Predicate[predicates.size()]);
