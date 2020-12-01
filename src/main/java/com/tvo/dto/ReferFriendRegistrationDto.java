@@ -17,6 +17,8 @@ public class ReferFriendRegistrationDto {
 
     private String rootUserCif;
 
+    private String rootUserName;
+
     private String targetUserCif;
 
     private String status;

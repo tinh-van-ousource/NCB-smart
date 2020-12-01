@@ -4,6 +4,7 @@ import com.tvo.common.AppConstant;
 import com.tvo.common.DateTimeUtil;
 import com.tvo.common.ModelMapperUtils;
 import com.tvo.config.Flag;
+import com.tvo.dao.DatCfmastDao;
 import com.tvo.dao.ReferFriendConfigurationDao;
 import com.tvo.dto.ReferFriendConfigurationDto;
 import com.tvo.dto.ReferFriendRegistrationDto;
@@ -48,6 +49,9 @@ public class ReferFriendServiceImpl implements ReferFriendService {
 
     @Autowired
     private ReferFriendConfigurationDao referFriendConfigurationDao;
+
+    @Autowired
+    private DatCfmastDao datCfmastDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -226,6 +230,12 @@ public class ReferFriendServiceImpl implements ReferFriendService {
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<ReferFriendRegistrationEntity> objects = typedQuery.getResultList();
         List<ReferFriendRegistrationDto> friendRegistrationDtos = ModelMapperUtils.mapAll(objects, ReferFriendRegistrationDto.class);
+        List<ReferFriendRegistrationDto> friendRegistrationDtoNews = new ArrayList<>();
+        for (ReferFriendRegistrationDto registrationDto : friendRegistrationDtos) {
+            String userRootName = datCfmastDao.findUserNameByCifNo(registrationDto.getRootUserCif());
+            registrationDto.setRootUserName(userRootName);
+            friendRegistrationDtoNews.add(registrationDto);
+        }
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
@@ -240,7 +250,7 @@ public class ReferFriendServiceImpl implements ReferFriendService {
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
                 " \n Danh sách bạn bè.");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(friendRegistrationDtos, pageable, total));
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(friendRegistrationDtoNews, pageable, total));
     }
 
     private Object[] createReferFriendRegistrationRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query,
