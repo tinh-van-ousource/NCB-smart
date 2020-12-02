@@ -242,15 +242,16 @@ public class QrCouponServiceImpl implements QrCouponService {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
-        setUpdate(qrCouponsEntity, updateQrCouponRequest);
-        QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(updateQrCouponRequest.getCode());
-        if (qrCouponsByCode != null) {
-            logger.warn(AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " " + qrCouponsByCode.getCode());
-            return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE,
-                    AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " Code : " + qrCouponsByCode.getCode(), null);
+        if(!qrCouponsEntity.getCode().equals(updateQrCouponRequest.getCode())){
+            QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(updateQrCouponRequest.getCode());
+            if (qrCouponsByCode != null) {
+                logger.warn(AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " " + qrCouponsByCode.getCode());
+                return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE,
+                        AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " Code : " + qrCouponsByCode.getCode(), null);
+            }
         }
+        setUpdate(qrCouponsEntity, updateQrCouponRequest);
         QrCouponsEntity save = qrCouponDao.save(qrCouponsEntity);
-
         List<CouponObjectUserEntity> ObjectUserEntityList = couponObjectUserDao.findByQrCouponId(save.getId());
         List<UserCoupon> userCouponList = ModelMapperUtils.mapAll(ObjectUserEntityList, UserCoupon.class);
         if (updateQrCouponRequest.getObjectUserType().equals("0") && (updateQrCouponRequest.getUserCoupons() != null && !updateQrCouponRequest.getUserCoupons().isEmpty()) )  {
