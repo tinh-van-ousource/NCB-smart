@@ -15,6 +15,4 @@ public interface DatCfmastDao extends JpaRepository<DatCfmast, Long> {
     @Query("SELECT d.name1 FROM DatCfmast d WHERE d.cifno = ?1 ")
     String findUserNameByCifNo(String cifNo);
 
-    @Query("SELECT d.cifno FROM DatCfmast d")
-    List<String> findAllUserName();
 }
