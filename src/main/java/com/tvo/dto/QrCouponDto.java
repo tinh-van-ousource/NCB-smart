@@ -1,8 +1,10 @@
 package com.tvo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvo.request.UserCoupon;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +27,11 @@ public class QrCouponDto {
 
     private String serviceId;
 
-    private String startDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date startDate;
 
-    private String endDate;
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date endDate;
 
     private Float amount;
 

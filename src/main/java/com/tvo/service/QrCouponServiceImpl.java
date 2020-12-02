@@ -35,8 +35,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +84,17 @@ public class QrCouponServiceImpl implements QrCouponService {
         typedQuery.setMaxResults(pageable.getPageSize());
         final List<QrCouponsEntity> objects = typedQuery.getResultList();
         List<QrCouponDto> qrCouponDtos = ModelMapperUtils.mapAll(objects, QrCouponDto.class);
+        List<QrCouponDto> qrCouponDtoNews = new ArrayList<>();
+        if(qrCouponDtos != null && qrCouponDtos.size() > 0){
+            for(QrCouponDto couponDto : qrCouponDtos){
+                if(couponDto.getEndDate().before(new Date()) ||
+                        couponDto.getStartDate().after(new Date())
+                ){
+                    couponDto.setStatus("0");
+                }
+                qrCouponDtoNews.add(couponDto);
+            }
+        }
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
@@ -96,7 +109,7 @@ public class QrCouponServiceImpl implements QrCouponService {
                 " \n Địa chỉ IP đăng nhập : " + ip +
                 " \n Hostname : " + hostname +
                 " \n Tìm kiếm Dịch vụ QR");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(qrCouponDtos, pageable, total));
+        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, new PageImpl<>(qrCouponDtoNews, pageable, total));
     }
 
     private Object[] createQrCouponRootPersist(CriteriaBuilder cb, CriteriaQuery<?> query, SearchQrCouponDto resource) {
@@ -190,8 +203,8 @@ public class QrCouponServiceImpl implements QrCouponService {
         qrCouponsEntity.setAmountPercentage(StringUtils.isEmpty(createQrCouponRequest.getAmountPercentage().toString()) ? null : createQrCouponRequest.getAmountPercentage());
         qrCouponsEntity.setNumberPerCustomer(StringUtils.isEmpty(createQrCouponRequest.getNumberPerCustomer().toString()) ? null : createQrCouponRequest.getNumberPerCustomer());
         qrCouponsEntity.setTotalNumberCoupon(StringUtils.isEmpty(createQrCouponRequest.getTotalNumberCoupon().toString()) ? null : createQrCouponRequest.getTotalNumberCoupon());
-        qrCouponsEntity.setStatus(StringUtils.isEmpty(createQrCouponRequest.getStatus()) ? null : createQrCouponRequest.getStatus());
-        qrCouponsEntity.setApproveStatus(StringUtils.isEmpty(createQrCouponRequest.getApproveStatus()) ? StatusActivate.STATUS_ACTIVATED.getStatus() : createQrCouponRequest.getApproveStatus());
+        qrCouponsEntity.setStatus(StringUtils.isEmpty(createQrCouponRequest.getStatus()) ? "0" : createQrCouponRequest.getStatus());
+        qrCouponsEntity.setApproveStatus(StringUtils.isEmpty(createQrCouponRequest.getApproveStatus()) ? "0" : createQrCouponRequest.getApproveStatus());
         qrCouponsEntity.setCreatedAt(DateTimeUtil.getNow());
         qrCouponsEntity.setCreatedBy(Flag.userFlag.getUserName());
         return qrCouponsEntity;
@@ -299,11 +312,14 @@ public class QrCouponServiceImpl implements QrCouponService {
         if (updateQrCouponRequest.getTotalNumberCoupon() != null) {
             qrCouponsEntity.setTotalNumberCoupon(updateQrCouponRequest.getTotalNumberCoupon());
         }
-        if (!StringUtils.isEmpty(updateQrCouponRequest.getStatus())) {
-            qrCouponsEntity.setStatus(updateQrCouponRequest.getStatus());
-        }
         if (!StringUtils.isEmpty(updateQrCouponRequest.getApproveStatus())) {
             qrCouponsEntity.setApproveStatus(updateQrCouponRequest.getApproveStatus());
+            if(updateQrCouponRequest.getApproveStatus().equals("1") &&
+                    !qrCouponsEntity.getEndDate().before(new Date()) &&
+                    !qrCouponsEntity.getStartDate().after(new Date())
+            ){
+                qrCouponsEntity.setStatus("1");
+            }
         }
         qrCouponsEntity.setUpdatedAt(DateTimeUtil.getNow());
         qrCouponsEntity.setUpdatedBy(Flag.userFlag.getUserName());
