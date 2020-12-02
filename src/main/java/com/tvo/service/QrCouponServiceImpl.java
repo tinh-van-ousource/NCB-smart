@@ -7,6 +7,7 @@ import com.tvo.common.UserStoreException;
 import com.tvo.config.Flag;
 import com.tvo.controllerDto.SearchQrCouponDto;
 import com.tvo.dao.CouponObjectUserDao;
+import com.tvo.dao.DatCfmastDao;
 import com.tvo.dao.DatUserProfileDao;
 import com.tvo.dao.QrCouponDao;
 import com.tvo.dto.QrCouponDto;
@@ -63,6 +64,9 @@ public class QrCouponServiceImpl implements QrCouponService {
 
     @Autowired
     private DatUserProfileDao datUserProfileDao;
+
+    @Autowired
+    private DatCfmastDao datCfmastDao;
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -211,13 +215,13 @@ public class QrCouponServiceImpl implements QrCouponService {
     }
 
     private List<CouponObjectUserEntity> setCreate(Long qrCouponId, CreateQrCouponRequest createQrCouponRequest) throws Exception {
-        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
+        List<String> userNameList = datCfmastDao.findAllUserName().stream().map(String::toUpperCase).collect(Collectors.toList());
         List<CouponObjectUserEntity> couponObjectUserEntities = new ArrayList<>();
         List<UserCoupon> userCoupons = createQrCouponRequest.getUserCoupons();
         if (userCoupons != null && !userCoupons.isEmpty()) {
             CouponObjectUserEntity couponObjectUserEntity;
             for (UserCoupon userCoupon : userCoupons) {
-                if (datUserProfileList.contains(userCoupon.getUserName().toUpperCase())) {
+                if (userNameList.contains(userCoupon.getUserCif().toUpperCase())) {
                     couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
                     couponObjectUserEntity.setQrCouponId(qrCouponId);
                     couponObjectUserEntity.setUserName(userCoupon.getUserName());
@@ -327,14 +331,14 @@ public class QrCouponServiceImpl implements QrCouponService {
     }
 
     private List<CouponObjectUserEntity> setUpdate(Long QrCouponId, UpdateQrCouponRequest updateQrCouponRequest, List<UserCoupon> userCouponList) throws Exception {
-        List<String> datUserProfileList = datUserProfileDao.findAllUsrid().stream().map(String::toUpperCase).collect(Collectors.toList());
+        List<String> userNameList = datCfmastDao.findAllUserName().stream().map(String::toUpperCase).collect(Collectors.toList());
         List<CouponObjectUserEntity> couponObjectUserEntityList = new ArrayList<>();
         List<UserCoupon> userCouponsListRequest = updateQrCouponRequest.getUserCoupons();
 
         if (userCouponsListRequest != null && !userCouponsListRequest.isEmpty()) {
             CouponObjectUserEntity couponObjectUserEntity;
             for (UserCoupon userCoupon : userCouponsListRequest) {
-                if (datUserProfileList.contains(userCoupon.getUserName().toUpperCase())) {
+                if (userNameList.contains(userCoupon.getUserCif().toUpperCase())) {
                     if (!userCouponList.contains(userCoupon)) {
                         couponObjectUserEntity = ModelMapperUtils.map(userCoupon, CouponObjectUserEntity.class);
                         couponObjectUserEntity.setQrCouponId(QrCouponId);
@@ -352,7 +356,6 @@ public class QrCouponServiceImpl implements QrCouponService {
         }
         return null;
     }
-
 
     @Override
     public ResponeData<QrCouponDto> detail(Long id) throws Exception {
