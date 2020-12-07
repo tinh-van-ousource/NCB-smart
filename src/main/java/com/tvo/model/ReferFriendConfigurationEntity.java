@@ -46,4 +46,7 @@ public class ReferFriendConfigurationEntity {
     @Column(name = "CREATED_AT")
     private Date createdAt;
 
+    @Column(name = "STATUS")
+    private String status;
+
 }

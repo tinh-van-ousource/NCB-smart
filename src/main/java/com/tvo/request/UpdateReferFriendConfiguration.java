@@ -14,4 +14,5 @@ public class UpdateReferFriendConfiguration {
     private String urlPromotion;
     private String urlBanner;
     private String provider;
+    private String status;
 }

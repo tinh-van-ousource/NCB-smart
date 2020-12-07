@@ -29,4 +29,6 @@ public class ReferFriendConfigurationDto {
 
     private Date createdAt;
 
+    private String status;
+
 }
