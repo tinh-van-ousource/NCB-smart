@@ -129,7 +129,7 @@ public class ReferFriendServiceImpl implements ReferFriendService {
         entity.setUrlBanner(StringUtils.isEmpty(friendsConfiguration.getUrlBanner()) ? null : friendsConfiguration.getUrlBanner());
         entity.setProvider(StringUtils.isEmpty(friendsConfiguration.getProvider()) ? null : friendsConfiguration.getProvider());
         entity.setCreatedAt(DateTimeUtil.getNow());
-        entity.setStatus("0");
+        entity.setStatus("1");
         return entity;
     }
 
