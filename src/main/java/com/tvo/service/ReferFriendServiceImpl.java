@@ -238,7 +238,11 @@ public class ReferFriendServiceImpl implements ReferFriendService {
         for (ReferFriendRegistrationDto registrationDto : friendRegistrationDtos) {
             String userRootName = datCfmastDao.findUserNameByCifNo(registrationDto.getRootUserCif());
             registrationDto.setRootUserName(userRootName);
-            friendRegistrationDtoNews.add(registrationDto);
+            Long referFriendConfigId = registrationDto.getReferFriendConfigId();
+            ReferFriendConfigurationEntity configurationEntity = referFriendConfigurationDao.findByIdNotDeleted(referFriendConfigId);
+            if(configurationEntity != null){
+                friendRegistrationDtoNews.add(registrationDto);
+            }
         }
 
         final CriteriaBuilder cbTotal = this.entityManagerFactory.getCriteriaBuilder();
