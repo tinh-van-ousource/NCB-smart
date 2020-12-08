@@ -39,9 +39,9 @@ public class ReferFriendRegistrationEntity {
     @Column(name = "CREATED_BY")
     private String createdBy;
 
-    @Column(name = "PROMOTION_CODE")
+    @Column(name = "PROMOTIONCODE")
     private String promotionCode;
 
-    @Column(name = "PARTNER_CODE")
+    @Column(name = "PARTNERCODE")
     private String partnerCode;
 }
