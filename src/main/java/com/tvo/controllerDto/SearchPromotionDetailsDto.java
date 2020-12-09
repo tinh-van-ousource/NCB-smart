@@ -31,6 +31,6 @@ public class SearchPromotionDetailsDto {
     }
 
     public void setToDate(Date toDate) {
-        this.toDate = DateTimeUtil.createStartTime(toDate);
+        this.toDate = DateTimeUtil.createEndTime(toDate);
     }
 }

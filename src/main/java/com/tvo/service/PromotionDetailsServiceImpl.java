@@ -103,7 +103,7 @@ public class PromotionDetailsServiceImpl implements PromotionDetailsService {
         if (resource.getFromDate() != null) {
             predicates.add(cb.and(cb.greaterThanOrEqualTo(rootPersist.get("createdAt"), resource.getFromDate())));
         }
-        if (resource.getFromDate() != null) {
+        if (resource.getToDate() != null) {
             predicates.add(cb.and(cb.lessThanOrEqualTo(rootPersist.get("createdAt"), resource.getToDate())));
         }
         predicates.add(cb.and(cb.isNull(rootPersist.<LocalDateTime>get("deletedAt"))));
