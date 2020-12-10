@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface QrMerchantDao extends JpaRepository<QrMerchantEntity, Long> {
-    @Query("SELECT q FROM QrMerchantEntity q WHERE q.name = ?1 OR q.address = ?2")
-    QrMerchantEntity findByNameOrAddress(String name, String address);
+    @Query("SELECT q FROM QrMerchantEntity q WHERE q.name = ?1")
+    QrMerchantEntity findByName(String name);
 }
