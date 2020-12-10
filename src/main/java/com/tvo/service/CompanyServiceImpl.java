@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.tvo.model.CompanyEntityPK;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,24 +42,34 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyResDto create(CompanyCreateReqDto companyCreateReqDto) {
         CompanyEntity companyEntity = companyRepo
-        		.findByCompCodeAndMcnAndMp(companyCreateReqDto.getKey().getCompCode(), 
-        				companyCreateReqDto.getKey().getMcn(), companyCreateReqDto.getKey().getMp());
+        		.findByCompCodeAndMcnAndMp(companyCreateReqDto.getCompCode(),
+        				companyCreateReqDto.getMcn(), companyCreateReqDto.getMp());
         if (companyEntity != null) {
             return null;
         }
+        CompanyEntityPK entityPK = new CompanyEntityPK();
         companyEntity = ModelMapperUtils.map(companyCreateReqDto, CompanyEntity.class);
+        entityPK.setCompCode(companyCreateReqDto.getCompCode());
+        entityPK.setMcn(companyCreateReqDto.getMcn());
+        entityPK.setMp(companyCreateReqDto.getMp());
+        companyEntity.setKey(entityPK);
         return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
     }
 
     @Override
     public CompanyResDto update(CompanyUpdateReqDto companyUpdateReqDto) {
     	CompanyEntity companyEntity = companyRepo
-    			.findByCompCodeAndMcnAndMp(companyUpdateReqDto.getKey().getCompCode(), 
-    					companyUpdateReqDto.getKey().getMcn(), companyUpdateReqDto.getKey().getMp());
+    			.findByCompCodeAndMcnAndMp(companyUpdateReqDto.getCompCode(),
+    					companyUpdateReqDto.getMcn(), companyUpdateReqDto.getMp());
         if (companyEntity == null) {
             return null;
         }
+        CompanyEntityPK entityPK = new CompanyEntityPK();
         companyEntity = ModelMapperUtils.map(companyUpdateReqDto, CompanyEntity.class);
+        entityPK.setCompCode(companyUpdateReqDto.getCompCode());
+        entityPK.setMcn(companyUpdateReqDto.getMcn());
+        entityPK.setMp(companyUpdateReqDto.getMp());
+        companyEntity.setKey(entityPK);
         return ModelMapperUtils.map(companyRepo.save(companyEntity), CompanyResDto.class);
     }
 
