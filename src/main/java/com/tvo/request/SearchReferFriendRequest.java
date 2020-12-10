@@ -1,5 +1,7 @@
 package com.tvo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tvo.common.DateTimeUtil;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -19,7 +21,17 @@ public class SearchReferFriendRequest {
 
     private String status;
 
+    @JsonFormat(pattern = "yyyy/M/d")
     private Date start;
 
+    @JsonFormat(pattern = "yyyy/M/d")
     private Date end;
+
+    public void setStart(Date startDate) {
+        this.start = DateTimeUtil.createStartTime(startDate);
+    }
+
+    public void setEnd(Date endDate) {
+        this.end = DateTimeUtil.createEndTime(endDate);
+    }
 }
