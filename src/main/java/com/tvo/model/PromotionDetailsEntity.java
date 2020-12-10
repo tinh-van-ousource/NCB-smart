@@ -26,7 +26,7 @@ public class PromotionDetailsEntity {
     @Column(name = "PROMOTION_CODE")
     private String promotionCode;
 
-    @Column(name = "REFER_PARTNER_CODE")
+    @Column(name = "REFER_PARTNERCODE")
     private String referPartnerCode;
 
     @Column(name = "STATUS")

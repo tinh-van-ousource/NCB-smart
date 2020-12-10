@@ -27,9 +27,30 @@ public class QrMerchantEntity implements Serializable {
     @Column(name = "ADDRESS")
     private String address;
 
+    @Column(name = "PLACE")
+    private String place;
+
+    @Column(name = "STORE_CODE")
+    private String storeCode;
+
+    @Column(name = "STATUS")
+    private String status;
+
     @Column(name = "CREATED_AT")
     private Date createdAt;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
+
+    @Column(name = "UPDATED_AT")
+    private Date updatedAt;
+
+    @Column(name = "UPDATED_BY")
+    private String updatedBy;
+
+    @Column(name = "DELETED_AT")
+    private Date deletedAt;
+
+    @Column(name = "DELETED_BY")
+    private String deletedBy;
 }
