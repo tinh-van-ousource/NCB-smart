@@ -159,7 +159,7 @@ public class QrCouponServiceImpl implements QrCouponService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponeData<QrCouponDto> create(CreateQrCouponRequest qrCouponRequest) throws Exception {
-        QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(qrCouponRequest.getCode());
+        QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(qrCouponRequest.getCode().toUpperCase());
         if (qrCouponsByCode != null) {
             logger.warn(AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " " + qrCouponsByCode.getCode());
             return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE,
@@ -240,7 +240,7 @@ public class QrCouponServiceImpl implements QrCouponService {
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
         if (!qrCouponsEntity.getCode().equals(updateQrCouponRequest.getCode())) {
-            QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(updateQrCouponRequest.getCode());
+            QrCouponsEntity qrCouponsByCode = qrCouponDao.findByCode(updateQrCouponRequest.getCode().toUpperCase());
             if (qrCouponsByCode != null) {
                 logger.warn(AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE + " " + qrCouponsByCode.getCode());
                 return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE,

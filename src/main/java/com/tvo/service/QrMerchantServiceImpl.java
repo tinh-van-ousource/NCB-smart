@@ -109,8 +109,8 @@ public class QrMerchantServiceImpl implements QrMerchantService {
         QrMerchantEntity qrMerchantEntity;
         List<QrMerchantEntity> qrMerchantEntities = new ArrayList<>();
         List<QrMerchantRequest> qrMerchantRequests = qrMerchantCreateRequest.getQrMerchants();
-        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantCreateRequest.getName());
-        if (checkNameAndAddress != null) {
+        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantCreateRequest.getName().toUpperCase());
+        if (checkNameAndAddress != null ) {
             logger.warn("Name bị trùng \n" + "name: " + qrMerchantCreateRequest.getName());
             return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
         }
@@ -121,8 +121,8 @@ public class QrMerchantServiceImpl implements QrMerchantService {
             qrMerchantDao.save(qrMerchantEntity);
         } else {
             for (QrMerchantRequest qrMerchantRequest : qrMerchantRequests) {
-                QrMerchantEntity checkNameAndAddressExist = qrMerchantDao.findByName(qrMerchantRequest.getName());
-                if (checkNameAndAddressExist != null) {
+                QrMerchantEntity checkNameAndAddressExist = qrMerchantDao.findByName(qrMerchantRequest.getName().toUpperCase());
+                if (checkNameAndAddressExist != null ) {
                     logger.warn("Name bị trùng \n" + "name: " + qrMerchantRequest.getName());
                     return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
                 }
@@ -159,7 +159,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
             logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
-        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantRequest.getName());
+        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantRequest.getName().toUpperCase());
         if (checkNameAndAddress != null && !qrMerchantRequest.getName().equals(qrMerchantEntity.getName())
         ) {
             logger.warn("Name bị trùng \n" + "name: " + qrMerchantRequest.getName());

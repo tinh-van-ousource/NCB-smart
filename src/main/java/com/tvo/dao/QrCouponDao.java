@@ -14,7 +14,7 @@ public interface QrCouponDao extends JpaRepository<QrCouponsEntity, Long> {
     @Query("SELECT qc FROM QrCouponsEntity qc WHERE qc.id = ?1 AND qc.deletedAt IS NULL")
     QrCouponsEntity findByIdNotDeleted(Long id);
 
-    @Query("SELECT qc FROM QrCouponsEntity qc WHERE qc.code = ?1")
+    @Query("SELECT qc FROM QrCouponsEntity qc WHERE UPPER(qc.code) = ?1")
     QrCouponsEntity findByCode(String id);
 
 }
