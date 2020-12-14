@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface DatCfmastDao extends JpaRepository<DatCfmast, Long> {
 
-    @Query("SELECT d.name1 FROM DatCfmast d WHERE d.cifno = ?1 ")
+    @Query("SELECT MAX(d.name1) FROM DatCfmast d WHERE d.cifno = ?1")
     String findUserNameByCifNo(String cifNo);
 
 }
