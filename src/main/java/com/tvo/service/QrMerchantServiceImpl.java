@@ -109,17 +109,7 @@ public class QrMerchantServiceImpl implements QrMerchantService {
         QrMerchantEntity qrMerchantEntity;
         List<QrMerchantEntity> qrMerchantEntities = new ArrayList<>();
         List<QrMerchantRequest> qrMerchantRequests = qrMerchantCreateRequest.getQrMerchants();
-        QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantCreateRequest.getName().toUpperCase());
-        if (checkNameAndAddress != null ) {
-            logger.warn("Name bị trùng \n" + "name: " + qrMerchantCreateRequest.getName());
-            return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
-        }
-        if (qrMerchantCreateRequest != null && (qrMerchantCreateRequest.getQrMerchants() == null || qrMerchantCreateRequest.getQrMerchants().isEmpty())) {
-            qrMerchantEntity = setCreate(qrMerchantCreateRequest);
-            qrMerchantEntity.setCreatedAt(DateTimeUtil.getNow());
-            qrMerchantEntity.setCreatedBy(Flag.userFlag.getUserName());
-            qrMerchantDao.save(qrMerchantEntity);
-        } else {
+        if (qrMerchantCreateRequest != null && !(qrMerchantCreateRequest.getQrMerchants() == null || qrMerchantCreateRequest.getQrMerchants().isEmpty())) {
             for (QrMerchantRequest qrMerchantRequest : qrMerchantRequests) {
                 QrMerchantEntity checkNameAndAddressExist = qrMerchantDao.findByName(qrMerchantRequest.getName().toUpperCase());
                 if (checkNameAndAddressExist != null ) {
@@ -132,6 +122,16 @@ public class QrMerchantServiceImpl implements QrMerchantService {
                 qrMerchantEntities.add(qrMerchantEntity);
             }
             qrMerchantDao.saveAll(qrMerchantEntities);
+        } else {
+            QrMerchantEntity checkNameAndAddress = qrMerchantDao.findByName(qrMerchantCreateRequest.getName().toUpperCase());
+            if (checkNameAndAddress != null ) {
+                logger.warn("Name bị trùng \n" + "name: " + qrMerchantCreateRequest.getName());
+                return new ResponeData<>(AppConstant.CITY_CREATE_DUPLICATE_ERROR_CODE, AppConstant.CITY_CREATE_DUPLICATE_ERROR_MESSAGE, false);
+            }
+            qrMerchantEntity = setCreate(qrMerchantCreateRequest);
+            qrMerchantEntity.setCreatedAt(DateTimeUtil.getNow());
+            qrMerchantEntity.setCreatedBy(Flag.userFlag.getUserName());
+            qrMerchantDao.save(qrMerchantEntity);
         }
         ip = InetAddress.getLocalHost();
         hostname = ip.getHostName();
