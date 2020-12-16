@@ -60,4 +60,14 @@ public interface QrCouponService {
      */
     ResponeData<Boolean> delete(Long id) throws Exception;
 
+    /**
+     * Approve coupons.
+     *
+     * @param id                    id
+     * @param isApprove isApprove
+     * @return Boolean
+     * @throws Exception
+     */
+    ResponeData<Boolean> approve(Long id, boolean isApprove) throws Exception;
+
 }

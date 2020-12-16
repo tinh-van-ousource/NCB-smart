@@ -55,6 +55,9 @@ public class AppConstant {
 
     // Custom User exception
     public static final String USER_NOT_EXITS_CODE = "1001";
+    // QRCoupons
+    public static final String NOT_APPROVE = "Can not approve";
+    public static final String APPROVE_SUCCESS = "Approve Successful";
 
     // Custom Deleted Successfully
     public static final String DELETED_SUCCESS_MESSAGE = "Deleted";

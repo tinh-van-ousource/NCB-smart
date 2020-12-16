@@ -312,13 +312,11 @@ public class QrCouponServiceImpl implements QrCouponService {
         if (updateQrCouponRequest.getTotalNumberCoupon() != null) {
             qrCouponsEntity.setTotalNumberCoupon(updateQrCouponRequest.getTotalNumberCoupon());
         }
-        if (!StringUtils.isEmpty(updateQrCouponRequest.getApproveStatus())) {
-            qrCouponsEntity.setApproveStatus(updateQrCouponRequest.getApproveStatus());
-            if (updateQrCouponRequest.getApproveStatus().equals("1") &&
-                    !qrCouponsEntity.getEndDate().before(new Date()) &&
+        if (!StringUtils.isEmpty(updateQrCouponRequest.getStatus())) {
+            if ( !qrCouponsEntity.getEndDate().before(new Date()) &&
                     !qrCouponsEntity.getStartDate().after(new Date())
             ) {
-                qrCouponsEntity.setStatus("1");
+                qrCouponsEntity.setStatus(updateQrCouponRequest.getStatus());
             }
         }
         qrCouponsEntity.setUpdatedAt(DateTimeUtil.getNow());
@@ -396,6 +394,36 @@ public class QrCouponServiceImpl implements QrCouponService {
                     " \n Hostname : " + hostname +
                     " \n Xóa Phiếu giảm giá");
             return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.DELETED_SUCCESS_MESSAGE, true);
+        }
+        logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
+        return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);
+    }
+
+    @Override
+    public ResponeData<Boolean> approve(Long id, boolean isApprove) throws Exception {
+        QrCouponsEntity qrCouponsEntity = qrCouponDao.findById(id).get();
+        if (qrCouponsEntity != null) {
+            if (isApprove && !qrCouponsEntity.getEndDate().before(new Date()) &&
+                    !qrCouponsEntity.getStartDate().after(new Date())
+            ) {
+                qrCouponsEntity.setApproveStatus("1");
+                qrCouponsEntity.setStatus("1");
+                qrCouponsEntity.setUpdatedAt(DateTimeUtil.getNow());
+                qrCouponsEntity.setUpdatedBy(Flag.userFlag.getUserName());
+            }else {
+                logger.warn(AppConstant.NOT_APPROVE);
+                return new ResponeData<>(AppConstant.USER_NOT_EXITS_CODE, AppConstant.NOT_APPROVE, false);
+            }
+            qrCouponDao.save(qrCouponsEntity);
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            logger.info(" \n Người dùng:" + Flag.userFlag.getFullName() +
+                    "\n Account :" + Flag.userFlag.getUserName() +
+                    "\n Role :" + Flag.userFlag.getRole().getRoleName() +
+                    " \n Địa chỉ IP đăng nhập : " + ip +
+                    " \n Hostname : " + hostname +
+                    " \n Approve phiếu giảm giá");
+            return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.APPROVE_SUCCESS, true);
         }
         logger.warn(AppConstant.FILE_NOT_FOUND_MESSAGE);
         return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, false);

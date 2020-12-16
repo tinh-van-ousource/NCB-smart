@@ -91,4 +91,15 @@ public class QrCouponController {
         }
     }
 
+    @PatchMapping(value = "/{id}")
+    public ResponeData<Boolean> approve(@PathVariable Long id,
+                                        @RequestParam boolean isApprove) {
+        try {
+            return qrCouponService.approve(id, isApprove);
+        } catch (Exception e) {
+            logger.error(e.toString());
+            return new ResponeData<>(AppConstant.SYSTEM_ERROR_CODE, AppConstant.SYSTEM_ERROR_MESSAGE, false);
+        }
+    }
+
 }
