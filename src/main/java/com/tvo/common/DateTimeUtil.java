@@ -112,6 +112,14 @@ public class DateTimeUtil {
 		calendar.set(Calendar.SECOND, 0);
 		return calendar.getTime();
 	}
+	public static Date plusSevenHour(final Date date) {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 7);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar.getTime();
+	}
 
 	public static Date createEndTime(final Date date) {
 		final Calendar calendar = Calendar.getInstance();
@@ -122,7 +130,6 @@ public class DateTimeUtil {
 		calendar.set(Calendar.MILLISECOND, 999);
 		return calendar.getTime();
 	}
-
 	public static int getYearNow() {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());

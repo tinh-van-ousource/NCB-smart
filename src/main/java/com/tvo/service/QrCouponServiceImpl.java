@@ -84,6 +84,7 @@ public class QrCouponServiceImpl implements QrCouponService {
         List<QrCouponDto> qrCouponDtoNews = new ArrayList<>();
         if (qrCouponDtos != null && qrCouponDtos.size() > 0) {
             for (QrCouponDto couponDto : qrCouponDtos) {
+                couponDto.setStartDate(DateTimeUtil.plusSevenHour(couponDto.getStartDate()));
                 if (couponDto.getEndDate().before(new Date()) ||
                         couponDto.getStartDate().after(new Date())
                 ) {
@@ -360,6 +361,7 @@ public class QrCouponServiceImpl implements QrCouponService {
             return new ResponeData<>(AppConstant.FILE_NOT_FOUND_CODE, AppConstant.FILE_NOT_FOUND_MESSAGE, null);
         }
         QrCouponDto qrCouponDto = ModelMapperUtils.map(qrCouponsEntity, QrCouponDto.class);
+        qrCouponDto.setStartDate(DateTimeUtil.plusSevenHour(qrCouponDto.getStartDate()));
         if (qrCouponsEntity.getObjectUserType().equals("0")) {
             List<UserCoupon> userCoupon = ModelMapperUtils.mapAll(couponObjectUserEntities, UserCoupon.class);
             qrCouponDto.setUserCoupons(userCoupon);
