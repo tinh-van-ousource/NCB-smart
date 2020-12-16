@@ -5,12 +5,15 @@ import com.tvo.config.Flag;
 import com.tvo.controllerDto.ServiceRegisterSearchReqDto;
 import com.tvo.controllerDto.ServiceRegisterUpdateReqDto;
 import com.tvo.dto.ContentResDto;
+import com.tvo.dto.ServiceRegisterDto;
 import com.tvo.response.ResponeData;
 import com.tvo.service.ServiceRegisterService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,22 +35,9 @@ public class ServiceRegisterController {
     private ServiceRegisterService serviceRegisterService;
 
     @GetMapping(value = "/search")
-    public ResponeData<ContentResDto> search(@Valid ServiceRegisterSearchReqDto serviceRegisterSearchReqDto) {
-        ContentResDto serviceRegisterResDtoList = serviceRegisterService.getServiceRegisterList(serviceRegisterSearchReqDto);
-        try {
-			ip = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        hostname = ip.getHostName();
-        logger.info(" \n Người dùng:" +Flag.userFlag.getFullName().toString()+ 
-        		"\n Account :"+Flag.userFlag.getUserName().toString()+
-        		"\n Role :"+Flag.userFlag.getRole().getRoleName().toString()+
-        		" \n Địa chỉ IP đăng nhập : " + ip+
-        		" \n Hostname : " + hostname +
-        		" \n Thao tác Tìm kiếm dịch vụ đã đăng ký");
-        return new ResponeData<>(AppConstant.SYSTEM_SUCCESS_CODE, AppConstant.SYSTEM_SUCCESS_MESSAGE, serviceRegisterResDtoList);
+    public ResponeData<Page<ServiceRegisterDto>> search(@Valid ServiceRegisterSearchReqDto serviceRegisterSearchReqDto,
+                                                        Pageable pageable) {
+        return serviceRegisterService.search(serviceRegisterSearchReqDto, pageable);
     }
 
     @GetMapping(value = "/get-all-service")

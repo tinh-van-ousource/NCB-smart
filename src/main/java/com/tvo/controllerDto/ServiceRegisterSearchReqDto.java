@@ -1,11 +1,11 @@
 package com.tvo.controllerDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tvo.common.DateTimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -21,18 +21,18 @@ public class ServiceRegisterSearchReqDto {
 
     private String status; // trang thai
 
-    private String fromDate; // tu ngay
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date fromDate; // tu ngay
 
-    private String toDate; // den ngay
+    @JsonFormat(pattern = "yyyy/M/d")
+    private Date toDate; // den ngay
 
-    @Positive
-    @Min(1)
-    @NotNull
-    private Integer page;
+    public void setFromDate(Date fromDate) {
+        this.fromDate = DateTimeUtil.createStartTime(fromDate);
+    }
 
-    @Positive
-    @Min(1)
-    @NotNull
-    private Integer size;
+    public void setToDate(Date toDate) {
+        this.toDate = DateTimeUtil.createEndTime(toDate);
+    }
 
 }

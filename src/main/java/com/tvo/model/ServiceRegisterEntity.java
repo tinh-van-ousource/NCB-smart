@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "SERVICE_REGISTER_MBAPP")
@@ -42,7 +44,7 @@ public class ServiceRegisterEntity implements Serializable {
     private String idCard;
 
     @Column(name = "IDCARD_ISSUEDATE")
-    private LocalDate idCardIssueDate;
+    private Date idCardIssueDate;
 
     @Column(name = "PHONE")
     private String phone;
